@@ -1,13 +1,24 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
+# patches
+cairo-win32.patch
+libxml.patch
+vs2013.patch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+# directories
+_prerequisites
+boost*
+cairo*
+freetype*
+gdal*
+geos*
+icu*
+jpeg*
+libpng*
+libxml2*
+packages
+pixman*
+postgresql*
+proj*
+protobuf*
+sqlite*
+tiff*
+zlib*

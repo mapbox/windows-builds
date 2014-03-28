@@ -1,0 +1,73 @@
+@echo off
+
+echo "use this script from 'Developer Command Prompt for VS2013' only"
+echo "call from %ROOTDIR%"
+
+CALL scripts\01_set_env_and_versions.bat
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\02_download_packages.bat
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\03_build_icu.bat
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL scripts\
+IF ERRORLEVEL 1 GOTO ERROR
+
+
+GOTO DONE
+
+:ERROR
+echo !!!!!ERROR: ABORTED!!!!!!
+
+:DONE
+echo -- DONE ---
