@@ -1,4 +1,4 @@
 mapnik-dependencies
 ===================
 
-build scripts for mapnik dependencies
+https://github.com/BergWerkGIS/mapnik-dependencies/tree/windows
