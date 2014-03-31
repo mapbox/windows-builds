@@ -23,6 +23,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 echo.
 echo APPLY PATCH to src/google/protobuf/stubs/common.h
+echo https://code.google.com/p/protobuf/issues/detail?id=531
 echo.
 pause
 

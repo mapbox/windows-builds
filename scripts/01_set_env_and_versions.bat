@@ -9,11 +9,11 @@ SET PATH=%ROOTDIR%\bin;%PATH%
 :: CygWin in the middle
 ::SET PATH=c:\cygwin\bin;%PATH%
 ::msysgit first
-SET PATH=C:\_downloads\cmder\vendor\msysgit\bin;%PATH%
+SET PATH=C:\dev2\bin\cmder\vendor\msysgit\bin;%PATH%
 
 SET CMAKE_ROOT=%ROOTDIR%\bin\cmake
-::MKDIR %ROOTDIR%\packages
-SET PKGDIR=%ROOTDIR%/packages
+SET PKGDIR=%ROOTDIR%\packages
+MKDIR %PKGDIR%
 
 set ICU_VERSION=4.8
 ::set BOOST_VERSION=49
