@@ -17,6 +17,8 @@ IF ERRORLEVEL 1 GOTO ERROR
 cd %PKGDIR%
 curl http://iweb.dl.sourceforge.net/project/boost/boost/1.%BOOST_VERSION%.0/boost_1_%BOOST_VERSION%_0.tar.gz -O
 IF ERRORLEVEL 1 GOTO ERROR
+curl https://webp.googlecode.com/files/libwebp-%WEBP_VERSION%-windows-x86.zip -O
+IF ERRORLEVEL 1 GOTO ERROR
 curl http://www.ijg.org/files/jpegsr%JPEG_VERSION%.zip -O
 IF ERRORLEVEL 1 GOTO ERROR
 curl http://ftp.igh.cnrs.fr/pub/nongnu/freetype/freetype-%FREETYPE_VERSION%.tar.gz -O
