@@ -27,6 +27,10 @@ echo https://code.google.com/p/protobuf/issues/detail?id=531
 echo.
 pause
 
+ECHO extracting includes ...
+CALL extract_includes.bat
+IF ERRORLEVEL 1 GOTO ERROR
+
 ECHO building ...
 CALL msbuild protobuf.sln /p:Configuration="Release" /p:Platform=Win32
 IF ERRORLEVEL 1 GOTO ERROR
