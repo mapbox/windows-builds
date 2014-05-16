@@ -15,6 +15,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 echo.
 echo adjust tools/build/v2/user-config.jam to use python: using python : 2.7 : C:/Python27/python.exe ;
+echo or 64bit Python
 echo.
 pause
 

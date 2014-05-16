@@ -5,6 +5,8 @@ echo download attachment 'vs2013.patch'
 echo of issue 531 at https://code.google.com/p/protobuf/issues/detail?id=531
 echo apply manually after downloading
 echo.
+echo Install Python 32bit or 64bit, as needed
+echo.
 
 pause
 
@@ -17,7 +19,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 cd %PKGDIR%
 curl http://iweb.dl.sourceforge.net/project/boost/boost/1.%BOOST_VERSION%.0/boost_1_%BOOST_VERSION%_0.tar.gz -O
 IF ERRORLEVEL 1 GOTO ERROR
-curl https://webp.googlecode.com/files/libwebp-%WEBP_VERSION%-windows-x86.zip -O
+curl https://webp.googlecode.com/files/libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip -O
 IF ERRORLEVEL 1 GOTO ERROR
 curl http://www.ijg.org/files/jpegsr%JPEG_VERSION%.zip -O
 IF ERRORLEVEL 1 GOTO ERROR

@@ -1,10 +1,14 @@
 @echo off
 ::devenv /Rebuild "Release|Win32" MySolution.sln
 ::msbuild MySolution.sln /p:Configuration=Release;Platform=Win32 /t:proj:Rebuild
+
 ::SET BUILDPLATFORM=Win32
 ::SET BOOSTADDRESSMODEL=32
+::SET WEBP_PLATFORM=x86
+
 SET BUILDPLATFORM=x64
 SET BOOSTADDRESSMODEL=64
+SET WEBP_PLATFORM=x64
 
 ::set PATH=%PATH%;c:\git\bin;c:\cygwin\bin;c:\GnuWin32\bin
 SET ROOTDIR=C:\dev2\mapnik-dependencies
