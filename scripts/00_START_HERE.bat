@@ -1,7 +1,15 @@
 @echo off
 
-echo "use this script from 'Developer Command Prompt for VS2013' only"
+echo "use this script only from"
+echo     "'VS2013 x64 Native Tools Command Prompt'"
+echo "or"
+echo     "'VS2013 x86 Native Tools Command Prompt'"
+echo "depending on your needs"
 echo "call from %ROOTDIR%"
+echo.
+
+pause
+
 
 ::INSTALL Python 64
 ::http://stackoverflow.com/a/12448411 and https://medium.com/learning-to-code/da577d9c436b

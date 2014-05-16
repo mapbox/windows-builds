@@ -16,7 +16,9 @@ cd jpeg
 echo y | call copy jconfig.txt jconfig.h
 IF ERRORLEVEL 1 GOTO ERROR
 
-nmake /f Makefile.vc nodebug=1
+::NMAKE Options: http://msdn.microsoft.com/en-us/library/afyyse50%28v=vs.120%29.aspx
+::NMAKE platform (32/64) used, depends on which Developer command prompt was opened
+nmake /A /F Makefile.vc nodebug=1
 IF ERRORLEVEL 1 GOTO ERROR
 
 
