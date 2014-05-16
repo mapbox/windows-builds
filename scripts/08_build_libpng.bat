@@ -13,14 +13,33 @@ ECHO upgrading solution
 CALL devenv.exe /upgrade vstudio.sln
 IF ERRORLEVEL 1 GOTO ERROR
 
+
+ECHO "IF building x64 add platform to solution manually!"
+ECHO.
+PAUSE
+
+
 ECHO building ...
-CALL msbuild vstudio.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=Win32
+CALL msbuild vstudio.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR
 
 cd %ROOTDIR%\libpng
-CALL move projects\vstudio\Release\libpng15.lib libpng.lib
+
+::TODO branch based on architecture
+::copy zlib twice, other projects expect the lib in different locations
+::CALL copy /Y projects\vstudio\Release\libpng15.lib libpng.lib
+::IF ERRORLEVEL 1 GOTO ERROR
+::CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib-1.2.5\zlib.lib
+::IF ERRORLEVEL 1 GOTO ERROR
+::CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib\zlib.lib
+::IF ERRORLEVEL 1 GOTO ERROR
+
+::copy zlib twice, other projects expect the lib in different locations
+CALL copy /Y projects\vstudio\x64\Release\libpng15.lib libpng.lib
 IF ERRORLEVEL 1 GOTO ERROR
-CALL move projects\vstudio\Release\zlib.lib ..\zlib-1.2.5\zlib.lib
+CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib-1.2.5\zlib.lib
+IF ERRORLEVEL 1 GOTO ERROR
+CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib\zlib.lib
 IF ERRORLEVEL 1 GOTO ERROR
 
 
