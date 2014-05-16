@@ -26,7 +26,7 @@ pause
 ::     check for 32/64bit within build_boost.bat
 ::     adjust Python Path 32/64bit
 ::     problems with 64, maybe use precompiled 64bit: http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0-build2/
-::     seems to be missing msvc_12-64
+::  FREETYPE: branch for copying for lib depending on platform
 
 CALL scripts\01_set_env_and_versions.bat
 IF ERRORLEVEL 1 GOTO ERROR
