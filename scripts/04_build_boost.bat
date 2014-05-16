@@ -14,14 +14,18 @@ CALL bootstrap.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
 echo.
-echo adjust user-config.jam to use python: using python : 2.7 : C:/Python27/python.exe ;
+echo adjust tools/build/v2/user-config.jam to use python: using python : 2.7 : C:/Python27/python.exe ;
 echo.
 pause
 
-::note for VS2012, use toolset=msvc-11.0 and VS2010 use toolset=msvc-10.0 
+::VS2010/MSBuild 10: toolset=msvc-10.0 
+::VS2012/MSBuild 11: toolset=msvc-11.0
+::VS2013/MSBuild 12: toolset=msvc-12.0
 ::64bit: http://stackoverflow.com/a/2326485
 echo bjamming ....
-CALL bjam toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
+::CALL bjam toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
+::icu: lib64\
+CALL bjam toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib64\\icuuc.lib release link=static install --build-type=complete
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::if you need python

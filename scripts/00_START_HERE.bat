@@ -3,6 +3,23 @@
 echo "use this script from 'Developer Command Prompt for VS2013' only"
 echo "call from %ROOTDIR%"
 
+::INSTALL Python 64
+::http://stackoverflow.com/a/12448411 and https://medium.com/learning-to-code/da577d9c436b
+::This appears to be working for me on Windows 7 64 bit. 
+::Choose one version to be your default installation, e.g. 64 bit, and install it first.
+::Before doing anything else install the other version.
+::Specify a different installation directory and in the Customize Python 2.7.3 screen 
+::select Register Extensions and select Entire feature will be unavailable.
+
+
+::TODO:
+::  ICU: adjust paths to icu for 64: lib64
+::  BOOST:
+::     check for 32/64bit within build_boost.bat
+::     adjust Python Path 32/64bit
+::     problems with 64, maybe use precompiled 64bit: http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0-build2/
+::     seems to be missing msvc_12-64
+
 CALL scripts\01_set_env_and_versions.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
