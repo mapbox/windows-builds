@@ -1,29 +1,30 @@
 echo off
 echo ------ geos -----
 
-CALL bsdtar xvf %PKGDIR%\geos-%GEOS_VERSION%.tar.bz2
-IF ERRORLEVEL 1 GOTO ERROR
+::CALL bsdtar xvf %PKGDIR%\geos-%GEOS_VERSION%.tar.bz2
+::IF ERRORLEVEL 1 GOTO ERROR
 
-CALL rename geos-%GEOS_VERSION% geos
-IF ERRORLEVEL 1 GOTO ERROR
+::CALL rename geos-%GEOS_VERSION% geos
+::IF ERRORLEVEL 1 GOTO ERROR
 
+
+::LATEST SNAPSHOT 18.05.2014
 echo.
-echo http://trac.osgeo.org/geos/ticket/616
-echo add  #define NOMINMAX to the beginning of geos\src\operation\buffer\BufferOp.cpp
+echo Download latest snapshot http://geos.osgeo.org/snapshots/
+echo and extract to %ROOTDIR%\geos
 echo.
 pause
 
 cd geos
 
-CALL mkdir build
+CALL autogen.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-cd build
-
-CALL cmake -G "NMake Makefiles" ..
-IF ERRORLEVEL 1 GOTO ERROR
-
-CALL nmake /f Makefile geos
+IF %BUILDPLATFORM% EQU x64 (
+	CALL nmake /A /F makefile.vc MSVC_VER=1800 WIN64=YES
+) ELSE (
+	CALL nmake /A /F makefile.vc MSVC_VER=1800
+)
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE

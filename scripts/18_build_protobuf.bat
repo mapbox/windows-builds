@@ -25,6 +25,7 @@ echo.
 echo APPLY PATCH to src/google/protobuf/stubs/common.h
 echo https://code.google.com/p/protobuf/issues/detail?id=531
 echo.
+echo when building 64 bit add platform to solution
 pause
 
 ECHO extracting includes ...
@@ -32,7 +33,7 @@ CALL extract_includes.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building ...
-CALL msbuild protobuf.sln /p:Configuration="Release" /p:Platform=Win32
+CALL msbuild protobuf.sln /t:rebuild /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR
 
 

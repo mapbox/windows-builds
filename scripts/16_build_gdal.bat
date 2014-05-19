@@ -37,6 +37,7 @@ cd gdal/gdal
 
 
 ::https://trac.osgeo.org/gdal/wiki/BuildingOnWindows
+::see basic options
 
 
 CALL nmake /F makefile.vc clean
