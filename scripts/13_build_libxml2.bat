@@ -2,6 +2,9 @@
 echo ------ libXML2 -----
 
 
+::[Tutorial] How to compile gnome libxml2 with Visual Studio 2008/2010 scripts step by step.
+::http://www.fabianoricci.org/?p=162
+
 CALL bsdtar xvfz %PKGDIR%\libxml2-%LIBXML2_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 

@@ -13,7 +13,9 @@ CALL unzip -o ../../packages/proj-datumgrid-%PROJ_GRIDS_VERSION%.zip
 IF ERRORLEVEL 1 GOTO ERROR
 
 cd ..
-CALL nmake /f Makefile.vc
+CALL nmake /F Makefile.vc clean
+IF ERRORLEVEL 1 GOTO ERROR
+CALL nmake /A /F Makefile.vc
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
