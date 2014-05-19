@@ -2,6 +2,11 @@
 echo ------ cairo -----
 
 echo.
+echo See http://cairographics.org/download/ Build in Visual Studio
+echo.
+echo Maybe use precompiled binaries: http://www.gtk.org/download/win64.php
+echo 'all-in-one bundle' contains dlls
+echo.
 echo 1. extract with 7zip GUI
 echo    %PKGDIR%\cairo-%CAIRO_VERSION%.tar.xz
 echo 2. rename folder cairo-%CAIRO_VERSION% to cairo
@@ -26,12 +31,20 @@ set INCLUDE=%INCLUDE%;%ROOTDIR%\cairo
 set INCLUDE=%INCLUDE%;%ROOTDIR%\cairo\src
 set INCLUDE=%INCLUDE%;%ROOTDIR%\freetype\include
 
+CALL make -f Makefile.win32 "CFG=release" clean
+IF ERRORLEVEL 1 GOTO ERROR
+
+
+echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
+echo.
+PAUSE
+
+
 CALL make -f Makefile.win32 "CFG=release"
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::rem - delete bogus cairo-version.h
 ::rem https://github.com/mapnik/mapnik-packaging/issues/56
-
 CALL del src\cairo-version.h
 IF ERRORLEVEL 1 GOTO ERROR
 
