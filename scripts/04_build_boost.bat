@@ -19,6 +19,10 @@ echo or 64bit Python
 echo.
 pause
 
+
+http://dominoc925.blogspot.co.at/2013/04/how-i-build-boost-for-64-bit-windows.html
+
+
 ::VS2010/MSBuild 10: toolset=msvc-10.0 
 ::VS2012/MSBuild 11: toolset=msvc-11.0
 ::VS2013/MSBuild 12: toolset=msvc-12.0
