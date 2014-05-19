@@ -10,13 +10,24 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 cd libxml2\win32
 
-CALL cscript configure.js compiler=msvc prefix=%ROOTDIR%\libxml2 iconv=no icu=yes include=%ROOTDIR%\icu\include lib=%ROOTDIR%\icu\lib
+
+IF %BUILDPLATFORM% EQU x64 (
+	SET ICU_LIB_DIR=%ROOTDIR%\icu\lib
+) ELSE (
+	SET ICU_LIB_DIR=%ROOTDIR%\icu\lib64
+)
+IF ERRORLEVEL 1 GOTO ERROR
+
+
+CALL cscript configure.js compiler=msvc prefix=%ROOTDIR%\libxml2 iconv=no icu=yes include=%ROOTDIR%\icu\include lib=%ICU_LIB_DIR%
 IF ERRORLEVEL 1 GOTO ERROR
 
 CALL patch  -p1 < %ROOTDIR%\libxml.patch
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL nmake /f Makefile.msvc
+CALL nmake /F Makefile.msvc clean
+IF ERRORLEVEL 1 GOTO ERROR
+CALL nmake /A /F Makefile.msvc
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
