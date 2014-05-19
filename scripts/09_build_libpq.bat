@@ -21,7 +21,11 @@ echo building ...
 :: !! http://www.postgresql.org/docs/9.0/static/install-windows-libpq.html
 ::NMAKE Options: http://msdn.microsoft.com/en-us/library/afyyse50%28v=vs.120%29.aspx
 ::NMAKE platform (32/64) used, depends on which Developer command prompt was opened
-IF %BUILDPLATFORM% EQU x64 (CALL nmake /A /B /F win32.mak CPU=AMD64) ELSE (CALL nmake /A /B /F win32.mak)
+IF %BUILDPLATFORM% EQU x64 (
+	CALL nmake /A /F win32.mak CPU=AMD64
+) ELSE (
+	CALL nmake /A /F win32.mak
+)
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::Note: The following errors occurred uring this process:

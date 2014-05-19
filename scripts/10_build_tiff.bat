@@ -26,7 +26,10 @@ IF ERRORLEVEL 1 GOTO ERROR
 CALL move /Y nmake.opt.fixed nmake.opt
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL nmake /f Makefile.vc
+CALL nmake /F Makefile.vc clean
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL nmake /A /F Makefile.vc
 IF ERRORLEVEL 1 GOTO ERROR
 
 
