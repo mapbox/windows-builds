@@ -9,6 +9,9 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 cd pixman\pixman
 
+CALL make -f Makefile.win32 "CFG=release" clean
+IF ERRORLEVEL 1 GOTO ERROR
+
 CALL make -f Makefile.win32 "CFG=release"
 IF ERRORLEVEL 1 GOTO ERROR
 

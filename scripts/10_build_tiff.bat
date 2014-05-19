@@ -26,6 +26,8 @@ IF ERRORLEVEL 1 GOTO ERROR
 CALL move /Y nmake.opt.fixed nmake.opt
 IF ERRORLEVEL 1 GOTO ERROR
 
+::http://www.remotesensing.org/libtiff/build.html#PC
+
 CALL nmake /F Makefile.vc clean
 IF ERRORLEVEL 1 GOTO ERROR
 
