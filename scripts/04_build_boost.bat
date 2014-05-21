@@ -7,12 +7,11 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 cd boost_1_%BOOST_VERSION%_0
 
-::set to -vc110 if using MSVC 2012
-SET BOOST_PREFIX=boost-%BOOST_VERSION%-vc120
-echo calling bootstrap bat
-CALL bootstrap.bat
-IF ERRORLEVEL 1 GOTO ERROR
-
+echo !!!!!!!!!
+echo USE x86 COMMANDPROMPT!!!!!!!!
+::http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html#v2.reference.tools.compiler.msvc.64
+:: If you provide a path to the compiler explicitly, provide the path to the 32-bit compiler. If you try to specify the path to any of 64-bit compilers, configuration will not work.
+echo !!!!!!!!
 echo.
 echo adjust tools/build/v2/user-config.jam to use python: using python : 2.7 : C:/Python27/python.exe ;
 echo or 64bit Python
@@ -20,7 +19,28 @@ echo.
 pause
 
 
-http://dominoc925.blogspot.co.at/2013/04/how-i-build-boost-for-64-bit-windows.html
+::set to -vc110 if using MSVC 2012
+SET BOOST_PREFIX=boost-%BOOST_VERSION%-vc120
+echo calling bootstrap bat
+CALL bootstrap.bat
+IF ERRORLEVEL 1 GOTO ERROR
+
+
+::http://dominoc925.blogspot.co.at/2013/04/how-i-build-boost-for-64-bit-windows.html
+
+::patching has_icu_test.cpp
+::http://stackoverflow.com/a/16304738
+
+::I was building boost with the bjam -q option.
+::When I build using the bjam -q option the build stops on the above error and
+::does not build the libraries.
+::I removed the -q and it ignored the above error, as you explained, and
+::everything built fine. 
+
+::http://www.boost.org/boost-build2/doc/html/bbv2/overview/invocation.html
+::http://www.boost.org/doc/libs/1_55_0/more/getting_started/windows.html#or-build-binaries-from-source
+::http://www.boost.org/doc/libs/1_55_0/libs/regex/doc/html/boost_regex/install.html
+::http://devwiki.neosys.com/index.php/Building_Boost_32/64_on_Windows
 
 
 ::VS2010/MSBuild 10: toolset=msvc-10.0 
@@ -28,9 +48,20 @@ http://dominoc925.blogspot.co.at/2013/04/how-i-build-boost-for-64-bit-windows.ht
 ::VS2013/MSBuild 12: toolset=msvc-12.0
 ::64bit: http://stackoverflow.com/a/2326485
 echo bjamming ....
+IF ERRORLEVEL 1 GOTO ERROR
+
+CALL b2 --clean
 ::CALL bjam toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
 ::icu: lib64\
-CALL bjam toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib64\\icuuc.lib release link=static install --build-type=complete
+:: -a rebuild everything
+:: -q stop at first error
+:: --reconfigure rerun all configuration checks
+
+
+bjam -a variant=release --toolset=msvc-12.0 architecture=x86 address-model=64 --with-python
+ stage --stagedir=stage64 link=shared,static --build-type=complete -j2 -a
+
+CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib64\\icuuc.lib release link=static install --build-type=complete >boost-build.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::if you need python
