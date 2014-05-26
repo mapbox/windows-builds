@@ -25,23 +25,22 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 cd %ROOTDIR%\libpng
 
-::TODO branch based on architecture
 ::copy zlib twice, other projects expect the lib in different locations
-::CALL copy /Y projects\vstudio\Release\libpng15.lib libpng.lib
-::IF ERRORLEVEL 1 GOTO ERROR
-::CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib-1.2.5\zlib.lib
-::IF ERRORLEVEL 1 GOTO ERROR
-::CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib\zlib.lib
-::IF ERRORLEVEL 1 GOTO ERROR
-
-::copy zlib twice, other projects expect the lib in different locations
-CALL copy /Y projects\vstudio\x64\Release\libpng15.lib libpng.lib
-IF ERRORLEVEL 1 GOTO ERROR
-CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib-1.2.5\zlib.lib
-IF ERRORLEVEL 1 GOTO ERROR
-CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib\zlib.lib
-IF ERRORLEVEL 1 GOTO ERROR
-
+IF %BUILDPLATFORM% EQU x64 (
+	CALL copy /Y projects\vstudio\x64\Release\libpng15.lib libpng.lib
+	IF ERRORLEVEL 1 GOTO ERROR
+	CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib-1.2.5\zlib.lib
+	IF ERRORLEVEL 1 GOTO ERROR
+	CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib\zlib.lib
+	IF ERRORLEVEL 1 GOTO ERROR
+) ELSE (
+	CALL copy /Y projects\vstudio\Release\libpng15.lib libpng.lib
+	IF ERRORLEVEL 1 GOTO ERROR
+	CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib-1.2.5\zlib.lib
+	IF ERRORLEVEL 1 GOTO ERROR
+	CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib\zlib.lib
+	IF ERRORLEVEL 1 GOTO ERROR
+)
 
 :ERROR
 

@@ -58,9 +58,30 @@ CALL b2 --clean
 :: --reconfigure rerun all configuration checks
 
 
-bjam -a variant=release --toolset=msvc-12.0 architecture=x86 address-model=64 --with-python
- stage --stagedir=stage64 link=shared,static --build-type=complete -j2 -a
+b2 -a variant=release --toolset=msvc-12.0 architecture=x86 address-model=64 --with-python stage --stagedir=stage64 link=shared,static --build-type=complete -j2 -a
 
+b2 -a --build-type=minimal --with-regex  address-model=32 stage --stagedir=stage32-minimal
+
+works:
+b2 -a --build-type=complete --with-regex address-model=32 stage --stagedir=stage32-complete
+b2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% address-model=%BOOSTADDRESSMODEL% --with-thread --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=L%ROOTDIR%\\icu\\lib\\icuuc.lib
+b2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% address-model=%BOOSTADDRESSMODEL% --with-python python=2.7 --with-thread --with-regex --with-filesystem --with-date_time --with-system --with-program_options --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu
+
+ORIGINAL:
+bjam toolset=msvc --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
+bjam toolset=msvc --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=static --build-type=complete install
+
+
+
+does not work
+b2 -a --build-type=complete release link=static --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu address-model=32
+
+
+32 BIT
+CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete >boost-build.log 2>&1
+
+
+64BIT
 CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib64\\icuuc.lib release link=static install --build-type=complete >boost-build.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 

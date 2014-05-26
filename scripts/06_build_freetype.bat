@@ -21,9 +21,11 @@ PAUSE
 ECHO building ...
 CALL msbuild builds\win32\vc2010\freetype.sln /t:rebuild /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
 
-::TODO branch depending on build platform
-::CALL move objs\win32\vc2010\freetype249.lib freetype.lib
-CALL move builds\win32\vc2010\x64\Release\freetype249.lib freetype.lib
+IF %BUILDPLATFORM% EQU x64 (
+	CALL copy /Y builds\win32\vc2010\x64\Release\freetype249.lib freetype.lib
+) ELSE (
+	CALL copy /Y objs\win32\vc2010\freetype249.lib freetype.lib
+)
 IF ERRORLEVEL 1 GOTO ERROR
 
 :ERROR

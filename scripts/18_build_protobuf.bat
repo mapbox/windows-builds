@@ -37,9 +37,6 @@ CALL msbuild protobuf.sln /t:rebuild /p:Configuration="Release" /p:Platform=%BUI
 IF ERRORLEVEL 1 GOTO ERROR
 
 
-CALL extract_includes.bat
-IF ERRORLEVEL 1 GOTO ERROR
-
 GOTO DONE
 
 :ERROR

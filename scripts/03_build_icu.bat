@@ -10,7 +10,7 @@ CALL devenv.exe /upgrade source\allinone\allinone.sln
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building ...
-msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+CALL msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
