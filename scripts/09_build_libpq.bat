@@ -1,8 +1,26 @@
 @echo off
 echo ------ libpq -----
 
+powershell scripts\deletedir -dir2del "%ROOTDIR%\postgresql"
+IF ERRORLEVEL 1 GOTO ERROR
+
 echo If you receive an error about not finding Win32.mak, you may need to do something like:
 echo "set INCLUDE=%include%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include"
+echo.
+echo.
+
+echo Error:
+echo "libpq.lib(dirmod.obj) : error LNK2019: unresolved external symbol _pstrdup referenced in function _pgfnames"
+echo "libpq.lib(dirmod.obj) : error LNK2019: unresolved external symbol _repalloc referenced in function _pgfnames"
+echo "libpq.lib(dirmod.obj) : error LNK2019: unresolved external symbol _palloc referenced in function _pgfnames"
+echo "libpq.lib(dirmod.obj) : error LNK2019: unresolved external symbol _pfree referenced in function _pgfnames_cleanup"
+echo.
+echo "apply patch http://postgresql.1045698.n5.nabble.com/Can-not-compile-libpq-version-9-3-td5770158.html"
+echo "to src/interfaces/libpq/win32.mak"
+echo.
+
+PAUSE
+
 
 SET INCLUDE=%include%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include
 
@@ -15,6 +33,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 rename postgresql-%POSTGRESQL_VERSION% postgresql
 IF ERRORLEVEL 1 GOTO ERROR
+
 cd postgresql\src
 
 echo building ...

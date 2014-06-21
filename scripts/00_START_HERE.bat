@@ -7,6 +7,8 @@ echo     "'VS2013 x86 Native Tools Command Prompt'"
 echo "depending on your needs"
 echo "call from %ROOTDIR%"
 echo.
+echo "ATTENTION! boost x64 build needs to be started from x86 command prompt"
+echo.
 
 pause
 
