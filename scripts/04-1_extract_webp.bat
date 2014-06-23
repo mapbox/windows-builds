@@ -1,6 +1,14 @@
 @echo off
 echo ------- WEBP --------
 
+
+powershell scripts\deletedir -dir2del "%ROOTDIR%\webp"
+IF ERRORLEVEL 1 GOTO ERROR
+
+pause
+
+
+
 unzip %PKGDIR%\libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip
 IF ERRORLEVEL 1 GOTO ERROR
 echo WEBP unzipped

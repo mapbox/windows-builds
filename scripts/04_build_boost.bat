@@ -1,6 +1,16 @@
 @echo off
 echo ----------- boost ---------
 
+
+::set to -vc110 if using MSVC 2012
+SET BOOST_PREFIX=boost-%BOOST_VERSION%-vc120
+
+
+powershell scripts\deletedir -dir2del "%ROOTDIR%\%BOOST_PREFIX%"
+IF ERRORLEVEL 1 GOTO ERROR
+PAUSE
+
+
 echo extracting
 CALL bsdtar xzf %PKGDIR%/boost_1_%BOOST_VERSION%_0.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
@@ -13,14 +23,13 @@ echo USE x86 COMMANDPROMPT!!!!!!!!
 :: If you provide a path to the compiler explicitly, provide the path to the 32-bit compiler. If you try to specify the path to any of 64-bit compilers, configuration will not work.
 echo !!!!!!!!
 echo.
-echo adjust tools/build/v2/user-config.jam to use python: using python : 2.7 : C:/Python27/python.exe ;
+echo adjust tools/build/v2/user-config.jam to use python:
+echo using python : 2.7 : C:/Python27/python.exe ;
 echo or 64bit Python
 echo.
 pause
 
 
-::set to -vc110 if using MSVC 2012
-SET BOOST_PREFIX=boost-%BOOST_VERSION%-vc120
 echo calling bootstrap bat
 CALL bootstrap.bat
 IF ERRORLEVEL 1 GOTO ERROR
@@ -50,7 +59,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 echo bjamming ....
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL b2 --clean
+CALL b2 toolset=msvc-12.0 --clean
 ::CALL bjam toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
 ::icu: lib64\
 :: -a rebuild everything
@@ -60,63 +69,24 @@ CALL b2 --clean
 
 
 
-
-
-
-...found 66 targets...
-...updating 3 targets...
-compile-c-c++ bin.v2\libs\regex\build\msvc-12.0\debug\has_icu_test.obj
-has_icu_test.cpp
-C:\dev2\mapnik-dependencies\icu\include\unicode/normalizer2.h(480) : warning C4512: 'icu_48::FilteredNormalizer2' : assignment operator could not be generated
-        C:\dev2\mapnik-dependencies\icu\include\unicode/normalizer2.h(315) : see declaration of 'icu_48::FilteredNormalizer2'
-libs\regex\build\has_icu_test.cpp(24) : warning C4189: 'c' : local variable is initialized but not referenced
-msvc.link bin.v2\libs\regex\build\msvc-12.0\debug\has_icu.exe
-LINK : fatal error LNK1181: cannot open input file 'icuind.lib'
-
-        call "C:\Program Files (x86)\microsoft visual studio 12.0\vc\vcvarsall.bat" x86 >nul
-link /NOLOGO /INCREMENTAL:NO /DEBUG /MACHINE:X86 /MANIFEST /subsystem:console /out:"bin.v2\libs\regex\build\msvc-12.0\debug\has_icu.exe" /LIBPATH:"C:\dev2\mapnik-dependencies\icu\bin" /LIBPATH:"C:\dev2\mapnik-dependencies\icu\lib" /delayload:icudt48.dll /delayload:icuin48.dll /delayload:icuuc48.dll delayimp.lib @"bin.v2\libs\regex\build\msvc-12.0\debug\has_icu.exe.rsp"
-        if %ERRORLEVEL% NEQ 0 EXIT %ERRORLEVEL%
-    
-...failed msvc.link bin.v2\libs\regex\build\msvc-12.0\debug\has_icu.exe bin.v2\libs\regex\build\msvc-12.0\debug\has_icu.pdb...
-...failed updating 2 targets...
-...updated 1 target...
-...found 1 target...
-...updating 1 target...
-config-cache.write bin.v2\project-cache.jam
-...updated 1 target...
-
-
-
-
-
-
-
-
-b2 -a variant=release --toolset=msvc-12.0 architecture=x86 address-model=64 --with-python stage --stagedir=stage64 link=shared,static --build-type=complete -j2 -a
-
-b2 -a --build-type=minimal --with-regex  address-model=32 stage --stagedir=stage32-minimal
-
-works:
-b2 -j2 -a --build-type=complete --with-regex address-model=32 stage --stagedir=stage32-complete
-b2 -j2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% address-model=%BOOSTADDRESSMODEL% --with-thread --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=L%ROOTDIR%\\icu\\lib\\icuuc.lib
-b2 -j2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-regex --with-filesystem --with-date_time --with-system --with-program_options --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu
-
-ORIGINAL:
-bjam toolset=msvc --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
-bjam toolset=msvc --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=static --build-type=complete install
-
-
-
-does not work
-b2 -a --build-type=complete release link=static --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu address-model=32
-
+::b2 -a variant=release --toolset=msvc-12.0 architecture=x86 address-model=64 --with-python stage --stagedir=stage64 link=shared,static --build-type=complete -j2 -a
+::b2 -a --build-type=minimal --with-regex  address-model=32 stage --stagedir=stage32-minimal
+::works:
+::b2 -j2 -a --build-type=complete --with-regex address-model=32 stage --stagedir=stage32-complete
+::b2 -j2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% address-model=%BOOSTADDRESSMODEL% --with-thread --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=L%ROOTDIR%\\icu\\lib\\icuuc.lib
+::b2 -j2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-regex --with-filesystem --with-date_time --with-system --with-program_options --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu
+::ORIGINAL:
+::bjam toolset=msvc --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
+::bjam toolset=msvc --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=static --build-type=complete install
+::does not work
+::b2 -a --build-type=complete release link=static --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu address-model=32
 
 32 BIT
-CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete >boost-build.log 2>&1
+CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static,shared install --build-type=complete >%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
 
 
 64BIT
-CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib64\\icuuc.lib release link=static install --build-type=complete >boost-build.log 2>&1
+CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib64\\icuuc.lib release link=static,shared install --build-type=complete >%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::if you need python

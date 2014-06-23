@@ -1,5 +1,12 @@
 @echo off
 echo ------- JPEG --------
+
+
+powershell scripts\deletedir -dir2del "%ROOTDIR%\jpeg"
+IF ERRORLEVEL 1 GOTO ERROR
+pause
+
+
 echo If you receive an error about not finding Win32.mak, you may need to do something like:
 echo "set INCLUDE=%include%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include"
 

@@ -14,9 +14,12 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 cd %ROOTDIR%\libpng\projects\vstudio\
 
-ECHO upgrading solution
+ECHO upgrading solution ....
 CALL devenv.exe /upgrade vstudio.sln
 IF ERRORLEVEL 1 GOTO ERROR
+
+ECHO .... solution upgraded
+PAUSE
 
 
 ECHO "IF building x64 add platform to solution manually!"
@@ -25,7 +28,7 @@ PAUSE
 
 
 ECHO building ...
-CALL msbuild vstudio.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+CALL msbuild vstudio.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM% >%ROOTDIR%\build_libpng-%LIBPNG_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
 cd %ROOTDIR%\libpng

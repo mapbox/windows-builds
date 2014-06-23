@@ -36,17 +36,20 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 cd postgresql\src
 
-echo building ...
 :: !! http://www.postgresql.org/docs/9.0/static/install-windows-libpq.html
 ::NMAKE Options: http://msdn.microsoft.com/en-us/library/afyyse50%28v=vs.120%29.aspx
 ::NMAKE platform (32/64) used, depends on which Developer command prompt was opened
 
+echo cleaning ...
 CALL nmake /F win32.mak clean
 
+
+echo building ...
+
 IF %BUILDPLATFORM% EQU x64 (
-	CALL nmake /A /F win32.mak CPU=AMD64
+	CALL nmake /A /F win32.mak CPU=AMD64 >%ROOTDIR%\build_libpg-%POSTGRESQL_VERSION%.log 2>&1
 ) ELSE (
-	CALL nmake /A /F win32.mak
+	CALL nmake /A /F win32.mak >%ROOTDIR%\build_libpg-%POSTGRESQL_VERSION%.log 2>&1
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
@@ -55,9 +58,12 @@ IF ERRORLEVEL 1 GOTO ERROR
 ::NMAKE : fatal error U1077: '"C:\Program Files (x86)\Windows Kits\8.0\bin\x86\mt.EXE"' : return code '0x1f' 
 ::However libpq.lib was successfully built.
 
+GOTO DONE
 
 :ERROR
 ECHO ===== ERROR building libpq
+
+:DONE
 
 cd %ROOTDIR%
 EXIT /b %ERRORLEVEL%

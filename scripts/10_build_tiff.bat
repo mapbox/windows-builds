@@ -3,7 +3,6 @@ echo ------ tiff -----
 
 powershell scripts\deletedir -dir2del "%ROOTDIR%\tiff"
 IF ERRORLEVEL 1 GOTO ERROR
-
 PAUSE
 
 CALL bsdtar xvfz %PKGDIR%\tiff-%TIFF_VERSION%.tar.gz
@@ -33,15 +32,20 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 ::http://www.remotesensing.org/libtiff/build.html#PC
 
+echo cleaning ....
 CALL nmake /F Makefile.vc clean
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL nmake /A /F Makefile.vc
+echo building ....
+CALL nmake /A /F Makefile.vc >%ROOTDIR%\build_tiff-%TIFF_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
-
+GOTO DONE
 
 :ERROR
+ECHO =========== ERROR TIFF
+
+:DONE
 
 cd %ROOTDIR%
 EXIT /b %ERRORLEVEL%

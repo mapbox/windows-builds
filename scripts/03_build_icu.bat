@@ -28,11 +28,11 @@ echo http://devwiki.neosys.com/index.php/Building_Boost_32/64_on_Windows
 pause
 
 ECHO building ... DEBUG
-CALL msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Debug" /p:Platform=%BUILDPLATFORM%
+CALL msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Debug" /p:Platform=%BUILDPLATFORM% >%ROOTDIR%\build_icu-%ICU_VERSION%-debug.log
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building ... RELEASE
-CALL msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+CALL msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM% >%ROOTDIR%\build_icu-%ICU_VERSION%-release.log
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
