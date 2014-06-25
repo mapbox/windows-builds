@@ -1,6 +1,12 @@
 echo off
 echo ------ protobuf -----
 
+
+powershell scripts\deletedir -dir2del "%ROOTDIR%\protobuf"
+IF ERRORLEVEL 1 GOTO ERROR
+PAUSE
+
+
 CALL unzip %PKGDIR%\protobuf-%PROTOBUF_VERSION%.zip
 IF ERRORLEVEL 1 GOTO ERROR
 
@@ -17,15 +23,18 @@ cd protobuf\vsprojects
 :: fails linking so I used binary from google code
 ::msbuild protoc.vcxproj /p:Configuration="Release" /p:Platform=Win32
 
-ECHO upgrading solution
+ECHO upgrading solution ...
 CALL devenv.exe /upgrade protobuf.sln
 IF ERRORLEVEL 1 GOTO ERROR
+ECHO solution upgraded
+
 
 echo.
 echo APPLY PATCH to src/google/protobuf/stubs/common.h
+echo add #include ^<algorithm^> as the third include
 echo https://code.google.com/p/protobuf/issues/detail?id=531
 echo.
-echo when building 64 bit add platform to solution
+echo when building 64 bit: add platform to solution
 pause
 
 ECHO extracting includes ...

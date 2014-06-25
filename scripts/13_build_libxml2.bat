@@ -35,8 +35,11 @@ ECHO APPLY PATCH MANUALLY!
 ::IF ERRORLEVEL 1 GOTO ERROR
 PAUSE
 
+ECHO cleaning ....
 CALL nmake /F Makefile.msvc clean
 IF ERRORLEVEL 1 GOTO ERROR
+
+ECHO building ...
 CALL nmake /A /F Makefile.msvc
 IF ERRORLEVEL 1 GOTO ERROR
 

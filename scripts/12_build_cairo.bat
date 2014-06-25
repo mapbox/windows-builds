@@ -6,6 +6,7 @@ powershell scripts\deletedir -dir2del "%ROOTDIR%\cairo"
 IF ERRORLEVEL 1 GOTO ERROR
 pause
 
+
 echo.
 echo See http://cairographics.org/download/ Build in Visual Studio
 echo.
@@ -24,6 +25,7 @@ echo 4.2 add freetype lib path and freetype.lib to CAIRO_LIBS variable
 echo.
 echo ATTENTION
 echo env var INCLUDE will be reset!!!
+echo WinSDK include paths have to be AFTER(!) freetype include paths
 echo.
 pause
 

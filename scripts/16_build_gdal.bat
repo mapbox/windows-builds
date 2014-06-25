@@ -1,6 +1,11 @@
 @echo off
 echo ------ gdal -----
 
+powershell scripts\deletedir -dir2del "%ROOTDIR%\gdal"
+IF ERRORLEVEL 1 GOTO ERROR
+PAUSE
+
+
 CALL bsdtar xvfz %PKGDIR%\gdal-%GDAL_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
@@ -53,14 +58,18 @@ cd gdal/gdal
 :: !!! BUILD FIRST and then do 'devinstall'!!!
 
 IF %BUILDPLATFORM% EQU x64 (
+	ECHO cleaning .....
 	CALL nmake /F makefile.vc clean WIN64=YES
 	IF ERRORLEVEL 1 GOTO ERROR
+	ECHO building ....
 	CALL nmake /A /F makefile.vc MSVC_VER=1800 WIN64=YES
 	IF ERRORLEVEL 1 GOTO ERROR
 	:: nmake /F makefile.vc devinstall WIN64=YES MSVC_VER=1800 GDAL_HOME=C:\dev2\mapnik-dependencies\64_gdal
 ) ELSE (
+	ECHO cleaning .....
 	CALL nmake /F makefile.vc clean
 	IF ERRORLEVEL 1 GOTO ERROR
+	ECHO building ....
 	CALL nmake /A /F makefile.vc MSVC_VER=1800
 	IF ERRORLEVEL 1 GOTO ERROR
 	:: nmake /F makefile.vc devinstall MSVC_VER=1800 GDAL_HOME=C:\dev2\mapnik-dependencies\32_gdal
