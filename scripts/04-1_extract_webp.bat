@@ -1,20 +1,24 @@
 @echo off
 echo ------- WEBP --------
 
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\webp"
+cd %PKGDIR%
+CALL %~dp0\download https://webp.googlecode.com/files/libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip
 IF ERRORLEVEL 1 GOTO ERROR
 
-pause
+IF EXIST webp (
+  echo found extracted sources
+)
 
-
-
-unzip %PKGDIR%\libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip
-IF ERRORLEVEL 1 GOTO ERROR
-echo WEBP unzipped
-
-rename libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM% webp
-IF ERRORLEVEL 1 GOTO ERROR
+if NOT EXIST webp (
+  echo extracting
+  unzip %PKGDIR%\libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip
+  IF ERRORLEVEL 1 GOTO ERROR
+  rename libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM% webp
+  IF ERRORLEVEL 1 GOTO ERROR
+)
 
 :: nothing more needed as we use the binaries
 
