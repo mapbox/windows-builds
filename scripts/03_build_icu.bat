@@ -19,6 +19,7 @@ if NOT EXIST icu (
 )
 
 cd icu
+IF ERRORLEVEL 1 GOTO ERROR
 
 echo.
 ECHO "...... upgrading solution ........."

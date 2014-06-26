@@ -2,29 +2,37 @@
 
 echo ----- freetype-----
 
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\freetype"
+cd %PKGDIR%
+CALL %~dp0\download freetype-%FREETYPE_VERSION%.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR
 
-pause
+if EXIST freetype (
+  echo found extracted sources
+)
 
-CALL bsdtar xfz "%PKGDIR%\freetype-%FREETYPE_VERSION%.tar.gz"
-IF ERRORLEVEL 1 GOTO ERROR
-
-CALL rename freetype-%FREETYPE_VERSION% freetype
-IF ERRORLEVEL 1 GOTO ERROR
+if NOT EXIST icu (
+  echo extracting
+  CALL bsdtar xfz freetype-%FREETYPE_VERSION%.tar.bz2
+  rename freetype-%FREETYPE_VERSION% freetype
+  IF ERRORLEVEL 1 GOTO ERROR
+)
 
 cd freetype
+IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO upgrading solution ....
 CALL devenv /upgrade builds\windows\vc2010\freetype.sln
 IF ERRORLEVEL 1 GOTO ERROR
 echo ... solution upgraded
 
-echo.
-ECHO "IF building x64 add platform to solution manually!"
-ECHO.
-PAUSE
+if "%TARGET_ARCH%"=="64" (
+  echo.
+  ECHO "IF building x64 add platform to solution manually!"
+  ECHO.
+)
 
 ECHO building ...
 CALL msbuild builds\windows\vc2010\freetype.sln /t:rebuild /p:Configuration=Release /p:Platform=%BUILDPLATFORM% >%ROOTDIR%\build_freetype-%FREETYPE_VERSION%.log 2>&1
