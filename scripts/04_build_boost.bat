@@ -77,7 +77,13 @@ CALL b2 toolset=msvc-12.0 --clean
 
 
 ::b2 -a variant=release --toolset=msvc-12.0 architecture=x86 address-model=64 --with-python stage --stagedir=stage64 link=shared,static --build-type=complete -j2 -a
+
+::just regex
 ::b2 -a --build-type=minimal --with-regex  address-model=32 stage --stagedir=stage32-minimal
+::b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --build-type=complete --with-regex  address-model=32 stage --stagedir=stage32-regex-complete -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu -sICU_LINK=%ROOTDIR%\icu\lib\icuuc.lib release link=static,shared
+::!!!!! THIS SEEMS TO BE THE(!) ONE THAT RULES THEM ALL!!!
+::b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --build-type=complete --with-regex  address-model=32 stage --stagedir=stage32-regex-complete -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu release link=static,shared
+
 ::works:
 ::b2 -j2 -a --build-type=complete --with-regex address-model=32 stage --stagedir=stage32-complete
 ::b2 -j2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% address-model=%BOOSTADDRESSMODEL% --with-thread --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=L%ROOTDIR%\\icu\\lib\\icuuc.lib
@@ -88,12 +94,17 @@ CALL b2 toolset=msvc-12.0 --clean
 ::does not work
 ::b2 -a --build-type=complete release link=static --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu address-model=32
 
-32 BIT
-CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static,shared install --build-type=complete >%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
+::this seems to be necessary to get all types regex libs
+::even when -sICU_PATH is specified
+SET INCLUDE=%ROOTDIR%\icu\include;%INCLUDE%
 
+:: SEEMS THAT ONLY SINGLE BACKSLASH IS VALID FOR -sICU_PATH
+:: NO DOUBLE BACKSLASH. STILL HAVE TO VERIY
+32 BIT
+CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu -sICU_LINK=%ROOTDIR%\icu\lib\icuuc.lib release link=static,shared install --build-type=complete >%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
 
 64BIT
-CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib64\\icuuc.lib release link=static,shared install --build-type=complete >%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
+CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu -sICU_LINK=%ROOTDIR%\icu\lib64\icuuc.lib release link=static,shared install --build-type=complete >%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::if you need python
