@@ -2,6 +2,9 @@
 
 @ rem or 64
 set TARGET_ARCH=32
+SET BUILDPLATFORM=Win32
+SET BOOSTADDRESSMODEL=32
+SET WEBP_PLATFORM=x86
 
 SET current_script_dir=%~dp0
 SET ROOTDIR=%current_script_dir%

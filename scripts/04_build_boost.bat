@@ -9,6 +9,8 @@ if NOT EXIST C:/Python27/python.exe ( echo "Missing C:/Python27/python.exe" && G
 
 cd %PKGDIR%
 CALL %~dp0\download boost_1_%BOOST_VERSION%_0.tar.bz2
+IF ERRORLEVEL 1 GOTO ERROR
+
 ::set to -vc110 if using MSVC 2012
 SET BOOST_PREFIX=boost-%BOOST_VERSION%-vc120
 
