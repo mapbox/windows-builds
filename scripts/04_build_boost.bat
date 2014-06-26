@@ -39,10 +39,11 @@ if "%TARGET_ARCH%"=="64" (
 
 echo using python : 2.7 : C:/Python27/python.exe ; >> user-config.jam
 
-echo calling bootstrap bat
-CALL bootstrap.bat
-IF ERRORLEVEL 1 GOTO ERROR
-
+if NOT EXIST b2.exe (
+  echo calling bootstrap bat
+  CALL bootstrap.bat
+  IF ERRORLEVEL 1 GOTO ERROR
+)
 
 ::http://dominoc925.blogspot.co.at/2013/04/how-i-build-boost-for-64-bit-windows.html
 
@@ -68,8 +69,12 @@ IF ERRORLEVEL 1 GOTO ERROR
 echo bjamming ....
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL b2 toolset=msvc-12.0 --clean
-::CALL bjam toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
+
+:: HINT: problems with icu configure check?
+:: cat bin.v2/config.log to see problems
+
+::CALL b2 toolset=msvc-12.0 --clean
+CALL b2 -d1 toolset=msvc-12.0 --reconfigure -q address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-python --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
 ::icu: lib64\
 :: -a rebuild everything
 :: -q stop at first error
@@ -102,11 +107,13 @@ SET INCLUDE=%ROOTDIR%\icu\include;%INCLUDE%
 
 :: SEEMS THAT ONLY SINGLE BACKSLASH IS VALID FOR -sICU_PATH
 :: NO DOUBLE BACKSLASH. STILL HAVE TO VERIY
-32 BIT
-CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu -sICU_LINK=%ROOTDIR%\icu\lib\icuuc.lib release link=static,shared install --build-type=complete >%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
+echo building python %BOOSTADDRESSMODEL%
+CALL b2 -d1 -q toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=shared
+::>%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
 
-64BIT
-CALL b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu -sICU_LINK=%ROOTDIR%\icu\lib64\icuuc.lib release link=static,shared install --build-type=complete >%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
+::echo building python 64 BIT
+::CALL b2 -d1 -q toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=shared
+::>%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::if you need python
