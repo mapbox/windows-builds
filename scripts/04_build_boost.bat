@@ -1,34 +1,41 @@
 @echo off
 echo ----------- boost ---------
 
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
+:: ensure python is around
+if NOT EXIST C:/Python27/python.exe ( echo "Missing C:/Python27/python.exe" && GOTO DONE )
+
+cd %PKGDIR%
+CALL %~dp0\download boost_1_%BOOST_VERSION%_0.tar.bz2
 ::set to -vc110 if using MSVC 2012
 SET BOOST_PREFIX=boost-%BOOST_VERSION%-vc120
 
-
-powershell scripts\deletedir -dir2del "%ROOTDIR%\%BOOST_PREFIX%"
+IF EXIST "%ROOTDIR%\%BOOST_PREFIX%" ( rd \s \q "%ROOTDIR%\%BOOST_PREFIX%" )
 IF ERRORLEVEL 1 GOTO ERROR
-PAUSE
 
+if EXIST boost_1_%BOOST_VERSION%_0 (
+  echo found extracted sources
+)
 
-echo extracting
-CALL bsdtar xzf %PKGDIR%/boost_1_%BOOST_VERSION%_0.tar.gz
-IF ERRORLEVEL 1 GOTO ERROR
+if NOT EXIST boost_1_%BOOST_VERSION%_0 (
+  echo extracting
+  CALL bsdtar xzf %PKGDIR%/boost_1_%BOOST_VERSION%_0.tar.bz2
+  IF ERRORLEVEL 1 GOTO ERROR
+)
 
 cd boost_1_%BOOST_VERSION%_0
 
-echo !!!!!!!!!
-echo USE x86 COMMANDPROMPT!!!!!!!!
-::http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html#v2.reference.tools.compiler.msvc.64
-:: If you provide a path to the compiler explicitly, provide the path to the 32-bit compiler. If you try to specify the path to any of 64-bit compilers, configuration will not work.
-echo !!!!!!!!
-echo.
-echo adjust tools/build/v2/user-config.jam to use python:
-echo using python : 2.7 : C:/Python27/python.exe ;
-echo or 64bit Python
-echo.
-pause
+if "%TARGET_ARCH%"=="64" (
+  echo !!!!!!!!!
+  echo USE x86 COMMANDPROMPT!!!!!!!!
+  ::http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html#v2.reference.tools.compiler.msvc.64
+  :: If you provide a path to the compiler explicitly, provide the path to the 32-bit compiler. If you try to specify the path to any of 64-bit compilers, configuration will not work.
+  echo !!!!!!!!
+)
 
+echo using python : 2.7 : C:/Python27/python.exe ; >> user-config.jam
 
 echo calling bootstrap bat
 CALL bootstrap.bat
@@ -101,6 +108,5 @@ GOTO DONE
 echo =========== ERROR boost =========
 
 :DONE
-
 cd %ROOTDIR%
 EXIT /b %ERRORLEVEL%
