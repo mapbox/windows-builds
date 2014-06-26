@@ -8,7 +8,7 @@ install:
   - cinst curl
   - cinst 7zip
   - cinst cmake
-  - cinst python2
+  #- cinst python2
   - settings.bat
   - scripts\02_download_packages.bat
 
