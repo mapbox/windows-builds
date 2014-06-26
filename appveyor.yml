@@ -1,0 +1,21 @@
+
+platform:
+  - x86
+
+install:
+  - cinst wget
+  - cinst msysgit
+  - cinst curl
+  - cinst 7zip
+  - cinst cmake
+  - cinst python2
+  - settings.bat
+  - scripts\02_download_packages.bat
+
+build: OFF
+
+test: OFF
+
+test_script: OFF
+
+deploy: OFF
