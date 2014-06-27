@@ -13,7 +13,7 @@ if EXIST jpeg (
   echo found extracted sources
 )
 
-if NOT EXIST icu (
+if NOT EXIST jpeg (
   echo extracting
   CALL bsdtar xfz jpegsrc.v%JPEG_VERSION%.tar.gz
   rename jpegsrc.v%JPEG_VERSION% jpeg
