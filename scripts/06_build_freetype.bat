@@ -23,11 +23,6 @@ if NOT EXIST freetype (
 cd freetype
 IF ERRORLEVEL 1 GOTO ERROR
 
-ECHO upgrading solution ....
-::CALL devenv /upgrade builds\windows\vc2010\freetype.sln
-IF ERRORLEVEL 1 GOTO ERROR
-echo ... solution upgraded
-
 if "%TARGET_ARCH%"=="64" (
   echo.
   ECHO "IF building x64 add platform to solution manually!"
@@ -35,7 +30,7 @@ if "%TARGET_ARCH%"=="64" (
 )
 
 ECHO building ...
-CALL msbuild builds\windows\vc2010\freetype.sln /t:rebuild /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
+CALL msbuild builds\windows\vc2010\freetype.sln /t:rebuild /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
 :: >%ROOTDIR%\build_freetype-%FREETYPE_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
