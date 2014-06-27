@@ -8,14 +8,6 @@ echo.
 echo Install Python 32bit or 64bit, as needed
 echo.
 
-::pause
-
-cd %PATCHES%
-CALL ..\scripts\download https://raw.github.com/mapnik/mapnik-packaging/master/windows/cairo-win32.patch
-IF ERRORLEVEL 1 GOTO ERROR
-CALL ..\scripts\download https://raw.github.com/mapnik/mapnik-packaging/master/windows/libxml.patch
-IF ERRORLEVEL 1 GOTO ERROR
-
 cd %PKGDIR%
 CALL ..\scripts\download boost_1_%BOOST_VERSION%_0.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR

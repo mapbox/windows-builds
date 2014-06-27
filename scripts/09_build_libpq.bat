@@ -1,12 +1,27 @@
 @echo off
 echo ------ libpq -----
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\postgresql"
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
+
+cd %PKGDIR%
+CALL %~dp0\download postgresql-%POSTGRESQL_VERSION%.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR
+
+if EXIST postgresql (
+  echo found extracted sources
+)
+
+if NOT EXIST postgresql (
+  echo extracting
+  CALL bsdtar xfz postgresql-%POSTGRESQL_VERSION%.tar.bz2
+  rename postgresql-%POSTGRESQL_VERSION% postgresql
+  IF ERRORLEVEL 1 GOTO ERROR
+)
+
 
 echo If you receive an error about not finding Win32.mak, you may need to do something like:
 echo "set INCLUDE=%include%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include"
-echo.
 echo.
 
 echo Error:
@@ -19,22 +34,16 @@ echo "apply patch http://postgresql.1045698.n5.nabble.com/Can-not-compile-libpq-
 echo "to src/interfaces/libpq/win32.mak"
 echo.
 
-PAUSE
-
-
 SET INCLUDE=%include%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include
-
 
 ::http://ftp.postgresql.org/pub/source/
 ::http://www.postgresql.org/docs/9.2/static/install-windows.html
 
-CALL bsdtar xvfz "%PKGDIR%\postgresql-%POSTGRESQL_VERSION%.tar.gz"
-IF ERRORLEVEL 1 GOTO ERROR
-
-rename postgresql-%POSTGRESQL_VERSION% postgresql
-IF ERRORLEVEL 1 GOTO ERROR
-
 cd postgresql\src
+IF ERRORLEVEL 1 GOTO ERROR
+
+patch -p0 < %PATCHES%/libpq.diff
+:: note: intentially not trapping error
 
 :: !! http://www.postgresql.org/docs/9.0/static/install-windows-libpq.html
 ::NMAKE Options: http://msdn.microsoft.com/en-us/library/afyyse50%28v=vs.120%29.aspx
@@ -43,15 +52,16 @@ cd postgresql\src
 echo cleaning ...
 CALL nmake /F win32.mak clean
 
-
 echo building ...
 
 IF %BUILDPLATFORM% EQU x64 (
-	CALL nmake /A /F win32.mak CPU=AMD64 >%ROOTDIR%\build_libpg-%POSTGRESQL_VERSION%.log 2>&1
+	CALL nmake /A /F win32.mak CPU=AMD64
 ) ELSE (
-	CALL nmake /A /F win32.mak >%ROOTDIR%\build_libpg-%POSTGRESQL_VERSION%.log 2>&1
+	CALL nmake /A /F win32.mak    
 )
 IF ERRORLEVEL 1 GOTO ERROR
+
+::>%ROOTDIR%\build_libpg-%POSTGRESQL_VERSION%.log 2>&1
 
 ::Note: The following errors occurred uring this process:
 ::.\Release\libpq.dll.manifest : general error c1010070: Failed to load and parse the manifest. The system cannot find the file specified.

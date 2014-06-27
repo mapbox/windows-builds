@@ -1,0 +1,44 @@
+--- interfaces\libpq\win32.mak	2014-06-26 17:27:22.593033200 -0700
++++ interfaces\libpq\win32.mak	2014-06-26 17:28:55.202408200 -0700
+@@ -115,6 +115,7 @@
+ 	-@erase "$(INTDIR)\open.obj"
+ 	-@erase "$(INTDIR)\win32error.obj"
+ 	-@erase "$(INTDIR)\win32setlocale.obj"
++    -@erase "$(INTDIR)\fe_memutils.obj" 
+ 	-@erase "$(OUTDIR)\$(OUTFILENAME).lib"
+ 	-@erase "$(OUTDIR)\$(OUTFILENAME)dll.lib"
+ 	-@erase "$(OUTDIR)\libpq.res"
+@@ -161,7 +162,8 @@
+ 	"$(INTDIR)\open.obj" \
+ 	"$(INTDIR)\win32error.obj" \
+ 	"$(INTDIR)\win32setlocale.obj" \
+-	"$(INTDIR)\pthread-win32.obj"
++	"$(INTDIR)\pthread-win32.obj" \
++	"$(INTDIR)\fe_memutils.obj" 
+ 
+ 
+ config: ..\..\include\pg_config.h ..\..\include\pg_config_ext.h pg_config_paths.h  ..\..\include\pg_config_os.h
+@@ -235,9 +237,11 @@
+ # Inclusion of manifest
+ !IF "$(_NMAKE_VER)" != "6.00.8168.0" && "$(_NMAKE_VER)" != "7.00.9466"
+ !IF "$(_NMAKE_VER)" != "6.00.9782.0" && "$(_NMAKE_VER)" != "7.10.3077"
++!IF EXIST ($(OUTDIR)\$(OUTFILENAME).dll.manifest)
+         mt -manifest $(OUTDIR)\$(OUTFILENAME).dll.manifest -outputresource:$(OUTDIR)\$(OUTFILENAME).dll;2
+ !ENDIF
+ !ENDIF
++!ENDIF
+ 
+ "$(INTDIR)\getaddrinfo.obj" : ..\..\port\getaddrinfo.c
+ 	$(CPP) @<<
+@@ -345,6 +349,11 @@
+ 	$(CPP_PROJ) /I"." ..\..\port\win32setlocale.c
+ <<
+ 
++"$(INTDIR)\fe_memutils.obj" : ..\..\common\fe_memutils.c 
++        $(CPP) @<< 
++        $(CPP_PROJ) /I"." ..\..\common\fe_memutils.c 
++<< 
++
+ .c{$(CPP_OBJS)}.obj:
+ 	$(CPP) $(CPP_PROJ) $<
+ 
