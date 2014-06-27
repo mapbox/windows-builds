@@ -1,32 +1,26 @@
 @echo off
 echo ------ zlib -----
 
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\zlib-1.2.5"
+cd %PKGDIR%
+CALL %~dp0\download zlib-%ZLIB_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\zlib"
-IF ERRORLEVEL 1 GOTO ERROR
+if EXIST zlib-1.2.5 (
+  echo found extracted sources
+)
 
-pause
-
-
-
-CALL bsdtar xvfz %PKGDIR%\zlib-%ZLIB_VERSION%.tar.gz
-IF ERRORLEVEL 1 GOTO ERROR
-
-::libpng build scripts look for a folder called zlib-1.2.5
-rename zlib-%ZLIB_VERSION% zlib-1.2.5
-IF ERRORLEVEL 1 GOTO ERROR
-
-
-CALL bsdtar xvfz %PKGDIR%\zlib-%ZLIB_VERSION%.tar.gz
-IF ERRORLEVEL 1 GOTO ERROR
-
-::other build scripts look for a folder called zlib
-rename zlib-%ZLIB_VERSION% zlib
-IF ERRORLEVEL 1 GOTO ERROR
-
+if NOT EXIST zlib-1.2.5 (
+  echo extracting
+  CALL bsdtar xfz zlib-%ZLIB_VERSION%.tar.gz
+  ::libpng build scripts look for a folder called zlib-1.2.5
+  rename zlib-%ZLIB_VERSION% zlib-1.2.5
+  IF ERRORLEVEL 1 GOTO ERROR
+  ::other build scripts look for a folder called zlib
+  rename zlib-%ZLIB_VERSION% zlib
+)
 
 echo.
 echo zlib will be built with/by libpng below
