@@ -28,8 +28,8 @@ install:
   - scripts\05_build_jpeg.bat
   - scripts\06_build_freetype.bat
   - scripts\07_build_zlib.bat
-  - scripts\08_build_libpq.bat
-
+  - scripts\08_build_libpng.bat
+  - scripts\09_build_libpq.bat
 
 build: OFF
 
