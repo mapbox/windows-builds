@@ -9,6 +9,7 @@ install:
   - cinst 7zip
   #- cinst cmake
   #- cinst python2
+  #- cinst python2-x86_32
   #- cinst GnuWin
   - mkdir tmp-bin
   - cd tmp-bin
