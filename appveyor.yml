@@ -14,6 +14,8 @@ install:
   - cd tmp-bin
   - wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
   - 7z e -y libarchive-2.4.12-1-bin.zip
+  - wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
+  - 7z e -y libarchive-2.4.12-1-dep.zip
   - set PATH=%CD%;%PATH%
   - cd ..
   - settings.bat
