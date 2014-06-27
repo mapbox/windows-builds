@@ -9,6 +9,7 @@ install:
   - cinst 7zip
   - cinst cmake
   #- cinst python2
+  - cinst GnuWin
   - settings.bat
   - scripts\02_download_packages.bat
   - scripts\03_build_icu.bat
