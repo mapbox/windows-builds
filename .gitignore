@@ -1,8 +1,3 @@
-# patches
-cairo-win32.patch
-libxml.patch
-vs2013.patch
-
 # directories
 _prerequisites
 boost*
