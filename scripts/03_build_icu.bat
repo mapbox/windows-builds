@@ -21,28 +21,16 @@ if NOT EXIST icu (
 cd icu
 IF ERRORLEVEL 1 GOTO ERROR
 
-echo.
-ECHO "...... upgrading solution ........."
-echo.
-
-CALL devenv.exe /upgrade source\allinone\allinone.sln
+call msbuild source\allinone\allinone.sln /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR
 
-ECHO "solution upgraded"
+::echo building release AND debug
+::echo A boost build bug that tests for existence of *debug* version of ICU even when building release only version of boost. 
+::echo http://devwiki.neosys.com/index.php/Building_Boost_32/64_on_Windows
 
-
-echo building release AND debug
-echo A boost build bug that tests for existence of *debug* version of ICU even when building release only version of boost. 
-echo http://devwiki.neosys.com/index.php/Building_Boost_32/64_on_Windows
-::pause
-
-ECHO building ... DEBUG
-CALL msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Debug" /p:Platform=%BUILDPLATFORM%
-IF ERRORLEVEL 1 GOTO ERROR
-
-ECHO building ... RELEASE
-CALL msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
-IF ERRORLEVEL 1 GOTO ERROR
+::ECHO building ... DEBUG
+::CALL msbuild source\allinone\allinone.sln /t:Rebuild  /p:Configuration="Debug" /p:Platform=%BUILDPLATFORM%
+::IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
 
