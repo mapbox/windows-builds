@@ -16,7 +16,7 @@ if EXIST jpeg (
 if NOT EXIST jpeg (
   echo extracting
   CALL bsdtar xfz jpegsrc.v%JPEG_VERSION%.tar.gz
-  rename jpegsrc.v%JPEG_VERSION% jpeg
+  rename jpeg-%JPEG_VERSION% jpeg
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
