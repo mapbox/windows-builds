@@ -18,10 +18,11 @@ if NOT EXIST zlib-1.2.5 (
   ::libpng build scripts look for a folder called zlib-1.2.5
   rename zlib-%ZLIB_VERSION% zlib-1.2.5
   IF ERRORLEVEL 1 GOTO ERROR
-  ::TODO
-  ::other build scripts look for a folder called zlib
-  ::rename zlib-%ZLIB_VERSION% zlib
 )
+
+::TODO
+::other build scripts look for a folder called zlib
+::rename zlib-%ZLIB_VERSION% zlib
 
 echo.
 echo zlib will be built with/by libpng below
