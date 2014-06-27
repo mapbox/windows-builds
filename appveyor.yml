@@ -9,12 +9,19 @@ install:
   - cinst 7zip
   - cinst cmake
   #- cinst python2
-  - cinst GnuWin
+  #- cinst GnuWin
+  - mkdir bin
+  - cd bin
+  - wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
+  - 7z e -y libarchive-2.4.12-1-bin.zip
+  - set PATH=%CD%;%PATH%
+  - cd ..
   - settings.bat
   - scripts\02_download_packages.bat
   - scripts\03_build_icu.bat
   - scripts\04_build_boost.bat
   - scripts\04-1_extract_webp.bat
+
 
 build: OFF
 
