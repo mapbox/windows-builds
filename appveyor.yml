@@ -7,20 +7,25 @@ install:
   - cinst msysgit
   - cinst curl
   - cinst 7zip
-  - cinst cmake
+  #- cinst cmake
   #- cinst python2
   #- cinst GnuWin
-  - mkdir bin
-  - cd bin
+  - mkdir tmp-bin
+  - cd tmp-bin
   - wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
   - 7z e -y libarchive-2.4.12-1-bin.zip
+  - wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
+  - 7z e -y libarchive-2.4.12-1-dep.zip
   - set PATH=%CD%;%PATH%
   - cd ..
   - settings.bat
-  - scripts\02_download_packages.bat
   - scripts\03_build_icu.bat
   - scripts\04_build_boost.bat
   - scripts\04-1_extract_webp.bat
+  - scripts\05_build_jpeg.bat
+  - scripts\06_build_freetype.bat
+  - scripts\07_build_zlib.bat
+  - scripts\08_build_libpq.bat
 
 
 build: OFF
