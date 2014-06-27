@@ -7,11 +7,11 @@ install:
   - cinst msysgit
   - cinst curl
   - cinst 7zip
-  - cinst cmake
+  #- cinst cmake
   #- cinst python2
   #- cinst GnuWin
-  - mkdir bin
-  - cd bin
+  - mkdir tmp-bin
+  - cd tmp-bin
   - wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
   - 7z e -y libarchive-2.4.12-1-bin.zip
   - set PATH=%CD%;%PATH%
