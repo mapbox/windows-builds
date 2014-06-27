@@ -22,8 +22,8 @@ install:
   - set PATH=%CD%;%PATH%
   - cd ..
   - settings.bat
-  - scripts\03_build_icu.bat
-  - scripts\04_build_boost.bat
+  #- scripts\03_build_icu.bat >%ROOTDIR%\icu.log 2>&1
+  #- scripts\04_build_boost.bat
   - scripts\04-1_extract_webp.bat
   - scripts\05_build_jpeg.bat
   - scripts\06_build_freetype.bat

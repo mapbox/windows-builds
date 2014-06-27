@@ -74,7 +74,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 :: cat bin.v2/config.log to see problems
 
 ::CALL b2 toolset=msvc-12.0 --clean
-CALL b2 -j%NUMBER_OF_PROCESSORS% -d0 toolset=msvc-12.0 --reconfigure -q address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
+CALL b2 -j%NUMBER_OF_PROCESSORS% -d1 toolset=msvc-12.0 --reconfigure -q address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
 ::icu: lib64\
 :: -a rebuild everything
 :: -q stop at first error
