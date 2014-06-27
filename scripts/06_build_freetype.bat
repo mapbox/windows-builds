@@ -13,7 +13,7 @@ if EXIST freetype (
   echo found extracted sources
 )
 
-if NOT EXIST icu (
+if NOT EXIST freetype (
   echo extracting
   CALL bsdtar xfz freetype-%FREETYPE_VERSION%.tar.bz2
   rename freetype-%FREETYPE_VERSION% freetype
@@ -24,7 +24,7 @@ cd freetype
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO upgrading solution ....
-CALL devenv /upgrade builds\windows\vc2010\freetype.sln
+::CALL devenv /upgrade builds\windows\vc2010\freetype.sln
 IF ERRORLEVEL 1 GOTO ERROR
 echo ... solution upgraded
 
@@ -35,7 +35,9 @@ if "%TARGET_ARCH%"=="64" (
 )
 
 ECHO building ...
-CALL msbuild builds\windows\vc2010\freetype.sln /t:rebuild /p:Configuration=Release /p:Platform=%BUILDPLATFORM% >%ROOTDIR%\build_freetype-%FREETYPE_VERSION%.log 2>&1
+CALL msbuild builds\windows\vc2010\freetype.sln /t:rebuild /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
+:: >%ROOTDIR%\build_freetype-%FREETYPE_VERSION%.log 2>&1
+IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (
 	CALL copy /Y builds\win32\vc2010\x64\Release\freetype253.lib freetype.lib

@@ -1,37 +1,40 @@
 @echo off
 echo ------ libpng -----
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\libpng"
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
+
+cd %PKGDIR%
+CALL %~dp0\download libpng-%LIBPNG_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
-pause 
+if EXIST libpng (
+  echo found extracted sources
+)
 
-CALL bsdtar xvfz %PKGDIR%\libpng-%LIBPNG_VERSION%.tar.gz
+if NOT EXIST libpng (
+  echo extracting
+  CALL bsdtar xfz libpng-%LIBPNG_VERSION%.tar.gz
+  rename libpng-%LIBPNG_VERSION% libpng
+  IF ERRORLEVEL 1 GOTO ERROR
+)
+
+cd .\libpng\projects\vstudio\
 IF ERRORLEVEL 1 GOTO ERROR
-
-CALL rename libpng-%LIBPNG_VERSION% libpng
-IF ERRORLEVEL 1 GOTO ERROR
-
-cd %ROOTDIR%\libpng\projects\vstudio\
 
 ECHO upgrading solution ....
 CALL devenv.exe /upgrade vstudio.sln
 IF ERRORLEVEL 1 GOTO ERROR
 
-ECHO .... solution upgraded
-PAUSE
-
-
 ECHO "IF building x64 add platform to solution manually!"
 ECHO.
-PAUSE
-
 
 ECHO building ...
-CALL msbuild vstudio.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM% >%ROOTDIR%\build_libpng-%LIBPNG_VERSION%.log 2>&1
+CALL msbuild vstudio.sln /t:Rebuild  /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+:: >%ROOTDIR%\build_libpng-%LIBPNG_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
-cd %ROOTDIR%\libpng
+cd %PKGDIR%%\libpng
 
 ::copy zlib twice, other projects expect the lib in different locations
 IF %BUILDPLATFORM% EQU x64 (
