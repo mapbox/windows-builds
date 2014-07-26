@@ -1,13 +1,26 @@
 @echo off
 echo ------ tiff -----
 
-CALL bsdtar xvfz %PKGDIR%\tiff-%TIFF_VERSION%.tar.gz
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
+
+cd %PKGDIR%
+CALL %ROOTDIR%\scripts\download tiff-%TIFF_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL rename tiff-%TIFF_VERSION% tiff
-IF ERRORLEVEL 1 GOTO ERROR
+if EXIST libtiff (
+  echo found extracted sources
+)
 
-cd tiff
+if NOT EXIST libtiff (
+  echo extracting
+  CALL bsdtar xfz tiff-%TIFF_VERSION%.tar.gz
+  rename tiff-%TIFF_VERSION% libtiff
+  IF ERRORLEVEL 1 GOTO ERROR
+)
+
+cd libtiff
+IF ERRORLEVEL 1 GOTO ERROR
 
 set P1=s/\^#JPEG_SUPPORT.*/JPEG_SUPPORT = 1/;
 set P2=s/\^#JPEGDIR.*/JPEGDIR = %ROOTDIR:\=\\\%\\\jpeg/;
