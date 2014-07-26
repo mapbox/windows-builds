@@ -4,6 +4,8 @@ echo ------ ICU -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
+:: http://blog.pcitron.fr/2014/03/25/compiling-icu-with-visual-studio-2013/
+
 cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download icu4c-%ICU_VERSION2%-src.tgz
 IF ERRORLEVEL 1 GOTO ERROR
@@ -21,7 +23,7 @@ if NOT EXIST icu (
 cd icu
 IF ERRORLEVEL 1 GOTO ERROR
 
-call msbuild /m source\allinone\allinone.sln /target:i18n;makedata;common /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+call msbuild /m source\allinone\allinone.sln /m /target:Build /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::echo building release AND debug
