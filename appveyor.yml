@@ -7,6 +7,7 @@ install:
   - call "%VS120COMNTOOLS%\..\..\VC\vcvarsall.bat" x86
   - cinst wget msysgit 7zip
   - settings.bat
+  - mkdir logs
   - scripts\build_icu.bat      >logs\icu.log 2>&1
   - scripts\build_boost.bat    >logs\boost.log 2>&1
   - scripts\build_webp.bat     >logs\webp.log 2>&1
