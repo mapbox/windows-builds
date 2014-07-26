@@ -21,9 +21,9 @@ CALL autogen.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (
-	CALL nmake /A /F makefile.vc MSVC_VER=1800 WIN64=YES
+    CALL nmake /A /F makefile.vc MSVC_VER=1800 WIN64=YES
 ) ELSE (
-	CALL nmake /A /F makefile.vc MSVC_VER=1800
+    CALL nmake /A /F makefile.vc MSVC_VER=1800
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
