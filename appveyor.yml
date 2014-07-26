@@ -5,23 +5,19 @@ platform:
 install:
   # make sure nmake is on PATH
   - call "%VS120COMNTOOLS%\..\..\VC\vcvarsall.bat" x86
-  - cinst wget
-  - cinst msysgit
-  #- cinst curl
-  - cinst 7zip
-  #- cinst cmake
-  #- cinst python2
-  #- cinst python2-x86_32
-  #- cinst GnuWin
+  - cinst wget msysgit 7zip
   - settings.bat
-  #- scripts\build_icu.bat >%ROOTDIR%\icu.log 2>&1
-  #- scripts\build_boost.bat
-  - scripts\build_webp.bat
-  - scripts\build_jpeg.bat
-  - scripts\build_freetype.bat
-  - scripts\build_zlib.bat
-  - scripts\build_libpng.bat
-  - scripts\build_libpq.bat
-  - scripts\build_tiff.bat
-  - scripts\build_libxml2.bat
-  - scripts\build_protobuf.bat
+  - scripts\build_icu.bat      >logs\icu.log 2>&1
+  - scripts\build_boost.bat    >logs\boost.log 2>&1
+  - scripts\build_webp.bat     >logs\webp.log 2>&1
+  - scripts\build_jpeg.bat     >logs\jpeg.log 2>&1
+  - scripts\build_freetype.bat >logs\freetype.log 2>&1
+  - scripts\build_zlib.bat     >logs\zlib.log 2>&1
+  - scripts\build_libpng.bat   >logs\png.log 2>&1
+  - scripts\build_libpq.bat    >logs\libpq.log 2>&1
+  - scripts\build_tiff.bat     >logs\tiff.log 2>&1
+  - scripts\build_libxml2.bat  >logs\libxml2.log 2>&1
+  - scripts\build_protobuf.bat >logs\protobuf.log 2>&1
+
+artifacts:
+  - path: logs
