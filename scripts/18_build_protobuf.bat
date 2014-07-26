@@ -25,6 +25,11 @@ if NOT EXIST protobuf (
 cd protobuf
 
 patch -N -p0 < %PATCHES%/protobuf.diff
+
+:: vs express lacks devenv.exe to upgrade
+:: and passing /toolsversion:12.0 /p:PlatformToolset=v120 to msbuild does not
+:: work to upgrade on the fly so we resort to patching to upgrade
+:: note: patch was created by opening protobuf.sln in vs express gui once
 patch -N -p1 < %PATCHES%/protobuf-vcupgrade.diff
 patch -N -p1 < %PATCHES%/protobuf-vcupgrade-all.diff
 
@@ -38,29 +43,6 @@ IF ERRORLEVEL 1 GOTO ERROR
 ECHO extracting includes ...
 CALL extract_includes.bat
 IF ERRORLEVEL 1 GOTO ERROR
-
-::msbuild protobuf.sln /t:rebuild /target:libprotobuf;libprotoc;protoc;libprotobuf-lite /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
-::/t:rebuild /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
-
-:: not working
-::vcupgrade libprotobuf-lite.vcproj
-::vcupgrade libprotobuf.vcproj
-::vcupgrade libprotoc.vcproj
-::vcupgrade protoc.vcproj
-::vcupgrade tests.vcproj
-::vcupgrade test_plugin.vcproj
-::vcupgrade lite-test.vcproj
-::vcupgrade ..\gtest\msvc\gtest.vcproj
-::vcupgrade ..\gtest\msvc\gtest_main.vcproj
-::msbuild libprotobuf-lite.vcxproj /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
-::msbuild libprotobuf.vcxproj /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
-::msbuild libprotoc.vcxproj /p:Configuration="Release" /p:Platform=Win32
-:: fails linking so I used binary from google code
-::msbuild protoc.vcxproj /p:Configuration="Release" /p:Platform=Win32
-
-
-::CALL msbuild protobuf.sln /t:rebuild /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
-
 
 GOTO DONE
 
