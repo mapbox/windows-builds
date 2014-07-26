@@ -16,20 +16,12 @@ install:
   - settings.bat
   #- scripts\build_icu.bat >%ROOTDIR%\icu.log 2>&1
   #- scripts\build_boost.bat
-  #- scripts\build_webp.bat
+  - scripts\build_webp.bat
   - scripts\build_jpeg.bat
-  #- scripts\build_freetype.bat
-  #- scripts\build_zlib.bat
-  #- scripts\build_libpng.bat
-  #- scripts\build_libpq.bat
+  - scripts\build_freetype.bat
+  - scripts\build_zlib.bat
+  - scripts\build_libpng.bat
+  - scripts\build_libpq.bat
   - scripts\build_tiff.bat
   - scripts\build_libxml2.bat
   - scripts\build_protobuf.bat
-
-build: OFF
-
-test: OFF
-
-test_script: OFF
-
-deploy: OFF
