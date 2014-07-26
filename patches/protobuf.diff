@@ -1,0 +1,10 @@
+--- src\google\protobuf\stubs\common.h	Fri Jul 25 19:52:49 2014
++++ src\google\protobuf\stubs\common.h_	Fri Jul 25 19:51:41 2014
+@@ -35,6 +35,7 @@
+ #ifndef GOOGLE_PROTOBUF_COMMON_H__
+ #define GOOGLE_PROTOBUF_COMMON_H__
+ 
++#include <algorithm>
+ #include <assert.h>
+ #include <stdlib.h>
+ #include <cstddef>
