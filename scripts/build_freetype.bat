@@ -30,7 +30,7 @@ if "%TARGET_ARCH%"=="64" (
 )
 
 ECHO building ...
-CALL msbuild builds\windows\vc2010\freetype.sln /t:rebuild /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
+CALL msbuild builds\windows\vc2010\freetype.sln /m /t:rebuild /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
 :: >%ROOTDIR%\build_freetype-%FREETYPE_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
