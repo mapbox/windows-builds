@@ -34,7 +34,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 cd vsprojects
 
-msbuild protobuf.sln /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+msbuild protobuf.sln /target:libprotobuf-lite;libprotobuf;protoc /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO extracting includes ...
