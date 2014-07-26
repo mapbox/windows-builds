@@ -1,7 +1,6 @@
 @echo off
 echo ------- JPEG --------
 
-
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 

@@ -22,14 +22,14 @@ if NOT EXIST tmp-bin\bsdtar.exe (
     echo "setting up bsdtar"
     mkdir tmp-bin
     cd tmp-bin
-    wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
-    7z e -y libarchive-2.4.12-1-bin.zip
-    wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
-    7z e -y libarchive-2.4.12-1-dep.zip
+    CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
+    CALL 7z e -y libarchive-2.4.12-1-bin.zip
+    CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
+    CALL 7z e -y libarchive-2.4.12-1-dep.zip
     cd ..
 )
-set PATH=%CD%\tmp-bin;%PATH%
 
+set PATH=%CD%\tmp-bin;%PATH%
 echo "building within %current_script_dir%"
 set ICU_VERSION=53.1
 set ICU_VERSION2=53_1
