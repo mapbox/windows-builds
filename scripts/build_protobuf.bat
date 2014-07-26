@@ -4,9 +4,6 @@ echo ------ protobuf -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-::[Tutorial] How to compile gnome libxml2 with Visual Studio 2008/2010 scripts step by step.
-::http://www.fabianoricci.org/?p=162
-
 cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download protobuf-%PROTOBUF_VERSION%.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR

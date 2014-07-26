@@ -13,26 +13,18 @@ install:
   #- cinst python2
   #- cinst python2-x86_32
   #- cinst GnuWin
-  - mkdir tmp-bin
-  - cd tmp-bin
-  - wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
-  - 7z e -y libarchive-2.4.12-1-bin.zip
-  - wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
-  - 7z e -y libarchive-2.4.12-1-dep.zip
-  - set PATH=%CD%;%PATH%
-  - cd ..
   - settings.bat
-  #- scripts\03_build_icu.bat >%ROOTDIR%\icu.log 2>&1
-  #- scripts\04_build_boost.bat
-  #- scripts\04-1_extract_webp.bat
-  - scripts\05_build_jpeg.bat
-  #- scripts\06_build_freetype.bat
-  #- scripts\07_build_zlib.bat
-  #- scripts\08_build_libpng.bat
-  #- scripts\09_build_libpq.bat
-  - scripts\10_build_tiff.bat
-  - scripts\13_build_libxml2.bat
-  - scripts\18_build_protobuf.bat
+  #- scripts\build_icu.bat >%ROOTDIR%\icu.log 2>&1
+  #- scripts\build_boost.bat
+  #- scripts\build_webp.bat
+  - scripts\build_jpeg.bat
+  #- scripts\build_freetype.bat
+  #- scripts\build_zlib.bat
+  #- scripts\build_libpng.bat
+  #- scripts\build_libpq.bat
+  - scripts\build_tiff.bat
+  - scripts\build_libxml2.bat
+  - scripts\build_protobuf.bat
 
 build: OFF
 

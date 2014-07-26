@@ -30,56 +30,58 @@ pause
 ::     problems with 64, maybe use precompiled 64bit: http://sourceforge.net/projects/boost/files/boost-binaries/1.55.0-build2/
 ::  FREETYPE: branch for copying for lib depending on platform
 
-CALL scripts\03_build_icu.bat
+CALL scripts\build_icu.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL scripts\04_build_boost.bat
+CALL scripts\build_boost.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL scripts\05_build_jpeg.bat
+CALL scripts\build_jpeg.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL scripts\06_build_freetype.bat
+CALL scripts\build_freetype.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL scripts\07_build_zlib.bat
+CALL scripts\build_zlib.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL scripts\08_build_libpng.bat
+CALL scripts\build_libpng.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL scripts\09_build_libpq.bat
+CALL scripts\build_libpq.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL scripts\10_build_tiff.bat
+CALL scripts\build_tiff.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\11_build_pixman.bat
+CALL scripts\build_proj4.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\12_build_cairo.bat
+CALL scripts\build_libxml2.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\13_build_libxml2.bat
+ALL scripts\build_protobuf.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\14_build_proj4.bat
+::CALL scripts\build_pixman.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\15_install_expat.bat
+::CALL scripts\build_cairo.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\16_build_gdal.bat
+
+::CALL scripts\install_expat.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\17_unzip_sqlite.bat
+::CALL scripts\build_gdal.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\18_build_protobuf.bat
+::CALL scripts\unzip_sqlite.bat
 IF ERRORLEVEL 1 GOTO ERROR
+
 
 ::GEOS not working
-::CALL scripts\19_build_geos.bat
+::CALL scripts\build_geos.bat
 ::IF ERRORLEVEL 1 GOTO ERROR
 
 
