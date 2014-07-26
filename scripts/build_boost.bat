@@ -66,15 +66,13 @@ if NOT EXIST b2.exe (
 ::VS2012/MSBuild 11: toolset=msvc-11.0
 ::VS2013/MSBuild 12: toolset=msvc-12.0
 ::64bit: http://stackoverflow.com/a/2326485
-echo bjamming ....
-IF ERRORLEVEL 1 GOTO ERROR
-
 
 :: HINT: problems with icu configure check?
 :: cat bin.v2/config.log to see problems
 
 ::CALL b2 toolset=msvc-12.0 --clean
-CALL b2 -j%NUMBER_OF_PROCESSORS% -d1 toolset=msvc-12.0 --reconfigure -q address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
+CALL b2 -j%NUMBER_OF_PROCESSORS% -d0 release stage runtime-link=static link=static --build-type=minimal toolset=msvc-12.0 -q address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib
+IF ERRORLEVEL 1 GOTO ERROR
 ::icu: lib64\
 :: -a rebuild everything
 :: -q stop at first error
