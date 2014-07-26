@@ -1,11 +1,6 @@
 @echo off
 echo ------ gdal -----
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\gdal"
-IF ERRORLEVEL 1 GOTO ERROR
-PAUSE
-
-
 CALL bsdtar xvfz %PKGDIR%\gdal-%GDAL_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 

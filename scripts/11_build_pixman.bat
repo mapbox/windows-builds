@@ -1,11 +1,6 @@
 @echo off
 echo ------ pixman -----
 
-
-powershell scripts\deletedir -dir2del "%ROOTDIR%\pixman"
-IF ERRORLEVEL 1 GOTO ERROR
-PAUSE
-
 CALL bsdtar xvfz %PKGDIR%\pixman-%PIXMAN_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 

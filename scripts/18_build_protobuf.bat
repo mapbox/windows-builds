@@ -1,12 +1,6 @@
 echo off
 echo ------ protobuf -----
 
-
-powershell scripts\deletedir -dir2del "%ROOTDIR%\protobuf"
-IF ERRORLEVEL 1 GOTO ERROR
-PAUSE
-
-
 CALL unzip %PKGDIR%\protobuf-%PROTOBUF_VERSION%.zip
 IF ERRORLEVEL 1 GOTO ERROR
 

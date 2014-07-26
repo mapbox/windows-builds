@@ -5,11 +5,6 @@ echo ------ libXML2 -----
 ::[Tutorial] How to compile gnome libxml2 with Visual Studio 2008/2010 scripts step by step.
 ::http://www.fabianoricci.org/?p=162
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\libxml2"
-IF ERRORLEVEL 1 GOTO ERROR
-
-PAUSE
-
 CALL bsdtar xvfz %PKGDIR%\libxml2-%LIBXML2_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 

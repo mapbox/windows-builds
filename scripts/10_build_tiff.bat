@@ -1,10 +1,6 @@
 @echo off
 echo ------ tiff -----
 
-powershell scripts\deletedir -dir2del "%ROOTDIR%\tiff"
-IF ERRORLEVEL 1 GOTO ERROR
-PAUSE
-
 CALL bsdtar xvfz %PKGDIR%\tiff-%TIFF_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 

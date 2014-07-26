@@ -1,12 +1,6 @@
 @echo off
 echo ------ cairo -----
 
-
-powershell scripts\deletedir -dir2del "%ROOTDIR%\cairo"
-IF ERRORLEVEL 1 GOTO ERROR
-pause
-
-
 echo.
 echo See http://cairographics.org/download/ Build in Visual Studio
 echo.

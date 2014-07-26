@@ -1,12 +1,6 @@
 @echo off
 echo ------ proj4 -----
 
-
-powershell scripts\deletedir -dir2del "%ROOTDIR%\proj"
-IF ERRORLEVEL 1 GOTO ERROR
-PAUSE
-
-
 CALL bsdtar xfz %PKGDIR%\proj-%PROJ_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
