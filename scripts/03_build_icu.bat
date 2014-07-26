@@ -5,7 +5,7 @@ echo ------ ICU -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-CALL %~dp0\download icu4c-%ICU_VERSION2%-src.tgz
+CALL %ROOTDIR%\scripts\download icu4c-%ICU_VERSION2%-src.tgz
 IF ERRORLEVEL 1 GOTO ERROR
 
 if EXIST icu (

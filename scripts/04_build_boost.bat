@@ -8,7 +8,7 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 if NOT EXIST C:/Python27/python.exe ( echo "Missing C:/Python27/python.exe" && GOTO DONE )
 
 cd %PKGDIR%
-CALL %~dp0\download boost_1_%BOOST_VERSION%_0.tar.bz2
+CALL %ROOTDIR%\scripts\download boost_1_%BOOST_VERSION%_0.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::set to -vc110 if using MSVC 2012

@@ -5,7 +5,7 @@ echo ------ zlib -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-CALL %~dp0\download zlib-%ZLIB_VERSION%.tar.gz
+CALL %ROOTDIR%\scripts\download zlib-%ZLIB_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
 if EXIST zlib-1.2.5 (

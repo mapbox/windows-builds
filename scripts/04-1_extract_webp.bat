@@ -5,7 +5,7 @@ echo ------- WEBP --------
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-CALL %~dp0\download https://webp.googlecode.com/files/libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip
+CALL %ROOTDIR%\scripts\download https://webp.googlecode.com/files/libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF EXIST webp (

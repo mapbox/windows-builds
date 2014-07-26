@@ -6,7 +6,7 @@ echo ----- freetype-----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-CALL %~dp0\download freetype-%FREETYPE_VERSION%.tar.bz2
+CALL %ROOTDIR%\scripts\download freetype-%FREETYPE_VERSION%.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR
 
 if EXIST freetype (

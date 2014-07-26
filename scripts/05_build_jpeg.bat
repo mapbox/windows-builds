@@ -6,7 +6,7 @@ echo ------- JPEG --------
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-CALL %~dp0\download jpegsrc.v%JPEG_VERSION%.tar.gz
+CALL %ROOTDIR%\scripts\download jpegsrc.v%JPEG_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
 if EXIST jpeg (
