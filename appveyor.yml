@@ -24,14 +24,15 @@ install:
   - settings.bat
   #- scripts\03_build_icu.bat >%ROOTDIR%\icu.log 2>&1
   #- scripts\04_build_boost.bat
-  - scripts\04-1_extract_webp.bat
+  #- scripts\04-1_extract_webp.bat
   - scripts\05_build_jpeg.bat
-  - scripts\06_build_freetype.bat
-  - scripts\07_build_zlib.bat
-  - scripts\08_build_libpng.bat
-  - scripts\09_build_libpq.bat
-  - scripts\10_build_libtiff.bat
+  #- scripts\06_build_freetype.bat
+  #- scripts\07_build_zlib.bat
+  #- scripts\08_build_libpng.bat
+  #- scripts\09_build_libpq.bat
+  - scripts\10_build_tiff.bat
   - scripts\13_build_libxml2.bat
+  - scripts\18_build_protobuf.bat
 
 build: OFF
 
