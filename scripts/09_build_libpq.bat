@@ -42,7 +42,7 @@ SET INCLUDE=%include%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Includ
 cd postgresql\src
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -p0 < %PATCHES%/libpq.diff
+patch -N -p0 < %PATCHES%/libpq.diff
 IF ERRORLEVEL 1 GOTO ERROR
 
 :: !! http://www.postgresql.org/docs/9.0/static/install-windows-libpq.html

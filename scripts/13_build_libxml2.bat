@@ -25,7 +25,6 @@ if NOT EXIST libxml2 (
 cd libxml2\win32
 IF ERRORLEVEL 1 GOTO ERROR
 
-
 IF %BUILDPLATFORM% EQU x64 (
     SET ICU_LIB_DIR=%ROOTDIR%\icu\lib64
 ) ELSE (
@@ -33,14 +32,12 @@ IF %BUILDPLATFORM% EQU x64 (
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
-
-CALL cscript configure.js compiler=msvc prefix=%ROOTDIR%\libxml2 iconv=no icu=yes include=%ROOTDIR%\icu\include lib=%ICU_LIB_DIR%
+CALL cscript configure.js compiler=msvc prefix=%PKGDIR%\libxml2 iconv=no icu=no
 IF ERRORLEVEL 1 GOTO ERROR
 
-ECHO APPLY PATCH MANUALLY!
+::does not appear needed?
 ::CALL patch  -p1 < %ROOTDIR%\libxml.patch
 ::IF ERRORLEVEL 1 GOTO ERROR
-PAUSE
 
 ECHO cleaning ....
 CALL nmake /F Makefile.msvc clean
