@@ -16,8 +16,21 @@ SET BUILD=%ROOTDIR%\build-%TARGET_ARCH%
 IF NOT EXIST %BUILD% MKDIR %BUILD%
 
 set PATH=C:\Program Files\7-Zip;%PATH%
-echo "building within %current_script_dir%"
+set PATH=C:\Program Files (x86)\Git\bin;%PATH%
 
+if NOT EXIST tmp-bin\bsdtar.exe (
+    echo "setting up bsdtar"
+    mkdir tmp-bin
+    cd tmp-bin
+    wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
+    7z e -y libarchive-2.4.12-1-bin.zip
+    wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
+    7z e -y libarchive-2.4.12-1-dep.zip
+    cd ..
+)
+set PATH=%CD%\tmp-bin;%PATH%
+
+echo "building within %current_script_dir%"
 set ICU_VERSION=53.1
 set ICU_VERSION2=53_1
 set BOOST_VERSION=55
