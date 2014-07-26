@@ -8,6 +8,8 @@ install:
   - cinst wget msysgit 7zip
   - settings.bat
   - mkdir logs
+
+build:
   - scripts\build_icu.bat      >logs\icu.log 2>&1
   - scripts\build_boost.bat    >logs\boost.log 2>&1
   - scripts\build_webp.bat     >logs\webp.log 2>&1
@@ -22,3 +24,6 @@ install:
 
 artifacts:
   - path: logs
+
+test: off
+deploy: off
