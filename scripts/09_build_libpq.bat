@@ -43,7 +43,7 @@ cd postgresql\src
 IF ERRORLEVEL 1 GOTO ERROR
 
 patch -p0 < %PATCHES%/libpq.diff
-:: note: intentially not trapping error
+IF ERRORLEVEL 1 GOTO ERROR
 
 :: !! http://www.postgresql.org/docs/9.0/static/install-windows-libpq.html
 ::NMAKE Options: http://msdn.microsoft.com/en-us/library/afyyse50%28v=vs.120%29.aspx
