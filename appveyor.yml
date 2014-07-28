@@ -5,7 +5,7 @@ platform:
 install:
   # make sure nmake is on PATH
   - call "%VS120COMNTOOLS%\..\..\VC\vcvarsall.bat" x86
-  - cinst wget msysgit 7zip
+  - cinst wget msysgit
   - settings.bat
   - scripts\build_icu.bat
   - scripts\build_boost.bat
