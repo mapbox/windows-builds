@@ -60,7 +60,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 CALL scripts\build_libxml2.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-ALL scripts\build_protobuf.bat
+CALL scripts\build_protobuf.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::CALL scripts\build_pixman.bat
@@ -68,7 +68,6 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 ::CALL scripts\build_cairo.bat
 IF ERRORLEVEL 1 GOTO ERROR
-
 
 ::CALL scripts\install_expat.bat
 IF ERRORLEVEL 1 GOTO ERROR
