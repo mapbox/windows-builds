@@ -66,13 +66,14 @@ echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
 ECHO building ...
 set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
 xcopy /i /d /s /q ..\zlib-1.2.5 ..\zlib /Y
-xcopy /i /f /s /q ..\zlib-1.2.5\zlib.lib ..\zlib\zdll.lib /Y
 CALL make -f Makefile.win32 "CFG=release"
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::rem - delete bogus cairo-version.h
 ::rem https://github.com/mapnik/mapnik-packaging/issues/56
-CALL del src\cairo-version.h
+if EXIST src\cairo-version.h (
+  CALL del src\cairo-version.h
+)
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
