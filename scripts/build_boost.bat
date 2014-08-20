@@ -106,7 +106,7 @@ SET INCLUDE=%ROOTDIR%\icu\include;%INCLUDE%
 :: SEEMS THAT ONLY SINGLE BACKSLASH IS VALID FOR -sICU_PATH
 :: NO DOUBLE BACKSLASH. STILL HAVE TO VERIY
 echo building python %BOOSTADDRESSMODEL%
-CALL b2 -j%NUMBER_OF_PROCESSORS% -d1 -q toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=shared
+CALL b2 -j%NUMBER_OF_PROCESSORS% -d1 -q toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=shared stage install
 ::>%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
 
 ::echo building python 64 BIT

@@ -19,7 +19,12 @@ if NOT EXIST pixman (
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
-cd pixman\pixman
+cd pixman
+IF ERRORLEVEL 1 GOTO ERROR
+
+patch -N -p1 < %PATCHES%/pixman.diff || true
+
+cd pixman
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::ECHO cleaning ....
@@ -28,10 +33,14 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 echo ATTENTION using "MMX=off" to compile cairo with 64bit
 echo.
-PAUSE
 ECHO building ...
-::CALL make -f Makefile.win32 "CFG=release"
-CALL make -f Makefile.win32 "CFG=release" "MMX=off"
+set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
+echo %PATH%
+:: upgrade make in order to work around "Interrupt/Exception caught"
+if NOT EXIST .\make.exe (
+    call wget ftp://ftp.equation.com/make/32/make.exe
+)
+CALL .\make.exe -f Makefile.win32 "CFG=release" "MMX=off"
 ::>%ROOTDIR%\build_pixman-%PIXMAN_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
