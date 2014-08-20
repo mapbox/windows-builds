@@ -29,6 +29,16 @@ if NOT EXIST tmp-bin\bsdtar.exe (
     cd ..
 )
 
+:: upgrade make in order to work around "Interrupt/Exception caught"
+if NOT EXIST tmp-bin\make.exe (
+    echo "setting up bsdtar"
+    mkdir tmp-bin
+    cd tmp-bin
+    call wget ftp://ftp.equation.com/make/32/make.exe
+	cd ..
+)
+
+
 set PATH=%CD%\tmp-bin;%PATH%
 echo "building within %current_script_dir%"
 set ICU_VERSION=53.1

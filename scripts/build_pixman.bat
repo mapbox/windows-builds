@@ -36,11 +36,7 @@ echo.
 ECHO building ...
 set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
 echo %PATH%
-:: upgrade make in order to work around "Interrupt/Exception caught"
-if NOT EXIST .\make.exe (
-    call wget ftp://ftp.equation.com/make/32/make.exe
-)
-CALL .\make.exe -f Makefile.win32 "CFG=release" "MMX=off"
+CALL make.exe -f Makefile.win32 "CFG=release" "MMX=off"
 ::>%ROOTDIR%\build_pixman-%PIXMAN_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 

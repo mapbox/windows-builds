@@ -35,7 +35,7 @@ if EXIST cairo (
 
 if NOT EXIST cairo (
   echo extracting
-  CALL 7z x cairo-%CAIRO_VERSION%.tar.xz
+  CALL 7z x -y cairo-%CAIRO_VERSION%.tar.xz
   CALL bsdtar xfz cairo-%CAIRO_VERSION%.tar
   rename cairo-%CAIRO_VERSION% cairo
   IF ERRORLEVEL 1 GOTO ERROR
@@ -44,7 +44,9 @@ if NOT EXIST cairo (
 cd cairo
 IF ERRORLEVEL 1 GOTO ERROR
 
-set INCLUDE=%ROOTDIR%\zlib-1.2.5
+patch -N -p1 < %PATCHES%/cairo.diff || true
+
+set INCLUDE=%PKGDIR%\zlib-1.2.5
 set INCLUDE=%INCLUDE%;%PKGDIR%\libpng
 set INCLUDE=%INCLUDE%;%PKGDIR%\pixman\pixman
 set INCLUDE=%INCLUDE%;%PKGDIR%\cairo\boilerplate
@@ -62,6 +64,9 @@ SET INCLUDE=%INCLUDE%;C:\Program Files (x86)\Windows Kits\8.1\Include\shared
 
 echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
 ECHO building ...
+set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
+xcopy /i /d /s /q ..\zlib-1.2.5 ..\zlib /Y
+xcopy /i /f /s /q ..\zlib-1.2.5\zlib.lib ..\zlib\zdll.lib /Y
 CALL make -f Makefile.win32 "CFG=release"
 IF ERRORLEVEL 1 GOTO ERROR
 
