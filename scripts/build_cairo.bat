@@ -21,31 +21,46 @@ echo ATTENTION
 echo env var INCLUDE will be reset!!!
 echo WinSDK include paths have to be AFTER(!) freetype include paths
 echo.
-pause
+
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
+
+cd %PKGDIR%
+CALL %ROOTDIR%\scripts\download cairo-%CAIRO_VERSION%.tar.xz
+IF ERRORLEVEL 1 GOTO ERROR
+
+if EXIST cairo (
+  echo found extracted sources
+)
+
+if NOT EXIST cairo (
+  echo extracting
+  CALL 7z x cairo-%CAIRO_VERSION%.tar.xz
+  CALL bsdtar xfz cairo-%CAIRO_VERSION%.tar
+  rename cairo-%CAIRO_VERSION% cairo
+  IF ERRORLEVEL 1 GOTO ERROR
+)
 
 cd cairo
+IF ERRORLEVEL 1 GOTO ERROR
 
 set INCLUDE=%ROOTDIR%\zlib-1.2.5
-set INCLUDE=%INCLUDE%;%ROOTDIR%\libpng
-set INCLUDE=%INCLUDE%;%ROOTDIR%\pixman\pixman
-set INCLUDE=%INCLUDE%;%ROOTDIR%\cairo\boilerplate
-set INCLUDE=%INCLUDE%;%ROOTDIR%\cairo
-set INCLUDE=%INCLUDE%;%ROOTDIR%\cairo\src
-set INCLUDE=%INCLUDE%;%ROOTDIR%\freetype\include
+set INCLUDE=%INCLUDE%;%PKGDIR%\libpng
+set INCLUDE=%INCLUDE%;%PKGDIR%\pixman\pixman
+set INCLUDE=%INCLUDE%;%PKGDIR%\cairo\boilerplate
+set INCLUDE=%INCLUDE%;%PKGDIR%\cairo
+set INCLUDE=%INCLUDE%;%PKGDIR%\cairo\src
+set INCLUDE=%INCLUDE%;%PKGDIR%\freetype\include
 SET INCLUDE=%INCLUDE%;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include
 SET INCLUDE=%INCLUDE%;C:\Program Files (x86)\Windows Kits\8.1\Include\um
 SET INCLUDE=%INCLUDE%;C:\Program Files (x86)\Windows Kits\8.1\Include\shared
 
 
-ECHO cleaning ....
-CALL make -f Makefile.win32 "CFG=release" clean
-IF ERRORLEVEL 1 GOTO ERROR
-
+::ECHO cleaning ....
+::CALL make -f Makefile.win32 "CFG=release" clean
+::IF ERRORLEVEL 1 GOTO ERROR
 
 echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
-echo.
-PAUSE
-
 ECHO building ...
 CALL make -f Makefile.win32 "CFG=release"
 IF ERRORLEVEL 1 GOTO ERROR
