@@ -7,10 +7,10 @@ echo ------ MAPNIK -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-if NOT EXIST mapnik (
-    git clone https://github.com/mapnik/mapnik
+if NOT EXIST mapnik-2.3.x (
+    git clone https://github.com/mapnik/mapnik mapnik-2.3.x
 )
-cd mapnik
+cd mapnik-2.3.x
 IF ERRORLEVEL 1 GOTO ERROR
 git fetch
 IF ERRORLEVEL 1 GOTO ERROR
@@ -34,15 +34,14 @@ CALL gyp\gyp.bat mapnik.gyp --depth=. ^
  --no-duplicate-basename-check
 IF ERRORLEVEL 1 GOTO ERROR
 
-ECHO deleting duplicate solution files ...
-DEL *.vcxproj*
-IF ERRORLEVEL 1 GOTO ERROR
-DEL *.sln
-IF ERRORLEVEL 1 GOTO ERROR
+::ECHO deleting duplicate solution files ...
+::DEL *.vcxproj*
+::IF ERRORLEVEL 1 GOTO ERROR
+::DEL *.sln
+::IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building mapnik
-msbuild .\build\mapnik.sln /t:Rebuild /p:Configuration=Release
-:: > mapnik-windows-build.log
+build.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
