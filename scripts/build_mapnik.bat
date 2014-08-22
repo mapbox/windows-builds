@@ -19,10 +19,6 @@ IF ERRORLEVEL 1 GOTO ERROR
 git pull
 IF ERRORLEVEL 1 GOTO ERROR
 
-if NOT EXIST gyp (
-    CALL git clone https://chromium.googlesource.com/external/gyp.git gyp
-)
-
 ECHO building mapnik
 call build.bat
 IF ERRORLEVEL 1 GOTO ERROR
