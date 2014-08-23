@@ -63,21 +63,20 @@ IF ERRORLEVEL 1 GOTO ERROR
 CALL scripts\build_protobuf.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\build_pixman.bat
+CALL scripts\build_pixman.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\build_cairo.bat
+CALL scripts\build_cairo.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-::CALL scripts\install_expat.bat
+CALL scripts\build_sqlite.bat
+IF ERRORLEVEL 1 GOTO ERROR
+
+::CALL scripts\build_expat.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::CALL scripts\build_gdal.bat
 IF ERRORLEVEL 1 GOTO ERROR
-
-::CALL scripts\unzip_sqlite.bat
-IF ERRORLEVEL 1 GOTO ERROR
-
 
 ::GEOS not working
 ::CALL scripts\build_geos.bat

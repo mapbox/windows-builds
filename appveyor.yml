@@ -10,6 +10,7 @@ install:
   #- scripts\build_icu.bat
   #- scripts\build_boost.bat
   #- scripts\build_webp.bat
+  - scripts\build_sqlite.bat
   - scripts\build_jpeg.bat
   - scripts\build_freetype.bat
   - scripts\build_zlib.bat
