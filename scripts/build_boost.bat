@@ -11,12 +11,6 @@ cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download boost_1_%BOOST_VERSION%_0.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR
 
-::set to -vc110 if using MSVC 2012
-SET BOOST_PREFIX=boost-%BOOST_VERSION%-vc120
-
-IF EXIST "%ROOTDIR%\%BOOST_PREFIX%" ( rd \s \q "%ROOTDIR%\%BOOST_PREFIX%" )
-IF ERRORLEVEL 1 GOTO ERROR
-
 if EXIST boost_1_%BOOST_VERSION%_0 (
   echo found extracted sources
 )
@@ -71,42 +65,48 @@ if NOT EXIST b2.exe (
 :: cat bin.v2/config.log to see problems
 
 ::CALL b2 toolset=msvc-12.0 --clean
-CALL b2 -j%NUMBER_OF_PROCESSORS% -d0 release stage runtime-link=static link=static --build-type=minimal toolset=msvc-12.0 -q address-model=%BOOSTADDRESSMODEL% --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib
+CALL b2 -j%NUMBER_OF_PROCESSORS% ^
+  -d0 release stage ^
+  --build-type=minimal toolset=msvc-12.0 -q ^
+  runtime-link=shared link=static ^
+  address-model=%BOOSTADDRESSMODEL% ^
+  --with-thread --with-filesystem  ^
+  --with-date_time --with-system ^
+  --with-program_options --with-regex ^
+  --disable-filesystem2 ^
+  -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib
+  
 IF ERRORLEVEL 1 GOTO ERROR
+
+:: build boost_python now
+:: we do this separately because
+:: we want to dynamically link python
+CALL b2 -j%NUMBER_OF_PROCESSORS% ^
+  -d0 release stage ^
+  --build-type=minimal toolset=msvc-12.0 -q ^
+  runtime-link=shared link=shared ^
+  address-model=%BOOSTADDRESSMODEL% ^
+  --with-python python=2.7
+
+IF ERRORLEVEL 1 GOTO ERROR
+
+
 ::icu: lib64\
 :: -a rebuild everything
 :: -q stop at first error
 :: --reconfigure rerun all configuration checks
 
-
-
-
-::b2 -a variant=release --toolset=msvc-12.0 architecture=x86 address-model=64 --with-python stage --stagedir=stage64 link=shared,static --build-type=complete -j2 -a
-
-::just regex
-::b2 -a --build-type=minimal --with-regex  address-model=32 stage --stagedir=stage32-minimal
-::b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --build-type=complete --with-regex  address-model=32 stage --stagedir=stage32-regex-complete -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu -sICU_LINK=%ROOTDIR%\icu\lib\icuuc.lib release link=static,shared
-::!!!!! THIS SEEMS TO BE THE(!) ONE THAT RULES THEM ALL!!!
-::b2 toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --build-type=complete --with-regex  address-model=32 stage --stagedir=stage32-regex-complete -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu release link=static,shared
-
-::works:
-::b2 -j2 -a --build-type=complete --with-regex address-model=32 stage --stagedir=stage32-complete
-::b2 -j2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% address-model=%BOOSTADDRESSMODEL% --with-thread --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=L%ROOTDIR%\\icu\\lib\\icuuc.lib
-::b2 -j2 -a --build-type=complete install release --toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 --with-thread --with-regex --with-filesystem --with-date_time --with-system --with-program_options --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu
-::ORIGINAL:
-::bjam toolset=msvc --prefix=..\\%BOOST_PREFIX% --with-thread --with-filesystem --with-date_time --with-system --with-program_options --with-regex --with-chrono --disable-filesystem2 -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\\icu -sICU_LINK=%ROOTDIR%\\icu\\lib\\icuuc.lib release link=static install --build-type=complete
-::bjam toolset=msvc --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=static --build-type=complete install
-::does not work
-::b2 -a --build-type=complete release link=static --with-regex -sHAVE_ICU=1 -sICU_PATH=%ROOTDIR%\icu address-model=32
-
 ::this seems to be necessary to get all types regex libs
 ::even when -sICU_PATH is specified
-SET INCLUDE=%ROOTDIR%\icu\include;%INCLUDE%
+::SET INCLUDE=%ROOTDIR%\icu\include;%INCLUDE%
 
 :: SEEMS THAT ONLY SINGLE BACKSLASH IS VALID FOR -sICU_PATH
 :: NO DOUBLE BACKSLASH. STILL HAVE TO VERIY
-echo building python %BOOSTADDRESSMODEL%
-CALL b2 -j%NUMBER_OF_PROCESSORS% -d1 -q toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=shared stage install
+::echo building python %BOOSTADDRESSMODEL%
+::CALL b2 -j%NUMBER_OF_PROCESSORS%  ^
+::  -d1 -q ^
+::  toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL%  ^
+::  --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=shared stage install
 ::>%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
 
 ::echo building python 64 BIT
