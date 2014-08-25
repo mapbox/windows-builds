@@ -1,16 +1,26 @@
 @echo off
 echo ------ sqlite -----
 
-unzip %PKGDIR%\sqlite-amalgamation-%SQLITE_VERSION%.zip
-rename sqlite-amalgamation-%SQLITE_VERSION% sqlite
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
+
+cd %PKGDIR%
+CALL %ROOTDIR%\scripts\download sqlite-autoconf-%SQLITE_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
-cd sqlite
+if EXIST sqlite (
+  echo found extracted sources
+)
 
-ECHO TODO ! VERIFY IF THIS WORKS
-ECHO SEE http://msdn.microsoft.com/en-us/library/ms235627.aspx
-ECHO How to include icu?
-PAUSE
+if NOT EXIST sqlite (
+  echo extracting
+  CALL bsdtar xfz sqlite-autoconf-%SQLITE_VERSION%.tar.gz
+  rename sqlite-autoconf-%SQLITE_VERSION% sqlite
+  IF ERRORLEVEL 1 GOTO ERROR
+)
+
+cd sqlite
+IF ERRORLEVEL 1 GOTO ERROR
 
 ::DLL
 cl sqlite3.c -link -dll -out:sqlite3.dll
