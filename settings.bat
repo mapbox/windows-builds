@@ -43,7 +43,7 @@ set PATH=%CD%\tmp-bin;%PATH%
 echo "building within %current_script_dir%"
 set ICU_VERSION=53.1
 set ICU_VERSION2=53_1
-set BOOST_VERSION=55
+set BOOST_VERSION=56
 set WEBP_VERSION=0.4.0
 set JPEG_VERSION=8d
 set FREETYPE_VERSION=2.5.3
