@@ -1,5 +1,7 @@
 @echo off
 
+set STARTTIME=%TIME%
+
 echo "use this script only from"
 echo     "'VS2013 x64 Native Tools Command Prompt'"
 echo "or"
@@ -39,6 +41,9 @@ IF ERRORLEVEL 1 GOTO ERROR
 CALL scripts\build_jpeg.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
+CALL scripts\build_webp.bat
+IF ERRORLEVEL 1 GOTO ERROR
+
 CALL scripts\build_freetype.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
@@ -72,6 +77,9 @@ IF ERRORLEVEL 1 GOTO ERROR
 CALL scripts\build_sqlite.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
+CALL scripts\build_mapnik.bat
+IF ERRORLEVEL 1 GOTO ERROR
+
 ::CALL scripts\build_expat.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
@@ -87,6 +95,8 @@ GOTO DONE
 
 :ERROR
 echo !!!!!ERROR: ABORTED!!!!!!
+echo Started at %STARTTIME%, finished at %TIME%
 
 :DONE
 echo -- DONE ---
+echo Started at %STARTTIME%, finished at %TIME%
