@@ -39,23 +39,6 @@ if NOT EXIST b2.exe (
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
-::http://dominoc925.blogspot.co.at/2013/04/how-i-build-boost-for-64-bit-windows.html
-
-::patching has_icu_test.cpp
-::http://stackoverflow.com/a/16304738
-
-::I was building boost with the bjam -q option.
-::When I build using the bjam -q option the build stops on the above error and
-::does not build the libraries.
-::I removed the -q and it ignored the above error, as you explained, and
-::everything built fine. 
-
-::http://www.boost.org/boost-build2/doc/html/bbv2/overview/invocation.html
-::http://www.boost.org/doc/libs/1_55_0/more/getting_started/windows.html#or-build-binaries-from-source
-::http://www.boost.org/doc/libs/1_55_0/libs/regex/doc/html/boost_regex/install.html
-::http://devwiki.neosys.com/index.php/Building_Boost_32/64_on_Windows
-
-
 ::VS2010/MSBuild 10: toolset=msvc-10.0 
 ::VS2012/MSBuild 11: toolset=msvc-11.0
 ::VS2013/MSBuild 12: toolset=msvc-12.0
@@ -89,36 +72,6 @@ CALL b2 -j%NUMBER_OF_PROCESSORS% ^
   --with-python python=2.7
 
 IF ERRORLEVEL 1 GOTO ERROR
-
-
-::icu: lib64\
-:: -a rebuild everything
-:: -q stop at first error
-:: --reconfigure rerun all configuration checks
-
-::this seems to be necessary to get all types regex libs
-::even when -sICU_PATH is specified
-::SET INCLUDE=%ROOTDIR%\icu\include;%INCLUDE%
-
-:: SEEMS THAT ONLY SINGLE BACKSLASH IS VALID FOR -sICU_PATH
-:: NO DOUBLE BACKSLASH. STILL HAVE TO VERIY
-::echo building python %BOOSTADDRESSMODEL%
-::CALL b2 -j%NUMBER_OF_PROCESSORS%  ^
-::  -d1 -q ^
-::  toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL%  ^
-::  --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=shared stage install
-::>%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
-
-::echo building python 64 BIT
-::CALL b2 -d1 -q toolset=msvc-12.0 address-model=%BOOSTADDRESSMODEL% -a --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=shared
-::>%ROOTDIR%\build_boost-%BOOST_VERSION%.log 2>&1
-IF ERRORLEVEL 1 GOTO ERROR
-
-::if you need python
-::note for VS2012, use toolset=msvc-11.0 and VS2010 use toolset=msvc-10.0 
-::echo bjamming (python) ....
-::CALL bjam toolset=msvc-12.0 --prefix=..\\%BOOST_PREFIX% --with-python python=2.7 release link=static --build-type=complete install
-::IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
 
