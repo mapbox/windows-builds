@@ -1,0 +1,2078 @@
+diff --git a/examples/elements.vcxproj b/examples/elements.vcxproj
+new file mode 100644
+index 0000000..e87cad8
+--- /dev/null
++++ b/examples/elements.vcxproj
+@@ -0,0 +1,247 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|Win32">
++      <Configuration>Debug</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|Win32">
++      <Configuration>Release</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <SccProjectName />
++    <SccLocalPath />
++    <ProjectGuid>{687BD936-C78B-430C-B852-14FCD29A43A5}</ProjectGuid>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <OutDir>.\..\win32\bin\Release\</OutDir>
++    <IntDir>.\..\win32\tmp\Release-elements\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <OutDir>.\..\win32\bin\Debug\</OutDir>
++    <IntDir>.\..\win32\tmp\Debug-elements\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-elements\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-elements\elements.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Release-elements\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-elements\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Release\elements.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\elements.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Release\elements.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpatMT.lib;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-elements\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-elements\elements.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Release-elements\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-elements\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Release\elements.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\elements.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Release\elements.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpatMT.lib;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-elements\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-elements\elements.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-elements\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-elements\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Debug\elements.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\elements.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\elements.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpatMT.lib;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-elements\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-elements\elements.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-elements\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-elements\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Debug\elements.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\elements.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\elements.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpatMT.lib;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <ClCompile Include="elements.c" />
++  </ItemGroup>
++  <ItemGroup>
++    <ProjectReference Include="..\lib\expat_static.vcxproj">
++      <Project>{2302e6ed-9d99-442a-a072-ad508f7fae36}</Project>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++    </ProjectReference>
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/examples/outline.vcxproj b/examples/outline.vcxproj
+new file mode 100644
+index 0000000..ea6bb18
+--- /dev/null
++++ b/examples/outline.vcxproj
+@@ -0,0 +1,268 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|Win32">
++      <Configuration>Debug</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|Win32">
++      <Configuration>Release</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|Win32">
++      <Configuration>Template</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|x64">
++      <Configuration>Template</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <SccProjectName />
++    <SccLocalPath />
++    <ProjectGuid>{22D4134A-D1B0-47C8-A26D-3674093B3827}</ProjectGuid>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <OutDir>.\..\win32\bin\Debug\</OutDir>
++    <IntDir>.\..\win32\tmp\Debug-outline\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <OutDir>.\..\win32\bin\Release\</OutDir>
++    <IntDir>.\..\win32\tmp\Release-outline\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <MinimalRebuild>true</MinimalRebuild>
++      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-outline\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-outline\outline.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-outline\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-outline\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Debug\outline.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\outline.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\outline.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpat.lib;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-outline\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-outline\outline.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-outline\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-outline\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Debug\outline.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\outline.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\outline.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpat.lib;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-outline\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-outline\outline.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Release-outline\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-outline\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Release\outline.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\outline.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Release\outline.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpat.lib;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-outline\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-outline\outline.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Release-outline\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-outline\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Release\outline.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\outline.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Release\outline.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpat.lib;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <ClCompile Include="outline.c" />
++  </ItemGroup>
++  <ItemGroup>
++    <ProjectReference Include="..\lib\expat.vcxproj">
++      <Project>{e8d10d0f-5a91-4105-824e-4e5d923548d2}</Project>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++    </ProjectReference>
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/expat.sln b/expat.sln
+new file mode 100644
+index 0000000..1ccfa70
+--- /dev/null
++++ b/expat.sln
+@@ -0,0 +1,118 @@
++﻿
++Microsoft Visual Studio Solution File, Format Version 12.00
++# Visual Studio 2013
++VisualStudioVersion = 12.0.30501.0
++MinimumVisualStudioVersion = 10.0.40219.1
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "elements", "examples\elements.vcxproj", "{687BD936-C78B-430C-B852-14FCD29A43A5}"
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat", "lib\expat.vcxproj", "{E8D10D0F-5A91-4105-824E-4E5D923548D2}"
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat_static", "lib\expat_static.vcxproj", "{2302E6ED-9D99-442A-A072-AD508F7FAE36}"
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expatw", "lib\expatw.vcxproj", "{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}"
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expatw_static", "lib\expatw_static.vcxproj", "{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}"
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "outline", "examples\outline.vcxproj", "{22D4134A-D1B0-47C8-A26D-3674093B3827}"
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmlwf", "xmlwf\xmlwf.vcxproj", "{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}"
++EndProject
++Global
++	GlobalSection(SolutionConfigurationPlatforms) = preSolution
++		Debug|Win32 = Debug|Win32
++		Debug|x64 = Debug|x64
++		Release|Win32 = Release|Win32
++		Release|x64 = Release|x64
++		Template|Win32 = Template|Win32
++		Template|x64 = Template|x64
++	EndGlobalSection
++	GlobalSection(ProjectConfigurationPlatforms) = postSolution
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Debug|Win32.ActiveCfg = Debug|Win32
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Debug|Win32.Build.0 = Debug|Win32
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Debug|x64.ActiveCfg = Debug|x64
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Debug|x64.Build.0 = Debug|x64
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Release|Win32.ActiveCfg = Release|Win32
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Release|Win32.Build.0 = Release|Win32
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Release|x64.ActiveCfg = Release|x64
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Release|x64.Build.0 = Release|x64
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Template|Win32.ActiveCfg = Release|Win32
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Template|Win32.Build.0 = Release|Win32
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Template|x64.ActiveCfg = Release|x64
++		{687BD936-C78B-430C-B852-14FCD29A43A5}.Template|x64.Build.0 = Release|x64
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Debug|Win32.ActiveCfg = Debug|Win32
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Debug|Win32.Build.0 = Debug|Win32
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Debug|x64.ActiveCfg = Debug|x64
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Debug|x64.Build.0 = Debug|x64
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Release|Win32.ActiveCfg = Release|Win32
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Release|Win32.Build.0 = Release|Win32
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Release|x64.ActiveCfg = Release|x64
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Release|x64.Build.0 = Release|x64
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Template|Win32.ActiveCfg = Template|Win32
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Template|Win32.Build.0 = Template|Win32
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Template|x64.ActiveCfg = Template|x64
++		{E8D10D0F-5A91-4105-824E-4E5D923548D2}.Template|x64.Build.0 = Template|x64
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Debug|Win32.ActiveCfg = Debug|Win32
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Debug|Win32.Build.0 = Debug|Win32
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Debug|x64.ActiveCfg = Debug|x64
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Debug|x64.Build.0 = Debug|x64
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Release|Win32.ActiveCfg = Release|Win32
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Release|Win32.Build.0 = Release|Win32
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Release|x64.ActiveCfg = Release|x64
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Release|x64.Build.0 = Release|x64
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Template|Win32.ActiveCfg = Template|Win32
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Template|Win32.Build.0 = Template|Win32
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Template|x64.ActiveCfg = Template|x64
++		{2302E6ED-9D99-442A-A072-AD508F7FAE36}.Template|x64.Build.0 = Template|x64
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Debug|Win32.ActiveCfg = Debug|Win32
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Debug|Win32.Build.0 = Debug|Win32
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Debug|x64.ActiveCfg = Debug|x64
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Debug|x64.Build.0 = Debug|x64
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Release|Win32.ActiveCfg = Release|Win32
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Release|Win32.Build.0 = Release|Win32
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Release|x64.ActiveCfg = Release|x64
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Release|x64.Build.0 = Release|x64
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Template|Win32.ActiveCfg = Template|Win32
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Template|Win32.Build.0 = Template|Win32
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Template|x64.ActiveCfg = Template|x64
++		{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}.Template|x64.Build.0 = Template|x64
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Debug|Win32.ActiveCfg = Debug|Win32
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Debug|Win32.Build.0 = Debug|Win32
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Debug|x64.ActiveCfg = Debug|x64
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Debug|x64.Build.0 = Debug|x64
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Release|Win32.ActiveCfg = Release|Win32
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Release|Win32.Build.0 = Release|Win32
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Release|x64.ActiveCfg = Release|x64
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Release|x64.Build.0 = Release|x64
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Template|Win32.ActiveCfg = Template|Win32
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Template|Win32.Build.0 = Template|Win32
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Template|x64.ActiveCfg = Template|x64
++		{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}.Template|x64.Build.0 = Template|x64
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Debug|Win32.ActiveCfg = Debug|Win32
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Debug|Win32.Build.0 = Debug|Win32
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Debug|x64.ActiveCfg = Debug|x64
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Debug|x64.Build.0 = Debug|x64
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Release|Win32.ActiveCfg = Release|Win32
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Release|Win32.Build.0 = Release|Win32
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Release|x64.ActiveCfg = Release|x64
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Release|x64.Build.0 = Release|x64
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Template|Win32.ActiveCfg = Template|Win32
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Template|Win32.Build.0 = Template|Win32
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Template|x64.ActiveCfg = Template|x64
++		{22D4134A-D1B0-47C8-A26D-3674093B3827}.Template|x64.Build.0 = Template|x64
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Debug|Win32.ActiveCfg = Debug|Win32
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Debug|Win32.Build.0 = Debug|Win32
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Debug|x64.ActiveCfg = Debug|x64
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Debug|x64.Build.0 = Debug|x64
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Release|Win32.ActiveCfg = Release|Win32
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Release|Win32.Build.0 = Release|Win32
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Release|x64.ActiveCfg = Release|x64
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Release|x64.Build.0 = Release|x64
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Template|Win32.ActiveCfg = Template|Win32
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Template|Win32.Build.0 = Template|Win32
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Template|x64.ActiveCfg = Template|x64
++		{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}.Template|x64.Build.0 = Template|x64
++	EndGlobalSection
++	GlobalSection(SolutionProperties) = preSolution
++		HideSolutionNode = FALSE
++	EndGlobalSection
++EndGlobal
+diff --git a/lib/expat.vcxproj b/lib/expat.vcxproj
+new file mode 100644
+index 0000000..f259393
+--- /dev/null
++++ b/lib/expat.vcxproj
+@@ -0,0 +1,304 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|Win32">
++      <Configuration>Debug</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|Win32">
++      <Configuration>Release</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|Win32">
++      <Configuration>Template</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|x64">
++      <Configuration>Template</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <SccProjectName />
++    <SccLocalPath />
++    <ProjectGuid>{E8D10D0F-5A91-4105-824E-4E5D923548D2}</ProjectGuid>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <OutDir>.\..\win32\bin\Debug\</OutDir>
++    <IntDir>.\..\win32\tmp\Debug\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <OutDir>.\..\win32\bin\Release\</OutDir>
++    <IntDir>.\..\win32\tmp\Release\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
++      <PreprocessorDefinitions>_DEBUG;COMPILED_FROM_DSP;WIN32;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug\expat.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <Midl>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <TypeLibraryName>.\..\win32\bin\Debug\expat.tlb</TypeLibraryName>
++      <MkTypLibCompatible>true</MkTypLibCompatible>
++      <TargetEnvironment>Win32</TargetEnvironment>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\expat.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <LinkDLL>true</LinkDLL>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\libexpat.dll</OutputFile>
++      <ImportLibrary>.\..\win32\bin\Debug\libexpat.lib</ImportLibrary>
++      <ModuleDefinitionFile>.\libexpat.def</ModuleDefinitionFile>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <PreprocessorDefinitions>_DEBUG;COMPILED_FROM_DSP;WIN32;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug\expat.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <Midl>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <TypeLibraryName>.\..\win32\bin\Debug\expat.tlb</TypeLibraryName>
++      <MkTypLibCompatible>true</MkTypLibCompatible>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\expat.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <LinkDLL>true</LinkDLL>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\libexpat.dll</OutputFile>
++      <ImportLibrary>.\..\win32\bin\Debug\libexpat.lib</ImportLibrary>
++      <ModuleDefinitionFile>.\libexpat.def</ModuleDefinitionFile>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;COMPILED_FROM_DSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release\expat.pch</PrecompiledHeaderOutputFile>
++      <PrecompiledHeader />
++      <ObjectFileName>.\..\win32\tmp\Release\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <TypeLibraryName>.\..\win32\bin\Release\expat.tlb</TypeLibraryName>
++      <MkTypLibCompatible>true</MkTypLibCompatible>
++      <TargetEnvironment>Win32</TargetEnvironment>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\expat.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <LinkDLL>true</LinkDLL>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Release\libexpat.dll</OutputFile>
++      <ImportLibrary>.\..\win32\bin\Release\libexpat.lib</ImportLibrary>
++      <ModuleDefinitionFile>.\libexpat.def</ModuleDefinitionFile>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;COMPILED_FROM_DSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release\expat.pch</PrecompiledHeaderOutputFile>
++      <PrecompiledHeader>
++      </PrecompiledHeader>
++      <ObjectFileName>.\..\win32\tmp\Release\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <TypeLibraryName>.\..\win32\bin\Release\expat.tlb</TypeLibraryName>
++      <MkTypLibCompatible>true</MkTypLibCompatible>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\expat.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <LinkDLL>true</LinkDLL>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Release\libexpat.dll</OutputFile>
++      <ImportLibrary>.\..\win32\bin\Release\libexpat.lib</ImportLibrary>
++      <ModuleDefinitionFile>.\libexpat.def</ModuleDefinitionFile>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <CustomBuild Include="libexpat.def" />
++  </ItemGroup>
++  <ItemGroup>
++    <ClCompile Include="xmlparse.c">
++      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++      </ExceptionHandling>
++      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++      </ExceptionHandling>
++    </ClCompile>
++    <ClCompile Include="xmlrole.c" />
++    <ClCompile Include="xmltok.c" />
++    <ClCompile Include="xmltok_impl.c" />
++    <ClCompile Include="xmltok_ns.c" />
++  </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="ascii.h" />
++    <ClInclude Include="asciitab.h" />
++    <ClInclude Include="expat.h" />
++    <ClInclude Include="expat_external.h" />
++    <ClInclude Include="iasciitab.h" />
++    <ClInclude Include="internal.h" />
++    <ClInclude Include="latin1tab.h" />
++    <ClInclude Include="nametab.h" />
++    <ClInclude Include="utf8tab.h" />
++    <ClInclude Include="xmlrole.h" />
++    <ClInclude Include="xmltok.h" />
++    <ClInclude Include="xmltok_impl.h" />
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/lib/expat_static.vcxproj b/lib/expat_static.vcxproj
+new file mode 100644
+index 0000000..ef43cac
+--- /dev/null
++++ b/lib/expat_static.vcxproj
+@@ -0,0 +1,249 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|Win32">
++      <Configuration>Debug</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|Win32">
++      <Configuration>Release</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|Win32">
++      <Configuration>Template</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|x64">
++      <Configuration>Template</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <SccProjectName />
++    <SccLocalPath />
++    <ProjectGuid>{2302E6ED-9D99-442A-A072-AD508F7FAE36}</ProjectGuid>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <OutDir>.\..\win32\bin\Release\</OutDir>
++    <IntDir>.\..\win32\tmp\Release_static\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <OutDir>.\..\win32\bin\Debug\</OutDir>
++    <IntDir>.\..\win32\tmp\Debug_static\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;COMPILED_FROM_DSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release_static\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release_static\expat_static.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Release_static\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release_static\</ProgramDataBaseFileName>
++    </ClCompile>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\expat_static.bsc</OutputFile>
++    </Bscmake>
++    <Lib>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>..\win32\bin\Release\libexpatMT.lib</OutputFile>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;COMPILED_FROM_DSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release_static\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release_static\expat_static.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Release_static\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release_static\</ProgramDataBaseFileName>
++    </ClCompile>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\expat_static.bsc</OutputFile>
++    </Bscmake>
++    <Lib>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>..\win32\bin\Release\libexpatMT.lib</OutputFile>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;COMPILED_FROM_DSP;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug_static\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug_static\expat_static.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug_static\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug_static\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\expat_static.bsc</OutputFile>
++    </Bscmake>
++    <Lib>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>..\win32\bin\Debug\libexpatMT.lib</OutputFile>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;COMPILED_FROM_DSP;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug_static\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug_static\expat_static.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug_static\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug_static\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\expat_static.bsc</OutputFile>
++    </Bscmake>
++    <Lib>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>..\win32\bin\Debug\libexpatMT.lib</OutputFile>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <ClCompile Include="xmlparse.c" />
++    <ClCompile Include="xmlrole.c" />
++    <ClCompile Include="xmltok.c" />
++    <ClCompile Include="xmltok_impl.c" />
++    <ClCompile Include="xmltok_ns.c" />
++  </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="ascii.h" />
++    <ClInclude Include="asciitab.h" />
++    <ClInclude Include="expat.h" />
++    <ClInclude Include="expat_external.h" />
++    <ClInclude Include="iasciitab.h" />
++    <ClInclude Include="internal.h" />
++    <ClInclude Include="latin1tab.h" />
++    <ClInclude Include="nametab.h" />
++    <ClInclude Include="utf8tab.h" />
++    <ClInclude Include="xmlrole.h" />
++    <ClInclude Include="xmltok.h" />
++    <ClInclude Include="xmltok_impl.h" />
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/lib/expatw.vcxproj b/lib/expatw.vcxproj
+new file mode 100644
+index 0000000..5ca3695
+--- /dev/null
++++ b/lib/expatw.vcxproj
+@@ -0,0 +1,304 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|Win32">
++      <Configuration>Debug</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|Win32">
++      <Configuration>Release</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|Win32">
++      <Configuration>Template</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|x64">
++      <Configuration>Template</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <SccProjectName />
++    <SccLocalPath />
++    <ProjectGuid>{9336E4FA-14D2-4E4F-A716-CFC7FC85C0E0}</ProjectGuid>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <OutDir>.\..\win32\bin\Release\</OutDir>
++    <IntDir>.\..\win32\tmp\Release-w\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <OutDir>.\..\win32\bin\Debug\</OutDir>
++    <IntDir>.\..\win32\tmp\Debug-w\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <PreprocessorDefinitions>NDEBUG;COMPILED_FROM_DSP;WIN32;_WINDOWS;_USRDLL;XML_UNICODE_WCHAR_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-w\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-w\expatw.pch</PrecompiledHeaderOutputFile>
++      <PrecompiledHeader />
++      <ObjectFileName>.\..\win32\tmp\Release-w\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-w\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <TypeLibraryName>.\..\win32\bin\Release\expatw.tlb</TypeLibraryName>
++      <MkTypLibCompatible>true</MkTypLibCompatible>
++      <TargetEnvironment>Win32</TargetEnvironment>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\expatw.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <LinkDLL>true</LinkDLL>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Release\libexpatw.dll</OutputFile>
++      <ImportLibrary>.\..\win32\bin\Release\libexpatw.lib</ImportLibrary>
++      <ModuleDefinitionFile>.\libexpatw.def</ModuleDefinitionFile>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <PreprocessorDefinitions>NDEBUG;COMPILED_FROM_DSP;WIN32;_WINDOWS;_USRDLL;XML_UNICODE_WCHAR_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-w\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-w\expatw.pch</PrecompiledHeaderOutputFile>
++      <PrecompiledHeader>
++      </PrecompiledHeader>
++      <ObjectFileName>.\..\win32\tmp\Release-w\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-w\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <TypeLibraryName>.\..\win32\bin\Release\expatw.tlb</TypeLibraryName>
++      <MkTypLibCompatible>true</MkTypLibCompatible>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\expatw.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <LinkDLL>true</LinkDLL>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Release\libexpatw.dll</OutputFile>
++      <ImportLibrary>.\..\win32\bin\Release\libexpatw.lib</ImportLibrary>
++      <ModuleDefinitionFile>.\libexpatw.def</ModuleDefinitionFile>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
++      <PreprocessorDefinitions>_DEBUG;COMPILED_FROM_DSP;WIN32;_WINDOWS;_USRDLL;XML_UNICODE_WCHAR_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-w\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-w\expatw.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-w\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-w\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <Midl>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <TypeLibraryName>.\..\win32\bin\Debug\expatw.tlb</TypeLibraryName>
++      <MkTypLibCompatible>true</MkTypLibCompatible>
++      <TargetEnvironment>Win32</TargetEnvironment>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\expatw.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <LinkDLL>true</LinkDLL>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\libexpatw.dll</OutputFile>
++      <ImportLibrary>.\..\win32\bin\Debug\libexpatw.lib</ImportLibrary>
++      <ModuleDefinitionFile>.\libexpatw.def</ModuleDefinitionFile>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <PreprocessorDefinitions>_DEBUG;COMPILED_FROM_DSP;WIN32;_WINDOWS;_USRDLL;XML_UNICODE_WCHAR_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-w\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-w\expatw.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-w\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-w\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <Midl>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <TypeLibraryName>.\..\win32\bin\Debug\expatw.tlb</TypeLibraryName>
++      <MkTypLibCompatible>true</MkTypLibCompatible>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\expatw.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <LinkDLL>true</LinkDLL>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\libexpatw.dll</OutputFile>
++      <ImportLibrary>.\..\win32\bin\Debug\libexpatw.lib</ImportLibrary>
++      <ModuleDefinitionFile>.\libexpatw.def</ModuleDefinitionFile>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <CustomBuild Include="libexpatw.def" />
++  </ItemGroup>
++  <ItemGroup>
++    <ClCompile Include="xmlparse.c">
++      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++      </ExceptionHandling>
++      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++      </ExceptionHandling>
++    </ClCompile>
++    <ClCompile Include="xmlrole.c" />
++    <ClCompile Include="xmltok.c" />
++    <ClCompile Include="xmltok_impl.c" />
++    <ClCompile Include="xmltok_ns.c" />
++  </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="ascii.h" />
++    <ClInclude Include="asciitab.h" />
++    <ClInclude Include="expat.h" />
++    <ClInclude Include="expat_external.h" />
++    <ClInclude Include="iasciitab.h" />
++    <ClInclude Include="internal.h" />
++    <ClInclude Include="latin1tab.h" />
++    <ClInclude Include="nametab.h" />
++    <ClInclude Include="utf8tab.h" />
++    <ClInclude Include="xmlrole.h" />
++    <ClInclude Include="xmltok.h" />
++    <ClInclude Include="xmltok_impl.h" />
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/lib/expatw_static.vcxproj b/lib/expatw_static.vcxproj
+new file mode 100644
+index 0000000..14d6120
+--- /dev/null
++++ b/lib/expatw_static.vcxproj
+@@ -0,0 +1,249 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|Win32">
++      <Configuration>Debug</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|Win32">
++      <Configuration>Release</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|Win32">
++      <Configuration>Template</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|x64">
++      <Configuration>Template</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <SccProjectName />
++    <SccLocalPath />
++    <ProjectGuid>{EFF08AE1-9EC5-4553-A9F1-DA2DA1482CAB}</ProjectGuid>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <OutDir>.\..\win32\bin\Debug\</OutDir>
++    <IntDir>.\..\win32\tmp\Debug-w_static\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <OutDir>.\..\win32\bin\Release\</OutDir>
++    <IntDir>.\..\win32\tmp\Release-w_static\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COMPILED_FROM_DSP;XML_UNICODE_WCHAR_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-w_static\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-w_static\expatw_static.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-w_static\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-w_static\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\expatw_static.bsc</OutputFile>
++    </Bscmake>
++    <Lib>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>..\win32\bin\Debug\libexpatwMT.lib</OutputFile>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COMPILED_FROM_DSP;XML_UNICODE_WCHAR_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-w_static\</AssemblerListingLocation>
++      <BrowseInformation>true</BrowseInformation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-w_static\expatw_static.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-w_static\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-w_static\</ProgramDataBaseFileName>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++    </ClCompile>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\expatw_static.bsc</OutputFile>
++    </Bscmake>
++    <Lib>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>..\win32\bin\Debug\libexpatwMT.lib</OutputFile>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;COMPILED_FROM_DSP;XML_UNICODE_WCHAR_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-w_static\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-w_static\expatw_static.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Release-w_static\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-w_static\</ProgramDataBaseFileName>
++    </ClCompile>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\expatw_static.bsc</OutputFile>
++    </Bscmake>
++    <Lib>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>..\win32\bin\Release\libexpatwMT.lib</OutputFile>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;COMPILED_FROM_DSP;XML_UNICODE_WCHAR_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-w_static\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-w_static\expatw_static.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Release-w_static\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-w_static\</ProgramDataBaseFileName>
++    </ClCompile>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\expatw_static.bsc</OutputFile>
++    </Bscmake>
++    <Lib>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>..\win32\bin\Release\libexpatwMT.lib</OutputFile>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <ClCompile Include="xmlparse.c" />
++    <ClCompile Include="xmlrole.c" />
++    <ClCompile Include="xmltok.c" />
++    <ClCompile Include="xmltok_impl.c" />
++    <ClCompile Include="xmltok_ns.c" />
++  </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="ascii.h" />
++    <ClInclude Include="asciitab.h" />
++    <ClInclude Include="expat.h" />
++    <ClInclude Include="expat_external.h" />
++    <ClInclude Include="iasciitab.h" />
++    <ClInclude Include="internal.h" />
++    <ClInclude Include="latin1tab.h" />
++    <ClInclude Include="nametab.h" />
++    <ClInclude Include="utf8tab.h" />
++    <ClInclude Include="xmlrole.h" />
++    <ClInclude Include="xmltok.h" />
++    <ClInclude Include="xmltok_impl.h" />
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/xmlwf/xmlwf.vcxproj b/xmlwf/xmlwf.vcxproj
+new file mode 100644
+index 0000000..737ea58
+--- /dev/null
++++ b/xmlwf/xmlwf.vcxproj
+@@ -0,0 +1,284 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|Win32">
++      <Configuration>Debug</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|Win32">
++      <Configuration>Release</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|Win32">
++      <Configuration>Template</Configuration>
++      <Platform>Win32</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Template|x64">
++      <Configuration>Template</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <SccProjectName />
++    <SccLocalPath />
++    <ProjectGuid>{D761280C-AAA6-4B6F-AEC7-8EABF49440B2}</ProjectGuid>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <PlatformToolset>v120</PlatformToolset>
++    <UseOfMfc>false</UseOfMfc>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <OutDir>.\..\win32\bin\Release\</OutDir>
++    <IntDir>.\..\win32\tmp\Release-xmlwf\</IntDir>
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <OutDir>.\..\win32\bin\Debug\</OutDir>
++    <IntDir>.\..\win32\tmp\Debug-xmlwf\</IntDir>
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>true</LinkIncremental>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>NDEBUG;WIN32;_CONSOLE;COMPILED_FROM_DSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-xmlwf\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-xmlwf\xmlwf.pch</PrecompiledHeaderOutputFile>
++      <PrecompiledHeader />
++      <ObjectFileName>.\..\win32\tmp\Release-xmlwf\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-xmlwf\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Release\xmlwf.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\xmlwf.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <SubSystem>Console</SubSystem>
++      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
++      <OutputFile>..\win32\bin\Release\xmlwf.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpat.lib;setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <Optimization>MaxSpeed</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>NDEBUG;WIN32;_CONSOLE;COMPILED_FROM_DSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Release-xmlwf\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Release-xmlwf\xmlwf.pch</PrecompiledHeaderOutputFile>
++      <PrecompiledHeader>
++      </PrecompiledHeader>
++      <ObjectFileName>.\..\win32\tmp\Release-xmlwf\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Release-xmlwf\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Release\xmlwf.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Release\xmlwf.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <SubSystem>Console</SubSystem>
++      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
++      <OutputFile>..\win32\bin\Release\xmlwf.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpat.lib;setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>_DEBUG;WIN32;_CONSOLE;COMPILED_FROM_DSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-xmlwf\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-xmlwf\xmlwf.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-xmlwf\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-xmlwf\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Debug\xmlwf.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\xmlwf.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\xmlwf.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpat.lib;setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <Optimization>Disabled</Optimization>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <WarningLevel>Level3</WarningLevel>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <AdditionalIncludeDirectories>..\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <PreprocessorDefinitions>_DEBUG;WIN32;_CONSOLE;COMPILED_FROM_DSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AssemblerListingLocation>.\..\win32\tmp\Debug-xmlwf\</AssemblerListingLocation>
++      <PrecompiledHeaderOutputFile>.\..\win32\tmp\Debug-xmlwf\xmlwf.pch</PrecompiledHeaderOutputFile>
++      <ObjectFileName>.\..\win32\tmp\Debug-xmlwf\</ObjectFileName>
++      <ProgramDataBaseFileName>.\..\win32\tmp\Debug-xmlwf\</ProgramDataBaseFileName>
++    </ClCompile>
++    <Midl>
++      <TypeLibraryName>.\..\win32\bin\Debug\xmlwf.tlb</TypeLibraryName>
++    </Midl>
++    <ResourceCompile>
++      <Culture>0x0409</Culture>
++      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Bscmake>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <OutputFile>.\..\win32\bin\Debug\xmlwf.bsc</OutputFile>
++    </Bscmake>
++    <Link>
++      <SuppressStartupBanner>true</SuppressStartupBanner>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <SubSystem>Console</SubSystem>
++      <OutputFile>..\win32\bin\Debug\xmlwf.exe</OutputFile>
++      <AdditionalLibraryDirectories>..\win32\bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalDependencies>libexpat.lib;setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
++    </Link>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <ClCompile Include="codepage.c" />
++    <ClCompile Include="readfilemap.c">
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
++    </ClCompile>
++    <ClCompile Include="unixfilemap.c">
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
++    </ClCompile>
++    <ClCompile Include="win32filemap.c" />
++    <ClCompile Include="xmlfile.c" />
++    <ClCompile Include="xmlwf.c" />
++  </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="codepage.h" />
++    <ClInclude Include="xmlfile.h" />
++    <ClInclude Include="xmltchar.h" />
++  </ItemGroup>
++  <ItemGroup>
++    <ProjectReference Include="..\lib\expat.vcxproj">
++      <Project>{e8d10d0f-5a91-4105-824e-4e5d923548d2}</Project>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++    </ProjectReference>
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file

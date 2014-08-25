@@ -1,18 +1,30 @@
 @echo off
 echo ------ expat -----
-echo executing binary installer
-echo.
-echo !!!!!
-echo Install into directory without whitespaces!!!
-echo e.g. C:\Expat2.1.0
-echo.
-echo When compiling 64bit download libexpat dev packages from http://www.gtk.org/download/win64.php
-echo Extract to e.g. C:\Expat2.0.1-2_win64
-echo.
-PAUSE
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-CALL %PKGDIR%\expat-win32bin-%EXPAT_VERSION%.exe
+cd %PKGDIR%
+CALL %ROOTDIR%\scripts\download expat-%EXPAT_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
+
+if EXIST expat (
+  echo found extracted sources
+)
+
+if NOT EXIST expat (
+  echo extracting
+  CALL bsdtar xfz expat-%EXPAT_VERSION%.tar.gz
+  rename expat-%EXPAT_VERSION% expat
+  IF ERRORLEVEL 1 GOTO ERROR
+)
+
+cd expat
+IF ERRORLEVEL 1 GOTO ERROR
+
+patch -N -p1 < %PATCHES%/expat.diff || true
+
+msbuild expat.sln /m /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
 
