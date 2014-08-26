@@ -1,0 +1,16 @@
+diff --git a/nmake.opt b/nmake.opt
+index 936cfcc..e8cd911 100644
+--- a/nmake.opt
++++ b/nmake.opt
+@@ -318,9 +318,8 @@ JPEG12_SUPPORTED = 1
+ #		$(OGDIDIR)\lib\$(TARGET)\zlib_ogdi$(OGDIVER).lib
+ 
+ # Uncomment for Expat support (required for KML, GPX and GeoRSS read support).
+-#EXPAT_DIR = "C:\Program Files\Expat 2.0.1"
+-#EXPAT_INCLUDE = -I$(EXPAT_DIR)/source/lib
+-#EXPAT_LIB = $(EXPAT_DIR)/bin/libexpat.lib
++EXPAT_INCLUDE = -I$(EXPAT_DIR)/lib
++EXPAT_LIB = $(EXPAT_DIR)/win32/bin/Release/libexpat.lib
+ 
+ # Uncomment for Xerces based GML and ILI support.
+ #XERCES_DIR =	c:\warmerda\supportlibs\xerces-c_2_6_0

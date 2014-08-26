@@ -1,31 +1,29 @@
 @echo off
 echo ------ gdal -----
 
-CALL bsdtar xvfz %PKGDIR%\gdal-%GDAL_VERSION%.tar.gz
+:: guard to make sure settings have been sourced
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
+
+cd %PKGDIR%
+CALL %ROOTDIR%\scripts\download gdal-%GDAL_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
-mkdir gdal
+if EXIST gdal (
+  echo found extracted sources
+)
+
+if NOT EXIST gdal (
+  echo extracting
+  CALL bsdtar xfz gdal-%GDAL_VERSION%.tar.gz
+  rename gdal-%GDAL_VERSION% gdal
+  IF ERRORLEVEL 1 GOTO ERROR
+)
+
+cd gdal
 IF ERRORLEVEL 1 GOTO ERROR
 
-::rem create gdal/gdal directory to mirror if we
-::rem checked out from github
-
-CALL move gdal-%GDAL_VERSION% gdal/gdal
-IF ERRORLEVEL 1 GOTO ERROR
-
-echo.
-echo clone from: https://github.com/OSGeo/gdal
-echo.
-echo !To get KML,GPX, GeoRSS support!
-echo !edit the 'gdal/gdal/nmake.opt' to point to the location the expat binary was installed to:!
-echo.
 echo When compiling 64bit download libexpat dev packages from http://www.gtk.org/download/win64.php
 ::echo Also un-comment WIN64=YES in nmake.opt -> can be passed as argument, see below
-echo.
-echo EXPAT_DIR=C:\Expat2.1.0
-echo un-comment the other two lines as well
-echo EXPAT_INCLUDE = -I$(EXPAT_DIR)/source/lib
-echo EXPAT_LIB = $(EXPAT_DIR)/bin/libexpat.lib
 echo.
 echo If there is an error about missing 'expat.h' change
 echo <include expat.h> to
@@ -33,15 +31,8 @@ echo #include "C:\Expat2.1.0\Source\lib\expat.h"
 echo gdal/gdal/ogr/ogr_expat.h
 echo.
 
-pause
-
-cd gdal/gdal
-
-
 ::https://trac.osgeo.org/gdal/wiki/BuildingOnWindows
 ::see basic options
-
-
 
 ::MSVC_VER compiler version
 ::http://stackoverflow.com/a/2676904
@@ -51,6 +42,7 @@ cd gdal/gdal
 
 
 :: !!! BUILD FIRST and then do 'devinstall'!!!
+SET EXPAT_DIR="%PKGDIR%\expat"
 
 IF %BUILDPLATFORM% EQU x64 (
     ECHO cleaning .....
