@@ -8,15 +8,14 @@ cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download zlib-%ZLIB_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
-if EXIST zlib-1.2.5 (
+if EXIST zlib (
   echo found extracted sources
 )
 
-if NOT EXIST zlib-1.2.5 (
+if NOT EXIST zlib (
   echo extracting
   CALL bsdtar xfz zlib-%ZLIB_VERSION%.tar.gz
-  ::libpng build scripts look for a folder called zlib-1.2.5
-  rename zlib-%ZLIB_VERSION% zlib-1.2.5
+  ::rename zlib-%ZLIB_VERSION% zlib
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
