@@ -23,11 +23,15 @@ cd libtiff
 IF ERRORLEVEL 1 GOTO ERROR
 
 echo JPEG_SUPPORT = 1 >> nmake.opt
-echo JPEGDIR = %PKGDIR%\jpeg >> nmake.opt
+echo JPEGDIR = %PKGDIR%/jpeg >> nmake.opt
 echo JPEG_INCLUDE   = -I$(JPEGDIR) >> nmake.opt
 echo JPEG_LIB   = $(JPEGDIR)/libjpeg.lib >> nmake.opt
 echo LIBS		= $(LIBS) $(JPEG_LIB) >> nmake.opt
-echo EXTRAFLAGS	= -DJPEG_SUPPORT -DOJPEG_SUPPORT $(EXTRAFLAGS) >> nmake.opt
+echo ZIP_SUPPORT	= 1 >> nmake.opt
+echo ZLIBDIR 	= %PKGDIR%/zlib-1.2.5 >> nmake.opt
+echo ZLIB_INCLUDE	= -I$(ZLIBDIR) >> nmake.opt
+echo ZLIB_LIB 	= $(ZLIBDIR)/zlib.lib >> nmake.opt
+echo EXTRAFLAGS	= -DJPEG_SUPPORT -DOJPEG_SUPPORT -DZIP_SUPPORT $(EXTRAFLAGS) >> nmake.opt
 
 
 ::http://www.remotesensing.org/libtiff/build.html#PC
