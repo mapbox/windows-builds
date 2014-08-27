@@ -66,7 +66,7 @@ echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
 ECHO building ...
 set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
 xcopy /i /d /s /q ..\zlib-1.2.5 ..\zlib /Y
-CALL make -f Makefile.win32 "CFG=release"
+CALL make -f Makefile.win32 "CFG=release" "MSVC_VER=%MSVC_VER%"
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::rem - delete bogus cairo-version.h

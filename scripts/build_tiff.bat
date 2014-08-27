@@ -43,7 +43,7 @@ CALL nmake /F Makefile.vc clean
 IF ERRORLEVEL 1 GOTO ERROR
 
 echo building ....
-CALL nmake /A /F Makefile.vc
+CALL nmake /A /F Makefile.vc MSVC_VER=%MSVC_VER%
 :: >%ROOTDIR%\build_tiff-%TIFF_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 

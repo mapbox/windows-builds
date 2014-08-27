@@ -23,7 +23,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 patch -N -p1 < %PATCHES%/expat.diff || true
 
-msbuild expat.sln /m /toolsversion:12.0 /p:PlatformToolset=v120 /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+msbuild expat.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE

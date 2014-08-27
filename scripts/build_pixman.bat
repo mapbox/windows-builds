@@ -36,7 +36,7 @@ echo.
 ECHO building ...
 set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
 echo %PATH%
-CALL make.exe -f Makefile.win32 "CFG=release" "MMX=off"
+CALL make.exe -f Makefile.win32 "CFG=release" "MMX=off" "MSVC_VER=%MSVC_VER%"
 ::>%ROOTDIR%\build_pixman-%PIXMAN_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 

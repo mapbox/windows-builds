@@ -35,7 +35,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 
 ECHO building ....
-CALL nmake /A /F Makefile.vc
+CALL nmake /A /F Makefile.vc MSVC_VER=%MSVC_VER%
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE

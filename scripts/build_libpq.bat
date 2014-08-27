@@ -55,7 +55,7 @@ CALL nmake /F win32.mak clean
 echo building ...
 
 IF %BUILDPLATFORM% EQU x64 (
-    CALL nmake /A /F win32.mak CPU=AMD64
+    CALL nmake /A /F win32.mak CPU=AMD64 MSVC_VER=%MSVC_VER%
 ) ELSE (
     CALL nmake /A /F win32.mak    
 )

@@ -34,7 +34,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 ::NMAKE Options: http://msdn.microsoft.com/en-us/library/afyyse50%28v=vs.120%29.aspx
 ::NMAKE platform (32/64) used, depends on which Developer command prompt was opened
-nmake /A /F Makefile.vc nodebug=1
+nmake /A /F Makefile.vc nodebug=1 MSVC_VER=%MSVC_VER%
 IF ERRORLEVEL 1 GOTO ERROR
 
 

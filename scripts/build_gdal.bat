@@ -39,14 +39,14 @@ IF %BUILDPLATFORM% EQU x64 (
     CALL nmake /F makefile.vc clean WIN64=YES
     IF ERRORLEVEL 1 GOTO ERROR
     ECHO building ....
-    CALL nmake /A /F makefile.vc MSVC_VER=1800 WIN64=YES
+    CALL nmake /A /F makefile.vc MSVC_VER=%MSVC_VER% WIN64=YES
     IF ERRORLEVEL 1 GOTO ERROR
 ) ELSE (
     ::ECHO cleaning .....
     ::CALL nmake /F makefile.vc clean
     ::IF ERRORLEVEL 1 GOTO ERROR
     ECHO building ....
-    CALL nmake /A /F makefile.vc MSVC_VER=1800
+    CALL nmake /A /F makefile.vc MSVC_VER=%MSVC_VER%
     IF ERRORLEVEL 1 GOTO ERROR
 )
 

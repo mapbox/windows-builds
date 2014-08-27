@@ -35,7 +35,7 @@ echo using python : 2.7 : C:/Python27/python.exe ; >> user-config.jam
 
 if NOT EXIST b2.exe (
   echo calling bootstrap bat
-  CALL bootstrap.bat --with-toolset=msvc-12.0
+  CALL bootstrap.bat --with-toolset=msvc-%TOOLS_VERSION%
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
@@ -50,7 +50,7 @@ if NOT EXIST b2.exe (
 ::CALL b2 toolset=msvc-12.0 --clean
 CALL b2 -j%NUMBER_OF_PROCESSORS% ^
   -d0 release stage ^
-  --build-type=minimal toolset=msvc-12.0 -q ^
+  --build-type=minimal toolset=msvc-%TOOLS_VERSION% -q ^
   runtime-link=shared link=static ^
   address-model=%BOOSTADDRESSMODEL% ^
   --with-thread --with-filesystem  ^
@@ -66,7 +66,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 :: we want to dynamically link python
 CALL b2 -j%NUMBER_OF_PROCESSORS% ^
   -d0 release stage ^
-  --build-type=minimal toolset=msvc-12.0 -q ^
+  --build-type=minimal toolset=msvc-%TOOLS_VERSION% -q ^
   runtime-link=shared link=shared ^
   address-model=%BOOSTADDRESSMODEL% ^
   --with-python python=2.7
