@@ -22,7 +22,12 @@ if NOT EXIST libxml2 (
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
-cd libxml2\win32
+cd libxml2
+IF ERRORLEVEL 1 GOTO ERROR
+
+patch -N -p1 < %PATCHES%/libxml2.diff || true
+
+cd win32
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (
@@ -40,11 +45,11 @@ IF ERRORLEVEL 1 GOTO ERROR
 ::IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO cleaning ....
-CALL nmake /F Makefile.msvc clean
+::CALL nmake /F Makefile.msvc clean
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building ...
-CALL nmake /A /F Makefile.msvc
+CALL nmake /A /F Makefile.msvc MSVC_VER=%MSVC_VER%
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
