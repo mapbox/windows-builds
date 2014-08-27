@@ -24,6 +24,9 @@ if NOT EXIST libtiff (
 cd libtiff
 IF ERRORLEVEL 1 GOTO ERROR
 
+patch -N -p1 < %PATCHES%/libtiff.diff || true
+
+
 echo JPEG_SUPPORT = 1 >> nmake.opt
 echo JPEGDIR = %PKGDIR%/jpeg >> nmake.opt
 echo JPEG_INCLUDE   = -I$(JPEGDIR) >> nmake.opt
