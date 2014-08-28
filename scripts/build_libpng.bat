@@ -19,7 +19,13 @@ if NOT EXIST libpng (
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
-cd .\libpng\projects\vstudio\
+cd .\libpng
+IF ERRORLEVEL 1 GOTO ERROR
+
+patch -N -p1 < %PATCHES%/png.diff
+IF ERRORLEVEL 1 GOTO ERROR
+
+cd .\projects\vstudio\
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO "IF building x64 add platform to solution manually!"

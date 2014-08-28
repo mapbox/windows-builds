@@ -1,0 +1,37 @@
+diff --git a/projects/vstudio/libpng/libpng.vcxproj b/projects/vstudio/libpng/libpng.vcxproj
+index de7fc3c..8238f16 100644
+--- a/projects/vstudio/libpng/libpng.vcxproj
++++ b/projects/vstudio/libpng/libpng.vcxproj
+@@ -173,7 +173,7 @@
+       <WarningLevel>Level4</WarningLevel>
+       <PrecompiledHeader>Use</PrecompiledHeader>
+       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+       <FunctionLevelLinking>true</FunctionLevelLinking>
+       <IntrinsicFunctions>true</IntrinsicFunctions>
+       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+diff --git a/projects/vstudio/zlib/zlib.vcxproj b/projects/vstudio/zlib/zlib.vcxproj
+index 6e5b94a..03f423a 100644
+--- a/projects/vstudio/zlib/zlib.vcxproj
++++ b/projects/vstudio/zlib/zlib.vcxproj
+@@ -87,7 +87,7 @@
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <ClCompile>
+       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;Z_SOLO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+       <WarningLevel>TurnOffAllWarnings</WarningLevel>
+       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+       <Optimization>Disabled</Optimization>
+@@ -127,8 +127,8 @@
+       <BrowseInformation>true</BrowseInformation>
+       <FunctionLevelLinking>true</FunctionLevelLinking>
+       <TreatWarningAsError>true</TreatWarningAsError>
+-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;Z_SOLO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+     </ClCompile>
+     <Link>
+       <TargetMachine>MachineX86</TargetMachine>
