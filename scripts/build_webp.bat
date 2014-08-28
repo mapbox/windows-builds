@@ -5,7 +5,7 @@ echo ------- WEBP --------
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-CALL %ROOTDIR%\scripts\download https://webp.googlecode.com/files/libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip
+CALL %ROOTDIR%\scripts\download libwebp-%WEBP_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF EXIST webp (
@@ -14,13 +14,17 @@ IF EXIST webp (
 
 if NOT EXIST webp (
   echo extracting
-  unzip %PKGDIR%\libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM%.zip
+  CALL bsdtar xfz libwebp-%WEBP_VERSION%.tar.gz
   IF ERRORLEVEL 1 GOTO ERROR
-  rename libwebp-%WEBP_VERSION%-windows-%WEBP_PLATFORM% webp
+  rename libwebp-%WEBP_VERSION% webp
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
-:: nothing more needed as we use the binaries
+cd webp
+IF ERRORLEVEL 1 GOTO ERROR
+
+nmake /f Makefile.vc ARCH=%WEBP_PLATFORM% CFG=release-dynamic RTLIBCFG=dynamic OBJDIR=output
+IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
 
