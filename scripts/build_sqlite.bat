@@ -23,12 +23,7 @@ cd sqlite
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::DLL
-cl sqlite3.c -link -dll -out:sqlite3.dll
-IF ERRORLEVEL 1 GOTO ERROR
-
-::static lib
-cl /c /EHsc sqlite3.c
-IF ERRORLEVEL 1 GOTO ERROR
+cl /MD /nologo /EHsc /D NDEBUG /D SQLITE_ENABLE_RTREE sqlite3.c /c
 lib sqlite3.obj
 IF ERRORLEVEL 1 GOTO ERROR
 
