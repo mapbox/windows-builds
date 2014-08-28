@@ -11,7 +11,7 @@ echo ------ geos -----
 ::LATEST SNAPSHOT 18.05.2014
 echo.
 echo Download latest snapshot http://geos.osgeo.org/snapshots/
-echo and extract to %ROOTDIR%\geos
+echo and extract to %ROOTDIR%geos
 echo.
 pause
 
