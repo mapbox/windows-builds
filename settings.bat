@@ -13,6 +13,9 @@ SET PLATFORM_TOOLSET=v120
 
 :: CTP Nov 2013
 ::SET PLATFORM_TOOLSET=CTP_Nov2013
+::SET PATH=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\bin:%PATH%
+::SET LIB=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib;%LIB%
+::SET INCLUDE=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\include;%INCLUDE%
 
 :: Visual Studio 2014
 ::SET MSVC_VER=1900
