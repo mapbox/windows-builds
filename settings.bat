@@ -2,22 +2,24 @@
 
 @ rem or 64
 set TARGET_ARCH=32
-SET BUILDPLATFORM=Win32
-SET BOOSTADDRESSMODEL=32
-SET WEBP_PLATFORM=x86
+::set TARGET_ARCH=64
 
 :: Visual Studio 2013
-SET MSVC_VER=1800
 SET TOOLS_VERSION=12.0
-SET PLATFORM_TOOLSET=v120
-
-:: CTP Nov 2013
-::SET PLATFORM_TOOLSET=CTP_Nov2013
-
 :: Visual Studio 2014
-::SET MSVC_VER=1900
 ::SET TOOLS_VERSION=14.0
-::SET PLATFORM_TOOLSET=v140
+
+if "%TARGET_ARCH%" == "32" (
+  SET BUILDPLATFORM=Win32
+  SET BOOSTADDRESSMODEL=32
+  SET WEBP_PLATFORM=x86
+)
+
+if "%TARGET_ARCH%" == "64" (
+  SET BUILDPLATFORM=x64
+  SET BOOSTADDRESSMODEL=64
+  SET WEBP_PLATFORM=x64
+)
 
 SET current_script_dir=%~dp0
 SET ROOTDIR=%current_script_dir%
@@ -30,6 +32,25 @@ IF NOT EXIST %BUILD% MKDIR %BUILD%
 
 set PATH=C:\Program Files\7-Zip;%PATH%
 set PATH=C:\Program Files (x86)\Git\bin;%PATH%
+
+if "%TOOLS_VERSION%" == "12.0" (
+  SET MSVC_VER=1800
+  SET PLATFORM_TOOLSET=v120
+  CALL "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/vcvarsall.bat" x86
+)
+
+:: Enable CTP Nov 2013
+:: TODO: not working to put this in a if statement for some reason (error about 'not expected at this time')
+SET PATH=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\bin;%PATH%
+SET LIB=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib;%LIB%
+SET INCLUDE=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\include;%INCLUDE%
+SET PLATFORM_TOOLSET="CTP_Nov2013"
+
+if "%TOOLS_VERSION%" == "14.0" (
+  SET MSVC_VER=1900
+  SET PLATFORM_TOOLSET=v140
+  CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+)
 
 if NOT EXIST tmp-bin\bsdtar.exe (
     echo "setting up bsdtar"
