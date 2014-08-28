@@ -83,8 +83,8 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL scripts\build_gdal.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL scripts\build_mapnik.bat
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::CALL scripts\build_mapnik.bat
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::GEOS not working
 ::CALL scripts\build_geos.bat
