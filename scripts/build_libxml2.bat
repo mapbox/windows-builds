@@ -37,7 +37,7 @@ IF %BUILDPLATFORM% EQU x64 (
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL cscript configure.js compiler=msvc prefix=%PKGDIR%\libxml2 iconv=no icu=no
+CALL cscript configure.js compiler=msvc cruntime="/MD" prefix=%PKGDIR%\libxml2 iconv=no icu=no
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::does not appear needed?
@@ -45,7 +45,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 ::IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO cleaning ....
-::CALL nmake /F Makefile.msvc clean
+CALL nmake /F Makefile.msvc clean
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building ...
