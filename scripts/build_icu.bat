@@ -24,6 +24,8 @@ if NOT EXIST icu (
 cd icu
 IF ERRORLEVEL 1 GOTO ERROR
 
+patch -N -p1 < %PATCHES%/icu3.diff || true
+
 call msbuild source\allinone\allinone.sln /m /target:common;makedata;i18n /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR
 
