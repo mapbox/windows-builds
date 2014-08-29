@@ -44,20 +44,7 @@ if NOT EXIST cairo (
 cd cairo
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/cairo.diff || true
-
-set OLD_INCLUDE=%INCLUDE%
-set INCLUDE=%PKGDIR%\zlib-1.2.5
-set INCLUDE=%INCLUDE%;%PKGDIR%\libpng
-set INCLUDE=%INCLUDE%;%PKGDIR%\pixman\pixman
-set INCLUDE=%INCLUDE%;%PKGDIR%\cairo\boilerplate
-set INCLUDE=%INCLUDE%;%PKGDIR%\cairo
-set INCLUDE=%INCLUDE%;%PKGDIR%\cairo\src
-set INCLUDE=%INCLUDE%;%PKGDIR%\freetype\include
-SET INCLUDE=%INCLUDE%;C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include
-SET INCLUDE=%INCLUDE%;C:\Program Files (x86)\Windows Kits\8.1\Include\um
-SET INCLUDE=%INCLUDE%;C:\Program Files (x86)\Windows Kits\8.1\Include\shared
-:: TODO - how to handle CTP include paths if it is enabled?
+patch -N -p1 < %PATCHES%/cairo_.diff || true
 
 ::ECHO cleaning ....
 ::CALL make -f Makefile.win32 "CFG=release" clean
@@ -74,17 +61,15 @@ IF ERRORLEVEL 1 GOTO ERROR
 ::rem https://github.com/mapnik/mapnik-packaging/issues/56
 if EXIST src\cairo-version.h (
   CALL del src\cairo-version.h
+  IF ERRORLEVEL 1 GOTO ERROR
 )
-IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
 
 :ERROR
 echo ----------ERROR CAIRO --------------
-set INCLUDE=%OLD_INCLUDE%
 
 :DONE
-set INCLUDE=%OLD_INCLUDE%
 
 cd %ROOTDIR%
 EXIT /b %ERRORLEVEL%

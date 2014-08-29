@@ -1,7 +1,28 @@
 diff --git a/nmake.opt b/nmake.opt
-index 936cfcc..e8cd911 100644
+index 936cfcc..bf7072e 100644
 --- a/nmake.opt
 +++ b/nmake.opt
+@@ -215,7 +215,7 @@ INCLUDE_OGR_FRMTS = YES
+ BSB_SUPPORTED = 1
+ 
+ # Comment out the following to disable ODBC support.
+-ODBC_SUPPORTED = 1
++#ODBC_SUPPORTED = 0
+ 
+ # Comment out the following to disable JPEG support.
+ JPEG_SUPPORTED = 1
+@@ -224,9 +224,9 @@ JPEG_SUPPORTED = 1
+ JPEG12_SUPPORTED = 1
+ 
+ #if using an external jpeg library uncomment the follwing lines
+-#JPEG_EXTERNAL_LIB = 1
++JPEG_EXTERNAL_LIB = 1
+ #JPEGDIR = c:/projects/jpeg-6b
+-#JPEG_LIB = $(JPEGDIR)/libjpeg.lib
++JPEG_LIB = $(JPEGDIR)/libjpeg.lib
+ 
+ #if using an external png library uncomment the follwing lines
+ #PNG_EXTERNAL_LIB = 1
 @@ -318,9 +318,8 @@ JPEG12_SUPPORTED = 1
  #		$(OGDIDIR)\lib\$(TARGET)\zlib_ogdi$(OGDIVER).lib
  
@@ -14,3 +35,17 @@ index 936cfcc..e8cd911 100644
  
  # Uncomment for Xerces based GML and ILI support.
  #XERCES_DIR =	c:\warmerda\supportlibs\xerces-c_2_6_0
+diff --git a/port/cpl_config.h.vc b/port/cpl_config.h.vc
+index bfff8f6..35311b2 100644
+--- a/port/cpl_config.h.vc
++++ b/port/cpl_config.h.vc
+@@ -17,7 +17,9 @@
+ #if defined(_MSC_VER) && (_MSC_VER < 1500)
+ #  define vsnprintf _vsnprintf
+ #endif
++#if defined(_MSC_VER) && (_MSC_VER < 1900)
+ #define snprintf _snprintf
++#endif
+ 
+ #define HAVE_GETCWD 1
+ /* gmt_notunix.h from GMT project also redefines getcwd. See #3138 */

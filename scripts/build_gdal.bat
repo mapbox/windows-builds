@@ -35,7 +35,7 @@ SET EXPAT_DIR="%PKGDIR%\expat"
 SET TIFF_INC="-I%PKGDIR%\libtiff\libtiff"
 SET TIFF_LIB="%PKGDIR%\libtiff\libtiff\libtiff_i.lib"
 SET TIFF_OPTS=/DBIGTIFF_SUPPORT /DCHUNKY_STRIP_READ_SUPPORT=1 /DDEFER_STRILE_LOAD=1
-
+set JPEGDIR="%PKGDIR%\jpeg"
 IF %BUILDPLATFORM% EQU x64 (
     ECHO cleaning .....
     CALL nmake /F makefile.vc clean WIN64=YES
@@ -52,6 +52,9 @@ IF %BUILDPLATFORM% EQU x64 (
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
+
+::odbccp32.lib(dllload.obj) : error LNK2019: unresolved external symbol __vsnwprintf_s referenced in function _StringCchPrintfW
+::gdal111.dll : fatal error LNK1120: 1 unresolved externals
 
 ::ECHO upgrading solution
 ::CALL devenv.exe /upgrade makegdal10.sln

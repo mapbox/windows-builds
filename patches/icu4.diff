@@ -1,0 +1,68 @@
+diff --git a/source/common/unicode/umachine.h b/source/common/unicode/umachine.h
+index d1102f4..17e696e 100644
+--- a/source/common/unicode/umachine.h
++++ b/source/common/unicode/umachine.h
+@@ -120,6 +120,21 @@
+ /* limits for int32_t etc., like in POSIX inttypes.h                        */
+ /*==========================================================================*/
+ 
++#if defined(_MSC_VER) && _MSC_VER >= 1900
++#undef INT8_MAX
++#undef INT8_MIN
++#undef INT16_MAX
++#undef INT16_MIN
++#undef INT32_MAX
++#undef INT32_MIN
++#undef UINT8_MAX
++#undef UINT8_MIN
++#undef UINT16_MAX
++#undef UINT16_MIN
++#undef UINT32_MAX
++#undef UINT32_MIN
++#endif
++
+ #ifndef INT8_MIN
+ /** The smallest value an 8 bit signed integer can hold @stable ICU 2.0 */
+ #   define INT8_MIN        ((int8_t)(-128))
+diff --git a/source/io/ufile.c b/source/io/ufile.c
+index 820071f..a2cc832 100644
+--- a/source/io/ufile.c
++++ b/source/io/ufile.c
+@@ -34,7 +34,7 @@
+ #include "cstring.h"
+ #include "cmemory.h"
+ 
+-#if U_PLATFORM_USES_ONLY_WIN32_API && !defined(fileno)
++#if U_PLATFORM_USES_ONLY_WIN32_API && !defined(fileno) && _MSC_VER < 1900
+ /* Windows likes to rename Unix-like functions */
+ #define fileno _fileno
+ #endif
+@@ -59,7 +59,7 @@ finit_owner(FILE         *f,
+     uprv_memset(result, 0, sizeof(UFILE));
+     result->fFileno = fileno(f);
+ 
+-#if U_PLATFORM_USES_ONLY_WIN32_API
++#if U_PLATFORM_USES_ONLY_WIN32_API
+     if (0 <= result->fFileno && result->fFileno <= 2) {
+         /* stdin, stdout and stderr need to be special cased for Windows 98 */
+ #if _MSC_VER >= 1400
+diff --git a/source/layout/LETypes.h b/source/layout/LETypes.h
+index 604a622..12e0168 100644
+--- a/source/layout/LETypes.h
++++ b/source/layout/LETypes.h
+@@ -299,13 +299,13 @@ typedef struct LEPoint LEPoint;
+ #ifndef UINT32_MAX
+ #define LE_UINT32_MAX 0xFFFFFFFFU
+ #else
+-#define LE_UINT32_MAX UINT32_MAX
++#define LE_UINT32_MAX 0xFFFFFFFFU
+ #endif
+ 
+ #ifndef UINTPTR_MAX
+ #define LE_UINTPTR_MAX LE_UINT32_MAX
+ #else
+-#define LE_UINTPTR_MAX UINTPTR_MAX
++#define LE_UINTPTR_MAX LE_UINT32_MAX
+ #endif
+ 
+ /**
