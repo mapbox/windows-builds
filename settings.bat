@@ -72,6 +72,14 @@ if NOT EXIST tmp-bin\make.exe (
 	cd ..
 )
 
+if NOT EXIST tmp-bin\ragel.exe (
+    echo getting ragel
+    mkdir tmp-bin
+    cd tmp-bin
+	curl -s -S -f -O -L -k --retry 3 http://w858rkbfg.homepage.t-online.de/files/9213/9317/6402/ragel-vs2012.7z
+	7z e -y ragel-vs2012.7z
+	cd ..
+)
 
 set PATH=%CD%\tmp-bin;%PATH%
 echo "building within %current_script_dir%"
@@ -94,4 +102,5 @@ set EXPAT_VERSION=2.1.0
 set GDAL_VERSION=1.11.0
 set SQLITE_VERSION=3080500
 set PROTOBUF_VERSION=2.5.0
+set HARFBUZZ_VERSION=0.9.35
 set GEOS_VERSION=3.4.2
