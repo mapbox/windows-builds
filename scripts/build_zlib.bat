@@ -16,9 +16,9 @@ if NOT EXIST "zlib-%ZLIB_VERSION%" (
   echo extracting
   CALL bsdtar xfz zlib-%ZLIB_VERSION%.tar.gz
   IF ERRORLEVEL 1 GOTO ERROR
+  rename zlib-%ZLIB_VERSION% zlib
+  IF ERRORLEVEL 1 GOTO ERROR
 )
-
-xcopy /i /d /s /q zlib-%ZLIB_VERSION% zlib
 
 echo.
 echo zlib will be built with/by libpng below

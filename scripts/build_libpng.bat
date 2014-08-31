@@ -40,17 +40,9 @@ cd %PKGDIR%%\libpng
 
 ::copy zlib twice, other projects expect the lib in different locations
 IF %BUILDPLATFORM% EQU x64 (
-    CALL copy /Y projects\vstudio\x64\Release\libpng16.lib libpng.lib
-    IF ERRORLEVEL 1 GOTO ERROR
-    CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib-%ZLIB_VERSION%\zlib.lib
-    IF ERRORLEVEL 1 GOTO ERROR
     CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib\zlib.lib
     IF ERRORLEVEL 1 GOTO ERROR
 ) ELSE (
-    CALL copy /Y projects\vstudio\Release\libpng16.lib libpng.lib
-    IF ERRORLEVEL 1 GOTO ERROR
-    CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib-%ZLIB_VERSION%\zlib.lib
-    IF ERRORLEVEL 1 GOTO ERROR
     CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib\zlib.lib
     IF ERRORLEVEL 1 GOTO ERROR
 )
