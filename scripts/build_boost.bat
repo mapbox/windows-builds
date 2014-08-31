@@ -4,9 +4,6 @@ echo ----------- boost ---------
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-:: ensure python is around
-if NOT EXIST C:/Python27/python.exe ( echo "Missing C:/Python27/python.exe" && GOTO DONE )
-
 cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download boost_1_%BOOST_VERSION%_0.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR
@@ -29,9 +26,17 @@ if "%TARGET_ARCH%"=="64" (
   ::http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html#v2.reference.tools.compiler.msvc.64
   :: If you provide a path to the compiler explicitly, provide the path to the 32-bit compiler. If you try to specify the path to any of 64-bit compilers, configuration will not work.
   echo !!!!!!!!
+  if EXIST c:/tools/python2 (
+      echo using python : 2.7 : c:/tools/python2/python.exe ; > user-config.jam
+  )
+) ELSE (
+  :: use cint python location
+  if EXIST c:/tools/python2-x86-32 (
+      echo using python : 2.7 : c:/tools/python2-x86-32/python.exe ; > user-config.jam
+  )
 )
 
-echo using python : 2.7 : C:/Python27/python.exe ; >> user-config.jam
+::NOTE: you cannot have both pythons installed otherwise it appears bjam will still find the 64 bit one
 
 if NOT EXIST b2.exe (
   echo calling bootstrap bat
@@ -64,6 +69,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 :: build boost_python now
 :: we do this separately because
 :: we want to dynamically link python
+
 CALL b2 -j%NUMBER_OF_PROCESSORS% ^
   -d0 release stage ^
   --build-type=minimal toolset=msvc-%TOOLS_VERSION% -q ^
