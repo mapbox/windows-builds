@@ -12,7 +12,13 @@ Build scripts for Mapnik dependencies
 
 First grab the build dependencies.
 
-You can do this with [chocolatey](https://chocolatey.org/):
+You can do this with [chocolatey](https://chocolatey.org/)
+
+Install chocolately:
+
+    @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+
+Then install deps:
 
     cinst wget msysgit 7zip python2 cmake
 
