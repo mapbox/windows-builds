@@ -49,10 +49,11 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET FREETYPE_DIR=%CD%\freetype-sdk
-CALL cmake ../ -DHB_HAVE_FREETYPE=ON ^
-  -DCMAKE_INCLUDE_PATH=%FREETYPE_DIR%\include ^
-  -DCMAKE_LIBRARY_PATH=%FREETYPE_DIR%\lib
-CALL msbuild Project.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+CALL cmake ../ -G "NMake Makefiles" ^
+   -DHB_HAVE_FREETYPE=ON ^
+   -DCMAKE_INCLUDE_PATH=%FREETYPE_DIR%\include ^
+   -DCMAKE_LIBRARY_PATH=%FREETYPE_DIR%\lib
+CALL nmake /A /F Makefile MSVC_VER=%MSVC_VER%
 
 GOTO DONE
 
