@@ -14,7 +14,7 @@ First grab the build dependencies.
 
 You can do this with [chocolatey](https://chocolatey.org/):
 
-    cinst wget msysgit 7zip
+    cinst wget msysgit 7zip python2 cmake
 
 ### Building
 
