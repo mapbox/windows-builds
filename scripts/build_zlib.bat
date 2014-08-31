@@ -12,7 +12,7 @@ if EXIST zlib (
   echo found extracted sources
 )
 
-if NOT EXIST "zlib-%ZLIB_VERSION%" (
+if NOT EXIST "zlib" (
   echo extracting
   CALL bsdtar xfz zlib-%ZLIB_VERSION%.tar.gz
   IF ERRORLEVEL 1 GOTO ERROR
