@@ -14,7 +14,7 @@ echo.
 echo 3. edit the build\Makefile.win32.features
 echo    enable CAIRO_HAS_FT_FONT=1
 echo 4. edit the build\Makefile.win32.common
-echo 4.1. change zdll.lib to zlib.lib and zlib path to zlib-%ZLIB_VERSION%
+echo 4.1. change zdll.lib to zlib.lib and zlib path to zlib
 echo 4.2 add freetype lib path and freetype.lib to CAIRO_LIBS variable
 echo.
 echo ATTENTION
@@ -53,7 +53,6 @@ patch -N -p1 < %PATCHES%/cairo_.diff || true
 echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
 ECHO building ...
 set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
-xcopy /i /d /s /q ..\zlib-%ZLIB_VERSION% ..\zlib /Y
 CALL make -f Makefile.win32 "CFG=release" "MSVC_VER=%MSVC_VER%"
 IF ERRORLEVEL 1 GOTO ERROR
 
