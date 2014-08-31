@@ -12,16 +12,13 @@ if EXIST zlib (
   echo found extracted sources
 )
 
-if NOT EXIST zlib (
+if NOT EXIST "zlib-%ZLIB_VERSION%" (
   echo extracting
   CALL bsdtar xfz zlib-%ZLIB_VERSION%.tar.gz
-  ::rename zlib-%ZLIB_VERSION% zlib
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
-::TODO
-::other build scripts look for a folder called zlib
-::rename zlib-%ZLIB_VERSION% zlib
+xcopy /i /d /s /q zlib-%ZLIB_VERSION% zlib
 
 echo.
 echo zlib will be built with/by libpng below
