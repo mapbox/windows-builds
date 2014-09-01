@@ -5,8 +5,8 @@ Build scripts for Mapnik dependencies
 
 ### Requirements
 
- - Visual Studio 2013 (Express is okay but MSBuild 12 alone is not sufficient)
- - wget, msysgit, and 7zip
+ - Visual Studio 2014 CTP 3
+ - wget, msysgit, and 7zip, cmake
 
 ### Setup
 
@@ -20,7 +20,7 @@ Install chocolately:
 
 Then install deps:
 
-    cinst wget msysgit 7zip python2 cmake
+    cinst wget msysgit 7zip cmake
 
 ### Building
 
@@ -29,14 +29,8 @@ Simply run:
     settings.bat
     scripts/build.bat
 
-
 Or to run individual builds do:
 
     settings.bat
     scripts/build_icu.bat
-
-### TODO
-
- - cmake/geos
- - test with cmder (http://bliker.github.io/cmder)
 
