@@ -1,8 +1,8 @@
 @echo off
 
 @ rem or 64
-set TARGET_ARCH=32
-::set TARGET_ARCH=64
+::set TARGET_ARCH=32
+set TARGET_ARCH=64
 
 :: Visual Studio 2013
 ::SET TOOLS_VERSION=12.0
@@ -49,7 +49,12 @@ if "%TOOLS_VERSION%" == "12.0" (
 if "%TOOLS_VERSION%" == "14.0" (
   SET MSVC_VER=1900
   SET PLATFORM_TOOLSET=v140
-  CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+  if "%TARGET_ARCH%" == "32" (
+    CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+  )
+  if "%TARGET_ARCH%" == "64" (
+    CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+  )
 )
 
 if NOT EXIST tmp-bin\bsdtar.exe (
