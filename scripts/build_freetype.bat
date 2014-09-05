@@ -35,7 +35,7 @@ CALL msbuild builds\windows\vc2010\freetype.sln /m /toolsversion:%TOOLS_VERSION%
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (
-    CALL copy /Y builds\win32\vc2010\x64\Release\freetype253.lib freetype.lib
+    CALL copy /Y builds\windows\vc2010\x64\Release\freetype253.lib freetype.lib
 ) ELSE (
     CALL copy /Y objs\win32\vc2010\freetype253.lib freetype.lib
 )

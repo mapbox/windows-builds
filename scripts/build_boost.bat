@@ -21,6 +21,7 @@ if NOT EXIST boost_1_%BOOST_VERSION%_0 (
 cd boost_1_%BOOST_VERSION%_0
 
 if "%TARGET_ARCH%"=="64" (
+  SET ICU_LINK=%PKGDIR%\\icu\\lib64\\icuuc.lib
   echo !!!!!!!!!
   echo USE x86 COMMANDPROMPT!!!!!!!!
   ::http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html#v2.reference.tools.compiler.msvc.64
@@ -30,6 +31,7 @@ if "%TARGET_ARCH%"=="64" (
       echo using python : 2.7 : c:/tools/python2/python.exe ; > user-config.jam
   )
 ) ELSE (
+  SET ICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib
   :: use cint python location
   if EXIST c:/tools/python2-x86-32 (
       echo using python : 2.7 : c:/tools/python2-x86-32/python.exe ; > user-config.jam
@@ -62,7 +64,7 @@ CALL b2 -j%NUMBER_OF_PROCESSORS% ^
   --with-date_time --with-system ^
   --with-program_options --with-regex ^
   --disable-filesystem2 ^
-  -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib
+  -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%ICU_LINK%
   
 IF ERRORLEVEL 1 GOTO ERROR
 
