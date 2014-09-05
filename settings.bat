@@ -30,6 +30,7 @@ IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 SET BUILD=%ROOTDIR%\build-%TARGET_ARCH%
 IF NOT EXIST %BUILD% MKDIR %BUILD%
 
+set PATH=C:\Python27;%PATH%
 set PATH=C:\Program Files\7-Zip;%PATH%
 set PATH=C:\Program Files (x86)\Git\bin;%PATH%
 
