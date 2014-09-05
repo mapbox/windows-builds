@@ -1,13 +1,15 @@
 @echo off
 
-@ rem or 64
-::set TARGET_ARCH=32
-set TARGET_ARCH=64
+IF "%1"=="" GOTO USAGE
+IF "%2"=="" GOTO USAGE
 
-:: Visual Studio 2013
-::SET TOOLS_VERSION=12.0
-:: Visual Studio 2014
-SET TOOLS_VERSION=14.0
+set TARGET_ARCH=%1%
+ECHO TARGET_ARCH %TARGET_ARCH%
+
+:: Visual Studio 2013: 12
+:: Visual Studio 2014: 14
+SET TOOLS_VERSION=%2%.0
+ECHO TOOLS_VERSION %TOOLS_VERSION%
 
 if "%TARGET_ARCH%" == "32" (
   SET BUILDPLATFORM=Win32
@@ -111,3 +113,13 @@ set PROTOBUF_VERSION=2.5.0
 set HARFBUZZ_VERSION=0.9.35
 set GEOS_VERSION=3.4.2
 set PYTHON_VERSION=2.7.8
+
+GOTO DONE
+
+:USAGE
+ECHO usage:
+ECHO settings.bat ^<target_arch^> ^<tools_version^>
+ECHO settings.bat 32^|64 12^|14
+EXIT /b 1
+
+:DONE
