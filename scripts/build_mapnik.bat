@@ -18,12 +18,16 @@ IF ERRORLEVEL 1 GOTO ERROR
 git pull
 IF ERRORLEVEL 1 GOTO ERROR
 
-if NOT EXIST mapnik-3.x (
+if NOT EXIST mapnik-gyp (
     git clone https://github.com/mapnik/mapnik-gyp mapnik-gyp
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
 cd mapnik-gyp
+IF ERRORLEVEL 1 GOTO ERROR
+git fetch
+IF ERRORLEVEL 1 GOTO ERROR
+git pull
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building mapnik
