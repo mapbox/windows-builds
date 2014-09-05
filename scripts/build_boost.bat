@@ -7,7 +7,7 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download boost_1_%BOOST_VERSION%_0.tar.bz2
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if EXIST boost_1_%BOOST_VERSION%_0 (
   echo found extracted sources
@@ -16,7 +16,7 @@ if EXIST boost_1_%BOOST_VERSION%_0 (
 if NOT EXIST boost_1_%BOOST_VERSION%_0 (
   echo extracting
   CALL bsdtar xzf %PKGDIR%/boost_1_%BOOST_VERSION%_0.tar.bz2
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 )
 
 cd boost_1_%BOOST_VERSION%_0
@@ -37,7 +37,6 @@ if "%BOOSTADDRESSMODEL%"=="64" (
     CALL "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/vcvarsall.bat" x86
   )
 
-
   if EXIST c:/tools/python2 (
       echo using python : 2.7 : c:/tools/python2/python.exe ; > user-config.jam
   )
@@ -56,7 +55,7 @@ ECHO ICU_LINK %ICU_LINK%
 if NOT EXIST b2.exe (
   echo calling bootstrap bat
   CALL bootstrap.bat --with-toolset=msvc-%TOOLS_VERSION%
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 )
 
 ::VS2010/MSBuild 10: toolset=msvc-10.0 
@@ -79,7 +78,7 @@ CALL b2 -j%NUMBER_OF_PROCESSORS% ^
   --disable-filesystem2 ^
   -sHAVE_ICU=1 -sICU_PATH=%PKGDIR%\\icu -sICU_LINK=%ICU_LINK%
   
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: build boost_python now
 :: we do this separately because
@@ -92,7 +91,7 @@ CALL b2 -j%NUMBER_OF_PROCESSORS% ^
   address-model=%BOOSTADDRESSMODEL% ^
   --with-python python=2.7
 
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
 
