@@ -1,8 +1,8 @@
 @echo off
 
 @ rem or 64
-set TARGET_ARCH=32
-::set TARGET_ARCH=64
+::set TARGET_ARCH=32
+set TARGET_ARCH=64
 
 :: Visual Studio 2013
 ::SET TOOLS_VERSION=12.0
