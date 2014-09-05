@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 
 echo.
 echo download attachment 'vs2013.patch'
@@ -53,8 +54,9 @@ IF ERRORLEVEL 1 GOTO ERROR
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ========= ERROR DOWNLOADING ===========
 
 :DONE
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

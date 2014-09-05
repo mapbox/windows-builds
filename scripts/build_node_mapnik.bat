@@ -1,6 +1,5 @@
-
-
 @echo off
+SET EL=0
 echo ------ NODE_MAPNIK -----
 
 :: guard to make sure settings have been sourced
@@ -39,9 +38,10 @@ npm test
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ----------ERROR NODE_MAPNIK --------------
 
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

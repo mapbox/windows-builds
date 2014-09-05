@@ -1,4 +1,5 @@
 echo off
+SET EL=0
 echo ------ geos -----
 
 ::CALL bsdtar xvf %PKGDIR%\geos-%GEOS_VERSION%.tar.bz2
@@ -30,9 +31,10 @@ IF ERRORLEVEL 1 GOTO ERROR
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ----------ERROR geos --------------
 
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------ ICU -----
 
 :: guard to make sure settings have been sourced
@@ -43,9 +44,10 @@ IF ERRORLEVEL 1 GOTO ERROR
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ----------ERROR ICU --------------
 
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

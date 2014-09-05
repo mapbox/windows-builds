@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ----------- boost ---------
 
 :: guard to make sure settings have been sourced
@@ -20,23 +21,35 @@ if NOT EXIST boost_1_%BOOST_VERSION%_0 (
 
 cd boost_1_%BOOST_VERSION%_0
 
-if "%TARGET_ARCH%"=="64" (
-  SET ICU_LINK=%PKGDIR%\\icu\\lib64\\icuuc.lib
+if "%BOOSTADDRESSMODEL%"=="64" (
+  SET ICU_LINK=%PKGDIR%\icu\lib64\icuuc.lib
   echo !!!!!!!!!
   echo USE x86 COMMANDPROMPT!!!!!!!!
   ::http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html#v2.reference.tools.compiler.msvc.64
   :: If you provide a path to the compiler explicitly, provide the path to the 32-bit compiler. If you try to specify the path to any of 64-bit compilers, configuration will not work.
   echo !!!!!!!!
+
+::use x86 command prompt
+  if "%TOOLS_VERSION%" == "12.0" (
+    CALL "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/vcvarsall.bat" x86
+  )
+  if "%TOOLS_VERSION%" == "14.0" (
+    CALL "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/vcvarsall.bat" x86
+  )
+
+
   if EXIST c:/tools/python2 (
       echo using python : 2.7 : c:/tools/python2/python.exe ; > user-config.jam
   )
 ) ELSE (
-  SET ICU_LINK=%PKGDIR%\\icu\\lib\\icuuc.lib
+  SET ICU_LINK=%PKGDIR%\icu\lib\icuuc.lib
   :: use cint python location
   if EXIST c:/tools/python2-x86-32 (
       echo using python : 2.7 : c:/tools/python2-x86-32/python.exe ; > user-config.jam
   )
 )
+
+ECHO ICU_LINK %ICU_LINK%
 
 ::NOTE: you cannot have both pythons installed otherwise it appears bjam will still find the 64 bit one
 
@@ -84,8 +97,20 @@ IF ERRORLEVEL 1 GOTO ERROR
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo =========== ERROR boost =========
 
 :DONE
+
+::reset x64 command prompt
+if "%BOOSTADDRESSMODEL%"=="64" (
+  if "%TOOLS_VERSION%" == "12.0" (
+    CALL "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/vcvarsall.bat" amd64
+  )
+  if "%TOOLS_VERSION%" == "14.0" (
+    CALL "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/vcvarsall.bat" amd64
+  )
+)
+
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

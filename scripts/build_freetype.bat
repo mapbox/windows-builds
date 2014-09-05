@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 
 echo ----- freetype-----
 
@@ -44,8 +45,9 @@ IF ERRORLEVEL 1 GOTO ERROR
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo -------------FREETYPE ERROR -----------------
 
 :DONE
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------ proj4 -----
 
 :: guard to make sure settings have been sourced
@@ -41,9 +42,10 @@ IF ERRORLEVEL 1 GOTO ERROR
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ----------ERROR proj4 --------------
 
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

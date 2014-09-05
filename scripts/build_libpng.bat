@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------ libpng -----
 
 :: guard to make sure settings have been sourced
@@ -49,7 +50,12 @@ IF %BUILDPLATFORM% EQU x64 (
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
-:ERROR
+GOTO DONE
 
+:ERROR
+SET EL=%ERRORLEVEL%
+ECHO ======== ERROR libpng =======
+
+:DONE
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------ cairo -----
 
 echo.
@@ -66,9 +67,10 @@ if EXIST src\cairo-version.h (
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ----------ERROR CAIRO --------------
 
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

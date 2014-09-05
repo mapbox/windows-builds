@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------ zlib -----
 
 :: guard to make sure settings have been sourced
@@ -26,9 +27,10 @@ echo zlib will be built with/by libpng below
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 ECHO ERROR ZLIB
 
 
 :DONE
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

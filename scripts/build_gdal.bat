@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------ gdal -----
 
 :: guard to make sure settings have been sourced
@@ -68,9 +69,10 @@ IF %BUILDPLATFORM% EQU x64 (
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ----------ERROR gdal --------------
 
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

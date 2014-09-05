@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------ libXML2 -----
 
 :: guard to make sure settings have been sourced
@@ -55,9 +56,10 @@ IF ERRORLEVEL 1 GOTO ERROR
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ----------ERROR libXML2 --------------
 
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------ harfbuzz -----
 
 :: guard to make sure settings have been sourced
@@ -58,9 +59,10 @@ CALL nmake /A /F Makefile MSVC_VER=%MSVC_VER%
 GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
 echo ----------ERROR HARFBUZZ --------------
 
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%

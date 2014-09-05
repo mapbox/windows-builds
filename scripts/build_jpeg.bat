@@ -1,4 +1,5 @@
 @echo off
+SET EL=0
 echo ------- JPEG --------
 
 :: guard to make sure settings have been sourced
@@ -39,8 +40,13 @@ IF ERRORLEVEL 1 GOTO ERROR
 nmake /A /F Makefile.vc nodebug=1 MSVC_VER=%MSVC_VER%
 IF ERRORLEVEL 1 GOTO ERROR
 
+GOTO DONE
 
 :ERROR
+SET EL=%ERRORLEVEL%
+ECHO ======== ERROR jpeg =======
+
+:DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%
