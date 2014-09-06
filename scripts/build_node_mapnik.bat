@@ -20,10 +20,11 @@ git pull
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building node-mapnik
-set PROJ_LIB=%CD%\..\mapnik-sdk\share\proj
-set GDAL_DATA=%CD%\..\mapnik-sdk\share\gdal
-set PATH=%CD%\..\mapnik-sdk\bin;%PATH%
-set PATH=%CD%\..\mapnik-sdk\libs;%PATH%
+set MAPNIK_SDK=%CD%\..\mapnik-3.x\mapnik-gyp\mapnik-sdk
+set PROJ_LIB=%MAPNIK_SDK%\share\proj
+set GDAL_DATA=%MAPNIK_SDK%\share\gdal
+set PATH=%MAPNIK_SDK%\bin;%PATH%
+set PATH=%MAPNIK_SDK%\libs;%PATH%
 
 :: NOTE - requires you install 32 bit node.exe from nodejs.org
 
