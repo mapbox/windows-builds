@@ -24,6 +24,10 @@ if NOT EXIST protobuf (
 cd protobuf
 IF ERRORLEVEL 1 GOTO ERROR
 
+IF %BUILDPLATFORM% EQU x64 (
+    CALL perl -pi.bak -e 's/Win32/x64/g' vsprojects/*.*
+)
+
 patch -N -p0 < %PATCHES%/protobuf.diff || true
 :: vs express lacks devenv.exe to upgrade
 :: and passing /toolsversion:12.0 /p:PlatformToolset=v120 to msbuild does not

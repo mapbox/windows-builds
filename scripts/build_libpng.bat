@@ -27,6 +27,13 @@ IF ERRORLEVEL 1 GOTO ERROR
 patch -N -p1 < %PATCHES%/png.diff || true
 IF ERRORLEVEL 1 GOTO ERROR
 
+IF %BUILDPLATFORM% EQU x64 (
+    CALL perl -pi.bak -e 's/Win32/x64/g' projects/vstudio/*.*
+    IF ERRORLEVEL 1 GOTO ERROR
+    CALL perl -pi.bak -e 's/Win32/x64/g' projects/vstudio/*/*.*
+    IF ERRORLEVEL 1 GOTO ERROR
+)
+
 cd .\projects\vstudio\
 IF ERRORLEVEL 1 GOTO ERROR
 
