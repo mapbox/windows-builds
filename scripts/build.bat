@@ -50,6 +50,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL scripts\build_icu.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+CALL scripts\build_python.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 CALL scripts\build_boost.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
