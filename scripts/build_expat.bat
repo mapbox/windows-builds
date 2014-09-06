@@ -1,4 +1,5 @@
 @echo off
+SETLOCAL
 SET EL=0
 echo ------ expat -----
 :: guard to make sure settings have been sourced

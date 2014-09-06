@@ -1,4 +1,5 @@
 @echo off
+SETLOCAL
 SET EL=0
 echo ------ tiff -----
 
