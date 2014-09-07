@@ -24,10 +24,6 @@ if NOT EXIST protobuf (
 cd protobuf
 IF ERRORLEVEL 1 GOTO ERROR
 
-IF %BUILDPLATFORM% EQU x64 (
-    CALL perl -pi.bak -e 's/Win32/x64/g' vsprojects/*.*
-)
-
 patch -N -p0 < %PATCHES%/protobuf.diff || true
 :: vs express lacks devenv.exe to upgrade
 :: and passing /toolsversion:12.0 /p:PlatformToolset=v120 to msbuild does not
@@ -35,8 +31,17 @@ patch -N -p0 < %PATCHES%/protobuf.diff || true
 :: note: patch was created by opening protobuf.sln in vs express gui once
 patch -N -p1 < %PATCHES%/protobuf-vcupgrade.diff || true
 patch -N -p1 < %PATCHES%/protobuf-vcupgrade-all.diff || true
-
 IF ERRORLEVEL 1 GOTO ERROR
+
+IF %BUILDPLATFORM% EQU x64 (
+    CALL perl -pi.bak -e 's/Win32/x64/g' vsprojects/*.*
+    CALL perl -pi.bak -e 's/x86/x64/g' vsprojects/*.*
+    :: repair damaage
+    CALL perl -pi.bak -e 's/atomicops_internals_x64_msvc/atomicops_internals_x86_msvc/g' vsprojects/*.*
+    CALL perl -pi.bak -e 's/TargetMachine="1"/TargetMachine="17"/g' vsprojects/*.*
+    CALL perl -pi.bak -e 's/MachineX86/MachineX64/g' vsprojects/*.*
+    IF ERRORLEVEL 1 GOTO ERROR
+)
 
 cd vsprojects
 
