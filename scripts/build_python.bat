@@ -8,19 +8,19 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
 
+SET PKGNAME=win-python-%PYTHON_VERSION%-%TARGET_ARCH%.7z
+
 if "%TARGET_ARCH%"=="64" (
     echo installing 64 bit python
-    CALL %ROOTDIR%\scripts\download python-%PYTHON_VERSION%.amd64.msi
+    CALL %ROOTDIR%\scripts\download %PKGNAME%
     IF ERRORLEVEL 1 GOTO ERROR
-    ::TODO TARGETDIR="C:\pythonXYZ"
-    msiexec /i python-%PYTHON_VERSION%.amd64.msi /qn
+    7z -y x %PKGNAME% -o%ROOTDIR%\tmp-bin\
     IF ERRORLEVEL 1 GOTO ERROR
 ) ELSE  (
     echo installing 32 bit python
-    CALL %ROOTDIR%\scripts\download python-%PYTHON_VERSION%.msi
+    CALL %ROOTDIR%\scripts\download %PKGNAME%
     IF ERRORLEVEL 1 GOTO ERROR
-    ::TODO TARGETDIR="C:\pythonXYZ"
-    msiexec /i python-%PYTHON_VERSION%.msi /qn
+    7z -y x %PKGNAME% -o%ROOTDIR%\tmp-bin\
     IF ERRORLEVEL 1 GOTO ERROR
 )
 

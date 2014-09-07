@@ -23,10 +23,10 @@ if NOT EXIST boost_1_%BOOST_VERSION%_0 (
 cd boost_1_%BOOST_VERSION%_0
 
 ::ohhh, how i LOVE commandline. CANNOT set path when using parentheses e.g. IF EXIST xyz ( SET PATH=bla;%PATH% )
-::%PATH% would get evaluated and bail out of BAT with unexpected ERROR
+::%PATH% would get evaluated as a command and bail out of BAT with unexpected ERROR
 ::e.g. "\Microsoft was unexpected at this time."
-if "%BOOSTADDRESSMODEL%"=="32" if EXIST c:/tools/python2-x86-32 SET PATH=c:\tools\python2-x86-32;%PATH%
-if "%BOOSTADDRESSMODEL%"=="64" if EXIST c:/tools/python2 SET PATH=c:\tools\python2;%PATH%
+if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%PATH%
+if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
 
 if "%BOOSTADDRESSMODEL%"=="64" (
   SET ICU_LINK=%PKGDIR%\icu\lib64\icuuc.lib
@@ -43,15 +43,8 @@ if "%BOOSTADDRESSMODEL%"=="64" (
   if "%TOOLS_VERSION%" == "14.0" (
     CALL "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/vcvarsall.bat" x86
   )
-  if EXIST c:/tools/python2 (
-    echo using python : 2.7 : c:/tools/python2/python.exe ; > user-config.jam
-  )
 ) ELSE (
   SET ICU_LINK=%PKGDIR%\icu\lib\icuuc.lib
-  :: use cint python location
-  if EXIST c:/tools/python2-x86-32 (
-    echo using python : 2.7 : c:/tools/python2-x86-32/python.exe ; > user-config.jam
-  )
 )
 
 ECHO ICU_LINK %ICU_LINK%
