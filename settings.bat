@@ -29,8 +29,6 @@ SET PKGDIR=%ROOTDIR%\packages
 IF NOT EXIST %PKGDIR% MKDIR %PKGDIR%
 SET PATCHES=%ROOTDIR%\patches
 IF NOT EXIST %PATCHES% MKDIR %PATCHES%
-SET BUILD=%ROOTDIR%\build-%TARGET_ARCH%
-IF NOT EXIST %BUILD% MKDIR %BUILD%
 
 set PATH=C:\Python27;%PATH%
 set PATH=C:\Program Files\7-Zip;%PATH%
@@ -41,13 +39,6 @@ if "%TOOLS_VERSION%" == "12.0" (
   SET PLATFORM_TOOLSET=v120
   CALL "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/vcvarsall.bat" x86
 )
-
-:: Enable CTP Nov 2013
-:: TODO: not working to put this in a if statement for some reason (error about 'not expected at this time')
-::SET PATH=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\bin;%PATH%
-::SET LIB=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\lib;%LIB%
-::SET INCLUDE=C:\Program Files (x86)\Microsoft Visual C++ Compiler Nov 2013 CTP\include;%INCLUDE%
-::SET PLATFORM_TOOLSET="CTP_Nov2013"
 
 if "%TOOLS_VERSION%" == "14.0" (
   SET MSVC_VER=1900
