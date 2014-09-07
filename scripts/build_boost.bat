@@ -22,30 +22,35 @@ if NOT EXIST boost_1_%BOOST_VERSION%_0 (
 
 cd boost_1_%BOOST_VERSION%_0
 
+::ohhh, how i LOVE commandline. CANNOT set path when using parentheses e.g. IF EXIST xyz ( SET PATH=bla;%PATH% )
+::%PATH% would get evaluated and bail out of BAT with unexpected ERROR
+::e.g. "\Microsoft was unexpected at this time."
+if "%BOOSTADDRESSMODEL%"=="32" if EXIST c:/tools/python2-x86-32 SET PATH=c:\tools\python2-x86-32;%PATH%
+if "%BOOSTADDRESSMODEL%"=="64" if EXIST c:/tools/python2 SET PATH=c:\tools\python2;%PATH%
+
 if "%BOOSTADDRESSMODEL%"=="64" (
   SET ICU_LINK=%PKGDIR%\icu\lib64\icuuc.lib
   echo !!!!!!!!!
   echo USE x86 COMMANDPROMPT!!!!!!!!
   ::http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html#v2.reference.tools.compiler.msvc.64
-  :: If you provide a path to the compiler explicitly, provide the path to the 32-bit compiler. If you try to specify the path to any of 64-bit compilers, configuration will not work.
+  ::If you provide a path to the compiler explicitly, provide the path to the 32-bit compiler. If you try to specify the path to any of 64-bit 
   echo !!!!!!!!
 
-::use x86 command prompt
+  ::use x86 command prompt
   if "%TOOLS_VERSION%" == "12.0" (
     CALL "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/vcvarsall.bat" x86
   )
   if "%TOOLS_VERSION%" == "14.0" (
     CALL "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/vcvarsall.bat" x86
   )
-
   if EXIST c:/tools/python2 (
-      echo using python : 2.7 : c:/tools/python2/python.exe ; > user-config.jam
+    echo using python : 2.7 : c:/tools/python2/python.exe ; > user-config.jam
   )
 ) ELSE (
   SET ICU_LINK=%PKGDIR%\icu\lib\icuuc.lib
   :: use cint python location
   if EXIST c:/tools/python2-x86-32 (
-      echo using python : 2.7 : c:/tools/python2-x86-32/python.exe ; > user-config.jam
+    echo using python : 2.7 : c:/tools/python2-x86-32/python.exe ; > user-config.jam
   )
 )
 
