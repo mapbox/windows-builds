@@ -6,6 +6,24 @@ echo ------ NODE_MAPNIK -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
+SET nodistdir=%ROOTDIR%\tmp-bin\nodist
+IF NOT EXIST %nodistdir% (
+	git clone https://github.com/marcelklehr/nodist.git %nodistdir%
+)
+
+IF %TARGET_ARCH% EQU 32 (
+	SET NODIST_X64=0
+) ELSE (
+	SET NODIST_X64=1
+)
+
+set PATH=%nodistdir%\bin;%PATH%
+set NODIST_PREFIX=%nodistdir%
+CALL nodist selfupdate
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+CALL nodist 0.11
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 cd %PKGDIR%
 if NOT EXIST node-mapnik (
     git clone https://github.com/mapnik/node-mapnik
