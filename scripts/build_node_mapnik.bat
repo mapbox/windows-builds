@@ -10,6 +10,7 @@ SET nodistdir=%ROOTDIR%\tmp-bin\nodist
 IF NOT EXIST %nodistdir% (
 	git clone https://github.com/marcelklehr/nodist.git %nodistdir%
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 IF %TARGET_ARCH% EQU 32 (
 	SET NODIST_X64=0
