@@ -30,6 +30,9 @@ IF NOT EXIST %PKGDIR% MKDIR %PKGDIR%
 SET PATCHES=%ROOTDIR%\patches
 IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 
+::TODO: see what we can use from mysysgit
+::wget cmake
+SET PATH=C:\ProgramData\chocolatey\bin;%PATH%
 set PATH=C:\Python27;%PATH%
 set PATH=C:\Program Files\7-Zip;%PATH%
 set PATH=C:\Program Files (x86)\Git\bin;%PATH%
