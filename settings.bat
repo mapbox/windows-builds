@@ -60,9 +60,13 @@ if NOT EXIST tmp-bin\bsdtar.exe (
     mkdir tmp-bin
     cd tmp-bin
     CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
+    IF ERRORLEVEL 1 GOTO ERROR
     CALL 7z e -y libarchive-2.4.12-1-bin.zip
+    IF ERRORLEVEL 1 GOTO ERROR
     CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
+    IF ERRORLEVEL 1 GOTO ERROR
     CALL 7z e -y libarchive-2.4.12-1-dep.zip
+    IF ERRORLEVEL 1 GOTO ERROR
     cd ..
 )
 
@@ -72,16 +76,19 @@ if NOT EXIST tmp-bin\make.exe (
     mkdir tmp-bin
     cd tmp-bin
     call wget ftp://ftp.equation.com/make/32/make.exe
-	cd ..
+    IF ERRORLEVEL 1 GOTO ERROR
+    cd ..
 )
 
 if NOT EXIST tmp-bin\ragel.exe (
     echo getting ragel
     mkdir tmp-bin
     cd tmp-bin
-	curl -s -S -f -O -L -k --retry 3 http://w858rkbfg.homepage.t-online.de/files/9213/9317/6402/ragel-vs2012.7z
-	7z e -y ragel-vs2012.7z
-	cd ..
+    curl -s -S -f -O -L -k --retry 3 http://w858rkbfg.homepage.t-online.de/files/9213/9317/6402/ragel-vs2012.7z
+    IF ERRORLEVEL 1 GOTO ERROR
+    7z e -y ragel-vs2012.7z
+    IF ERRORLEVEL 1 GOTO ERROR
+    cd ..
 )
 
 set PATH=%CD%\tmp-bin;%PATH%
@@ -116,5 +123,10 @@ ECHO usage:
 ECHO settings.bat ^<target_arch^> ^<tools_version^>
 ECHO settings.bat 32^|64 12^|14
 EXIT /b 1
+
+GOTO DONE
+
+:ERROR
+ECHO ===== ERROR ====
 
 :DONE
