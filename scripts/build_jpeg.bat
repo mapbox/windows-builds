@@ -21,25 +21,40 @@ if NOT EXIST jpeg (
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
-cd jpeg
-IF ERRORLEVEL 1 GOTO ERROR
-
-patch -N -p1 < %PATCHES%/jpeg.diff || true
-
 echo If you receive an error about not finding Win32.mak, you may need to do something like:
 echo "set INCLUDE=%include%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include"
 
 SET INCLUDE=%include%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include
 
+:: download http://www.bvbcode.com/code/f2kivdrh-395674-down
+:: NMAKE /f makefile.vc  setup-v10 PROCESSOR_ARCHITECTURE=x86
+:: edit jpeg.vcxproj, remove wrong character at start
+:: msbuild jpeg.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+:: copy jpeg\release\jpeg.ib -> jpeg\libjpeg.lib
 
-cd jpeg 
-echo y | call copy jconfig.txt jconfig.h
+cd jpeg
 IF ERRORLEVEL 1 GOTO ERROR
+
+copy %PATCHES%\jpeg\*.*
+IF ERRORLEVEL 1 GOTO ERROR
+msbuild jpeg.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+IF ERRORLEVEL 1 GOTO ERROR
+copy Release\jpeg.lib libjpeg.lib
+IF ERRORLEVEL 1 GOTO ERROR
+
+
+::patch -N -p1 < %PATCHES%/jpeg.diff || true
+
+::echo y | call copy jconfig.txt jconfig.h
+::IF ERRORLEVEL 1 GOTO ERROR
 
 ::NMAKE Options: http://msdn.microsoft.com/en-us/library/afyyse50%28v=vs.120%29.aspx
 ::NMAKE platform (32/64) used, depends on which Developer command prompt was opened
-nmake /A /F Makefile.vc nodebug=1 MSVC_VER=%MSVC_VER%
-IF ERRORLEVEL 1 GOTO ERROR
+::nmake /A /F Makefile.vc nodebug=1 MSVC_VER=%MSVC_VER%
+::IF ERRORLEVEL 1 GOTO ERROR
+
+
+
 
 GOTO DONE
 
