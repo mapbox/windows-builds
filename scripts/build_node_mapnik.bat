@@ -6,6 +6,10 @@ echo ------ NODE_MAPNIK -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
+SET PUB=0
+IF "%1"=="PUBLISH" ( ECHO "publishing" && SET PUB=1 ) ELSE ( GOTO %1 )
+
+
 SET nodistdir=%ROOTDIR%\tmp-bin\nodist
 IF NOT EXIST %nodistdir% (
 	git clone https://github.com/marcelklehr/nodist.git %nodistdir%
@@ -60,7 +64,15 @@ if NOT EXIST node_modules (
 call .\node_modules\.bin\node-pre-gyp build --msvs_version=2013
 IF ERRORLEVEL 1 GOTO ERROR
 
-npm test
+CALL npm test
+IF ERRORLEVEL 1 GOTO ERROR
+
+ECHO PUB %PUB%
+IF %PUB% EQU 1 (
+	CALL npm install aws-sdk
+	CALL .\node_modules\.bin\node-pre-gyp package publish
+)
+IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
 
