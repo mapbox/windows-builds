@@ -61,18 +61,44 @@ if NOT EXIST node_modules (
     call npm install node-gyp mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp
 )
 
-call .\node_modules\.bin\node-pre-gyp build --msvs_version=2013
+call .\node_modules\.bin\node-pre-gyp rebuild --msvs_version=2013
 IF ERRORLEVEL 1 GOTO ERROR
 
 CALL npm test
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO PUB %PUB%
+::Windows batch file problems: everything within a block e.g.( ) will be evaluated at one
+::split publishing into 3 blocks, otherwise output of xcopy will be written into mapnik_settings.js :-(
+FOR /F "tokens=*" %%i in ('.\node_modules\.bin\node-pre-gyp reveal module_path --silent') do SET BINDINGIDR=%%i
+IF %PUB% EQU 1 (
+	xcopy /Q /S /Y %MAPNIK_SDK%\libs\mapnik %BINDINGIDR%\mapnik\
+	xcopy /Q /S /Y %MAPNIK_SDK%\share %BINDINGIDR%\share\
+	xcopy /Q /Y %MAPNIK_SDK%\libs\cairo.dll %BINDINGIDR%\
+	xcopy /Q /Y %MAPNIK_SDK%\libs\gdal111.dll %BINDINGIDR%\
+	xcopy /Q /Y %MAPNIK_SDK%\libs\icu*.dll %BINDINGIDR%\
+	xcopy /Q /Y %MAPNIK_SDK%\libs\libexpat.dll %BINDINGIDR%\
+	xcopy /Q /Y %MAPNIK_SDK%\libs\libpng16.dll %BINDINGIDR%\
+	xcopy /Q /Y %MAPNIK_SDK%\libs\mapnik.dll %BINDINGIDR%\
+)
+IF %PUB% EQU 1 (
+	ECHO var path = require('path'); > %BINDINGIDR%\mapnik_settings.js
+	ECHO module.exports.paths = { >> %BINDINGIDR%\mapnik_settings.js
+	ECHO     'fonts': path.join(__dirname, 'mapnik/fonts'), >> %BINDINGIDR%\mapnik_settings.js
+	ECHO     'input_plugins': path.join(__dirname, 'mapnik/input') >> %BINDINGIDR%\mapnik_settings.js
+	ECHO }; >> %BINDINGIDR%\mapnik_settings.js
+	ECHO module.exports.env = { >> %BINDINGIDR%\mapnik_settings.js
+	ECHO     'ICU_DATA': path.join(__dirname, 'share/icu'), >> %BINDINGIDR%\mapnik_settings.js
+	ECHO     'GDAL_DATA': path.join(__dirname, 'share/gdal'), >> %BINDINGIDR%\mapnik_settings.js
+	ECHO     'PROJ_LIB': path.join(__dirname, 'share/proj'), >> %BINDINGIDR%\mapnik_settings.js
+	ECHO     'PATH': __dirname >> %BINDINGIDR%\mapnik_settings.js
+	ECHO }; >> %BINDINGIDR%\mapnik_settings.js
+)
 IF %PUB% EQU 1 (
 	CALL npm install aws-sdk
+	REM CALL .\node_modules\.bin\node-pre-gyp package
 	CALL .\node_modules\.bin\node-pre-gyp package publish
 )
-IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
 
