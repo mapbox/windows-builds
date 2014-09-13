@@ -32,7 +32,7 @@ set PATH=%nodistdir%\bin;%PATH%
 set NODIST_PREFIX=%nodistdir%
 CALL nodist selfupdate
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-CALL nodist 0.11
+CALL nodist 0.10
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cd %PKGDIR%
