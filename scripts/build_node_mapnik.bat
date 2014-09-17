@@ -6,8 +6,13 @@ echo ------ NODE_MAPNIK -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
+SET NODE_VER=0.10
 SET PUB=0
-IF "%1"=="PUBLISH" ( ECHO "publishing" && SET PUB=1 )
+IF "%1"=="PUBLISH" ( 
+	ECHO "publishing"
+	SET PUB=1
+	IF "%2"=="" ( ECHO using default %NODE_VER% ) ELSE ( SET NODE_VER=%2 && ECHO using %2)
+)
 
 
 SET nodistdir=%ROOTDIR%\tmp-bin\nodist
@@ -32,7 +37,7 @@ set PATH=%nodistdir%\bin;%PATH%
 set NODIST_PREFIX=%nodistdir%
 CALL nodist selfupdate
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-CALL nodist 0.10
+CALL nodist %NODE_VER%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cd %PKGDIR%
