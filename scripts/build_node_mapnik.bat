@@ -7,7 +7,7 @@ echo ------ NODE_MAPNIK -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 SET PUB=0
-IF "%1"=="PUBLISH" ( ECHO "publishing" && SET PUB=1 ) ELSE ( GOTO %1 )
+IF "%1"=="PUBLISH" ( ECHO "publishing" && SET PUB=1 )
 
 
 SET nodistdir=%ROOTDIR%\tmp-bin\nodist
