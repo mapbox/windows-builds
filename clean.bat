@@ -43,7 +43,7 @@ rd /q /s packages\webp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 rd /q /s packages\zlib
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\mapnik-3.x
+rd /q /s packages\mapnik-%MAPNIKVERSION%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 rd /q /s packages\node-mapnik
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR

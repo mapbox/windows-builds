@@ -48,13 +48,13 @@ cd node-mapnik
 IF ERRORLEVEL 1 GOTO ERROR
 git fetch
 IF ERRORLEVEL 1 GOTO ERROR
-git checkout mapnik3
+git checkout %NODEMAPNIKVERSION%
 IF ERRORLEVEL 1 GOTO ERROR
 git pull
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building node-mapnik
-set MAPNIK_SDK=%CD%\..\mapnik-3.x\mapnik-gyp\mapnik-sdk
+set MAPNIK_SDK=%CD%\..\mapnik-%MAPNIKVERSION%\mapnik-gyp\mapnik-sdk
 set PROJ_LIB=%MAPNIK_SDK%\share\proj
 set GDAL_DATA=%MAPNIK_SDK%\share\gdal
 set PATH=%MAPNIK_SDK%\bin;%PATH%

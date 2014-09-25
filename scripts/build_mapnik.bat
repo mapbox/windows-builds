@@ -7,11 +7,11 @@ echo ------ MAPNIK -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-if NOT EXIST mapnik-3.x (
-    git clone https://github.com/mapnik/mapnik mapnik-3.x
+if NOT EXIST mapnik-%MAPNIKVERSION% (
+    git clone https://github.com/mapnik/mapnik mapnik-%MAPNIKVERSION%
     IF ERRORLEVEL 1 GOTO ERROR
 )
-cd mapnik-3.x
+cd mapnik-%MAPNIKVERSION%
 IF ERRORLEVEL 1 GOTO ERROR
 git fetch
 IF ERRORLEVEL 1 GOTO ERROR
