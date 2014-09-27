@@ -8,12 +8,13 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 SET NODE_VER=0.10
 SET PUB=0
-IF "%1"=="PUBLISH" ( 
+IF "%1"=="PUBLISH" (
 	ECHO "publishing"
 	SET PUB=1
-	IF "%2"=="" ( ECHO using default %NODE_VER% ) ELSE ( SET NODE_VER=%2 && ECHO using %2)
-)
+	IF "%2"=="" ( ECHO using default %NODE_VER% ) ELSE ( SET NODE_VER=%2)
+) ELSE ( ECHO "NOT publishing")
 
+ECHO using %NODE_VER%
 
 SET nodistdir=%ROOTDIR%\tmp-bin\nodist
 IF NOT EXIST %nodistdir% (
@@ -68,7 +69,7 @@ if NOT EXIST node_modules (
 
 call .\node_modules\.bin\node-pre-gyp rebuild --msvs_version=2013
 IF ERRORLEVEL 1 GOTO ERROR
-
+echo before test
 CALL npm test
 IF ERRORLEVEL 1 GOTO ERROR
 
