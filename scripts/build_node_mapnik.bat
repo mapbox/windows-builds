@@ -70,6 +70,14 @@ if NOT EXIST node_modules (
     call npm install node-gyp mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp
 )
 
+call .\node_modules\.bin\node-pre-gyp clean
+if EXIST build ( 
+	rd /q /s build
+)
+if EXIST lib\binding (
+    rd /q /s lib\binding
+)
+
 call .\node_modules\.bin\node-pre-gyp rebuild --msvs_version=2013
 IF ERRORLEVEL 1 GOTO ERROR
 echo before test
@@ -93,25 +101,27 @@ IF %PUB% EQU 1 (
 	xcopy /Q /Y %MAPNIK_SDK%\libs\mapnik.dll %BINDINGIDR%\
 )
 
-IF %PUB% EQU 1 (
-	ECHO var path = require('path'); > %BINDINGIDR%\mapnik_settings.js
-	ECHO module.exports.paths = { >> %BINDINGIDR%\mapnik_settings.js
-	ECHO     'fonts': path.join(__dirname, 'mapnik/fonts'), >> %BINDINGIDR%\mapnik_settings.js
-	ECHO     'input_plugins': path.join(__dirname, 'mapnik/input') >> %BINDINGIDR%\mapnik_settings.js
-	ECHO }; >> %BINDINGIDR%\mapnik_settings.js
-	ECHO module.exports.env = { >> %BINDINGIDR%\mapnik_settings.js
-	ECHO     'ICU_DATA': path.join(__dirname, 'share/icu'), >> %BINDINGIDR%\mapnik_settings.js
-	ECHO     'GDAL_DATA': path.join(__dirname, 'share/gdal'), >> %BINDINGIDR%\mapnik_settings.js
-	ECHO     'PROJ_LIB': path.join(__dirname, 'share/proj'), >> %BINDINGIDR%\mapnik_settings.js
-	ECHO     'PATH': __dirname >> %BINDINGIDR%\mapnik_settings.js
-	ECHO }; >> %BINDINGIDR%\mapnik_settings.js
-)
-
-CALL .\node_modules\.bin\node-pre-gyp package
+ECHO var path = require('path'); > %BINDINGIDR%\mapnik_settings.js
+ECHO module.exports.paths = { >> %BINDINGIDR%\mapnik_settings.js
+ECHO     'fonts': path.join(__dirname, 'mapnik/fonts'), >> %BINDINGIDR%\mapnik_settings.js
+ECHO     'input_plugins': path.join(__dirname, 'mapnik/input') >> %BINDINGIDR%\mapnik_settings.js
+ECHO }; >> %BINDINGIDR%\mapnik_settings.js
+ECHO module.exports.env = { >> %BINDINGIDR%\mapnik_settings.js
+ECHO     'ICU_DATA': path.join(__dirname, 'share/icu'), >> %BINDINGIDR%\mapnik_settings.js
+ECHO     'GDAL_DATA': path.join(__dirname, 'share/gdal'), >> %BINDINGIDR%\mapnik_settings.js
+ECHO     'PROJ_LIB': path.join(__dirname, 'share/proj'), >> %BINDINGIDR%\mapnik_settings.js
+ECHO     'PATH': __dirname >> %BINDINGIDR%\mapnik_settings.js
+ECHO }; >> %BINDINGIDR%\mapnik_settings.js
 
 IF %PUB% EQU 1 (
+    CALL npm test
+    IF ERRORLEVEL 1 GOTO ERROR
+    CALL .\node_modules\.bin\node-pre-gyp package
+    IF ERRORLEVEL 1 GOTO ERROR
 	CALL npm install aws-sdk
+    IF ERRORLEVEL 1 GOTO ERROR
 	CALL .\node_modules\.bin\node-pre-gyp unpublish publish
+    IF ERRORLEVEL 1 GOTO ERROR
 )
 
 GOTO DONE
