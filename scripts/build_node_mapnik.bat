@@ -88,6 +88,8 @@ IF %PUB% EQU 1 (
 	xcopy /Q /Y %MAPNIK_SDK%\libs\icu*.dll %BINDINGIDR%\
 	xcopy /Q /Y %MAPNIK_SDK%\libs\libexpat.dll %BINDINGIDR%\
 	xcopy /Q /Y %MAPNIK_SDK%\libs\libpng16.dll %BINDINGIDR%\
+	xcopy /Q /Y %MAPNIK_SDK%\libs\libtiff.dll %BINDINGIDR%\
+	xcopy /Q /Y %MAPNIK_SDK%\libs\libwebp.dll %BINDINGIDR%\
 	xcopy /Q /Y %MAPNIK_SDK%\libs\mapnik.dll %BINDINGIDR%\
 )
 
