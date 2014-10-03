@@ -16,6 +16,9 @@ IF "%1"=="PUBLISH" (
 
 ECHO using %NODE_VER%
 
+if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%PATH%
+if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
+
 SET nodistdir=%ROOTDIR%\tmp-bin\nodist
 IF NOT EXIST %nodistdir% (
 	git clone https://github.com/marcelklehr/nodist.git %nodistdir%
@@ -87,6 +90,7 @@ IF %PUB% EQU 1 (
 	xcopy /Q /Y %MAPNIK_SDK%\libs\libpng16.dll %BINDINGIDR%\
 	xcopy /Q /Y %MAPNIK_SDK%\libs\mapnik.dll %BINDINGIDR%\
 )
+
 IF %PUB% EQU 1 (
 	ECHO var path = require('path'); > %BINDINGIDR%\mapnik_settings.js
 	ECHO module.exports.paths = { >> %BINDINGIDR%\mapnik_settings.js
@@ -100,10 +104,12 @@ IF %PUB% EQU 1 (
 	ECHO     'PATH': __dirname >> %BINDINGIDR%\mapnik_settings.js
 	ECHO }; >> %BINDINGIDR%\mapnik_settings.js
 )
+
+CALL .\node_modules\.bin\node-pre-gyp package
+
 IF %PUB% EQU 1 (
 	CALL npm install aws-sdk
-	REM CALL .\node_modules\.bin\node-pre-gyp package
-	CALL .\node_modules\.bin\node-pre-gyp package publish
+	CALL .\node_modules\.bin\node-pre-gyp unpublish publish
 )
 
 GOTO DONE
