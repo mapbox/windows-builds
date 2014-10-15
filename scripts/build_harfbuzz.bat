@@ -29,7 +29,7 @@ if NOT EXIST CMakeLists.txt (
 )
 
 if EXIST harfbuzz-build (
-    rd /q /s harfbuzz-build
+    ddt /q harfbuzz-build
 )
 
 mkdir harfbuzz-build
@@ -52,6 +52,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET FREETYPE_DIR=%CD%\freetype-sdk
 CALL cmake ../ -G "NMake Makefiles" ^
+   -DCMAKE_BUILD_TYPE=Release ^
    -DHB_HAVE_FREETYPE=ON ^
    -DCMAKE_INCLUDE_PATH=%FREETYPE_DIR%\include ^
    -DCMAKE_LIBRARY_PATH=%FREETYPE_DIR%\lib

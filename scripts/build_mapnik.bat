@@ -28,6 +28,9 @@ if NOT EXIST mapnik-gyp (
 
 cd mapnik-gyp
 IF ERRORLEVEL 1 GOTO ERROR
+
+ddt /Q mapnik-sdk
+
 git fetch
 IF ERRORLEVEL 1 GOTO ERROR
 git pull

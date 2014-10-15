@@ -9,7 +9,7 @@ foreach ($item in Get-ChildItem $args[0] -Recurse -Include *.lib){
         Write-Host "MT or MTd $item";
     }
     #MDd
-    if ($output -like '*msvcrtd*') {
+    if ($output -like '*MSVCRTD*') {
         Write-Host "MDd $item";
     }
 }
@@ -23,7 +23,7 @@ foreach ($item in Get-ChildItem $args[0] -Recurse -Include *.dll){
         Write-Host "MT or MTd $item";
     }
     #MDd
-    if ($output -like '*msvcrtd*') {
+    if ($output -like '*MSVCRTD*') {
         Write-Host "MDd $item";
     }
 }
