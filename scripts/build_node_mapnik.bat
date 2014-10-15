@@ -71,7 +71,7 @@ if NOT EXIST node_modules (
 )
 
 call .\node_modules\.bin\node-pre-gyp clean
-if EXIST build ( 
+if EXIST build (
 	rd /q /s build
 )
 if EXIST lib\binding (

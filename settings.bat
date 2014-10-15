@@ -100,6 +100,17 @@ if NOT EXIST tmp-bin\ragel.exe (
     cd ..
 )
 
+IF NOT EXIST tmp-bin\ddt.exe (
+    echo getting "delete-directory-tree"
+    mkdir tmp-bin
+    cd tmp-bin
+    curl -O https://mapnik.s3.amazonaws.com/dist/dev/delete-directory-tree.7z
+    IF ERRORLEVEL 1 GOTO ERROR
+    7z e delete-directory-tree.7z NET\%WEBP_PLATFORM%\ddt.exe
+    IF ERRORLEVEL 1 GOTO ERROR
+    cd ..
+)
+
 set PATH=%CD%\tmp-bin;%PATH%
 echo "building within %current_script_dir%"
 set ICU_VERSION=53.1
@@ -137,5 +148,7 @@ GOTO DONE
 
 :ERROR
 ECHO ===== ERROR ====
+CD %ROOTDIR%
+EXIT /b 1
 
 :DONE
