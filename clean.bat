@@ -3,51 +3,50 @@ del /q /s packages\boost_1_%BOOST_VERSION%_0\*.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 del /q /s packages\boost_1_%BOOST_VERSION%_0\user-confg.jam
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\boost_1_%BOOST_VERSION%_0\bin.v2
+ddt /Q packages\boost_1_%BOOST_VERSION%_0\bin.v2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\boost_1_%BOOST_VERSION%_0\stage
+ddt /Q packages\boost_1_%BOOST_VERSION%_0\stage
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\cairo
+ddt /Q packages\cairo
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\expat
+ddt /Q packages\expat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\freetype
+ddt /Q packages\freetype
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\gdal
+ddt /Q packages\gdal
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\harfbuzz
+ddt /Q packages\harfbuzz
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\harfbuzz-build
+ddt /Q packages\harfbuzz-build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\icu
+ddt /Q packages\icu
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\jpeg
+ddt /Q packages\jpeg
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\libpng
+ddt /Q packages\libpng
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\libtiff
+ddt /Q packages\libtiff
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\libxml2
+ddt /Q packages\libxml2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\pixman
+ddt /Q packages\pixman
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\postgresql
+ddt /Q packages\postgresql
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\proj
+ddt /Q packages\proj
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\protobuf
+ddt /Q packages\protobuf
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\sqlite
+ddt /Q packages\sqlite
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\webp
+ddt /Q packages\webp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\zlib
+ddt /Q packages\zlib
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\mapnik-%MAPNIKVERSION%
+ddt /Q packages\mapnik-%MAPNIKBRANCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-rd /q /s packages\node-mapnik
+ddt /Q packages\node-mapnik
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
 
 
 GOTO DONE
