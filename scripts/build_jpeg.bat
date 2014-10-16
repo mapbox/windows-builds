@@ -45,11 +45,11 @@ msbuild jpeg.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_T
 IF ERRORLEVEL 1 GOTO ERROR
 
 if %TARGET_ARCH% EQU 32 (
-  copy %BUILD_TYPE%\jpeg.lib libjpeg.lib
-  IF EXIST %BUILD_TYPE%\jpeg.pdb (copy %BUILD_TYPE%\jpeg.pdb libjpeg.pdb)
+  copy /Y %BUILD_TYPE%\jpeg.lib libjpeg.lib
+  IF EXIST %BUILD_TYPE%\jpeg.pdb (copy /Y %BUILD_TYPE%\jpeg.pdb libjpeg.pdb)
 ) ELSE (
-  copy x64\%BUILD_TYPE%\jpeg.lib libjpeg.lib
-  IF EXIST x64\%BUILD_TYPE%\jpeg.pdb (x64\%BUILD_TYPE%\jpeg.pdb libjpeg.pdb)
+  copy /Y x64\%BUILD_TYPE%\jpeg.lib libjpeg.lib
+  IF EXIST x64\%BUILD_TYPE%\jpeg.pdb (copy /Y x64\%BUILD_TYPE%\jpeg.pdb libjpeg.pdb)
 )
 IF ERRORLEVEL 1 GOTO ERROR
 

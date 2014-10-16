@@ -47,8 +47,11 @@ echo cleaning ....
 CALL nmake /F Makefile.vc clean
 IF ERRORLEVEL 1 GOTO ERROR
 
+SET DEBUG_FLAG=0
+IF %BUILD_TYPE% EQU Debug (SET DEBUG_FLAG=1)
+
 echo building ....
-CALL nmake /A /F Makefile.vc MSVC_VER=%MSVC_VER%
+CALL nmake /A /F Makefile.vc MSVC_VER=%MSVC_VER% DEBUG=%DEBUG_FLAG%
 :: >%ROOTDIR%\build_tiff-%TIFF_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
