@@ -1,3 +1,10 @@
+matrix:
+  vs_version: 12
+  vs_version: 14
+
+configuration:
+  - Debug
+  - Release
 
 platform:
   - x86
@@ -6,8 +13,8 @@ platform:
 install:
   - cinst wget msysgit
   - set FINAL_ARCH=64
-  - if "%PLATFORM%" == "x86" set FINAL_ARCH=32
-  - .\settings.bat %FINAL_ARCH% 12 Release
+  - if "%platform%" == "x86" set FINAL_ARCH=32
+  - .\settings.bat %FINAL_ARCH% %vs_version% %configuration%
   - scripts\build.bat
 
 build: off
