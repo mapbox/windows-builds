@@ -4,11 +4,9 @@ platform:
   - x64
 
 install:
-  # make sure nmake is on PATH
-  - call "%VS120COMNTOOLS%\..\..\VC\vcvarsall.bat" x86
-  - cinst wget msysgit
-  - if "%PLATFORM%" == "x64" .\settings.bat 64 12 Release
-  - if "%PLATFORM%" == "x86" .\settings.bat 32 12 Release
+  - set FINAL_ARCH=64
+  - if "%PLATFORM%" == "x86" set FINAL_ARCH=32
+  - .\settings.bat %FINAL_ARCH% 12 Release
   - scripts\build.bat
 
 build: off
