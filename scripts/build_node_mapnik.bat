@@ -9,9 +9,9 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 SET NODE_VER=0.10
 SET PUB=0
 IF "%1"=="PUBLISH" (
-	ECHO "publishing"
-	SET PUB=1
-	IF "%2"=="" ( ECHO using default %NODE_VER% ) ELSE ( SET NODE_VER=%2)
+    ECHO "publishing"
+    SET PUB=1
+    IF "%2"=="" ( ECHO using default %NODE_VER% ) ELSE ( SET NODE_VER=%2)
 ) ELSE ( ECHO "NOT publishing")
 
 ECHO using %NODE_VER%
@@ -21,7 +21,7 @@ if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOT
 
 SET nodistdir=%ROOTDIR%\tmp-bin\nodist
 IF NOT EXIST %nodistdir% (
-	git clone https://github.com/marcelklehr/nodist.git %nodistdir%
+    git clone https://github.com/marcelklehr/nodist.git %nodistdir%
 )
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
@@ -32,9 +32,9 @@ git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 IF %TARGET_ARCH% EQU 32 (
-	SET NODIST_X64=0
+    SET NODIST_X64=0
 ) ELSE (
-	SET NODIST_X64=1
+    SET NODIST_X64=1
 )
 
 set PATH=%nodistdir%\bin;%PATH%
@@ -72,7 +72,7 @@ if NOT EXIST node_modules (
 
 call .\node_modules\.bin\node-pre-gyp clean
 if EXIST build (
-	rd /q /s build
+    rd /q /s build
 )
 if EXIST lib\binding (
     rd /q /s lib\binding
@@ -88,18 +88,31 @@ ECHO PUB %PUB%
 ::Windows batch file problems: everything within a block e.g.( ) will be evaluated at one
 ::split publishing into 3 blocks, otherwise output of xcopy will be written into mapnik_settings.js :-(
 FOR /F "tokens=*" %%i in ('.\node_modules\.bin\node-pre-gyp reveal module_path --silent') do SET BINDINGIDR=%%i
-IF %PUB% EQU 1 (
-	xcopy /Q /S /Y %MAPNIK_SDK%\libs\mapnik %BINDINGIDR%\mapnik\
-	xcopy /Q /S /Y %MAPNIK_SDK%\share %BINDINGIDR%\share\
-	xcopy /Q /Y %MAPNIK_SDK%\libs\cairo.dll %BINDINGIDR%\
-	xcopy /Q /Y %MAPNIK_SDK%\libs\gdal111.dll %BINDINGIDR%\
-	xcopy /Q /Y %MAPNIK_SDK%\libs\icu*.dll %BINDINGIDR%\
-	xcopy /Q /Y %MAPNIK_SDK%\libs\libexpat.dll %BINDINGIDR%\
-	xcopy /Q /Y %MAPNIK_SDK%\libs\libpng16.dll %BINDINGIDR%\
-	xcopy /Q /Y %MAPNIK_SDK%\libs\libtiff.dll %BINDINGIDR%\
-	xcopy /Q /Y %MAPNIK_SDK%\libs\libwebp.dll %BINDINGIDR%\
-	xcopy /Q /Y %MAPNIK_SDK%\libs\mapnik.dll %BINDINGIDR%\
-)
+
+xcopy /Q /S /Y %MAPNIK_SDK%\libs\mapnik\input %BINDINGIDR%\mapnik\input\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /S /Y %MAPNIK_SDK%\share %BINDINGIDR%\share\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\libs\cairo.dll %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\libs\gdal111.dll %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\libs\icu*.dll %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\libs\libexpat.dll %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\libs\libpng16.dll %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\libs\libtiff.dll %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\libs\libwebp.dll %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\libs\mapnik.dll %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\bin\nik2img.exe %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\bin\shapeindex.exe %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO var path = require('path'); > %BINDINGIDR%\mapnik_settings.js
 ECHO module.exports.paths = { >> %BINDINGIDR%\mapnik_settings.js
@@ -113,14 +126,15 @@ ECHO     'PROJ_LIB': path.join(__dirname, 'share/proj'), >> %BINDINGIDR%\mapnik_
 ECHO     'PATH': __dirname >> %BINDINGIDR%\mapnik_settings.js
 ECHO }; >> %BINDINGIDR%\mapnik_settings.js
 
+CALL npm test
+IF ERRORLEVEL 1 GOTO ERROR
+CALL .\node_modules\.bin\node-pre-gyp package
+IF ERRORLEVEL 1 GOTO ERROR
+
 IF %PUB% EQU 1 (
-    CALL npm test
+    CALL npm install aws-sdk
     IF ERRORLEVEL 1 GOTO ERROR
-    CALL .\node_modules\.bin\node-pre-gyp package
-    IF ERRORLEVEL 1 GOTO ERROR
-	CALL npm install aws-sdk
-    IF ERRORLEVEL 1 GOTO ERROR
-	CALL .\node_modules\.bin\node-pre-gyp unpublish publish
+    CALL .\node_modules\.bin\node-pre-gyp unpublish publish
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
