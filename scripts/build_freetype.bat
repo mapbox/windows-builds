@@ -32,8 +32,15 @@ if "%TARGET_ARCH%"=="64" (
 )
 
 ECHO building ...
-CALL msbuild builds\windows\vc2010\freetype.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration=Release /p:Platform=%BUILDPLATFORM%
-:: >%ROOTDIR%\build_freetype-%FREETYPE_VERSION%.log 2>&1
+msbuild ^
+.\builds\windows\vc2010\freetype.sln ^
+/nologo ^
+/m:%NUMBER_OF_PROCESSORS% ^
+/toolsversion:%TOOLS_VERSION% ^
+/p:BuildInParellel=true ^
+/p:Configuration=%BUILD_TYPE% ^
+/p:Platform=%BUILDPLATFORM% ^
+/p:PlatformToolset=%PLATFORM_TOOLSET%
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (

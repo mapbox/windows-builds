@@ -41,7 +41,15 @@ IF ERRORLEVEL 1 GOTO ERROR
 copy %PATCHES%\jpeg\*.*
 IF ERRORLEVEL 1 GOTO ERROR
 
-msbuild jpeg.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration=%BUILD_TYPE% /p:Platform=%BUILDPLATFORM%
+msbuild ^
+.\jpeg.sln  ^
+/nologo ^
+/m:%NUMBER_OF_PROCESSORS% ^
+/toolsversion:%TOOLS_VERSION% ^
+/p:BuildInParellel=true ^
+/p:Configuration=%BUILD_TYPE% ^
+/p:Platform=%BUILDPLATFORM% ^
+/p:PlatformToolset=%PLATFORM_TOOLSET%
 IF ERRORLEVEL 1 GOTO ERROR
 
 if %TARGET_ARCH% EQU 32 (

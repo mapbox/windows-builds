@@ -28,8 +28,26 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 patch -N -p1 < %PATCHES%/icu4.diff || true
 
-call msbuild source\i18n\i18n.vcxproj /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration=%BUILD_TYPE% /p:Platform=%BUILDPLATFORM%
-call msbuild source\common\common.vcxproj /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration=%BUILD_TYPE% /p:Platform=%BUILDPLATFORM%
+msbuild ^
+.\source\i18n\i18n.vcxproj ^
+/nologo ^
+/m:%NUMBER_OF_PROCESSORS% ^
+/toolsversion:%TOOLS_VERSION% ^
+/p:BuildInParellel=true ^
+/p:Configuration=%BUILD_TYPE% ^
+/p:Platform=%BUILDPLATFORM% ^
+/p:PlatformToolset=%PLATFORM_TOOLSET%
+IF ERRORLEVEL 1 GOTO ERROR
+
+msbuild ^
+.\source\common\common.vcxproj ^
+/nologo ^
+/m:%NUMBER_OF_PROCESSORS% ^
+/toolsversion:%TOOLS_VERSION% ^
+/p:BuildInParellel=true ^
+/p:Configuration=%BUILD_TYPE% ^
+/p:Platform=%BUILDPLATFORM% ^
+/p:PlatformToolset=%PLATFORM_TOOLSET%
 ::call msbuild source\data\makedata.vcxproj /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 ::call msbuild source\allinone\allinone.sln /m /target:common;makedata;i18n /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR

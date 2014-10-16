@@ -41,8 +41,15 @@ ECHO "IF building x64 add platform to solution manually!"
 ECHO.
 
 ECHO building ...
-CALL msbuild vstudio.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration=%BUILD_TYPE% /p:Platform=%BUILDPLATFORM%
-:: >%ROOTDIR%\build_libpng-%LIBPNG_VERSION%.log 2>&1
+msbuild ^
+.\vstudio.sln ^
+/nologo ^
+/m:%NUMBER_OF_PROCESSORS% ^
+/toolsversion:%TOOLS_VERSION% ^
+/p:BuildInParellel=true ^
+/p:Configuration=%BUILD_TYPE% ^
+/p:Platform=%BUILDPLATFORM% ^
+/p:PlatformToolset=%PLATFORM_TOOLSET%
 IF ERRORLEVEL 1 GOTO ERROR
 
 cd %PKGDIR%%\libpng
