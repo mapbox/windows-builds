@@ -41,7 +41,7 @@ ECHO "IF building x64 add platform to solution manually!"
 ECHO.
 
 ECHO building ...
-CALL msbuild vstudio.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+CALL msbuild vstudio.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration=%BUILD_TYPE% /p:Platform=%BUILDPLATFORM%
 :: >%ROOTDIR%\build_libpng-%LIBPNG_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
@@ -49,12 +49,12 @@ cd %PKGDIR%%\libpng
 
 ::copy zlib and libpng, other projects expect the lib in different locations
 IF %BUILDPLATFORM% EQU x64 (
-    CALL copy /Y projects\vstudio\x64\Release\libpng16.lib libpng.lib
-    CALL copy /Y projects\vstudio\x64\Release\zlib.lib ..\zlib\zlib.lib
+    CALL copy /Y projects\vstudio\x64\%BUILD_TYPE%\libpng16.lib libpng.lib
+    CALL copy /Y projects\vstudio\x64\%BUILD_TYPE%\zlib.lib ..\zlib\zlib.lib
     IF ERRORLEVEL 1 GOTO ERROR
 ) ELSE (
-    CALL copy /Y projects\vstudio\Release\libpng16.lib libpng.lib
-    CALL copy /Y projects\vstudio\Release\zlib.lib ..\zlib\zlib.lib
+    CALL copy /Y projects\vstudio\%BUILD_TYPE%\libpng16.lib libpng.lib
+    CALL copy /Y projects\vstudio\%BUILD_TYPE%\zlib.lib ..\zlib\zlib.lib
     IF ERRORLEVEL 1 GOTO ERROR
 )
 

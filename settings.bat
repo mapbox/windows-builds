@@ -1,13 +1,18 @@
 @echo off
 
-IF "%1"=="" GOTO USAGE
-IF "%2"=="" GOTO USAGE
-
 ::SET MAPNIKBRANCH=2.3.x
 SET MAPNIKBRANCH=master
 
 ::SET NODEMAPNIKBRANCH=1.x
 SET NODEMAPNIKBRANCH=master
+
+SET BUILD_TYPE=Release
+
+IF "%1"=="" GOTO USAGE
+IF "%2"=="" GOTO USAGE
+IF "%3"=="" (SET BUILD_TYPE=Release) ELSE (SET BUILD_TYPE=%3%)
+
+ECHO BUILD_TYPE %BUILD_TYPE%
 
 set TARGET_ARCH=%1%
 ECHO TARGET_ARCH %TARGET_ARCH%
@@ -140,8 +145,8 @@ GOTO DONE
 
 :USAGE
 ECHO usage:
-ECHO settings.bat ^<target_arch^> ^<tools_version^>
-ECHO settings.bat 32^|64 12^|14
+ECHO settings.bat ^<target_arch^> ^<tools_version^> ^<build_type^>
+ECHO settings.bat 32^|64 12^|14 Release^|Debug
 EXIT /b 1
 
 GOTO DONE
