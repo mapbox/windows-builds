@@ -20,9 +20,6 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL scripts\build_tiff.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-::CALL scripts\build_jpeg.bat
-::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
 :ICU
 CALL scripts\build_icu.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
