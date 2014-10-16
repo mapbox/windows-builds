@@ -89,7 +89,7 @@ if NOT EXIST tmp-bin\make.exe (
     echo "setting up bsdtar"
     mkdir tmp-bin
     cd tmp-bin
-    call wget ftp://ftp.equation.com/make/32/make.exe
+    CALL wget ftp://ftp.equation.com/make/32/make.exe
     IF ERRORLEVEL 1 GOTO ERROR
     cd ..
 )
@@ -98,9 +98,9 @@ if NOT EXIST tmp-bin\ragel.exe (
     echo getting ragel
     mkdir tmp-bin
     cd tmp-bin
-    curl -s -S -f -O -L -k --retry 3 http://w858rkbfg.homepage.t-online.de/files/9213/9317/6402/ragel-vs2012.7z
+    CALL curl -s -S -f -O -L -k --retry 3 http://w858rkbfg.homepage.t-online.de/files/9213/9317/6402/ragel-vs2012.7z
     IF ERRORLEVEL 1 GOTO ERROR
-    7z e -y ragel-vs2012.7z
+    CALL 7z e -y ragel-vs2012.7z
     IF ERRORLEVEL 1 GOTO ERROR
     cd ..
 )
@@ -109,9 +109,9 @@ IF NOT EXIST tmp-bin\ddt.exe (
     echo getting "delete-directory-tree"
     mkdir tmp-bin
     cd tmp-bin
-    curl -O https://mapnik.s3.amazonaws.com/dist/dev/delete-directory-tree.7z
+    CALL curl -O https://mapnik.s3.amazonaws.com/dist/dev/delete-directory-tree.7z
     IF ERRORLEVEL 1 GOTO ERROR
-    7z e delete-directory-tree.7z NET\%WEBP_PLATFORM%\ddt.exe
+    CALL 7z e delete-directory-tree.7z NET\%WEBP_PLATFORM%\ddt.exe
     IF ERRORLEVEL 1 GOTO ERROR
     cd ..
 )
