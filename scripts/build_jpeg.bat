@@ -41,13 +41,13 @@ IF ERRORLEVEL 1 GOTO ERROR
 copy %PATCHES%\jpeg\*.*
 IF ERRORLEVEL 1 GOTO ERROR
 
-msbuild jpeg.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
+msbuild jpeg.sln /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration=%BUILD_TYPE% /p:Platform=%BUILDPLATFORM%
 IF ERRORLEVEL 1 GOTO ERROR
 
 if %TARGET_ARCH% EQU 32 (
-  copy Release\jpeg.lib libjpeg.lib
+  copy %BUILD_TYPE%\jpeg.lib libjpeg.lib
 ) ELSE (
-  copy x64\Release\jpeg.lib libjpeg.lib
+  copy x64\%BUILD_TYPE%\jpeg.lib libjpeg.lib
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
