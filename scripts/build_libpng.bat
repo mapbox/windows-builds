@@ -53,11 +53,11 @@ IF %BUILDPLATFORM% EQU x64 (SET ARCHPATH="\x64")
 ::copy zlib and libpng, other projects expect the lib in different locations
 CALL copy /Y projects\vstudio%ARCHPATH%\%BUILD_TYPE%\libpng16.lib libpng.lib
 IF ERRORLEVEL 1 GOTO ERROR
-IF EXIST projects\vstudio%ARCHPATH%\%BUILD_TYPE%\libpng16.pdb (CALL COPY /Y projects\vstudio\x64\%BUILD_TYPE%\libpng16.pdb libpng.pdb)
+IF EXIST projects\vstudio%ARCHPATH%\%BUILD_TYPE%\libpng16.pdb (CALL COPY /Y projects\vstudio%ARCHPATH%\%BUILD_TYPE%\libpng16.pdb libpng.pdb)
 IF ERRORLEVEL 1 GOTO ERROR
 CALL copy /Y projects\vstudio%ARCHPATH%\%BUILD_TYPE%\zlib.lib ..\zlib\zlib.lib
 IF ERRORLEVEL 1 GOTO ERROR
-IF EXIST projects\vstudio%ARCHPATH%\%BUILD_TYPE%\zlib.pdb (CALL COPY /Y projects\vstudio\x64\%BUILD_TYPE%\zlib.pdb ..\zlib\zlib.pdb)
+IF EXIST projects\vstudio%ARCHPATH%\%BUILD_TYPE%\zlib.pdb (CALL COPY /Y projects\vstudio%ARCHPATH%\%BUILD_TYPE%\zlib.pdb ..\zlib\zlib.pdb)
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
