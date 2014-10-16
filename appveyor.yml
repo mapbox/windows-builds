@@ -1,6 +1,7 @@
-matrix:
-  vs_version: 12
-  vs_version: 14
+environment:
+  matrix:
+    - vs_version: 12
+    - vs_version: 14
 
 configuration:
   - Debug
