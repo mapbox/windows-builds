@@ -10,6 +10,13 @@ cd %PKGDIR%
 
 SET PKGNAME=win-python-%PYTHON_VERSION%-%TARGET_ARCH%.7z
 
+::TODO
+::think about how to distribute python PDBs
+::the archive don't have directories within
+::https://www.python.org/downloads/release/python-278/
+::https://www.python.org/ftp/python/2.7.8/python-2.7.8-pdb.zip
+::https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64-pdb.zip
+
 if "%TARGET_ARCH%"=="64" (
     echo installing 64 bit python
     CALL %ROOTDIR%\scripts\download %PKGNAME%
