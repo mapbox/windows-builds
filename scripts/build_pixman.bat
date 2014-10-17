@@ -33,12 +33,16 @@ IF ERRORLEVEL 1 GOTO ERROR
 ::CALL make -f Makefile.win32 "CFG=release" clean
 ::IF ERRORLEVEL 1 GOTO ERROR
 
+SET CFG_TYPE=release
+IF %BUILD_TYPE% EQU Debug (SET CFG_TYPE=debug)
+
+
 echo ATTENTION using "MMX=off" to compile cairo with 64bit
 echo.
 ECHO building ...
 set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
 echo %PATH%
-CALL make.exe -f Makefile.win32 "CFG=release" "MMX=off" "MSVC_VER=%MSVC_VER%"
+CALL make.exe -f Makefile.win32 CFG=%CFG_TYPE% MMX=off MSVC_VER=%MSVC_VER%
 ::>%ROOTDIR%\build_pixman-%PIXMAN_VERSION%.log 2>&1
 IF ERRORLEVEL 1 GOTO ERROR
 
