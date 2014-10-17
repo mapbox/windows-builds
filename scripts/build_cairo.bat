@@ -52,10 +52,14 @@ patch -N -p1 < %PATCHES%/cairo_.diff || true
 ::CALL make -f Makefile.win32 "CFG=release" clean
 ::IF ERRORLEVEL 1 GOTO ERROR
 
+
+SET CFG_TYPE=release
+IF %BUILD_TYPE% EQU Debug (SET CFG_TYPE=debug)
+
 echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
 ECHO building ...
 set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
-CALL make -f Makefile.win32 "CFG=release" "MSVC_VER=%MSVC_VER%"
+CALL make -f Makefile.win32 CFG=%CFG_TYPE% MSVC_VER=%MSVC_VER%
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::rem - delete bogus cairo-version.h
