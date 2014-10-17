@@ -24,8 +24,14 @@ if NOT EXIST sqlite (
 cd sqlite
 IF ERRORLEVEL 1 GOTO ERROR
 
-::DLL
-cl /MD /nologo /EHsc /D NDEBUG /D SQLITE_ENABLE_RTREE sqlite3.c /c
+IF %BUILD_TYPE% EQU Release (
+	cl /MD /nologo /EHsc /D NDEBUG /D SQLITE_ENABLE_RTREE sqlite3.c /c
+	IF ERRORLEVEL 1 GOTO ERROR
+) ELSE (
+	cl /DEBUG /MDd /Zi /Fdsqlite3.pdb /nologo /EHsc /D _DEBUG /D SQLITE_ENABLE_RTREE sqlite3.c /c
+	IF ERRORLEVEL 1 GOTO ERROR
+)
+
 lib sqlite3.obj
 IF ERRORLEVEL 1 GOTO ERROR
 
