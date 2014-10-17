@@ -1,4 +1,17 @@
 @echo off
+
+::errorlevel for exit
+SET EL=0
+
+::clean single package only
+SET SINGLE=0
+IF "%1" NEQ "" (
+	SET SINGLE=1
+)
+IF %SINGLE% EQU 1 ECHO SINGLE %SINGLE% && ECHO GOTO %1 && GOTO %1
+
+
+:BOOST
 del /q /s packages\boost_1_%BOOST_VERSION%_0\*.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 del /q /s packages\boost_1_%BOOST_VERSION%_0\user-confg.jam
@@ -7,54 +20,112 @@ ddt /Q packages\boost_1_%BOOST_VERSION%_0\bin.v2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ddt /Q packages\boost_1_%BOOST_VERSION%_0\stage
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:CAIRO
 ddt /Q packages\cairo
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:EXPAT
 ddt /Q packages\expat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:FREETYPE
 ddt /Q packages\freetype
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:GDAL
 ddt /Q packages\gdal
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:HARFBUZZ
 ddt /Q packages\harfbuzz
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ddt /Q packages\harfbuzz-build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:ICU
 ddt /Q packages\icu
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:JPEG
 ddt /Q packages\jpeg
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:PNG
 ddt /Q packages\libpng
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:TIFF
 ddt /Q packages\libtiff
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:LIBXML2
 ddt /Q packages\libxml2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:PIXMAN
 ddt /Q packages\pixman
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:LIBPQ
 ddt /Q packages\postgresql
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:PROJ
 ddt /Q packages\proj
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:PROTOBUF
 ddt /Q packages\protobuf
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:SQLITE
 ddt /Q packages\sqlite
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:WEBP
 ddt /Q packages\webp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:ZLIB
 ddt /Q packages\zlib
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:MAPNIK
 ddt /Q packages\mapnik-%MAPNIKBRANCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:NODEMAPNIK
 ddt /Q packages\node-mapnik
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
 
 
 GOTO DONE
 
 :ERROR
 echo ----------ERROR clean --------------
-
+SET EL=%ERRORLEVEL%
 :DONE
 
 cd %ROOTDIR%
-EXIT /b %ERRORLEVEL%
+EXIT /b %EL%
