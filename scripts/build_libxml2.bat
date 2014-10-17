@@ -39,7 +39,14 @@ IF %BUILDPLATFORM% EQU x64 (
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
-CALL cscript configure.js compiler=msvc cruntime="/MD" prefix=%PKGDIR%\libxml2 iconv=no icu=no
+SET DEBUG_FLAG=0
+SET RUNTIME_FLAG="/MD"
+IF %BUILD_TYPE% EQU Debug (
+	SET DEBUG_FLAG=1
+	SET RUNTIME_FLAG="/MDd"
+)
+
+CALL cscript configure.js compiler=msvc cruntime=%RUNTIME_FLAG% prefix=%PKGDIR%\libxml2 iconv=no icu=no
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::does not appear needed?
@@ -51,7 +58,7 @@ CALL nmake /F Makefile.msvc clean
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO building ...
-CALL nmake /A /F Makefile.msvc MSVC_VER=%MSVC_VER%
+CALL nmake /A /F Makefile.msvc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER%
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
