@@ -25,7 +25,10 @@ if NOT EXIST webp (
 cd webp
 IF ERRORLEVEL 1 GOTO ERROR
 
-nmake /f Makefile.vc ARCH=%WEBP_PLATFORM% CFG=release-dynamic RTLIBCFG=dynamic OBJDIR=output
+SET CFG_FLAG=release
+IF %BUILD_TYPE% EQU Debug (SET CFG_FLAG=debug)
+
+nmake /f Makefile.vc ARCH=%WEBP_PLATFORM% CFG=%CFG_FLAG%-dynamic RTLIBCFG=dynamic OBJDIR=output
 IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
