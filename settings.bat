@@ -36,9 +36,9 @@ if "%TARGET_ARCH%" == "64" (
 
 SET current_script_dir=%~dp0
 SET ROOTDIR=%current_script_dir%
-SET PKGDIR=%ROOTDIR%\packages
+SET PKGDIR=%ROOTDIR%packages
 IF NOT EXIST %PKGDIR% MKDIR %PKGDIR%
-SET PATCHES=%ROOTDIR%\patches
+SET PATCHES=%ROOTDIR%patches
 IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 
 ::TODO: see what we can use from mysysgit
