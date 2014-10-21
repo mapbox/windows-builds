@@ -59,10 +59,15 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 echo building ...
 
+SET DEBUG_FLAG=0
+IF %BUILD_TYPE% EQU Debug (
+  SET DEBUG_FLAG=1
+)
+
 IF %BUILDPLATFORM% EQU x64 (
-    CALL nmake /A /F win32.mak CPU=AMD64 MSVC_VER=%MSVC_VER%
+    CALL nmake /A /F win32.mak DEBUG=%DEBUG_FLAG% CPU=AMD64 MSVC_VER=%MSVC_VER%
 ) ELSE (
-    CALL nmake /A /F win32.mak    
+    CALL nmake /A /F win32.mak DEBUG=%DEBUG_FLAG%
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
@@ -73,7 +78,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 ::Note: The following errors occurred uring this process:
 ::.\Release\libpq.dll.manifest : general error c1010070: Failed to load and parse the manifest. The system cannot find the file specified.
-::NMAKE : fatal error U1077: '"C:\Program Files (x86)\Windows Kits\8.0\bin\x86\mt.EXE"' : return code '0x1f' 
+::NMAKE : fatal error U1077: '"C:\Program Files (x86)\Windows Kits\8.0\bin\x86\mt.EXE"' : return code '0x1f'
 ::However libpq.lib was successfully built.
 
 GOTO DONE
