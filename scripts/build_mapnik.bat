@@ -30,6 +30,7 @@ cd mapnik-gyp
 IF ERRORLEVEL 1 GOTO ERROR
 
 ddt /Q mapnik-sdk
+IF ERRORLEVEL 1 GOTO ERROR
 
 git fetch
 IF ERRORLEVEL 1 GOTO ERROR
