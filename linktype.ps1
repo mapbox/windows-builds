@@ -14,6 +14,20 @@ foreach ($item in Get-ChildItem $args[0] -Recurse -Include *.lib){
     }
 }
 
+Write-Host 'checking .node...';
+
+foreach ($item in Get-ChildItem $args[0] -Recurse -Include *.node){
+    $output = dumpbin /DIRECTIVES $item.FullName;
+    #MT and MTd
+    if ($output -like '*LIBCMT*') {
+        Write-Host "MT or MTd $item";
+    }
+    #MDd
+    if ($output -like '*MSVCRTD*') {
+        Write-Host "MDd $item";
+    }
+}
+
 Write-Host 'checking dlls...';
 
 foreach ($item in Get-ChildItem $args[0] -Recurse -Include *.dll){

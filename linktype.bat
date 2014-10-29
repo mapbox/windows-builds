@@ -10,4 +10,9 @@
 ::)
 
 powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force
-powershell %~dp0\linktype.ps1 %~dp0
+IF "%1" EQU "" (
+  powershell %~dp0\linktype.ps1 %~dp0
+) ELSE (
+  ECHO %1
+  powershell %~dp0\linktype.ps1 %1%
+)
