@@ -78,7 +78,10 @@ if EXIST lib\binding (
     rd /q /s lib\binding
 )
 
-call .\node_modules\.bin\node-pre-gyp rebuild --msvs_version=2013
+SET DEBUG_FLAG=
+IF %BUILD_TYPE% EQU Debug (SET DEBUG_FLAG=--debug)
+
+call .\node_modules\.bin\node-pre-gyp rebuild %DEBUG_FLAG% --msvs_version=2013
 IF ERRORLEVEL 1 GOTO ERROR
 echo before test
 CALL npm test
