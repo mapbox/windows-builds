@@ -1,11 +1,15 @@
 environment:
   matrix:
-    - vs_version: 12
-    #- vs_version: 14
+    #- vs_version: 12
+    - vs_version: 14
+
+# http://help.appveyor.com/discussions/questions/557-visual-studio-2014
+
+os: Visual Studio 2014 CTP4
 
 configuration:
-  - Debug
-  #- Release
+  #- Debug
+  - Release
 
 platform:
   #- x86
