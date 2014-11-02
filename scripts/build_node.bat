@@ -23,19 +23,34 @@ IF ERRORLEVEL 1 GOTO ERROR
 ::git pull
 ::IF ERRORLEVEL 1 GOTO ERROR
 
-ECHO VCINSTALLDIR %VCINSTALLDIR%
-ECHO building node %NODE_VERSION%
-
-CALL vcbuild.bat %BUILD_TYPE% x%TARGET_ARCH%
+patch -N -p1 < %PATCHES%/node-0.10.30.diff || true
 IF ERRORLEVEL 1 GOTO ERROR
+
+
+ECHO.
+ECHO ---------------- BUILDING  NODE %NODE_VERSION% --------------
+
+CALL vcbuild.bat %BUILD_TYPE% x%TARGET_ARCH% nosign
+IF ERRORLEVEL 1 GOTO ERROR
+
+::ECHO.
+::ECHO ------------------------------------------------------------
+::ECHO running tests
+::ECHO ------------------------------------------------------------
+::ECHO.
+::CALL vcbuild %BUILD_TYPE% x%TARGET_ARCH% nosign nobuild test-uv
+::IF ERRORLEVEL 1 GOTO ERROR
+
 
 GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR NODE_MAPNIK --------------
+echo ----------ERROR NODE %NODE_VERSION% --------------
 
 :DONE
+echo ----------DONE NODE %NODE_VERSION% --------------
+
 
 cd %ROOTDIR%
 EXIT /b %EL%

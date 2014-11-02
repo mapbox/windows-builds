@@ -143,8 +143,36 @@ index 6a0aad1..ee2c192 100644
  #    elif !defined(OPENSSL_SYS_MPE)
  #      include <sys/time.h> /* Needed under linux for FD_XXX */
  #    endif
+diff --git a/deps/uv/src/win/fs.c b/deps/uv/src/win/fs.c
+index 7f3704e..74e78fa 100644
+--- a/deps/uv/src/win/fs.c
++++ b/deps/uv/src/win/fs.c
+@@ -732,9 +732,9 @@ void fs__readdir(uv_fs_t* req) {
+   if (len == 0) {
+     fmt = L"./*";
+   } else if (pathw[len - 1] == L'/' || pathw[len - 1] == L'\\') {
+-    fmt = L"%s*";
++    fmt = L"%S*";
+   } else {
+-    fmt = L"%s\\*";
++    fmt = L"%S\\*";
+   }
+ 
+   /* Figure out whether path is a file or a directory. */
+diff --git a/node.gyp b/node.gyp
+index 33c4f0e..77b55dc 100644
+--- a/node.gyp
++++ b/node.gyp
+@@ -325,6 +325,7 @@
+         }],
+       ],
+       'msvs_settings': {
++        "msbuild_toolset": "v140",
+         'VCLinkerTool': {
+           'SubSystem': 1, # /subsystem:console
+         },
 diff --git a/vcbuild.bat b/vcbuild.bat
-index 0c9b0b2..f8575e0 100644
+index 0c9b0b2..b9503a7 100644
 --- a/vcbuild.bat
 +++ b/vcbuild.bat
 @@ -89,6 +89,7 @@ if defined NIGHTLY set TAG=nightly-%NIGHTLY%
@@ -182,6 +210,15 @@ index 0c9b0b2..f8575e0 100644
  if errorlevel 1 goto exit
  
  :sign
+@@ -181,7 +192,7 @@ if "%test%"=="test-all" set test_args=%test_args%
+ :build-node-weak
+ @rem Build node-weak if required
+ if "%buildnodeweak%"=="" goto run-tests
+-"%config%\node" deps\npm\node_modules\node-gyp\bin\node-gyp rebuild --directory="%~dp0test\gc\node_modules\weak" --nodedir="%~dp0."
++"%config%\node" deps\npm\node_modules\node-gyp\bin\node-gyp rebuild msvs_version=2013 --directory="%~dp0test\gc\node_modules\weak" --nodedir="%~dp0."
+ if errorlevel 1 goto build-node-weak-failed
+ goto run-tests
+ 
 @@ -196,7 +207,7 @@ if "%test%"=="test" goto jslint
  goto exit
  
