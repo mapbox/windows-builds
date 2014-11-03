@@ -1,30 +1,34 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ NODE_MAPNIK -----
+echo ------ NODEJS -----
 
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-if NOT EXIST node-%NODE_VERSION% (
-    git clone https://github.com/joyent/node.git node
+if NOT EXIST node-v%NODE_VERSION% (
+    git clone https://github.com/joyent/node.git node-v%NODE_VERSION%
 )
 
-cd node
+cd node-v%NODE_VERSION%
 IF ERRORLEVEL 1 GOTO ERROR
 
-git fetch
+:: clear out previous PATCHES
+git checkout .
 IF ERRORLEVEL 1 GOTO ERROR
 
-git checkout tags/%NODE_VERSION%
+git fetch -v
+IF ERRORLEVEL 1 GOTO ERROR
+
+git checkout tags/v%NODE_VERSION%
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::git pull
 ::IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/node-0.10.30.diff || true
-IF ERRORLEVEL 1 GOTO ERROR
+git apply %PATCHES%/node-%NODE_VERSION%.diff
+::IF ERRORLEVEL 1 GOTO ERROR
 
 
 ECHO.

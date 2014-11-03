@@ -1,11 +1,11 @@
 diff --git a/configure b/configure
-index d2998c8..15e02fc 100755
+index d2998c8..b4c5e1c 100755
 --- a/configure
 +++ b/configure
 @@ -655,7 +655,7 @@ def configure_winsdk(o):
-
+ 
    winsdk_dir = os.environ.get("WindowsSdkDir")
-
+ 
 -  if winsdk_dir and os.path.isfile(winsdk_dir + '\\bin\\ctrpp.exe'):
 +  if winsdk_dir and os.path.isfile(winsdk_dir + '\\bin\\x64\\ctrpp.exe'):
      print "Found ctrpp in WinSDK--will build generated files into tools/msvs/genfiles."
@@ -19,67 +19,11 @@ index d2998c8..15e02fc 100755
 +  gyp_args += ['-f', 'msvs', '-G', 'msvs_version=2013']
  else:
    gyp_args += ['-f', 'make-' + flavor]
-
+ 
 diff --git a/deps/openssl/openssl/e_os.h b/deps/openssl/openssl/e_os.h
-index 733155e..00fbe59 100644
+index 733155e..71d9600 100644
 --- a/deps/openssl/openssl/e_os.h
 +++ b/deps/openssl/openssl/e_os.h
-@@ -5,21 +5,21 @@
-  * This package is an SSL implementation written
-  * by Eric Young (eay@cryptsoft.com).
-  * The implementation was written so as to conform with Netscapes SSL.
-- *
-+ *
-  * This library is free for commercial and non-commercial use as long as
-  * the following conditions are aheared to.  The following conditions
-  * apply to all code found in this distribution, be it the RC4, RSA,
-  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
-  * included with this distribution is covered by the same copyright terms
-  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
-- *
-+ *
-  * Copyright remains Eric Young's, and as such any Copyright notices in
-  * the code are not to be removed.
-  * If this package is used in a product, Eric Young should be given attribution
-  * as the author of the parts of the library used.
-  * This can be in the form of a textual message at program startup or
-  * in documentation (online or textual) provided with the package.
-- *
-+ *
-  * Redistribution and use in source and binary forms, with or without
-  * modification, are permitted provided that the following conditions
-  * are met:
-@@ -34,10 +34,10 @@
-  *     Eric Young (eay@cryptsoft.com)"
-  *    The word 'cryptographic' can be left out if the rouines from the library
-  *    being used are not cryptographic related :-).
-- * 4. If you include any Windows specific code (or a derivative thereof) from
-+ * 4. If you include any Windows specific code (or a derivative thereof) from
-  *    the apps directory (application code) you must include an acknowledgement:
-  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
-- *
-+ *
-  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
-  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-@@ -49,7 +49,7 @@
-  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-  * SUCH DAMAGE.
-- *
-+ *
-  * The licence and distribution terms for any publically available version or
-  * derivative of this code cannot be changed.  i.e. this code cannot simply be
-  * copied and put under another distribution licence
-@@ -93,7 +93,7 @@ extern "C" {
- #  define NO_CHMOD
- #  define NO_SYSLOG
- #endif
--
-+
- #if defined(OPENSSL_SYS_MACINTOSH_CLASSIC)
- # if macintosh==1
- #  ifndef MAC_OS_GUSI_SOURCE
 @@ -307,7 +307,7 @@ static unsigned int _strlen31(const char *str)
  #      undef isxdigit
  #    endif
@@ -98,24 +42,6 @@ index 733155e..00fbe59 100644
  #        undef stdin
  #        undef stdout
  #        undef stderr
-@@ -388,7 +388,7 @@ static unsigned int _strlen31(const char *str)
-
- #  ifdef OPENSSL_SYS_VMS
- #    define VMS 1
--  /* some programs don't include stdlib, so exit() and others give implicit
-+  /* some programs don't include stdlib, so exit() and others give implicit
-      function warnings */
- #    include <stdlib.h>
- #    if defined(__DECC)
-@@ -571,7 +571,7 @@ static unsigned int _strlen31(const char *str)
- #      include <sys/param.h>
- #    endif
- #    ifdef OPENSSL_SYS_VXWORKS
--#      include <time.h>
-+#      include <time.h>
- #    elif !defined(OPENSSL_SYS_MPE)
- #      include <sys/time.h> /* Needed under linux for FD_XXX */
- #    endif
 diff --git a/deps/uv/src/win/fs.c b/deps/uv/src/win/fs.c
 index 7f3704e..74e78fa 100644
 --- a/deps/uv/src/win/fs.c
@@ -130,16 +56,16 @@ index 7f3704e..74e78fa 100644
 -    fmt = L"%s\\*";
 +    fmt = L"%S\\*";
    }
-
+ 
    /* Figure out whether path is a file or a directory. */
 diff --git a/vcbuild.bat b/vcbuild.bat
-index 0c9b0b2..1deadb8 100644
+index 0c9b0b2..40f5b8e 100644
 --- a/vcbuild.bat
 +++ b/vcbuild.bat
-@@ -99,7 +99,16 @@ ENDLOCAL
+@@ -99,6 +99,15 @@ ENDLOCAL
  @rem Skip project generation if requested.
  if defined nobuild goto sign
-
+ 
 +@rem Look for Visual Studio 2014
 +if not defined VS140COMNTOOLS goto vc-set-2013
 +if not exist "%VS140COMNTOOLS%\..\..\vc\vcvarsall.bat" goto vc-set-2013
@@ -148,26 +74,16 @@ index 0c9b0b2..1deadb8 100644
 +set GYP_MSVS_VERSION=2013
 +goto msbuild-found
 +
- @rem Look for Visual Studio 2013
 +:vc-set-2013
+ @rem Look for Visual Studio 2013
  if not defined VS120COMNTOOLS goto vc-set-2012
  if not exist "%VS120COMNTOOLS%\..\..\vc\vcvarsall.bat" goto vc-set-2012
- call "%VS120COMNTOOLS%\..\..\vc\vcvarsall.bat"
 @@ -129,7 +138,7 @@ goto run
-
+ 
  :msbuild-found
  @rem Build the sln with msbuild.
 -msbuild node.sln /m /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
 +msbuild node.sln /m /toolsversion:14.0 /p:PlatformToolset=v140 /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
  if errorlevel 1 goto exit
-
+ 
  :sign
-@@ -196,7 +205,7 @@ if "%test%"=="test" goto jslint
- goto exit
-
- :create-msvs-files-failed
--echo Failed to create vc project files.
-+echo Failed to create vc project files.
- goto exit
-
- :upload
