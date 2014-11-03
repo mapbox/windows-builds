@@ -12,7 +12,7 @@ configuration:
   - Release
 
 platform:
-  #- x86
+  - x86
   - x64
 
 install:
@@ -20,7 +20,7 @@ install:
   - set FINAL_ARCH=64
   - if "%platform%" == "x86" set FINAL_ARCH=32
   - .\settings.bat %FINAL_ARCH% %vs_version% %configuration%
-  - scripts\build.bat
+  - scripts\build_node.bat
 
 build: off
 test: off
