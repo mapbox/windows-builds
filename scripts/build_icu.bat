@@ -26,7 +26,8 @@ if NOT EXIST icu (
 cd icu
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/icu4.diff || true
+patch -N -p1 < %PATCHES%/icu4.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
 
 msbuild ^
 .\source\i18n\i18n.vcxproj ^

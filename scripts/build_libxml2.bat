@@ -27,7 +27,8 @@ if NOT EXIST libxml2 (
 cd libxml2
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/libxml2.diff || true
+patch -N -p1 < %PATCHES%/libxml2.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
 
 cd win32
 IF ERRORLEVEL 1 GOTO ERROR

@@ -24,13 +24,15 @@ if NOT EXIST protobuf (
 cd protobuf
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p0 < %PATCHES%/protobuf.diff || true
+patch -N -p0 < %PATCHES%/protobuf.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
 :: vs express lacks devenv.exe to upgrade
 :: and passing /toolsversion:12.0 /p:PlatformToolset=v120 to msbuild does not
 :: work to upgrade on the fly so we resort to patching to upgrade
 :: note: patch was created by opening protobuf.sln in vs express gui once
-patch -N -p1 < %PATCHES%/protobuf-vcupgrade.diff || true
-patch -N -p1 < %PATCHES%/protobuf-vcupgrade-all.diff || true
+patch -N -p1 < %PATCHES%/protobuf-vcupgrade.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
+patch -N -p1 < %PATCHES%/protobuf-vcupgrade-all.diff || %SKIP_FAILED_PATCH%
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (

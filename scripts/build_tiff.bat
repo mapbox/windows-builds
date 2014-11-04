@@ -26,7 +26,8 @@ if NOT EXIST libtiff (
 cd libtiff
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/libtiff.diff || true
+patch -N -p1 < %PATCHES%/libtiff.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
 
 
 echo JPEG_SUPPORT = 1 >> nmake.opt

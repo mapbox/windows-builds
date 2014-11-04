@@ -44,8 +44,8 @@ echo.
 cd postgresql
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/postgres.diff
-::IF ERRORLEVEL 1 GOTO ERROR
+patch -N -p1 < %PATCHES%/postgres.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
 
 cd src
 IF ERRORLEVEL 1 GOTO ERROR

@@ -24,7 +24,7 @@ if NOT EXIST libpng (
 cd .\libpng
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/png.diff || true
+patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (

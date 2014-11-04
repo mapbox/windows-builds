@@ -16,6 +16,7 @@ platform:
   - x64
 
 install:
+  #- cinst wget msysgit
   - set FINAL_ARCH=64
   - if "%platform%" == "x86" set FINAL_ARCH=32
   - .\settings-minimal.bat %FINAL_ARCH% %vs_version% %configuration%

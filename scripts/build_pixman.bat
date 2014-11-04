@@ -24,7 +24,8 @@ if NOT EXIST pixman (
 cd pixman
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/pixman.diff || true
+patch -N -p1 < %PATCHES%/pixman.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
 
 cd pixman
 IF ERRORLEVEL 1 GOTO ERROR

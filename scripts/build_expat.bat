@@ -23,7 +23,8 @@ if NOT EXIST expat (
 cd expat
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/expat.diff || true
+patch -N -p1 < %PATCHES%/expat.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
 
 msbuild ^
 .\expat.sln ^

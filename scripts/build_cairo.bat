@@ -46,7 +46,8 @@ if NOT EXIST cairo (
 cd cairo
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/cairo_.diff || true
+patch -N -p1 < %PATCHES%/cairo_.diff || %SKIP_FAILED_PATCH%
+IF ERRORLEVEL 1 GOTO ERROR
 
 ::ECHO cleaning ....
 ::CALL make -f Makefile.win32 "CFG=release" clean
