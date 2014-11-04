@@ -17,6 +17,7 @@ if EXIST postgresql (
 if NOT EXIST postgresql (
   echo extracting
   CALL bsdtar xfz postgresql-%POSTGRESQL_VERSION%.tar.bz2
+  IF ERRORLEVEL 1 GOTO ERROR
   rename postgresql-%POSTGRESQL_VERSION% postgresql
   IF ERRORLEVEL 1 GOTO ERROR
 )
@@ -59,15 +60,15 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 echo building ...
 
-SET DEBUG_FLAG=0
+SET DEBUG_FLAG=
 IF %BUILD_TYPE% EQU Debug (
-  SET DEBUG_FLAG=1
+  SET DEBUG_FLAG=DEBUG=1
 )
 
 IF %BUILDPLATFORM% EQU x64 (
-    CALL nmake /A /F win32.mak DEBUG=%DEBUG_FLAG% CPU=AMD64 MSVC_VER=%MSVC_VER%
+    CALL nmake /A /F win32.mak %DEBUG_FLAG% CPU=AMD64 MSVC_VER=%MSVC_VER%
 ) ELSE (
-    CALL nmake /A /F win32.mak DEBUG=%DEBUG_FLAG%
+    CALL nmake /A /F win32.mak %DEBUG_FLAG%
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
