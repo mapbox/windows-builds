@@ -14,19 +14,24 @@ if EXIST boost_1_%BOOST_VERSION%_0 (
   echo found extracted sources
 )
 
-if NOT EXIST boost_1_%BOOST_VERSION%_0 (
+if NOT EXIST boost (
   echo extracting
   CALL bsdtar xzf %PKGDIR%/boost_1_%BOOST_VERSION%_0.tar.bz2
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+  rename boost_1_%BOOST_VERSION%_0 boost
+  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 )
 
-cd boost_1_%BOOST_VERSION%_0
+cd boost
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::ohhh, how i LOVE commandline. CANNOT set path when using parentheses e.g. IF EXIST xyz ( SET PATH=bla;%PATH% )
 ::%PATH% would get evaluated as a command and bail out of BAT with unexpected ERROR
 ::e.g. "\Microsoft was unexpected at this time."
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%PATH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if "%BOOSTADDRESSMODEL%"=="64" (
   IF %BUILD_TYPE% EQU Release (
