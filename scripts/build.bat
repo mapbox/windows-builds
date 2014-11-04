@@ -49,7 +49,8 @@ CALL scripts\build_libxml2.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :PROTOBUF
-CALL scripts\build_protobuf.bat
+SET protobufbat=scripts\build_protobuf-%PROTOBUF_VERSION%.bat
+CALL %protobufbat%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :PIXMAN
