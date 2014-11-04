@@ -46,7 +46,7 @@ msbuild ^
 /nologo ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
-/p:BuildInParellel=true ^
+/p:BuildInParallel=true ^
 /p:Configuration=%BUILD_TYPE% ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
