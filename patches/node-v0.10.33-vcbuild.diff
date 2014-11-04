@@ -23,7 +23,7 @@ index 0c9b0b2..40f5b8e 100644
  :msbuild-found
  @rem Build the sln with msbuild.
 -msbuild node.sln /m /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
-+msbuild node.sln /m:%NUMBER_OF_PROCESSORS% /p:BuildInParellel=true /toolsversion:14.0 /p:PlatformToolset=v140 /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
++msbuild node.sln /m:%NUMBER_OF_PROCESSORS% /p:BuildInParallel=true /toolsversion:14.0 /p:PlatformToolset=v140 /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
  if errorlevel 1 goto exit
  
  :sign
