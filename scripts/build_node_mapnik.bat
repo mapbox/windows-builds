@@ -81,7 +81,9 @@ if EXIST lib\binding (
 SET DEBUG_FLAG=
 IF %BUILD_TYPE% EQU Debug (SET DEBUG_FLAG=--debug)
 
-call .\node_modules\.bin\node-pre-gyp rebuild %DEBUG_FLAG% --msvs_version=2013
+call .\node_modules\.bin\node-pre-gyp ^
+  rebuild %DEBUG_FLAG% --msvs_version=2013 ^
+  --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11/v0.10.33
 IF ERRORLEVEL 1 GOTO ERROR
 echo before test
 CALL npm test
