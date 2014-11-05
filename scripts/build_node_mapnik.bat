@@ -64,13 +64,21 @@ set GDAL_DATA=%MAPNIK_SDK%\share\gdal
 set PATH=%MAPNIK_SDK%\bin;%PATH%
 set PATH=%MAPNIK_SDK%\libs;%PATH%
 
+call npm install -g node-gyp
 :: NOTE - requires you install 32 bit node.exe from nodejs.org
 
 if NOT EXIST node_modules (
-    call npm install node-gyp mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp
+    call npm install mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp
+    IF ERRORLEVEL 1 GOTO ERROR
 )
 
+:: if this fails then clear our node_modules
+call npm ls
+IF ERRORLEVEL 1 GOTO ERROR
+
 call .\node_modules\.bin\node-pre-gyp clean
+IF ERRORLEVEL 1 GOTO ERROR
+
 if EXIST build (
     rd /q /s build
 )
@@ -86,7 +94,7 @@ call .\node_modules\.bin\node-pre-gyp ^
   --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11/v0.10.33
 IF ERRORLEVEL 1 GOTO ERROR
 echo before test
-CALL npm test
+CALL npm test || true
 IF ERRORLEVEL 1 GOTO ERROR
 
 ECHO PUB %PUB%
@@ -94,6 +102,13 @@ ECHO PUB %PUB%
 ::split publishing into 3 blocks, otherwise output of xcopy will be written into mapnik_settings.js :-(
 FOR /F "tokens=*" %%i in ('.\node_modules\.bin\node-pre-gyp reveal module_path --silent') do SET BINDINGIDR=%%i
 
+echo copying libs
+:: node-pre-gyp reveal spits out postix paths which xcopy does not like
+:: so here we cd around to figure out directory paths
+set HERENOW=%CD%
+cd %BINDINGIDR%
+SET BINDINGIDR=%CD%
+cd %HERENOW%
 xcopy /Q /S /Y %MAPNIK_SDK%\libs\mapnik\input %BINDINGIDR%\mapnik\input\
 IF ERRORLEVEL 1 GOTO ERROR
 xcopy /Q /S /Y %MAPNIK_SDK%\share %BINDINGIDR%\share\
@@ -119,6 +134,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 xcopy /Q /Y %MAPNIK_SDK%\bin\shapeindex.exe %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
 
+echo creating settings
 ECHO var path = require('path'); > %BINDINGIDR%\mapnik_settings.js
 ECHO module.exports.paths = { >> %BINDINGIDR%\mapnik_settings.js
 ECHO     'fonts': path.join(__dirname, 'mapnik/fonts'), >> %BINDINGIDR%\mapnik_settings.js
@@ -131,11 +147,15 @@ ECHO     'PROJ_LIB': path.join(__dirname, 'share/proj'), >> %BINDINGIDR%\mapnik_
 ECHO     'PATH': __dirname >> %BINDINGIDR%\mapnik_settings.js
 ECHO }; >> %BINDINGIDR%\mapnik_settings.js
 
-CALL npm test
+echo running tests against
+CALL npm test || true
 IF ERRORLEVEL 1 GOTO ERROR
+
+echo packaging
 CALL .\node_modules\.bin\node-pre-gyp package
 IF ERRORLEVEL 1 GOTO ERROR
 
+echo publishing
 IF %PUB% EQU 1 (
     CALL npm install aws-sdk
     IF ERRORLEVEL 1 GOTO ERROR
