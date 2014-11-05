@@ -8,14 +8,22 @@ SET SINGLE=0
 IF "%1" NEQ "" (
 	SET SINGLE=1
 )
-IF %SINGLE% EQU 1 ECHO SINGLE %SINGLE% && ECHO GOTO %1 && GOTO %1
+IF %SINGLE% EQU 1 (ECHO SINGLE %SINGLE% && ECHO GOTO %1 && GOTO %1)
 
 
 :BOOST
-del /q /s packages\boost_1_%BOOST_VERSION%_0\*.exe
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-del /q /s packages\boost_1_%BOOST_VERSION%_0\user-confg.jam
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET BDIR=packages\boost_1_%BOOST_VERSION%_0
+IF EXIST %BDIR% (
+  for /R %BDIR% %%f in (*.exe) do (
+    del /q %%f
+    IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  )
+)
+ENDLOCAL
+
+IF EXIST packages\boost_1_%BOOST_VERSION%_0\user-confg.jam (del /q /s packages\boost_1_%BOOST_VERSION%_0\user-confg.jam)
+IF %ERRORLEVEL% NEQ 0 (ECHO %ERRORLEVEL% && GOTO ERROR)
 ddt /Q packages\boost_1_%BOOST_VERSION%_0\bin.v2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ddt /Q packages\boost_1_%BOOST_VERSION%_0\stage
