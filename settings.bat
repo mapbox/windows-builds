@@ -119,8 +119,8 @@ IF NOT EXIST tmp-bin\ddt.exe (
 
 set PATH=%CD%\tmp-bin;%PATH%
 echo "building within %current_script_dir%"
-set ICU_VERSION=53.1
-set ICU_VERSION2=53_1
+set ICU_VERSION=54.1
+set ICU_VERSION2=54_1
 set BOOST_VERSION=57
 set WEBP_VERSION=0.4.2
 set JPEG_VERSION=8d
