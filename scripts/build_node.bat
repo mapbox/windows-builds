@@ -6,6 +6,12 @@ echo ------ NODEJS -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
+SET NODE_VERSION=0.10.33
+SET PUB=0
+IF "%1"=="" ( ECHO using default %NODE_VERSION% ) ELSE ( SET NODE_VERSION=%1)
+
+ECHO using %NODE_VER%
+
 cd %PKGDIR%
 if NOT EXIST node-v%NODE_VERSION% (
     git clone https://github.com/joyent/node.git node-v%NODE_VERSION%

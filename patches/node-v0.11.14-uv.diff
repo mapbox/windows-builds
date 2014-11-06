@@ -1,0 +1,16 @@
+diff --git a/deps/uv/src/win/fs.c b/deps/uv/src/win/fs.c
+index d380146..d27119f 100644
+--- a/deps/uv/src/win/fs.c
++++ b/deps/uv/src/win/fs.c
+@@ -798,9 +798,9 @@ void fs__readdir(uv_fs_t* req) {
+   if (len == 0) {
+     fmt = L"./*";
+   } else if (pathw[len - 1] == L'/' || pathw[len - 1] == L'\\') {
+-    fmt = L"%s*";
++    fmt = L"%S*";
+   } else {
+-    fmt = L"%s\\*";
++    fmt = L"%S\\*";
+   }
+ 
+   /* Figure out whether path is a file or a directory. */
