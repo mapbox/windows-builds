@@ -6,7 +6,7 @@ echo ------ NODE_MAPNIK -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-SET NODE_VER=0.10
+SET NODE_VER=0.10.33
 SET PUB=0
 IF "%1"=="PUBLISH" (
     ECHO "publishing"
@@ -76,7 +76,7 @@ if NOT EXIST node_modules (
 call npm ls
 IF ERRORLEVEL 1 GOTO ERROR
 
-call .\node_modules\.bin\node-pre-gyp clean
+call .\node_modules\.bin\node-pre-gyp clean --target=%NODE_VER% 
 IF ERRORLEVEL 1 GOTO ERROR
 
 if EXIST build (
@@ -97,7 +97,8 @@ if EXIST %USERPROFILE%\.node-gyp (
 
 call .\node_modules\.bin\node-pre-gyp ^
   rebuild %DEBUG_FLAG% --msvs_version=2013 ^
-  --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
+  --target=%NODE_VER% --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
+
 IF ERRORLEVEL 1 GOTO ERROR
 echo before test
 CALL npm test || true
@@ -106,7 +107,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 ECHO PUB %PUB%
 ::Windows batch file problems: everything within a block e.g.( ) will be evaluated at one
 ::split publishing into 3 blocks, otherwise output of xcopy will be written into mapnik_settings.js :-(
-FOR /F "tokens=*" %%i in ('.\node_modules\.bin\node-pre-gyp reveal module_path --silent') do SET BINDINGIDR=%%i
+FOR /F "tokens=*" %%i in ('.\node_modules\.bin\node-pre-gyp reveal module_path --target=%NODE_VER%  --silent') do SET BINDINGIDR=%%i
 
 echo copying libs
 :: node-pre-gyp reveal spits out postix paths which xcopy does not like
@@ -158,14 +159,14 @@ CALL npm test || true
 IF ERRORLEVEL 1 GOTO ERROR
 
 echo packaging
-CALL .\node_modules\.bin\node-pre-gyp package
+CALL .\node_modules\.bin\node-pre-gyp package --target=%NODE_VER% 
 IF ERRORLEVEL 1 GOTO ERROR
 
 echo publishing
 IF %PUB% EQU 1 (
     CALL npm install aws-sdk
     IF ERRORLEVEL 1 GOTO ERROR
-    CALL .\node_modules\.bin\node-pre-gyp unpublish publish
+    CALL .\node_modules\.bin\node-pre-gyp unpublish publish --target=%NODE_VER% 
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
