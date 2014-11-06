@@ -46,6 +46,7 @@ IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 ::wget cmake
 SET PATH=C:\ProgramData\chocolatey\bin;%PATH%
 set PATH=C:\Python27;%PATH%
+set PATH=C:\Python27\Scripts;%PATH%
 set PATH=C:\Program Files\7-Zip;%PATH%
 set PATH=C:\Program Files (x86)\Git\bin;%PATH%
 
@@ -68,6 +69,14 @@ if "%TOOLS_VERSION%" == "14.0" (
   if "%TARGET_ARCH%" == "64" (
     CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
   )
+)
+
+
+if NOT EXIST C:\Python27\Scripts\aws (
+    git clone --depth=1 https://github.com/aws/aws-cli.git
+    cd aws-cli
+    python setup.py install
+    cd ../
 )
 
 if NOT EXIST tmp-bin\bsdtar.exe (
