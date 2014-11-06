@@ -21,7 +21,7 @@ IF ERRORLEVEL 1 GOTO ERROR
 git fetch -v
 IF ERRORLEVEL 1 GOTO ERROR
 
-git checkout tags/v%NODE_VERSION%
+git checkout origin/v%NODE_VERSION%-release
 IF ERRORLEVEL 1 GOTO ERROR
 
 ::git pull
