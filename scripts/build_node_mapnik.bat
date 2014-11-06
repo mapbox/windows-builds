@@ -89,6 +89,12 @@ if EXIST lib\binding (
 SET DEBUG_FLAG=
 IF %BUILD_TYPE% EQU Debug (SET DEBUG_FLAG=--debug)
 
+:: clear out cached node-gyp dist
+:: to force re-download from dist-url
+if EXIST %USERPROFILE%\.node-gyp (
+    rd /q /s %USERPROFILE%\.node-gyp
+)
+
 call .\node_modules\.bin\node-pre-gyp ^
   rebuild %DEBUG_FLAG% --msvs_version=2013 ^
   --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
