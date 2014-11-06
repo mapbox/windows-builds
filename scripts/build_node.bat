@@ -43,6 +43,18 @@ ECHO ---------------- BUILDING  NODE %NODE_VERSION% --------------
 CALL vcbuild.bat %BUILD_TYPE% x%TARGET_ARCH% nosign
 IF ERRORLEVEL 1 GOTO ERROR
 
+:: 32 bit (need to actually put 32 bit libs here)
+aws s3 cp --acl public-read Release\node.exe s3://mapbox/node-cpp11/v%NODE_VERSION%/
+aws s3 cp --acl public-read Release\node.lib s3://mapbox/node-cpp11/v%NODE_VERSION%/
+aws s3 cp --acl public-read Release\node.exp s3://mapbox/node-cpp11/v%NODE_VERSION%/
+aws s3 cp --acl public-read Release\node.exp s3://mapbox/node-cpp11/v%NODE_VERSION%/
+
+:: 64 bit
+aws s3 cp --acl public-read Release\node.exe s3://mapbox/node-cpp11/v%NODE_VERSION%/x64/
+aws s3 cp --acl public-read Release\node.lib s3://mapbox/node-cpp11/v%NODE_VERSION%/x64/
+aws s3 cp --acl public-read Release\node.exp s3://mapbox/node-cpp11/v%NODE_VERSION%/x64/
+aws s3 cp --acl public-read Release\node.exp s3://mapbox/node-cpp11/v%NODE_VERSION%/x64/
+
 ::ECHO.
 ::ECHO ------------------------------------------------------------
 ::ECHO running tests
