@@ -6,15 +6,17 @@ echo ------ NODE_MAPNIK -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-SET NODE_VER=0.10.33
+SET NODE_VER=0.11.14
 SET PUB=0
-IF "%1"=="PUBLISH" (
-    ECHO "publishing"
-    SET PUB=1
-    IF "%2"=="" ( ECHO using default %NODE_VER% ) ELSE ( SET NODE_VER=%2)
-) ELSE ( ECHO "NOT publishing")
 
-ECHO using %NODE_VER%
+IF "%1"=="" (
+    SET PUB=0
+) ELSE (
+    SET NODE_VER=%1
+    IF "%2"=="PUBLISH" (SET PUB=1 && ECHO "publishing")
+)
+
+ECHO using node %NODE_VER%
 
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%PATH%
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
@@ -76,7 +78,7 @@ if NOT EXIST node_modules (
 call npm ls
 IF ERRORLEVEL 1 GOTO ERROR
 
-call .\node_modules\.bin\node-pre-gyp clean --target=%NODE_VER% 
+call .\node_modules\.bin\node-pre-gyp clean --target=%NODE_VER%
 IF ERRORLEVEL 1 GOTO ERROR
 
 if EXIST build (
@@ -159,14 +161,14 @@ CALL npm test || true
 IF ERRORLEVEL 1 GOTO ERROR
 
 echo packaging
-CALL .\node_modules\.bin\node-pre-gyp package --target=%NODE_VER% 
+CALL .\node_modules\.bin\node-pre-gyp package --target=%NODE_VER%
 IF ERRORLEVEL 1 GOTO ERROR
 
 echo publishing
 IF %PUB% EQU 1 (
     CALL npm install aws-sdk
     IF ERRORLEVEL 1 GOTO ERROR
-    CALL .\node_modules\.bin\node-pre-gyp unpublish publish --target=%NODE_VER% 
+    CALL .\node_modules\.bin\node-pre-gyp unpublish publish --target=%NODE_VER%
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
