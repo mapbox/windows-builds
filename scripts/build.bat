@@ -85,6 +85,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL scripts\build_mapnik.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+:NODE
+CALL scripts\build_node.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 :NODEMAPNIK
 CALL scripts\build_node_mapnik.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
