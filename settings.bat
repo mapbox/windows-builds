@@ -72,13 +72,6 @@ if "%TOOLS_VERSION%" == "14.0" (
 )
 
 
-if NOT EXIST C:\Python27\Scripts\aws (
-    git clone --depth=1 https://github.com/aws/aws-cli.git
-    cd aws-cli
-    python setup.py install
-    cd ../
-)
-
 if NOT EXIST tmp-bin\bsdtar.exe (
     echo "setting up bsdtar"
     mkdir tmp-bin
@@ -93,6 +86,22 @@ if NOT EXIST tmp-bin\bsdtar.exe (
     IF ERRORLEVEL 1 GOTO ERROR
     cd ..
 )
+
+python setuptools-available.py
+IF %ERRORLEVEL% NEQ 0 (
+  ECHO Please install setuptools for python!
+  ECHO see https://pypi.python.org/pypi/setuptools#installation-instructions
+  GOTO ERROR
+)
+
+if NOT EXIST C:\Python27\Scripts\aws (
+    ddt /Q aws-cli
+    git clone --depth=1 https://github.com/aws/aws-cli.git
+    cd aws-cli
+    python setup.py install
+    cd ../
+)
+
 
 :: upgrade make in order to work around "Interrupt/Exception caught"
 if NOT EXIST tmp-bin\make.exe (
