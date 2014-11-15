@@ -22,11 +22,11 @@ IF EXIST %BDIR% (
 )
 ENDLOCAL
 
-IF EXIST packages\boost_1_%BOOST_VERSION%_0\user-confg.jam (del /q /s packages\boost_1_%BOOST_VERSION%_0\user-confg.jam)
+IF EXIST packages\boost\user-confg.jam (del /q /s packages\boost\user-confg.jam)
 IF %ERRORLEVEL% NEQ 0 (ECHO %ERRORLEVEL% && GOTO ERROR)
-ddt /Q packages\boost_1_%BOOST_VERSION%_0\bin.v2
+ddt /Q packages\boost\bin.v2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-ddt /Q packages\boost_1_%BOOST_VERSION%_0\stage
+ddt /Q packages\boost\stage
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
