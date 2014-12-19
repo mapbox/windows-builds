@@ -21,31 +21,6 @@ ECHO using node %NODE_VER%
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%PATH%
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
 
-SET nodistdir=%ROOTDIR%\tmp-bin\nodist
-IF NOT EXIST %nodistdir% (
-    git clone https://github.com/marcelklehr/nodist.git %nodistdir%
-)
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-cd %nodistdir%
-git fetch
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-git pull
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-IF %TARGET_ARCH% EQU 32 (
-    SET NODIST_X64=0
-) ELSE (
-    SET NODIST_X64=1
-)
-
-set PATH=%nodistdir%\bin;%PATH%
-set NODIST_PREFIX=%nodistdir%
-CALL nodist selfupdate
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-CALL nodist %NODE_VER%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
 cd %PKGDIR%
 if NOT EXIST node-mapnik (
     git clone https://github.com/mapnik/node-mapnik
@@ -98,7 +73,7 @@ if EXIST %USERPROFILE%\.node-gyp (
 )
 
 call .\node_modules\.bin\node-pre-gyp ^
-  rebuild %DEBUG_FLAG% --msvs_version=2013 ^
+  rebuild %DEBUG_FLAG% --msvs_version=2013 --no-rollback ^
   --target=%NODE_VER% --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
 
 IF ERRORLEVEL 1 GOTO ERROR
