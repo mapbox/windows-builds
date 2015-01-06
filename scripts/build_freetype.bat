@@ -43,22 +43,24 @@ msbuild ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 IF ERRORLEVEL 1 GOTO ERROR
 
+ECHO build ok
+
 IF %BUILDPLATFORM% EQU x64 (
   IF %BUILD_TYPE% EQU Release (
-    CALL copy /Y builds\windows\vc2010\x64\Release\freetype253.lib freetype.lib
+    CALL copy /Y objs\vc2010\x64\freetype%FREETYPE_VERSION_FILE%.lib freetype.lib
     IF ERRORLEVEL 1 GOTO ERROR
   ) ELSE (
-    CALL copy /Y objs\win64\vc2010\freetype253_D.lib freetype.lib
+    CALL copy /Y objs\win64\vc2010\freetype%FREETYPE_VERSION_FILE%_D.lib freetype.lib
     IF ERRORLEVEL 1 GOTO ERROR
     CALL copy /Y objs\debug\freetype.pdb freetype.pdb
     IF ERRORLEVEL 1 GOTO ERROR
   )
 ) ELSE (
   IF %BUILD_TYPE% EQU Release (
-    CALL copy /Y objs\win32\vc2010\freetype253.lib freetype.lib
+    CALL copy /Y objs\win32\vc2010\freetype%FREETYPE_VERSION_FILE%.lib freetype.lib
     IF ERRORLEVEL 1 GOTO ERROR
   ) ELSE (
-    CALL copy /Y objs\win32\vc2010\freetype253_D.lib freetype.lib
+    CALL copy /Y objs\win32\vc2010\freetype%FREETYPE_VERSION_FILE%_D.lib freetype.lib
     IF ERRORLEVEL 1 GOTO ERROR
     CALL copy /Y objs\debug\freetype.pdb freetype.pdb
     IF ERRORLEVEL 1 GOTO ERROR
