@@ -61,4 +61,10 @@ To create a mapnik SDK package, including all necessary header files, libs and d
     cd packages\mapnik-master\mapnik-gyp
     package.bat
 
-This will create a file in the form of `mapnik-win-sdk-14.0-x64-<CURRENT MAPNIK GIT TAG>.7z`
+This will create a file in the form of
+
+    mapnik-win-sdk-<MSBUILD VERSION>-<ARCHITECTURE>-<CURRENT MAPNIK GIT TAG>.7z`
+
+ e.g.
+
+    `mapnik-win-sdk-14.0-x64-v3.0.0-rc1-242-g2a33ead.7z`
