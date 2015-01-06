@@ -57,7 +57,7 @@ IF %BUILDPLATFORM% EQU x64 (
   )
 ) ELSE (
   IF %BUILD_TYPE% EQU Release (
-    CALL copy /Y objs\win32\vc2010\freetype%FREETYPE_VERSION_FILE%.lib freetype.lib
+    CALL copy /Y objs\vc2010\Win32\freetype%FREETYPE_VERSION_FILE%.lib freetype.lib
     IF ERRORLEVEL 1 GOTO ERROR
   ) ELSE (
     CALL copy /Y objs\win32\vc2010\freetype%FREETYPE_VERSION_FILE%_D.lib freetype.lib
