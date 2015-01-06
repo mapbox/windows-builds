@@ -34,3 +34,31 @@ Or to run individual builds e.g. do:
 
     scripts/build_icu.bat
 
+### Tip
+
+If you want to compile 32bit and 64bit use `clean.bat` before compling the second architecture, this will clean all package directories.
+
+A better way would be to create a dedicated directory for each architecture, e.g.:
+
+#### 64bit
+
+    git clone https://github.com/BergWerkGIS/mapnik-dependencies.git mapnik-dependencies-64
+    cd mapnik-dependencies-64
+    settings.bat 64 14
+    scripts/build.bat
+
+#### 32bit
+
+    git clone https://github.com/BergWerkGIS/mapnik-dependencies.git mapnik-dependencies-32
+    cd mapnik-dependencies-32
+    settings.bat 32 14
+    scripts/build.bat
+
+### Bonus Tip
+
+To create a mapnik SDK package, including all necessary header files, libs and dlls:
+
+    cd packages\mapnik-master\mapnik-gyp
+    package.bat
+
+This will create a file in the form of `mapnik-win-sdk-14.0-x64-<CURRENT MAPNIK GIT TAG>.7z`
