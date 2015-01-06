@@ -5,32 +5,32 @@ Build scripts for Mapnik dependencies
 
 ### Requirements
 
- - Visual Studio 2014 CTP 3
- - wget, msysgit, and 7zip, cmake
+ - [Visual Studio 2014 CTP 4 or Visual Studio 2015 Preview](http://support.microsoft.com/kb/2967191)
+ - [Python 2.7 32 bit](https://www.python.org/downloads/windows/) installed into `C:\Python27`
+ - [git](https://msysgit.github.io/)
+ - [7zip 64bit](http://www.7-zip.org/download.html)
+ - [cmake](http://www.cmake.org/download/)
+ - [gnu bsdtar, make and wget](http://gnuwin32.sourceforge.net/packages.html)
 
 ### Setup
 
-First grab the build dependencies.
+Install all requirements and make sure gnu tools and cmake are available on your PATH then
 
-You can do this with [chocolatey](https://chocolatey.org/)
+    git clone https://github.com/BergWerkGIS/mapnik-dependencies.git
+    cd mapnik-dependencies
+    settings.bat 64 14
 
-Install chocolately:
-
-    @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
-
-Then install deps:
-
-    cinst wget msysgit 7zip cmake
+Options for settings.bat:
+`settings.bat 32|64 14 Release|Debug`
 
 ### Building
 
-Simply run:
+To download and build all dependencies, mapnik and node-mapnik run:
 
-    settings.bat
     scripts/build.bat
 
-Or to run individual builds do:
 
-    settings.bat
+Or to run individual builds e.g. do:
+
     scripts/build_icu.bat
 
