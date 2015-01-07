@@ -10,7 +10,7 @@ cd %PKGDIR%
 
 cd %PKGDIR%
 if NOT EXIST OSM-binary (
-    git clone https://github.com/scrosby/OSM-binary.git
+	git clone https://github.com/scrosby/OSM-binary.git
 )
 cd OSM-binary
 IF ERRORLEVEL 1 GOTO ERROR
@@ -21,13 +21,19 @@ IF ERRORLEVEL 1 GOTO ERROR
 
 ::libprotobuf.lib
 ::libprotobuf-lite.lib
-::SET PROTOBUF_LIBRARY=%PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\libprotobuf-lite.lib
-::SET PROTOBUF_INCLUDE_DIR=%PKGDIR%\protobuf\src\google
+
+IF %BUILDPLATFORM% EQU x64 (
+	SET PROTOC=%PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\protoc.exe
+	SET PROTOLIB=%PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\libprotobuf-lite.lib
+) ELSE (
+	SET PROTOC=%PKGDIR%\protobuf\vsprojects\%BUILD_TYPE%\protoc.exe
+	SET PROTOLIB=%PKGDIR%\protobuf\vsprojects\%BUILD_TYPE%\libprotobuf-lite.lib
+)
 
 cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DCMAKE_INSTALL_PREFIX=%PKGDIR%\OSM-binary\deploy ^
--DPROTOBUF_LIBRARY=%PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\libprotobuf-lite.lib ^
+-DPROTOBUF_PROTOC_EXECUTABLE=%PROTOC%
+-DPROTOBUF_LIBRARY=%PROTOLIB% ^
 -DPROTOBUF_INCLUDE_DIR=%PKGDIR%\protobuf\src ^
--DPROTOBUF_PROTOC_EXECUTABLE=%PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\protoc.exe
 IF ERRORLEVEL 1 GOTO ERROR
 
 nmake src install

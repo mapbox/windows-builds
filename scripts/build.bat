@@ -53,6 +53,10 @@ SET protobufbat=scripts\build_protobuf-%PROTOBUF_VERSION%.bat
 CALL %protobufbat%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+:OSMPBF
+CALL scripts\build_osmpbf.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 :PIXMAN
 CALL scripts\build_pixman.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
