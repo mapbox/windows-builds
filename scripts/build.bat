@@ -57,6 +57,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL scripts\build_osmpbf.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+:BZIP2
+CALL scripts\build_bzip2.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 :PIXMAN
 CALL scripts\build_pixman.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
