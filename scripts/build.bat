@@ -53,6 +53,10 @@ SET protobufbat=scripts\build_protobuf-%PROTOBUF_VERSION%.bat
 CALL %protobufbat%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+:SPARSEHASH
+CALL scripts\build_sparsehash.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 :OSMPBF
 CALL scripts\build_osmpbf.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -99,6 +103,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :NODEMAPNIK
 CALL scripts\build_node_mapnik.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:LIBOSMIUM
+CALL scripts\build_libosmium.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
