@@ -7,8 +7,6 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
 
-
-cd %PKGDIR%
 if NOT EXIST OSM-binary (
 	git clone https://github.com/scrosby/OSM-binary.git
 )
@@ -33,7 +31,7 @@ IF %BUILDPLATFORM% EQU x64 (
 cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DCMAKE_INSTALL_PREFIX=%PKGDIR%\OSM-binary\deploy ^
 -DPROTOBUF_PROTOC_EXECUTABLE=%PROTOC% ^
 -DPROTOBUF_LIBRARY=%PROTOLIB% ^
--DPROTOBUF_INCLUDE_DIR=%PKGDIR%\protobuf\src ^
+-DPROTOBUF_INCLUDE_DIR=%PKGDIR%\protobuf\src
 IF ERRORLEVEL 1 GOTO ERROR
 
 nmake src install
