@@ -20,12 +20,19 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 if EXIST build (
 	ddt /Q build
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 mkdir build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cd build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+::TEST for bzip2 needs forward slashes or 4(!) backward slashes http://stackoverflow.com/a/13052993/2333354
+SET LIBBZIP2=%PKGDIR%\bzip2\libbz2.lib
+ECHO %LIBBZIP2%
+SET LIBBZIP2=%LIBBZIP2:\=/%
+ECHO %LIBBZIP2%
 
 cmake .. ^
 -DBOOST_ROOT=%PKGDIR%\boost ^
@@ -37,7 +44,7 @@ cmake .. ^
 -DZLIB_INCLUDE_DIR=%PKGDIR%\zlib ^
 -DEXPAT_LIBRARY=%PKGDIR%\expat\win32\bin\Release\libexpat.lib ^
 -DEXPAT_INCLUDE_DIR=%PKGDIR%\expat\lib ^
--DBZIP2_LIBRARIES="C:\\mb\\mapnik-dependencies-64\\packages\\bzip2\\libbz2.lib" ^
+-DBZIP2_LIBRARIES=%LIBBZIP2% ^
 -DBZIP2_INCLUDE_DIR=%PKGDIR%\bzip2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
