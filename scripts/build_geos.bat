@@ -3,6 +3,8 @@ SETLOCAL
 SET EL=0
 echo ------ geos -----
 
+cd %PKGDIR%
+
 ::CALL bsdtar xvf %PKGDIR%\geos-%GEOS_VERSION%.tar.bz2
 ::IF ERRORLEVEL 1 GOTO ERROR
 
@@ -23,9 +25,9 @@ CALL autogen.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (
-    CALL nmake /A /F makefile.vc MSVC_VER=1800 WIN64=YES
+    CALL nmake /A /F makefile.vc MSVC_VER=1900 WIN64=YES
 ) ELSE (
-    CALL nmake /A /F makefile.vc MSVC_VER=1800
+    CALL nmake /A /F makefile.vc MSVC_VER=1900
 )
 IF ERRORLEVEL 1 GOTO ERROR
 
