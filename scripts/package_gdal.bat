@@ -21,6 +21,11 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\gdal\*.h %GDALPKG%\includes\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+::additionally copy all header files into a single directory
+::otherwise libosmium won't compile
+::TODO: find another way, tell @joto
+for /R %PKGDIR%\gdal %%f in (*.h) do copy %%f %GDALPKG%\includes\
+
 mkdir %GDALPKG%\libs\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
