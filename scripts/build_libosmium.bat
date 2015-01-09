@@ -47,7 +47,7 @@ cmake .. ^
 -DEXPAT_INCLUDE_DIR=%PKGDIR%\expat\lib ^
 -DBZIP2_LIBRARIES=%LIBBZIP2% ^
 -DBZIP2_INCLUDE_DIR=%PKGDIR%\bzip2 ^
--DGDAL_LIBRARY=%PKGDIR%\gdal-sdk\gdal\libs\gdal.lib ^
+-DGDAL_LIBRARY=%PKGDIR%\gdal-sdk\gdal\libs\gdal_i.lib ^
 -DGDAL_INCLUDE_DIR=%PKGDIR%\gdal-sdk\gdal\includes ^
 -DGEOS_LIBRARY=%PKGDIR%\geos\src\geos.lib ^
 -DGEOS_INCLUDE_DIR=%PKGDIR%\geos\include ^
