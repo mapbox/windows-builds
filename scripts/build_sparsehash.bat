@@ -22,6 +22,8 @@ if NOT EXIST "sparsehash" (
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 )
 
+XCOPY /S /Q %PKGDIR%\sparsehash\src\windows\*.* %PKGDIR%\sparsehash\src\
+
 ::BUILDING not necessary (for libosmium)
 :: cd sparsehash
 :: IF %ERRORLEVEL% NEQ 0 GOTO ERROR
