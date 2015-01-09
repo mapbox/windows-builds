@@ -22,19 +22,20 @@ if NOT EXIST "sparsehash" (
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 )
 
-cd sparsehash
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::BUILDING not necessary (for libosmium)
+:: cd sparsehash
+:: IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-msbuild ^
-sparsehash.sln ^
-/nologo ^
-/m:%NUMBER_OF_PROCESSORS% ^
-/toolsversion:%TOOLS_VERSION% ^
-/p:BuildInParallel=true ^
-/p:Configuration=%BUILD_TYPE% ^
-/p:Platform=%BUILDPLATFORM% ^
-/p:PlatformToolset=%PLATFORM_TOOLSET%
-IF ERRORLEVEL 1 GOTO ERROR
+:: msbuild ^
+:: sparsehash.sln ^
+:: /nologo ^
+:: /m:%NUMBER_OF_PROCESSORS% ^
+:: /toolsversion:%TOOLS_VERSION% ^
+:: /p:BuildInParallel=true ^
+:: /p:Configuration=%BUILD_TYPE% ^
+:: /p:Platform=%BUILDPLATFORM% ^
+:: /p:PlatformToolset=%PLATFORM_TOOLSET%
+:: IF ERRORLEVEL 1 GOTO ERROR
 
 GOTO DONE
 
