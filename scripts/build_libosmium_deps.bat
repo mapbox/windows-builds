@@ -5,32 +5,39 @@ echo ------ libosmium -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-cd %PKGDIR%
+cd %ROOTDIR%\scripts
 
-if NOT EXIST libosmium (
-	git clone https://github.com/osmcode/libosmium.git
-)
-cd libosmium
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-git fetch
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-git pull
+
+TODO!!!
+ALSO ADD libs that are built with standard mapnik workflow,
+that just libosmium can be built alone
+
+CALL build_osmpbf.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST build (
-	ddt /Q build
-)
+CALL 
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-mkdir build
+CALL 
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-cd build
+CALL 
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-::cmake test for bzip2 needs forward slashes or 4(!) backward slashes http://stackoverflow.com/a/13052993/2333354
-SET LIBBZIP2=%PKGDIR%\bzip2\libbz2.lib
-SET LIBBZIP2=%LIBBZIP2:\=/%
+CALL 
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL 
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL 
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL 
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL 
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cmake .. ^
 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
