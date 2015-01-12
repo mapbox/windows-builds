@@ -38,8 +38,9 @@ SET LIBBZIP2=%LODEPSDIR%\bzip2\lib\libbz2.lib
 SET LIBBZIP2=%LIBBZIP2:\=/%
 
 cmake .. ^
+-G "NMake Makefiles" ^
 -DOsmium_DEBUG=TRUE ^
--DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
+-DCMAKE_BUILD_TYPE=Dev ^
 -DBOOST_ROOT=%LODEPSDIR%\boost ^
 -DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
 -DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
