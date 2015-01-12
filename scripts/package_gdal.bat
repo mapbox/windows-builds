@@ -18,25 +18,25 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\gdal\apps\*.exe %GDALPKG%\bin\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-xcopy /S /Q %PKGDIR%\gdal\*.h %GDALPKG%\includes\
+xcopy /S /Q %PKGDIR%\gdal\*.h %GDALPKG%\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::additionally copy all header files into a single directory
 ::otherwise libosmium won't compile
 ::TODO: find another way, tell @joto
-for /R %PKGDIR%\gdal %%f in (*.h) do copy %%f %GDALPKG%\includes\
+for /R %PKGDIR%\gdal %%f in (*.h) do copy %%f %GDALPKG%\include\
 
-mkdir %GDALPKG%\libs\
+mkdir %GDALPKG%\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 for /R %PKGDIR%\gdal %%f in (*.lib) do (
-  copy %%f %GDALPKG%\libs\
+  copy %%f %GDALPKG%\lib\
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
 ENDLOCAL
 
-copy %PKGDIR%\gdal\*.dll %GDALPKG%\libs\
+copy %PKGDIR%\gdal\*.dll %GDALPKG%\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
