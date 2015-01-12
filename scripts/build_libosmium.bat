@@ -3,7 +3,8 @@ SETLOCAL
 SET EL=0
 echo ------ libosmium -----
 :: guard to make sure settings have been sourced
-IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
+IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO ERROR )
 
 cd %PKGDIR%
 
@@ -48,8 +49,8 @@ cmake .. ^
 -DEXPAT_INCLUDE_DIR=%PKGDIR%\expat\lib ^
 -DBZIP2_LIBRARIES=%LIBBZIP2% ^
 -DBZIP2_INCLUDE_DIR=%PKGDIR%\bzip2 ^
--DGDAL_LIBRARY=%PKGDIR%\gdal-sdk\gdal\libs\gdal_i.lib ^
--DGDAL_INCLUDE_DIR=%PKGDIR%\gdal-sdk\gdal\includes ^
+-DGDAL_LIBRARY=%PKGDIR%\gdal-sdk\gdal\lib\gdal_i.lib ^
+-DGDAL_INCLUDE_DIR=%PKGDIR%\gdal-sdk\gdal\include ^
 -DGEOS_LIBRARY=%PKGDIR%\geos\src\geos.lib ^
 -DGEOS_INCLUDE_DIR=%PKGDIR%\geos\include ^
 -DPROJ_LIBRARY=%PKGDIR%\proj\src\proj.lib ^
