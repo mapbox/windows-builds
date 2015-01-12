@@ -29,38 +29,40 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 cd build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+
+SET LODEPSDIR=%PKGDIR%\libosmium-deps\libosmium-deps
+
+
 ::cmake test for bzip2 needs forward slashes or 4(!) backward slashes http://stackoverflow.com/a/13052993/2333354
-SET LIBBZIP2=%PKGDIR%\bzip2\libbz2.lib
+SET LIBBZIP2=%LODEPSDIR%\bzip2\lib\libbz2.lib
 SET LIBBZIP2=%LIBBZIP2:\=/%
 
 cmake .. ^
 -DOsmium_DEBUG=TRUE ^
 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
--DBOOST_ROOT=%PKGDIR%\boost ^
--DBoost_PROGRAM_OPTIONS_LIBRARY=%PKGDIR%\boost\stage\lib\libboost_program_options-vc140-mt-1_57.lib ^
--DOSMPBF_LIBRARY=%PKGDIR%\OSM-binary\deploy\lib\osmpbf.lib ^
--DOSMPBF_INCLUDE_DIR=%PKGDIR%\OSM-binary\deploy\include ^
--DPROTOBUF_LIBRARY=%PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\libprotobuf.lib ^
--DPROTOBUF_LITE_LIBRARY=%PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\libprotobuf-lite.lib ^
--DPROTOBUF_INCLUDE_DIR=%PKGDIR%\protobuf\src ^
--DZLIB_LIBRARY=%PKGDIR%\zlib\contrib\vstudio\vc10\x64\ZlibDllRelease\zlibwapi.lib ^
--DZLIB_INCLUDE_DIR=%PKGDIR%\zlib ^
--DEXPAT_LIBRARY=%PKGDIR%\expat\win32\bin\%BUILD_TYPE%\libexpat.lib ^
--DEXPAT_INCLUDE_DIR=%PKGDIR%\expat\lib ^
+-DBOOST_ROOT=%LODEPSDIR%\boost ^
+-DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
+-DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
+-DOSMPBF_INCLUDE_DIR=%LODEPSDIR%\osmpbf\include ^
+-DPROTOBUF_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf.lib ^
+-DPROTOBUF_LITE_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf-lite.lib ^
+-DPROTOBUF_INCLUDE_DIR=%LODEPSDIR%\protobuf\include ^
+-DZLIB_LIBRARY=%LODEPSDIR%\zlib\lib\zlibwapi.lib ^
+-DZLIB_INCLUDE_DIR=%LODEPSDIR%\zlib\include ^
+-DEXPAT_LIBRARY=%LODEPSDIR%\expat\lib\libexpat.lib ^
+-DEXPAT_INCLUDE_DIR=%LODEPSDIR%\expat\include ^
 -DBZIP2_LIBRARIES=%LIBBZIP2% ^
--DBZIP2_INCLUDE_DIR=%PKGDIR%\bzip2 ^
--DGDAL_LIBRARY=%PKGDIR%\gdal-sdk\gdal\lib\gdal_i.lib ^
--DGDAL_INCLUDE_DIR=%PKGDIR%\gdal-sdk\gdal\include ^
--DGEOS_LIBRARY=%PKGDIR%\geos\src\geos.lib ^
--DGEOS_INCLUDE_DIR=%PKGDIR%\geos\include ^
--DPROJ_LIBRARY=%PKGDIR%\proj\src\proj.lib ^
--DPROJ_INCLUDE_DIR=%PKGDIR%\proj\src ^
--DSPARSEHASH_INCLUDE_DIR=%PKGDIR%\sparsehash\src ^
--DGETOPT_LIBRARY=%PKGDIR%\wingetopt\deploy\lib\wingetopt.lib ^
--DGETOPT_INCLUDE_DIR=%PKGDIR%\wingetopt\deploy\include
+-DBZIP2_INCLUDE_DIR=%LODEPSDIR%\bzip2\include ^
+-DGDAL_LIBRARY=%LODEPSDIR%\gdal\lib\gdal_i.lib ^
+-DGDAL_INCLUDE_DIR=%LODEPSDIR%\gdal\include ^
+-DGEOS_LIBRARY=%LODEPSDIR%\geos\lib\geos_i.lib ^
+-DGEOS_INCLUDE_DIR=%LODEPSDIR%\geos\include ^
+-DPROJ_LIBRARY=%LODEPSDIR%\proj\lib\proj.lib ^
+-DPROJ_INCLUDE_DIR=%LODEPSDIR%\proj\include ^
+-DSPARSEHASH_INCLUDE_DIR=%LODEPSDIR%\sparsehash\include ^
+-DGETOPT_LIBRARY=%LODEPSDIR%\wingetopt\lib\wingetopt.lib ^
+-DGETOPT_INCLUDE_DIR=%LODEPSDIR%\wingetopt\include
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-REM -DZLIB_LIBRARY=%PKGDIR%\zlib\zlib.lib
 
 nmake
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR

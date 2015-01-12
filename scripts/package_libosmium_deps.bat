@@ -84,6 +84,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO copying sparsehash
 xcopy /S /Q %PKGDIR%\sparsehash\src\*.h %LODEPSDIR%\sparsehash\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+copy %PKGDIR%\sparsehash\src\google\sparsetable %LODEPSDIR%\sparsehash\include\google\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+copy %PKGDIR%\sparsehash\src\sparsehash\sparsetable %LODEPSDIR%\sparsehash\include\sparsehash\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying wingetopt
 xcopy /S /Q %PKGDIR%\wingetopt\deploy\*.* %LODEPSDIR%\wingetopt\
