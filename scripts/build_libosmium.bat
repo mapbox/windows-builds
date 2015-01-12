@@ -33,6 +33,7 @@ SET LIBBZIP2=%PKGDIR%\bzip2\libbz2.lib
 SET LIBBZIP2=%LIBBZIP2:\=/%
 
 cmake .. ^
+-DOsmium_DEBUG=TRUE ^
 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
 -DBOOST_ROOT=%PKGDIR%\boost ^
 -DBoost_PROGRAM_OPTIONS_LIBRARY=%PKGDIR%\boost\stage\lib\libboost_program_options-vc140-mt-1_57.lib ^
