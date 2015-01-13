@@ -23,7 +23,7 @@ if NOT EXIST "zlib" (
 )
 
 ::extracting was enough, gets built by libpng -> normal mapnik workflow
-IF "%1"=="" GOTO NOBUILD
+IF %1 NEQ build GOTO NOBUILD
 
 
 ::build zlib ourselves -> for libosimium
@@ -32,7 +32,7 @@ SET ARCH=x64
 IF %TARGET_ARCH% EQU 32 SET ARCH=x86
 CD zlib\contrib\masm%ARCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-CALL bld_ml%TARGET_ARCH%.bat 
+CALL bld_ml%TARGET_ARCH%.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: --- build with Visual Studio

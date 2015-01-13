@@ -21,10 +21,16 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\gdal\*.h %GDALPKG%\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+
 ::additionally copy all header files into a single directory
 ::otherwise libosmium won't compile
 ::TODO: find another way, tell @joto
+IF %1 NEQ libosmium GOTO NODUPILCATE
+echo ----------- duplicating header files for libosmium
 for /R %PKGDIR%\gdal %%f in (*.h) do copy %%f %GDALPKG%\include\
+:NODUPILCATE
+
+
 
 mkdir %GDALPKG%\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -38,6 +44,10 @@ ENDLOCAL
 
 copy %PKGDIR%\gdal\*.dll %GDALPKG%\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+:: skip packaging if preparing for libosmium
+IF %1 EQU libosmium GOTO DONE
 
 
 if %TARGET_ARCH% EQU 32 (
@@ -55,7 +65,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF EXIST %PKGNAME% DEL %PKGNAME%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-7z a -r -mx9 ..\%PKGNAME%
+7z a -r -mx9 ..\%PKGNAME% > nul
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 

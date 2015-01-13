@@ -6,6 +6,16 @@ echo ------ libosmium -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO ERROR )
 
+IF %1 EQU full (
+	cd %ROOTDIR%\scripts
+	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+	CALL build_libosmium_deps.bat
+	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+	CALL package_libosmium_deps.bat
+	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+)
+
 cd %PKGDIR%
 
 if NOT EXIST libosmium (
@@ -19,6 +29,7 @@ git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if EXIST build (
+	ECHO deleting build dir
 	ddt /Q build
 )
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -37,10 +48,14 @@ SET LODEPSDIR=%PKGDIR%\libosmium-deps\libosmium-deps
 SET LIBBZIP2=%LODEPSDIR%\bzip2\lib\libbz2.lib
 SET LIBBZIP2=%LIBBZIP2:\=/%
 
+REM -G "Visual Studio 14 Win64" ^
+REM -G "NMake Makefiles" ^
+REM -DCMAKE_BUILD_TYPE=Dev ^
+
 cmake .. ^
 -G "NMake Makefiles" ^
 -DOsmium_DEBUG=TRUE ^
--DCMAKE_BUILD_TYPE=Dev ^
+-DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
 -DBOOST_ROOT=%LODEPSDIR%\boost ^
 -DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
 -DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
@@ -68,6 +83,16 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 nmake
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+GOTO NOMSBUILD
+msbuild libosmium.sln ^
+/m:%NUMBER_OF_PROCESSORS% ^
+/toolsversion:%TOOLS_VERSION% ^
+/p:BuildInParallel=true ^
+/p:Configuration=%BUILD_TYPE% ^
+/p:Platform=%BUILDPLATFORM% ^
+/p:PlatformToolset=%PLATFORM_TOOLSET%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+:NOMSBUILD
 
 GOTO DONE
 
