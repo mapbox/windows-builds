@@ -7,12 +7,12 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO ERROR )
 
 IF %1 EQU full (
+	echo ======== BUILDING AND PACKAGING ALL DEPS ================
 	cd %ROOTDIR%\scripts
 	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 	CALL build_libosmium_deps.bat
 	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 	CALL package_libosmium_deps.bat
-	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 )
 

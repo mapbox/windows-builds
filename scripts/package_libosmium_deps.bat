@@ -4,22 +4,22 @@ SET EL=0
 echo ============ packing libosmium deps =========
 
 :: guard to make sure settings have been sourced
-IF "%PKGDIR%"=="" ( echo "PKGDIR variable not set" && GOTO DONE )
-IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
+IF "%PKGDIR%"=="" ( echo "PKGDIR variable not set" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && SET ERRORLEVEL=1 && GOTO ERROR )
 
 echo TODO also check for individual files
-IF NOT EXIST %PKGDIR%\boost ( echo "no boost dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\boost\stage\lib ( echo "no boost libs dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\OSM-binary ( echo "no osmpbf dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\protobuf ( echo "no protobuf dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\zlib ( echo "no zlib dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\expat ( echo "no expat dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\bzip2 ( echo "no bzip dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\gdal ( echo "no gdal dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\geos ( echo "no geos dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\proj ( echo "no proj dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\sparsehash ( echo "no sparsehash dir" && GOTO DONE )
-IF NOT EXIST %PKGDIR%\wingetopt ( echo "no wingetopt dir" && GOTO DONE )
+IF NOT EXIST %PKGDIR%\boost ( echo "no boost dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\boost\stage\lib ( echo "no boost libs dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\OSM-binary ( echo "no osmpbf dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\protobuf ( echo "no protobuf dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\zlib ( echo "no zlib dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\expat ( echo "no expat dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\bzip2 ( echo "no bzip dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\gdal ( echo "no gdal dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\geos ( echo "no geos dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\proj ( echo "no proj dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\sparsehash ( echo "no sparsehash dir" &&SET ERRORLEVEL=1 && GOTO ERROR )
+IF NOT EXIST %PKGDIR%\wingetopt ( echo "no wingetopt dir" && SET ERRORLEVEL=1 && GOTO ERROR )
 
 ECHO "TODO - copy only files that are really necessary"
 
