@@ -37,12 +37,15 @@ for /R %PKGDIR%\gdal %%f in (*.h) do copy %%f %GDALPKG%\include\
 mkdir %GDALPKG%\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-SETLOCAL ENABLEDELAYEDEXPANSION
-for /R %PKGDIR%\gdal %%f in (*.lib) do (
-  copy %%f %GDALPKG%\lib\
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-)
-ENDLOCAL
+REM SETLOCAL ENABLEDELAYEDEXPANSION
+REM for /R %PKGDIR%\gdal %%f in (*.lib) do (
+REM   copy %%f %GDALPKG%\lib\
+REM   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+REM )
+REM ENDLOCAL
+
+COPY %PKGDIR%\gdal\gdal_i.lib %GDALPKG%\lib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 copy %PKGDIR%\gdal\*.dll %GDALPKG%\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR

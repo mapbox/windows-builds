@@ -53,6 +53,10 @@ SET PATH=%LODEPSDIR%\geos\lib;%PATH%
 SET PATH=%LODEPSDIR%\gdal\lib;%PATH%
 ::libexpat.dll
 SET PATH=%LODEPSDIR%\expat\lib;%PATH%
+::libtiff.dll
+SET PATH=%LODEPSDIR%\libtiff\lib;%PATH%
+::zlibwapi.dll
+SET PATH=%LODEPSDIR%\zlib\lib;%PATH%
 
 
 ::cmake test for bzip2 needs forward slashes or 4(!) backward slashes http://stackoverflow.com/a/13052993/2333354
@@ -94,7 +98,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 nmake
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-ctest -V -E testdata-multipolygon
+CALL ctest -V -E testdata-multipolygon
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO NOMSBUILD

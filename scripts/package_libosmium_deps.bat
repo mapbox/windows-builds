@@ -86,7 +86,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO copying ---------------- geos
 xcopy /S /Q %PKGDIR%\geos\include\*.h %LODEPSDIR%\geos\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-xcopy /S /Q %PKGDIR%\geos\src\*.lib %LODEPSDIR%\geos\lib\
+xcopy /S /Q %PKGDIR%\geos\src\geos_i.lib %LODEPSDIR%\geos\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\geos\src\*.dll %LODEPSDIR%\geos\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
