@@ -7,6 +7,8 @@ echo ============ packing gdal =========
 IF "%PKGDIR%"=="" ( echo "PKGDIR variable not set" && GOTO DONE )
 IF NOT EXIST %PKGDIR%\gdal ( echo "nothing to package" && GOTO DONE )
 
+IF "%1" EQU "libosmium" ECHO "---- packaging for libosmium --------"
+
 SET SDKBASE=%PKGDIR%\gdal-sdk
 SET GDALPKG=%SDKBASE%\gdal
 ECHO packaging to %SDKBASE%
@@ -25,7 +27,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::additionally copy all header files into a single directory
 ::otherwise libosmium won't compile
 ::TODO: find another way, tell @joto
-IF %1 NEQ libosmium GOTO NODUPILCATE
+IF "%1" NEQ "libosmium" GOTO NODUPILCATE
 echo ----------- duplicating header files for libosmium
 for /R %PKGDIR%\gdal %%f in (*.h) do copy %%f %GDALPKG%\include\
 :NODUPILCATE
@@ -47,7 +49,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 :: skip packaging if preparing for libosmium
-IF %1 EQU libosmium GOTO DONE
+IF "%1" EQU "libosmium" GOTO DONE
 
 
 if %TARGET_ARCH% EQU 32 (

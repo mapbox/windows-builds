@@ -6,7 +6,7 @@ echo ------ libosmium -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO ERROR )
 
-IF %1 EQU full (
+IF "%1"=="full" (
 	echo ======== BUILDING AND PACKAGING ALL DEPS ================
 	cd %ROOTDIR%\scripts
 	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -43,6 +43,17 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET LODEPSDIR=%PKGDIR%\libosmium-deps\libosmium-deps
 
+::epsg file https://trac.osgeo.org/mapserver/wiki/EnvironmentVariables#PROJ_LIB
+SET PROJ_LIB=%LODEPSDIR%\proj\share
+::http://trac.osgeo.org/gdal/wiki/FAQInstallationAndBuilding#HowtosetGDAL_DATAvariable
+set GDAL_DATA=%LODEPSDIR%\gdal\data
+::geos.dll
+SET PATH=%LODEPSDIR%\geos\lib;%PATH%
+::gdal.dll
+SET PATH=%LODEPSDIR%\gdal\lib;%PATH%
+::libexpat.dll
+SET PATH=%LODEPSDIR%\expat\lib;%PATH%
+
 
 ::cmake test for bzip2 needs forward slashes or 4(!) backward slashes http://stackoverflow.com/a/13052993/2333354
 SET LIBBZIP2=%LODEPSDIR%\bzip2\lib\libbz2.lib
@@ -55,7 +66,7 @@ REM -DCMAKE_BUILD_TYPE=Dev ^
 cmake .. ^
 -G "NMake Makefiles" ^
 -DOsmium_DEBUG=TRUE ^
--DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
+-DCMAKE_BUILD_TYPE=Release ^
 -DBOOST_ROOT=%LODEPSDIR%\boost ^
 -DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
 -DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
@@ -81,6 +92,9 @@ cmake .. ^
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 nmake
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ctest -V -E testdata-multipolygon
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO NOMSBUILD

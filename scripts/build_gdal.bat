@@ -81,6 +81,7 @@ SET EL=%ERRORLEVEL%
 echo ----------ERROR gdal --------------
 
 :DONE
+echo ----------DONE gdal --------------
 
 cd %ROOTDIR%
 EXIT /b %EL%

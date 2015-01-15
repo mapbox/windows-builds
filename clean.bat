@@ -45,8 +45,16 @@ ddt /Q packages\freetype
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
+:GEOS
+ECHO GEOS directory will not be deleted, because it requires manual steps of downloading and extracting snapshot
+REM ddt /Q packages\geos
+REM IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
 :GDAL
 ddt /Q packages\gdal
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ddt /Q packages\gdal-sdk
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
@@ -157,6 +165,18 @@ IF %SINGLE% EQU 1 GOTO DONE
 
 :LIBOSMIUM
 ddt /Q packages\libosmium
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ddt /Q packages\osm-testdata
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:LIBOSMIUMDEPS
+ddt /Q packages\libosmium-deps
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
+:WINGETOPT
+ddt /Q packages\wingetopt
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 

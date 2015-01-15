@@ -54,17 +54,29 @@ xcopy /S /Q %PKGDIR%\zlib\*.h %LODEPSDIR%\zlib\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc10\%BUILDPLATFORM%\ZlibDll%BUILD_TYPE%\*.lib %LODEPSDIR%\zlib\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc10\%BUILDPLATFORM%\ZlibDll%BUILD_TYPE%\*.dll %LODEPSDIR%\zlib\lib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- expat
 xcopy /S /Q %PKGDIR%\expat\lib\*.h %LODEPSDIR%\expat\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\expat\win32\bin\%BUILD_TYPE%\*.lib %LODEPSDIR%\expat\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+xcopy /S /Q %PKGDIR%\expat\win32\bin\%BUILD_TYPE%\*.dll %LODEPSDIR%\expat\lib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- bzip2
 xcopy /S /Q %PKGDIR%\bzip2\*.h %LODEPSDIR%\bzip2\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\bzip2\*.lib %LODEPSDIR%\bzip2\lib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO copying ---------------- libtiff
+xcopy /S /Q %PKGDIR%\libtiff\libtiff\*.h %LODEPSDIR%\libtiff\include\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+xcopy /S /Q %PKGDIR%\libtiff\libtiff\*.lib %LODEPSDIR%\libtiff\lib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+xcopy /S /Q %PKGDIR%\libtiff\libtiff\*.dll %LODEPSDIR%\libtiff\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- gdal
@@ -76,11 +88,15 @@ xcopy /S /Q %PKGDIR%\geos\include\*.h %LODEPSDIR%\geos\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\geos\src\*.lib %LODEPSDIR%\geos\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+xcopy /S /Q %PKGDIR%\geos\src\*.dll %LODEPSDIR%\geos\lib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- proj
 xcopy /S /Q %PKGDIR%\proj\src\*.h %LODEPSDIR%\proj\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\proj\src\*.lib %LODEPSDIR%\proj\lib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+xcopy /Q %PKGDIR%\proj\nad\epsg %LODEPSDIR%\proj\share\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- sparsehash

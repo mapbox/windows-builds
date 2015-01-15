@@ -7,7 +7,6 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %ROOTDIR%\scripts
 
-
 CALL build_boost.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
@@ -23,10 +22,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL build_expat.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL buid_bzip2.bat
+CALL build_bzip2.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_proj.bat
+CALL build_proj4.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_geos.bat

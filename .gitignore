@@ -1,6 +1,7 @@
 aws-cli
 packages
 tmp-bin
+testing
 
 *.sublime-project
 *.sublime-workspace

@@ -23,7 +23,7 @@ if NOT EXIST "zlib" (
 )
 
 ::extracting was enough, gets built by libpng -> normal mapnik workflow
-IF "%1" EQU "" GOTO NOBUILD
+IF "%1"=="" GOTO NOBUILD
 
 
 ::build zlib ourselves -> for libosimium

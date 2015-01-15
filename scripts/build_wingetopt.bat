@@ -29,6 +29,7 @@ cd build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cmake .. ^
+-G "NMake Makefiles" ^
 -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
 -DCMAKE_INSTALL_PREFIX=%PKGDIR%\wingetopt\deploy
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
