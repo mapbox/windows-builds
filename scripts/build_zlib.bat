@@ -49,7 +49,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 :: --- build with Visual Studio
 CD %PKGDIR%\zlib\contrib\vstudio\vc11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 msbuild zlibvc.sln ^
+/SAFESEH:NO ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
