@@ -24,6 +24,22 @@ if NOT EXIST libpng (
 cd .\libpng
 IF ERRORLEVEL 1 GOTO ERROR
 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TODO!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+either remove ZLIB_WINAPI everywhere in zlib
+or add it to libpng
+
+nmake /a /f scripts\makefile.vcwin32 test
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
 IF ERRORLEVEL 1 GOTO ERROR
 
