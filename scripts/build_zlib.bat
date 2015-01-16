@@ -25,6 +25,9 @@ if NOT EXIST "zlib" (
 ::extracting was enough, gets built by libpng -> normal mapnik workflow
 ::IF "%1"=="" GOTO NOBUILD
 
+cd zlib
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 echo patching
 :: -p NUM  --strip=NUM  Strip NUM leading components from file names
 :: -N  --forward  Ignore patches that appear to be reversed or already applied
