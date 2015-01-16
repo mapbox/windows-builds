@@ -70,6 +70,17 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
+::copy shared lib, dll
+copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibDll%BUILD_TYPE%\zlibwapi.lib ..\zlib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibDll%BUILD_TYPE%\zlibwapi.dll ..\zlib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+::copy static lib
+copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibStat%BUILD_TYPE%\zlibwapi.lib ..\zlib\zlib.dll
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
 GOTO DONE
 
 
