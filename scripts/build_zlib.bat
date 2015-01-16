@@ -23,7 +23,13 @@ if NOT EXIST "zlib" (
 )
 
 ::extracting was enough, gets built by libpng -> normal mapnik workflow
-IF "%1"=="" GOTO NOBUILD
+::IF "%1"=="" GOTO NOBUILD
+
+echo patching
+:: -p NUM  --strip=NUM  Strip NUM leading components from file names
+:: -N  --forward  Ignore patches that appear to be reversed or already applied
+patch -N -p1 < %PATCHES%/zlib-1.2.8.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 ::build zlib ourselves -> for libosimium
@@ -36,7 +42,7 @@ CALL bld_ml%TARGET_ARCH%.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: --- build with Visual Studio
-CD %PKGDIR%\zlib\contrib\vstudio\vc10
+CD %PKGDIR%\zlib\contrib\vstudio\vc11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 msbuild zlibvc.sln ^
 /m:%NUMBER_OF_PROCESSORS% ^

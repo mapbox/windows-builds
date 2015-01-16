@@ -10,6 +10,8 @@ cd %PKGDIR%
 if NOT EXIST wingetopt (
 	git clone https://github.com/alex85k/wingetopt.git
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 cd wingetopt
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git fetch
