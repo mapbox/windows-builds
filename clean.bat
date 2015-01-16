@@ -46,9 +46,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
 :GEOS
-ECHO GEOS directory will not be deleted, because it requires manual steps of downloading and extracting snapshot
-REM ddt /Q packages\geos
-REM IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+REM ECHO GEOS directory will not be deleted, because it requires manual steps of downloading and extracting snapshot
+ddt /Q packages\geos
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
 :GDAL
