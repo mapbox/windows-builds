@@ -86,7 +86,7 @@ cmake .. ^
 -DBZIP2_INCLUDE_DIR=%LODEPSDIR%\bzip2\include ^
 -DGDAL_LIBRARY=%LODEPSDIR%\gdal\lib\gdal_i.lib ^
 -DGDAL_INCLUDE_DIR=%LODEPSDIR%\gdal\include ^
--DGEOS_LIBRARY=%LODEPSDIR%\geos\lib\geos_i.lib ^
+-DGEOS_LIBRARY=%LODEPSDIR%\geos\lib\geos.lib ^
 -DGEOS_INCLUDE_DIR=%LODEPSDIR%\geos\include ^
 -DPROJ_LIBRARY=%LODEPSDIR%\proj\lib\proj.lib ^
 -DPROJ_INCLUDE_DIR=%LODEPSDIR%\proj\include ^
