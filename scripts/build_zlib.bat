@@ -50,8 +50,11 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CD %PKGDIR%\zlib\contrib\vstudio\vc11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+:: /SAFESEH:NO
+:: /p:ImageHasSafeExceptionHandlers=false
+
 msbuild zlibvc.sln ^
-/p:ImageHasSafeExceptionHandlers=false ^
+/p:ImageHasSafeExceptionHandlers=NO ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
