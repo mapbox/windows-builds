@@ -28,6 +28,8 @@ if NOT EXIST "zlib" (
 cd zlib
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+ECHO %CD%
+
 echo patching
 :: -p NUM  --strip=NUM  Strip NUM leading components from file names
 :: -N  --forward  Ignore patches that appear to be reversed or already applied
