@@ -52,9 +52,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO copying ---------------- zlib
 xcopy /S /Q %PKGDIR%\zlib\*.h %LODEPSDIR%\zlib\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc10\%BUILDPLATFORM%\ZlibDll%BUILD_TYPE%\*.lib %LODEPSDIR%\zlib\lib\
+xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc11\%BUILDPLATFORM%\ZlibDll%BUILD_TYPE%\*.lib %LODEPSDIR%\zlib\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc10\%BUILDPLATFORM%\ZlibDll%BUILD_TYPE%\*.dll %LODEPSDIR%\zlib\lib\
+xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc11\%BUILDPLATFORM%\ZlibDll%BUILD_TYPE%\*.dll %LODEPSDIR%\zlib\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- expat
@@ -86,9 +86,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO copying ---------------- geos
 xcopy /S /Q %PKGDIR%\geos\include\*.h %LODEPSDIR%\geos\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-xcopy /S /Q %PKGDIR%\geos\src\geos_i.lib %LODEPSDIR%\geos\lib\
+xcopy /S /Q %PKGDIR%\geos\build\lib\%BUILD_TYPE%\geos.lib %LODEPSDIR%\geos\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-xcopy /S /Q %PKGDIR%\geos\src\*.dll %LODEPSDIR%\geos\lib\
+xcopy /S /Q %PKGDIR%\geos\build\bin\%BUILD_TYPE%\geos.dll %LODEPSDIR%\geos\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- proj
