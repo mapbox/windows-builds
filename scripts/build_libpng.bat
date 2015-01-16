@@ -67,9 +67,9 @@ IF ERRORLEVEL 1 GOTO ERROR
 IF EXIST projects\vstudio%ARCHPATH%\%BUILD_TYPE%\zlib.pdb (CALL COPY /Y projects\vstudio%ARCHPATH%\%BUILD_TYPE%\zlib.pdb ..\zlib\zlib.pdb)
 IF ERRORLEVEL 1 GOTO ERROR
 
-copy %PKGDIR%\zlib\contrib\vstudio\vc11\x64\ZlibDllRelease\zlibwapi.lib projects\vstudio%ARCHPATH%\%BUILD_TYPE%\zlib.lib
+copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibDll%BUILD_TYPE%\zlibwapi.lib projects\vstudio%ARCHPATH%\%BUILD_TYPE%\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-copy %PKGDIR%\zlib\contrib\vstudio\vc11\x64\ZlibDllRelease\zlibwapi.lib ..\zlib\zlib.lib
+copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibDll%BUILD_TYPE%\zlibwapi.lib ..\zlib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 REM C:\mb\mapnik-dependencies-64\packages\zlib\contrib\vstudio\vc11\x64\ZlibDllRelease\zlibwapi.dll
 
