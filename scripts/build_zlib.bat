@@ -37,28 +37,37 @@ patch -N -p1 < %PATCHES%/zlib-1.2.8.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
+
+
 ::build zlib ourselves -> for libosimium
 
-SET ARCH=x64
-IF %TARGET_ARCH% EQU 32 SET ARCH=x86
-CD %PKGDIR%\zlib\contrib\masm%ARCH%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-CALL bld_ml%TARGET_ARCH%.bat
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::SET ARCH=x64
+::IF %TARGET_ARCH% EQU 32 SET ARCH=x86
+::CD %PKGDIR%\zlib\contrib\masm%ARCH%
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::CALL bld_ml%TARGET_ARCH%.bat
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: --- build with Visual Studio
 CD %PKGDIR%\zlib\contrib\vstudio\vc11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+
+find . -iname "*.vcxproj" -exec sed "s/ZLIB_WINAPI;/;/g" "{}" ;
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 :: /SAFESEH:NO
 :: /p:ImageHasSafeExceptionHandlers=false
+
+SET BT=Debug
+IF "%BUILD_TYPE%"=="Release" SET BT=ReleaseWithoutAsm
 
 msbuild zlibvc.sln ^
 /p:ImageHasSafeExceptionHandlers=NO ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
-/p:Configuration=%BUILD_TYPE% ^
+/p:Configuration=%BT% ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -71,13 +80,13 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 ::copy shared lib, dll
-copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibDll%BUILD_TYPE%\zlibwapi.lib %PKGDIR%\zlib\
+copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibDll%BT%\zlibwapi.lib %PKGDIR%\zlib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibDll%BUILD_TYPE%\zlibwapi.dll %PKGDIR%\zlib\
+copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibDll%BT%\zlibwapi.dll %PKGDIR%\zlib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::copy static lib
-copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibStat%BUILD_TYPE%\zlibstat.lib %PKGDIR%\zlib\zlib.lib
+copy %PKGDIR%\zlib\contrib\vstudio\vc11\%PLATFORMX%\ZlibStat%BT%\zlibstat.lib %PKGDIR%\zlib\zlib.lib
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 

@@ -1,40 +1,96 @@
-diff --git a/projects/vstudio/libpng/libpng.vcxproj b/projects/vstudio/libpng/libpng.vcxproj
-index de7fc3c..8238f16 100644
---- a/projects/vstudio/libpng/libpng.vcxproj
-+++ b/projects/vstudio/libpng/libpng.vcxproj
-@@ -173,7 +173,7 @@
-       <WarningLevel>Level4</WarningLevel>
-       <PrecompiledHeader>Use</PrecompiledHeader>
-       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
--      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-       <FunctionLevelLinking>true</FunctionLevelLinking>
-       <IntrinsicFunctions>true</IntrinsicFunctions>
-       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-diff --git a/projects/vstudio/zlib/zlib.vcxproj b/projects/vstudio/zlib/zlib.vcxproj
-index 6e5b94a..03f423a 100644
---- a/projects/vstudio/zlib/zlib.vcxproj
-+++ b/projects/vstudio/zlib/zlib.vcxproj
-@@ -87,7 +87,7 @@
-   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
-     <ClCompile>
-       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;Z_SOLO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
--      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-       <WarningLevel>TurnOffAllWarnings</WarningLevel>
-       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-       <Optimization>Disabled</Optimization>
-@@ -127,8 +127,8 @@
-       <BrowseInformation>true</BrowseInformation>
-       <FunctionLevelLinking>true</FunctionLevelLinking>
-       <TreatWarningAsError>true</TreatWarningAsError>
--      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
--      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;Z_SOLO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-     </ClCompile>
-     <Link>
-       <TargetMachine>MachineX86</TargetMachine>
+diff --git a/projects/vstudio/vstudio.sln b/projects/vstudio/vstudio.sln
+index af0b1ba..9d2f4ba 100644
+--- a/projects/vstudio/vstudio.sln
++++ b/projects/vstudio/vstudio.sln
+@@ -1,39 +1,34 @@
+-Microsoft Visual Studio Solution File, Format Version 11.00
+-# Visual Studio 2010
+-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.vcxproj", "{60F89955-91C6-3A36-8000-13C592FEC2DF}"
+-EndProject
++Microsoft Visual Studio Solution File, Format Version 12.00
++# Visual Studio 14
++VisualStudioVersion = 14.0.22310.1
++MinimumVisualStudioVersion = 10.0.40219.1
+ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pnglibconf", "pnglibconf\pnglibconf.vcxproj", "{EB33566E-DA7F-4D28-9077-88C0B7C77E35}"
+ EndProject
+ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpng", "libpng\libpng.vcxproj", "{D6973076-9317-4EF2-A0B8-B7A18AC0713E}"
+ 	ProjectSection(ProjectDependencies) = postProject
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF} = {60F89955-91C6-3A36-8000-13C592FEC2DF}
+ 		{EB33566E-DA7F-4D28-9077-88C0B7C77E35} = {EB33566E-DA7F-4D28-9077-88C0B7C77E35}
+ 	EndProjectSection
+ EndProject
+ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pngtest", "pngtest\pngtest.vcxproj", "{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}"
+ 	ProjectSection(ProjectDependencies) = postProject
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF} = {60F89955-91C6-3A36-8000-13C592FEC2DF}
+ 		{EB33566E-DA7F-4D28-9077-88C0B7C77E35} = {EB33566E-DA7F-4D28-9077-88C0B7C77E35}
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E} = {D6973076-9317-4EF2-A0B8-B7A18AC0713E}
+ 	EndProjectSection
+ EndProject
+ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pngvalid", "pngvalid\pngvalid.vcxproj", "{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}"
+ 	ProjectSection(ProjectDependencies) = postProject
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF} = {60F89955-91C6-3A36-8000-13C592FEC2DF}
+ 		{EB33566E-DA7F-4D28-9077-88C0B7C77E35} = {EB33566E-DA7F-4D28-9077-88C0B7C77E35}
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E} = {D6973076-9317-4EF2-A0B8-B7A18AC0713E}
+ 	EndProjectSection
+ EndProject
+ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pngstest", "pngstest\pngstest.vcxproj", "{277AC57F-313B-4D06-B119-A3CDB672D2FF}"
+ 	ProjectSection(ProjectDependencies) = postProject
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF} = {60F89955-91C6-3A36-8000-13C592FEC2DF}
+ 		{EB33566E-DA7F-4D28-9077-88C0B7C77E35} = {EB33566E-DA7F-4D28-9077-88C0B7C77E35}
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E} = {D6973076-9317-4EF2-A0B8-B7A18AC0713E}
+ 	EndProjectSection
+ EndProject
+ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pngunknown", "pngunknown\pngunknown.vcxproj", "{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}"
+ 	ProjectSection(ProjectDependencies) = postProject
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF} = {60F89955-91C6-3A36-8000-13C592FEC2DF}
+ 		{EB33566E-DA7F-4D28-9077-88C0B7C77E35} = {EB33566E-DA7F-4D28-9077-88C0B7C77E35}
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E} = {D6973076-9317-4EF2-A0B8-B7A18AC0713E}
+ 	EndProjectSection
+@@ -46,6 +41,14 @@ Global
+ 		Release|Win32 = Release|Win32
+ 	EndGlobalSection
+ 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|Win32.ActiveCfg = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|Win32.Build.0 = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug|Win32.ActiveCfg = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug|Win32.Build.0 = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|Win32.ActiveCfg = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|Win32.Build.0 = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|Win32.ActiveCfg = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|Win32.Build.0 = Release|Win32
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug Library|Win32.Build.0 = Debug Library|Win32
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|Win32.ActiveCfg = Debug|Win32
+@@ -62,14 +65,6 @@ Global
+ 		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release Library|Win32.Build.0 = Release Library|Win32
+ 		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release|Win32.ActiveCfg = Release|Win32
+ 		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release|Win32.Build.0 = Release|Win32
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Debug Library|Win32.Build.0 = Debug Library|Win32
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Debug|Win32.ActiveCfg = Debug|Win32
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Debug|Win32.Build.0 = Debug|Win32
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Release Library|Win32.ActiveCfg = Release Library|Win32
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Release Library|Win32.Build.0 = Release Library|Win32
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Release|Win32.ActiveCfg = Release|Win32
+-		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Release|Win32.Build.0 = Release|Win32
+ 		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
+ 		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug Library|Win32.Build.0 = Debug Library|Win32
+ 		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug|Win32.ActiveCfg = Debug|Win32
+@@ -78,14 +73,6 @@ Global
+ 		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release Library|Win32.Build.0 = Release Library|Win32
+ 		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release|Win32.ActiveCfg = Release|Win32
+ 		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release|Win32.Build.0 = Release|Win32
+-		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|Win32.ActiveCfg = Release|Win32
+-		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|Win32.Build.0 = Release|Win32
+-		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug|Win32.ActiveCfg = Release|Win32
+-		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug|Win32.Build.0 = Release|Win32
+-		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|Win32.ActiveCfg = Release|Win32
+-		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|Win32.Build.0 = Release|Win32
+-		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|Win32.ActiveCfg = Release|Win32
+-		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|Win32.Build.0 = Release|Win32
+ 		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
+ 		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug Library|Win32.Build.0 = Debug Library|Win32
+ 		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug|Win32.ActiveCfg = Debug|Win32
 diff --git a/projects/vstudio/zlib.props b/projects/vstudio/zlib.props
 index 7d09a41..d273a26 100644
 --- a/projects/vstudio/zlib.props
@@ -45,6 +101,6 @@ index 7d09a41..d273a26 100644
       -->
 -    <ZLibSrcDir>..\..\..\..\zlib-1.2.8</ZLibSrcDir>
 +    <ZLibSrcDir>..\..\..\..\zlib</ZLibSrcDir>
- 
+
      <!-- The following line allows compilation for an ARM target with Visual
           Studio 2012.  Notice that this is not supported by the Visual Studio

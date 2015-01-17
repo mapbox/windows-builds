@@ -21,8 +21,10 @@ if NOT EXIST libpng (
   IF ERRORLEVEL 1 GOTO ERROR
 )
 
-cd .\libpng
+cd libpng
 IF ERRORLEVEL 1 GOTO ERROR
+
+goto SKIPTHISSECTION
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -40,8 +42,6 @@ nmake /a /f scripts\makefile.vcwin32 test
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
-IF ERRORLEVEL 1 GOTO ERROR
 
 IF %BUILDPLATFORM% EQU x64 (
     CALL perl -pi.bak -e 's/Win32/x64/g' projects/vstudio/*.*
@@ -50,11 +50,23 @@ IF %BUILDPLATFORM% EQU x64 (
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
-cd .\projects\vstudio\
-IF ERRORLEVEL 1 GOTO ERROR
 
-ECHO "IF building x64 add platform to solution manually!"
-ECHO.
+
+:SKIPTHISSECTION
+
+patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+
+cd projects\vstudio\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+rmdir zlib /S /Q
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
 
 ECHO building ...
 msbuild ^
@@ -67,6 +79,8 @@ msbuild ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 IF ERRORLEVEL 1 GOTO ERROR
+
+
 
 cd %PKGDIR%%\libpng
 
