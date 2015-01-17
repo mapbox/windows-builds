@@ -16,7 +16,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL build_protobuf.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_zlib.bat build
+CALL build_zlib.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_expat.bat
