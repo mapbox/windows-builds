@@ -8,7 +8,7 @@ IF "%1"=="" ( ECHO "building everything ..." ) ELSE ( GOTO %1 )
 CALL scripts\build_zlib.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-:PNG
+:LIBPNG
 CALL scripts\build_libpng.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
