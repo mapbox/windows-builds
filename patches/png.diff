@@ -1,5 +1,1657 @@
+diff --git a/projects/vstudio/libpng/libpng.vcxproj b/projects/vstudio/libpng/libpng.vcxproj
+index de7fc3c..a2b4959 100644
+--- a/projects/vstudio/libpng/libpng.vcxproj
++++ b/projects/vstudio/libpng/libpng.vcxproj
+@@ -1,22 +1,38 @@
+-<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
+ <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <ItemGroup Label="ProjectConfigurations">
+     <ProjectConfiguration Include="Debug Library|Win32">
+       <Configuration>Debug Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug Library|x64">
++      <Configuration>Debug Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Debug|Win32">
+       <Configuration>Debug</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release Library|Win32">
+       <Configuration>Release Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release Library|x64">
++      <Configuration>Release Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release|Win32">
+       <Configuration>Release</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+   </ItemGroup>
+   <PropertyGroup Label="Globals">
+     <ProjectGuid>{D6973076-9317-4EF2-A0B8-B7A18AC0713E}</ProjectGuid>
+@@ -30,34 +46,64 @@
+     <CharacterSet>MultiByte</CharacterSet>
+     <WholeProgramOptimization>true</WholeProgramOptimization>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <WholeProgramOptimization>true</WholeProgramOptimization>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="Configuration">
+     <ConfigurationType>StaticLibrary</ConfigurationType>
+     <CharacterSet>MultiByte</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+     <ConfigurationType>DynamicLibrary</ConfigurationType>
+     <WholeProgramOptimization>true</WholeProgramOptimization>
+     <CharacterSet>MultiByte</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>DynamicLibrary</ConfigurationType>
++    <WholeProgramOptimization>true</WholeProgramOptimization>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="Configuration">
+     <ConfigurationType>StaticLibrary</ConfigurationType>
+     <CharacterSet>MultiByte</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <ImportGroup Label="ExtensionSettings">
+   </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <PropertyGroup Label="UserMacros" />
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+@@ -65,22 +111,42 @@
+     </CustomBuildBeforeTargets>
+     <TargetName>$(ProjectName)16</TargetName>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildBeforeTargets />
++    <TargetName>$(ProjectName)16</TargetName>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildBeforeTargets />
+     <TargetName>$(ProjectName)16</TargetName>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildBeforeTargets />
++    <TargetName>$(ProjectName)16</TargetName>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildBeforeTargets>
+     </CustomBuildBeforeTargets>
+     <TargetName>$(ProjectName)16</TargetName>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildBeforeTargets />
++    <TargetName>$(ProjectName)16</TargetName>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildBeforeTargets />
+     <TargetName>$(ProjectName)16</TargetName>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildBeforeTargets />
++    <TargetName>$(ProjectName)16</TargetName>
++  </PropertyGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>Use</PrecompiledHeader>
+@@ -111,6 +177,36 @@
+       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+     </Link>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <PrecompiledHeader>Use</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
++      <PrecompiledHeaderFile>pngpriv.h</PrecompiledHeaderFile>
++      <BrowseInformation>true</BrowseInformation>
++      <CompileAs>CompileAsC</CompileAs>
++      <StringPooling>true</StringPooling>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <Optimization>Disabled</Optimization>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++    </ClCompile>
++    <Link>
++      <SubSystem>Windows</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>zlib.lib</AdditionalDependencies>
++      <Version>16</Version>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>Use</PrecompiledHeader>
+@@ -138,6 +234,33 @@
+       <GenerateDebugInformation>true</GenerateDebugInformation>
+     </Link>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <ClCompile>
++      <PrecompiledHeader>Use</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
++      <PrecompiledHeaderFile>pngpriv.h</PrecompiledHeaderFile>
++      <BrowseInformation>true</BrowseInformation>
++      <CompileAs>CompileAsC</CompileAs>
++      <StringPooling>true</StringPooling>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++    </ClCompile>
++    <Link>
++      <SubSystem>Windows</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++    </Link>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -168,6 +291,36 @@
+       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+     </Link>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>Use</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
++      <PrecompiledHeaderFile>pngpriv.h</PrecompiledHeaderFile>
++      <BrowseInformation>true</BrowseInformation>
++      <CompileAs>CompileAsC</CompileAs>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <Optimization>Full</Optimization>
++    </ClCompile>
++    <Link>
++      <SubSystem>Windows</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <AdditionalDependencies>zlib.lib</AdditionalDependencies>
++      <Version>16</Version>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -200,12 +353,48 @@
+       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+     </Lib>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>Use</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
++      <PrecompiledHeaderFile>pngpriv.h</PrecompiledHeaderFile>
++      <BrowseInformation>true</BrowseInformation>
++      <CompileAs>CompileAsC</CompileAs>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <Optimization>Full</Optimization>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++    </ClCompile>
++    <Link>
++      <SubSystem>Windows</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++    </Link>
++    <Lib>
++      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
++    </Lib>
++  </ItemDefinitionGroup>
+   <ItemGroup>
+     <ClCompile Include="..\..\..\png.c">
+       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
++      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">Create</PrecompiledHeader>
++      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">Create</PrecompiledHeader>
+       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
++      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">Create</PrecompiledHeader>
++      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">Create</PrecompiledHeader>
+     </ClCompile>
+     <ClCompile Include="..\..\..\pngerror.c" />
+     <ClCompile Include="..\..\..\pngget.c" />
+@@ -225,10 +414,12 @@
+   <ItemGroup>
+     <ResourceCompile Include="..\..\..\scripts\pngwin.rc">
+       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">true</ExcludedFromBuild>
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">true</ExcludedFromBuild>
+       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">true</ExcludedFromBuild>
++      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">true</ExcludedFromBuild>
+     </ResourceCompile>
+   </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets">
+   </ImportGroup>
+-</Project>
++</Project>
+\ No newline at end of file
+diff --git a/projects/vstudio/pnglibconf/pnglibconf.vcxproj b/projects/vstudio/pnglibconf/pnglibconf.vcxproj
+index e2a232c..b9cdeaa 100644
+--- a/projects/vstudio/pnglibconf/pnglibconf.vcxproj
++++ b/projects/vstudio/pnglibconf/pnglibconf.vcxproj
+@@ -1,10 +1,14 @@
+-<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
+ <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <ItemGroup Label="ProjectConfigurations">
+     <ProjectConfiguration Include="Release|Win32">
+       <Configuration>Release</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+   </ItemGroup>
+   <PropertyGroup Label="Globals">
+     <ProjectGuid>{EB33566E-DA7F-4D28-9077-88C0B7C77E35}</ProjectGuid>
+@@ -17,6 +21,12 @@
+     <WholeProgramOptimization>true</WholeProgramOptimization>
+     <CharacterSet>MultiByte</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <UseDebugLibraries>false</UseDebugLibraries>
++    <WholeProgramOptimization>true</WholeProgramOptimization>
++    <CharacterSet>MultiByte</CharacterSet>
++  </PropertyGroup>
+   <Import Project="$(SolutionDir)\zlib.props" />
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <ImportGroup Label="ExtensionSettings">
+@@ -24,10 +34,16 @@
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <PropertyGroup Label="UserMacros" />
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
++  </PropertyGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <ClCompile>
+       <WarningLevel>Level3</WarningLevel>
+@@ -53,9 +69,34 @@
+       <Inputs>..\..\..\scripts\pnglibconf.h.prebuilt</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <WarningLevel>Level3</WarningLevel>
++      <Optimization>MaxSpeed</Optimization>
++      <FunctionLevelLinking>true</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++    </ClCompile>
++    <Link>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++    </Link>
++    <CustomBuildStep>
++      <Command>copy ..\..\..\scripts\pnglibconf.h.prebuilt ..\..\..\pnglibconf.h</Command>
++    </CustomBuildStep>
++    <CustomBuildStep>
++      <Message>Generating pnglibconf.h</Message>
++    </CustomBuildStep>
++    <CustomBuildStep>
++      <Outputs>..\..\..\pnglibconf.h</Outputs>
++    </CustomBuildStep>
++    <CustomBuildStep>
++      <Inputs>..\..\..\scripts\pnglibconf.h.prebuilt</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemGroup>
+   </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets">
+   </ImportGroup>
+-</Project>
++</Project>
+\ No newline at end of file
+diff --git a/projects/vstudio/pngstest/pngstest.vcxproj b/projects/vstudio/pngstest/pngstest.vcxproj
+index 0d2980d..62c0958 100644
+--- a/projects/vstudio/pngstest/pngstest.vcxproj
++++ b/projects/vstudio/pngstest/pngstest.vcxproj
+@@ -1,22 +1,38 @@
+-<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
+ <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <ItemGroup Label="ProjectConfigurations">
+     <ProjectConfiguration Include="Debug Library|Win32">
+       <Configuration>Debug Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug Library|x64">
++      <Configuration>Debug Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Debug|Win32">
+       <Configuration>Debug</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release Library|Win32">
+       <Configuration>Release Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release Library|x64">
++      <Configuration>Release Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release|Win32">
+       <Configuration>Release</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+   </ItemGroup>
+   <PropertyGroup Label="Globals">
+     <ProjectGuid>{277AC57F-313B-4D06-B119-A3CDB672D2FF}</ProjectGuid>
+@@ -29,50 +45,94 @@
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <ImportGroup Label="ExtensionSettings">
+   </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <PropertyGroup Label="UserMacros" />
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+@@ -106,6 +166,39 @@
+       <Inputs>$(OutDir)pngstest.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;PNG_USE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <BrowseInformation>true</BrowseInformation>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>libpng16.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing libpng simplified API test program</Message>
++      <Command>"$(OutDir)pngstest.exe" --strict --log --touch "$(IntDir)pngstest.out" ../../../contrib/pngsuite/basn0g01.png ../../../contrib/pngsuite/basn0g02.png ../../../contrib/pngsuite/basn0g04.png ../../../contrib/pngsuite/basn0g08.png ../../../contrib/pngsuite/basn0g16.png ../../../contrib/pngsuite/basn2c08.png ../../../contrib/pngsuite/basn2c16.png ../../../contrib/pngsuite/basn3p01.png ../../../contrib/pngsuite/basn3p02.png ../../../contrib/pngsuite/basn3p04.png ../../../contrib/pngsuite/basn3p08.png ../../../contrib/pngsuite/basn4a08.png ../../../contrib/pngsuite/basn4a16.png ../../../contrib/pngsuite/basn6a08.png ../../../contrib/pngsuite/basn6a16.png ../../../contrib/pngsuite/ftbbn0g01.png ../../../contrib/pngsuite/ftbbn0g02.png ../../../contrib/pngsuite/ftbbn0g04.png ../../../contrib/pngsuite/ftbbn2c16.png ../../../contrib/pngsuite/ftbbn3p08.png ../../../contrib/pngsuite/ftbgn2c16.png ../../../contrib/pngsuite/ftbgn3p08.png ../../../contrib/pngsuite/ftbrn2c08.png ../../../contrib/pngsuite/ftbwn0g16.png ../../../contrib/pngsuite/ftbwn3p08.png ../../../contrib/pngsuite/ftbyn3p08.png ../../../contrib/pngsuite/ftp0n0g08.png ../../../contrib/pngsuite/ftp0n2c08.png ../../../contrib/pngsuite/ftp0n3p08.png ../../../contrib/pngsuite/ftp1n3p08.png</Command>
++      <Outputs>$(IntDir)pngstest.out</Outputs>
++      <Inputs>$(OutDir)pngstest.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+@@ -139,6 +232,39 @@
+       <Inputs>$(OutDir)pngstest.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <ClCompile>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <BrowseInformation>true</BrowseInformation>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing libpng simplified API test program</Message>
++      <Command>"$(OutDir)pngstest.exe" --strict --log --touch "$(IntDir)pngstest.out" ../../../contrib/pngsuite/basn0g01.png ../../../contrib/pngsuite/basn0g02.png ../../../contrib/pngsuite/basn0g04.png ../../../contrib/pngsuite/basn0g08.png ../../../contrib/pngsuite/basn0g16.png ../../../contrib/pngsuite/basn2c08.png ../../../contrib/pngsuite/basn2c16.png ../../../contrib/pngsuite/basn3p01.png ../../../contrib/pngsuite/basn3p02.png ../../../contrib/pngsuite/basn3p04.png ../../../contrib/pngsuite/basn3p08.png ../../../contrib/pngsuite/basn4a08.png ../../../contrib/pngsuite/basn4a16.png ../../../contrib/pngsuite/basn6a08.png ../../../contrib/pngsuite/basn6a16.png ../../../contrib/pngsuite/ftbbn0g01.png ../../../contrib/pngsuite/ftbbn0g02.png ../../../contrib/pngsuite/ftbbn0g04.png ../../../contrib/pngsuite/ftbbn2c16.png ../../../contrib/pngsuite/ftbbn3p08.png ../../../contrib/pngsuite/ftbgn2c16.png ../../../contrib/pngsuite/ftbgn3p08.png ../../../contrib/pngsuite/ftbrn2c08.png ../../../contrib/pngsuite/ftbwn0g16.png ../../../contrib/pngsuite/ftbwn3p08.png ../../../contrib/pngsuite/ftbyn3p08.png ../../../contrib/pngsuite/ftp0n0g08.png ../../../contrib/pngsuite/ftp0n2c08.png ../../../contrib/pngsuite/ftp0n3p08.png ../../../contrib/pngsuite/ftp1n3p08.png</Command>
++      <Outputs>$(IntDir)pngstest.out</Outputs>
++      <Inputs>$(OutDir)pngstest.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -174,6 +300,41 @@
+       <Inputs>$(OutDir)pngstest.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Full</Optimization>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;PNG_USE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <BrowseInformation>true</BrowseInformation>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <AdditionalDependencies>libpng16.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing libpng simplified API test program</Message>
++      <Command>"$(OutDir)pngstest.exe" --strict --log --touch "$(IntDir)pngstest.out" ../../../contrib/pngsuite/basn0g01.png ../../../contrib/pngsuite/basn0g02.png ../../../contrib/pngsuite/basn0g04.png ../../../contrib/pngsuite/basn0g08.png ../../../contrib/pngsuite/basn0g16.png ../../../contrib/pngsuite/basn2c08.png ../../../contrib/pngsuite/basn2c16.png ../../../contrib/pngsuite/basn3p01.png ../../../contrib/pngsuite/basn3p02.png ../../../contrib/pngsuite/basn3p04.png ../../../contrib/pngsuite/basn3p08.png ../../../contrib/pngsuite/basn4a08.png ../../../contrib/pngsuite/basn4a16.png ../../../contrib/pngsuite/basn6a08.png ../../../contrib/pngsuite/basn6a16.png ../../../contrib/pngsuite/ftbbn0g01.png ../../../contrib/pngsuite/ftbbn0g02.png ../../../contrib/pngsuite/ftbbn0g04.png ../../../contrib/pngsuite/ftbbn2c16.png ../../../contrib/pngsuite/ftbbn3p08.png ../../../contrib/pngsuite/ftbgn2c16.png ../../../contrib/pngsuite/ftbgn3p08.png ../../../contrib/pngsuite/ftbrn2c08.png ../../../contrib/pngsuite/ftbwn0g16.png ../../../contrib/pngsuite/ftbwn3p08.png ../../../contrib/pngsuite/ftbyn3p08.png ../../../contrib/pngsuite/ftp0n0g08.png ../../../contrib/pngsuite/ftp0n2c08.png ../../../contrib/pngsuite/ftp0n3p08.png ../../../contrib/pngsuite/ftp1n3p08.png</Command>
++      <Outputs>$(IntDir)pngstest.out</Outputs>
++      <Inputs>$(OutDir)pngstest.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -210,10 +371,46 @@
+       <Inputs>$(OutDir)pngstest.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Full</Optimization>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <BrowseInformation>true</BrowseInformation>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing libpng simplified API test program</Message>
++      <Command>"$(OutDir)pngstest.exe" --strict --log --touch "$(IntDir)pngstest.out" ../../../contrib/pngsuite/basn0g01.png ../../../contrib/pngsuite/basn0g02.png ../../../contrib/pngsuite/basn0g04.png ../../../contrib/pngsuite/basn0g08.png ../../../contrib/pngsuite/basn0g16.png ../../../contrib/pngsuite/basn2c08.png ../../../contrib/pngsuite/basn2c16.png ../../../contrib/pngsuite/basn3p01.png ../../../contrib/pngsuite/basn3p02.png ../../../contrib/pngsuite/basn3p04.png ../../../contrib/pngsuite/basn3p08.png ../../../contrib/pngsuite/basn4a08.png ../../../contrib/pngsuite/basn4a16.png ../../../contrib/pngsuite/basn6a08.png ../../../contrib/pngsuite/basn6a16.png ../../../contrib/pngsuite/ftbbn0g01.png ../../../contrib/pngsuite/ftbbn0g02.png ../../../contrib/pngsuite/ftbbn0g04.png ../../../contrib/pngsuite/ftbbn2c16.png ../../../contrib/pngsuite/ftbbn3p08.png ../../../contrib/pngsuite/ftbgn2c16.png ../../../contrib/pngsuite/ftbgn3p08.png ../../../contrib/pngsuite/ftbrn2c08.png ../../../contrib/pngsuite/ftbwn0g16.png ../../../contrib/pngsuite/ftbwn3p08.png ../../../contrib/pngsuite/ftbyn3p08.png ../../../contrib/pngsuite/ftp0n0g08.png ../../../contrib/pngsuite/ftp0n2c08.png ../../../contrib/pngsuite/ftp0n3p08.png ../../../contrib/pngsuite/ftp1n3p08.png</Command>
++      <Outputs>$(IntDir)pngstest.out</Outputs>
++      <Inputs>$(OutDir)pngstest.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemGroup>
+     <ClCompile Include="..\..\..\contrib\libtests\pngstest.c" />
+   </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets">
+   </ImportGroup>
+-</Project>
++</Project>
+\ No newline at end of file
+diff --git a/projects/vstudio/pngtest/pngtest.vcxproj b/projects/vstudio/pngtest/pngtest.vcxproj
+index bf9266f..e533dc3 100644
+--- a/projects/vstudio/pngtest/pngtest.vcxproj
++++ b/projects/vstudio/pngtest/pngtest.vcxproj
+@@ -1,22 +1,38 @@
+-<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
+ <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <ItemGroup Label="ProjectConfigurations">
+     <ProjectConfiguration Include="Debug Library|Win32">
+       <Configuration>Debug Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug Library|x64">
++      <Configuration>Debug Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Debug|Win32">
+       <Configuration>Debug</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release Library|Win32">
+       <Configuration>Release Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release Library|x64">
++      <Configuration>Release Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release|Win32">
+       <Configuration>Release</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+   </ItemGroup>
+   <PropertyGroup Label="Globals">
+     <ProjectGuid>{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}</ProjectGuid>
+@@ -29,50 +45,94 @@
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <ImportGroup Label="ExtensionSettings">
+   </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <PropertyGroup Label="UserMacros" />
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+@@ -106,6 +166,39 @@
+       <Inputs>..\..\..\pngtest.png;$(OutDir)pngtest.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <BrowseInformation>true</BrowseInformation>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>libpng16.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG test program</Message>
++      <Command>"$(OutDir)pngtest.exe" ..\..\..\pngtest.png "$(IntDir)pngout.png"</Command>
++      <Outputs>$(IntDir)pngout.png</Outputs>
++      <Inputs>..\..\..\pngtest.png;$(OutDir)pngtest.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+@@ -139,6 +232,39 @@
+       <Inputs>..\..\..\pngtest.png;$(OutDir)pngtest.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <ClCompile>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <BrowseInformation>true</BrowseInformation>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG test program</Message>
++      <Command>"$(OutDir)pngtest.exe" ..\..\..\pngtest.png "$(IntDir)pngout.png"</Command>
++      <Outputs>$(IntDir)pngout.png</Outputs>
++      <Inputs>..\..\..\pngtest.png;$(OutDir)pngtest.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -174,6 +300,41 @@
+       <Inputs>..\..\..\pngtest.png;$(OutDir)pngtest.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Full</Optimization>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <BrowseInformation>true</BrowseInformation>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++      <AdditionalDependencies>libpng16.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG test program</Message>
++      <Command>"$(OutDir)pngtest.exe" ..\..\..\pngtest.png "$(IntDir)pngout.png"</Command>
++      <Outputs>$(IntDir)pngout.png</Outputs>
++      <Inputs>..\..\..\pngtest.png;$(OutDir)pngtest.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -211,10 +372,47 @@
+       <Inputs>..\..\..\pngtest.png;$(OutDir)pngtest.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Full</Optimization>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <BrowseInformation>true</BrowseInformation>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG test program</Message>
++      <Command>$(OutDir)pngtest.exe ..\..\..\pngtest.png $(IntDir)pngout.png</Command>
++      <Command>"$(OutDir)pngtest.exe" ..\..\..\pngtest.png "$(IntDir)pngout.png"</Command>
++      <Outputs>$(IntDir)pngout.png</Outputs>
++      <Inputs>..\..\..\pngtest.png;$(OutDir)pngtest.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemGroup>
+     <ClCompile Include="..\..\..\pngtest.c" />
+   </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets">
+   </ImportGroup>
+-</Project>
++</Project>
+\ No newline at end of file
+diff --git a/projects/vstudio/pngunknown/pngunknown.vcxproj b/projects/vstudio/pngunknown/pngunknown.vcxproj
+index a30cc7a..75961e4 100644
+--- a/projects/vstudio/pngunknown/pngunknown.vcxproj
++++ b/projects/vstudio/pngunknown/pngunknown.vcxproj
+@@ -1,22 +1,38 @@
+-<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
+ <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <ItemGroup Label="ProjectConfigurations">
+     <ProjectConfiguration Include="Debug Library|Win32">
+       <Configuration>Debug Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug Library|x64">
++      <Configuration>Debug Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Debug|Win32">
+       <Configuration>Debug</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release Library|Win32">
+       <Configuration>Release Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release Library|x64">
++      <Configuration>Release Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release|Win32">
+       <Configuration>Release</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+   </ItemGroup>
+   <PropertyGroup Label="Globals">
+     <ProjectGuid>{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}</ProjectGuid>
+@@ -29,50 +45,94 @@
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <ImportGroup Label="ExtensionSettings">
+   </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <PropertyGroup Label="UserMacros" />
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+@@ -106,6 +166,39 @@
+       <Inputs>$(OutDir)pngunknown.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;PNG_USE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <BrowseInformation>true</BrowseInformation>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>libpng16.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG validation program</Message>
++      <Command>"$(OutDir)pngunknown.exe" --strict --default --touch "$(IntDir)pngunknown.out" ../../../pngtest.png</Command>
++      <Outputs>$(IntDir)pngunknown.out</Outputs>
++      <Inputs>$(OutDir)pngunknown.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+@@ -139,6 +232,39 @@
+       <Inputs>$(OutDir)pngunknown.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <ClCompile>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <BrowseInformation>true</BrowseInformation>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG validation program</Message>
++      <Command>"$(OutDir)pngunknown.exe" --strict --default --touch "$(IntDir)pngunknown.out" ../../../pngtest.png</Command>
++      <Outputs>$(IntDir)pngunknown.out</Outputs>
++      <Inputs>$(OutDir)pngunknown.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -174,6 +300,41 @@
+       <Inputs>$(OutDir)pngunknown.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Full</Optimization>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;PNG_USE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <BrowseInformation>true</BrowseInformation>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <AdditionalDependencies>libpng16.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG validation program</Message>
++      <Command>"$(OutDir)pngunknown.exe" --strict --default --touch "$(IntDir)pngunknown.out" ../../../pngtest.png</Command>
++      <Outputs>$(IntDir)pngunknown.out</Outputs>
++      <Inputs>$(OutDir)pngunknown.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -210,10 +371,46 @@
+       <Inputs>$(OutDir)pngunknown.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Full</Optimization>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <BrowseInformation>true</BrowseInformation>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG validation program</Message>
++      <Command>"$(OutDir)pngunknown.exe" --strict --default --touch "$(IntDir)pngunknown.out" ../../../pngtest.png</Command>
++      <Outputs>$(IntDir)pngunknown.out</Outputs>
++      <Inputs>$(OutDir)pngunknown.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemGroup>
+     <ClCompile Include="..\..\..\contrib\libtests\pngunknown.c" />
+   </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets">
+   </ImportGroup>
+-</Project>
++</Project>
+\ No newline at end of file
+diff --git a/projects/vstudio/pngvalid/pngvalid.vcxproj b/projects/vstudio/pngvalid/pngvalid.vcxproj
+index 07cf241..88a9e68 100644
+--- a/projects/vstudio/pngvalid/pngvalid.vcxproj
++++ b/projects/vstudio/pngvalid/pngvalid.vcxproj
+@@ -1,22 +1,38 @@
+-<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
+ <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <ItemGroup Label="ProjectConfigurations">
+     <ProjectConfiguration Include="Debug Library|Win32">
+       <Configuration>Debug Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug Library|x64">
++      <Configuration>Debug Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Debug|Win32">
+       <Configuration>Debug</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release Library|Win32">
+       <Configuration>Release Library</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release Library|x64">
++      <Configuration>Release Library</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+     <ProjectConfiguration Include="Release|Win32">
+       <Configuration>Release</Configuration>
+       <Platform>Win32</Platform>
+     </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
+   </ItemGroup>
+   <PropertyGroup Label="Globals">
+     <ProjectGuid>{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}</ProjectGuid>
+@@ -29,50 +45,94 @@
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="Configuration">
+     <ConfigurationType>Application</ConfigurationType>
+     <CharacterSet>Unicode</CharacterSet>
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>Unicode</CharacterSet>
++  </PropertyGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+   <ImportGroup Label="ExtensionSettings">
+   </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
+   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'" Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+   </ImportGroup>
++  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'" Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
++  </ImportGroup>
+   <PropertyGroup Label="UserMacros" />
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <LinkIncremental>false</LinkIncremental>
+     <CustomBuildAfterTargets />
+   </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <LinkIncremental>false</LinkIncremental>
++    <CustomBuildAfterTargets />
++  </PropertyGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+@@ -106,6 +166,39 @@
+       <Inputs>$(OutDir)pngvalid.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;PNG_USE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <BrowseInformation>true</BrowseInformation>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG validation program</Message>
++      <Command>"$(OutDir)pngvalid.exe" --touch "$(IntDir)pngvalid.out"</Command>
++      <Outputs>$(IntDir)pngvalid.out</Outputs>
++      <Inputs>$(OutDir)pngvalid.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|Win32'">
+     <ClCompile>
+       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+@@ -139,6 +232,39 @@
+       <Inputs>$(OutDir)pngvalid.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Library|x64'">
++    <ClCompile>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <WarningLevel>Level4</WarningLevel>
++      <MinimalRebuild>false</MinimalRebuild>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Disabled</Optimization>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <StringPooling>true</StringPooling>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <BrowseInformation>true</BrowseInformation>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG validation program</Message>
++      <Command>"$(OutDir)pngvalid.exe" --touch "$(IntDir)pngvalid.out"</Command>
++      <Outputs>$(IntDir)pngvalid.out</Outputs>
++      <Inputs>$(OutDir)pngvalid.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -174,6 +300,41 @@
+       <Inputs>$(OutDir)pngvalid.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Full</Optimization>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;PNG_USE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <BrowseInformation>true</BrowseInformation>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG validation program</Message>
++      <Command>"$(OutDir)pngvalid.exe" --touch "$(IntDir)pngvalid.out"</Command>
++      <Outputs>$(IntDir)pngvalid.out</Outputs>
++      <Inputs>$(OutDir)pngvalid.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|Win32'">
+     <ClCompile>
+       <WarningLevel>Level4</WarningLevel>
+@@ -210,10 +371,46 @@
+       <Inputs>$(OutDir)pngvalid.exe</Inputs>
+     </CustomBuildStep>
+   </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Library|x64'">
++    <ClCompile>
++      <WarningLevel>Level4</WarningLevel>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <Optimization>Full</Optimization>
++      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
++      <FunctionLevelLinking>false</FunctionLevelLinking>
++      <IntrinsicFunctions>true</IntrinsicFunctions>
++      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <AdditionalIncludeDirectories>$(ZLibSrcDir);..\..\..\scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <DisableSpecificWarnings>4996;4127</DisableSpecificWarnings>
++      <CompileAsManaged>false</CompileAsManaged>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <StringPooling>true</StringPooling>
++      <MinimalRebuild>false</MinimalRebuild>
++      <BrowseInformation>true</BrowseInformation>
++      <WholeProgramOptimization>true</WholeProgramOptimization>
++      <FloatingPointExceptions>false</FloatingPointExceptions>
++    </ClCompile>
++    <Link>
++      <SubSystem>Console</SubSystem>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <EnableCOMDATFolding>true</EnableCOMDATFolding>
++      <OptimizeReferences>true</OptimizeReferences>
++      <AdditionalDependencies>libpng16.lib;zlib.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
++      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
++    </Link>
++    <CustomBuildStep>
++      <Message>Executing PNG validation program</Message>
++      <Command>"$(OutDir)pngvalid.exe" --touch "$(IntDir)pngvalid.out"</Command>
++      <Outputs>$(IntDir)pngvalid.out</Outputs>
++      <Inputs>$(OutDir)pngvalid.exe</Inputs>
++    </CustomBuildStep>
++  </ItemDefinitionGroup>
+   <ItemGroup>
+     <ClCompile Include="..\..\..\contrib\libtests\pngvalid.c" />
+   </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets">
+   </ImportGroup>
+-</Project>
++</Project>
+\ No newline at end of file
 diff --git a/projects/vstudio/vstudio.sln b/projects/vstudio/vstudio.sln
-index af0b1ba..9d2f4ba 100644
+index af0b1ba..b76a61c 100644
 --- a/projects/vstudio/vstudio.sln
 +++ b/projects/vstudio/vstudio.sln
 @@ -1,39 +1,34 @@
@@ -46,23 +1698,63 @@ index af0b1ba..9d2f4ba 100644
  		{EB33566E-DA7F-4D28-9077-88C0B7C77E35} = {EB33566E-DA7F-4D28-9077-88C0B7C77E35}
  		{D6973076-9317-4EF2-A0B8-B7A18AC0713E} = {D6973076-9317-4EF2-A0B8-B7A18AC0713E}
  	EndProjectSection
-@@ -46,6 +41,14 @@ Global
+@@ -41,67 +36,111 @@ EndProject
+ Global
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+ 		Debug Library|Win32 = Debug Library|Win32
++		Debug Library|x64 = Debug Library|x64
+ 		Debug|Win32 = Debug|Win32
++		Debug|x64 = Debug|x64
+ 		Release Library|Win32 = Release Library|Win32
++		Release Library|x64 = Release Library|x64
  		Release|Win32 = Release|Win32
++		Release|x64 = Release|x64
  	EndGlobalSection
  	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 +		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|Win32.ActiveCfg = Release|Win32
 +		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|Win32.Build.0 = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|x64.ActiveCfg = Release|x64
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|x64.Build.0 = Release|x64
 +		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug|Win32.ActiveCfg = Release|Win32
 +		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug|Win32.Build.0 = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug|x64.ActiveCfg = Release|x64
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug|x64.Build.0 = Release|x64
 +		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|Win32.ActiveCfg = Release|Win32
 +		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|Win32.Build.0 = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|x64.ActiveCfg = Release|x64
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|x64.Build.0 = Release|x64
 +		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|Win32.ActiveCfg = Release|Win32
 +		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|Win32.Build.0 = Release|Win32
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|x64.ActiveCfg = Release|x64
++		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|x64.Build.0 = Release|x64
  		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
  		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug Library|Win32.Build.0 = Debug Library|Win32
++		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug Library|x64.ActiveCfg = Debug Library|x64
++		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug Library|x64.Build.0 = Debug Library|x64
  		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|Win32.ActiveCfg = Debug|Win32
-@@ -62,14 +65,6 @@ Global
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|Win32.Build.0 = Debug|Win32
++		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|x64.ActiveCfg = Debug|x64
++		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Debug|x64.Build.0 = Debug|x64
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release Library|Win32.ActiveCfg = Release Library|Win32
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release Library|Win32.Build.0 = Release Library|Win32
++		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release Library|x64.ActiveCfg = Release Library|x64
++		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release Library|x64.Build.0 = Release Library|x64
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release|Win32.ActiveCfg = Release|Win32
+ 		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release|Win32.Build.0 = Release|Win32
++		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release|x64.ActiveCfg = Release|x64
++		{D6973076-9317-4EF2-A0B8-B7A18AC0713E}.Release|x64.Build.0 = Release|x64
+ 		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
+ 		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Debug Library|Win32.Build.0 = Debug Library|Win32
++		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Debug Library|x64.ActiveCfg = Debug Library|x64
++		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Debug Library|x64.Build.0 = Debug Library|x64
+ 		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Debug|Win32.ActiveCfg = Debug|Win32
+ 		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Debug|Win32.Build.0 = Debug|Win32
++		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Debug|x64.ActiveCfg = Debug|x64
++		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Debug|x64.Build.0 = Debug|x64
+ 		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release Library|Win32.ActiveCfg = Release Library|Win32
  		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release Library|Win32.Build.0 = Release Library|Win32
++		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release Library|x64.ActiveCfg = Release Library|x64
++		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release Library|x64.Build.0 = Release Library|x64
  		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release|Win32.ActiveCfg = Release|Win32
  		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release|Win32.Build.0 = Release|Win32
 -		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
@@ -73,11 +1765,20 @@ index af0b1ba..9d2f4ba 100644
 -		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Release Library|Win32.Build.0 = Release Library|Win32
 -		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Release|Win32.ActiveCfg = Release|Win32
 -		{60F89955-91C6-3A36-8000-13C592FEC2DF}.Release|Win32.Build.0 = Release|Win32
++		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release|x64.ActiveCfg = Release|x64
++		{228BA965-50D5-42B2-8BCF-AFCC227E3C1D}.Release|x64.Build.0 = Release|x64
  		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
  		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug Library|Win32.Build.0 = Debug Library|Win32
++		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug Library|x64.ActiveCfg = Debug Library|x64
++		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug Library|x64.Build.0 = Debug Library|x64
  		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug|Win32.ActiveCfg = Debug|Win32
-@@ -78,14 +73,6 @@ Global
+ 		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug|Win32.Build.0 = Debug|Win32
++		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug|x64.ActiveCfg = Debug|x64
++		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Debug|x64.Build.0 = Debug|x64
+ 		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release Library|Win32.ActiveCfg = Release Library|Win32
  		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release Library|Win32.Build.0 = Release Library|Win32
++		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release Library|x64.ActiveCfg = Release Library|x64
++		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release Library|x64.Build.0 = Release Library|x64
  		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release|Win32.ActiveCfg = Release|Win32
  		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release|Win32.Build.0 = Release|Win32
 -		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Debug Library|Win32.ActiveCfg = Release|Win32
@@ -88,19 +1789,40 @@ index af0b1ba..9d2f4ba 100644
 -		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release Library|Win32.Build.0 = Release|Win32
 -		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|Win32.ActiveCfg = Release|Win32
 -		{EB33566E-DA7F-4D28-9077-88C0B7C77E35}.Release|Win32.Build.0 = Release|Win32
++		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release|x64.ActiveCfg = Release|x64
++		{9B36B6FE-7FC0-434F-A71F-BBEF8099F1D8}.Release|x64.Build.0 = Release|x64
  		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
  		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug Library|Win32.Build.0 = Debug Library|Win32
++		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug Library|x64.ActiveCfg = Debug Library|x64
++		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug Library|x64.Build.0 = Debug Library|x64
  		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug|Win32.ActiveCfg = Debug|Win32
-diff --git a/projects/vstudio/zlib.props b/projects/vstudio/zlib.props
-index 7d09a41..d273a26 100644
---- a/projects/vstudio/zlib.props
-+++ b/projects/vstudio/zlib.props
-@@ -32,7 +32,7 @@
- 	 versions do not match.  The zlib version used in this build is recorded
- 	 below:
-      -->
--    <ZLibSrcDir>..\..\..\..\zlib-1.2.8</ZLibSrcDir>
-+    <ZLibSrcDir>..\..\..\..\zlib</ZLibSrcDir>
-
-     <!-- The following line allows compilation for an ARM target with Visual
-          Studio 2012.  Notice that this is not supported by the Visual Studio
+ 		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug|Win32.Build.0 = Debug|Win32
++		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug|x64.ActiveCfg = Debug|x64
++		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Debug|x64.Build.0 = Debug|x64
+ 		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Release Library|Win32.ActiveCfg = Release Library|Win32
+ 		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Release Library|Win32.Build.0 = Release Library|Win32
++		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Release Library|x64.ActiveCfg = Release Library|x64
++		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Release Library|x64.Build.0 = Release Library|x64
+ 		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Release|Win32.ActiveCfg = Release|Win32
+ 		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Release|Win32.Build.0 = Release|Win32
++		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Release|x64.ActiveCfg = Release|x64
++		{277AC57F-313B-4D06-B119-A3CDB672D2FF}.Release|x64.Build.0 = Release|x64
+ 		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Debug Library|Win32.ActiveCfg = Debug Library|Win32
+ 		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Debug Library|Win32.Build.0 = Debug Library|Win32
++		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Debug Library|x64.ActiveCfg = Debug Library|x64
++		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Debug Library|x64.Build.0 = Debug Library|x64
+ 		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Debug|Win32.ActiveCfg = Debug|Win32
+ 		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Debug|Win32.Build.0 = Debug|Win32
++		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Debug|x64.ActiveCfg = Debug|x64
++		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Debug|x64.Build.0 = Debug|x64
+ 		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Release Library|Win32.ActiveCfg = Release Library|Win32
+ 		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Release Library|Win32.Build.0 = Release Library|Win32
++		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Release Library|x64.ActiveCfg = Release Library|x64
++		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Release Library|x64.Build.0 = Release Library|x64
+ 		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Release|Win32.ActiveCfg = Release|Win32
+ 		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Release|Win32.Build.0 = Release|Win32
++		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Release|x64.ActiveCfg = Release|x64
++		{C5D3156C-8C8C-4936-B35F-2B829BA36FEC}.Release|x64.Build.0 = Release|x64
+ 	EndGlobalSection
+ 	GlobalSection(SolutionProperties) = preSolution
+ 		HideSolutionNode = FALSE
