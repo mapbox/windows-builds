@@ -53,7 +53,7 @@ CD %PKGDIR%\zlib\contrib\vstudio\vc11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
-find . -iname "*.vcxproj" -exec sed "s/ZLIB_WINAPI;/;/g" "{}" ;
+find . -iname "*.vcxproj" -exec sed -i "s/ZLIB_WINAPI;/;/g" "{}" ;
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: /SAFESEH:NO

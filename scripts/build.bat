@@ -5,6 +5,7 @@ set STARTTIME=%TIME%
 IF "%1"=="" ( ECHO "building everything ..." ) ELSE ( GOTO %1 )
 
 :ALL
+:ZLIB
 CALL scripts\build_zlib.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 

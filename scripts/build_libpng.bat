@@ -25,39 +25,15 @@ cd libpng
 IF ERRORLEVEL 1 GOTO ERROR
 
 goto SKIPTHISSECTION
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-TODO!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-either remove ZLIB_WINAPI everywhere in zlib
-or add it to libpng
-
+::makefile just creates one .lib
 nmake /a /f scripts\makefile.vcwin32 test
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-IF %BUILDPLATFORM% EQU x64 (
-    CALL perl -pi.bak -e 's/Win32/x64/g' projects/vstudio/*.*
-    IF ERRORLEVEL 1 GOTO ERROR
-    CALL perl -pi.bak -e 's/Win32/x64/g' projects/vstudio/*/*.*
-    IF ERRORLEVEL 1 GOTO ERROR
-)
-
-
 
 :SKIPTHISSECTION
 
+
+
 patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-
 
 cd projects\vstudio\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -66,6 +42,15 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 rmdir zlib /S /Q
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+
+::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ECHO TODO!!!!! only SED once!!!!!
+::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+find . -iname "*.vcxproj" -exec sed -i "s|zlib.lib|..\\\\..\\\\..\\\\..\\\\zlib\\\\zlib.lib|g" "{}" ;
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 ECHO building ...
