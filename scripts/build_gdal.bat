@@ -16,19 +16,19 @@ if EXIST gdal (
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST gdal (
-  echo extracting
+  echo extracting ...
   CALL bsdtar xfz gdal-%GDAL_VERSION%.tar.gz
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename gdal-%GDAL_VERSION% gdal
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  cd %PKGDIR%gdal
+  cd %PKGDIR%\gdal
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   patch -N -p1 < %PATCHES%/gdal.diff || %SKIP_FAILED_PATCH%
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
 ENDLOCAL
 
-cd %PKGDIR%gdal
+cd %PKGDIR%\gdal
 IF ERRORLEVEL 1 GOTO ERROR
 
 
