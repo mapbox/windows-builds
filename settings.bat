@@ -15,6 +15,11 @@ IF "%3"=="" (SET BUILD_TYPE=Release) ELSE (SET BUILD_TYPE=%3%)
 
 ECHO BUILD_TYPE %BUILD_TYPE%
 
+
+IF NOT EXIST C:\Python27 ( ECHO C:\Python27 not found && GOTO ERROR )
+IF NOT EXIST "C:\Program Files (x86)\Git\bin" (ECHO "C:\Program Files (x86)\Git\bin" not found && GOTO ERROR)
+
+
 set TARGET_ARCH=%1%
 ECHO TARGET_ARCH %TARGET_ARCH%
 
@@ -46,11 +51,12 @@ IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 
 ::TODO: see what we can use from mysysgit
 ::wget cmake
-SET PATH=C:\ProgramData\chocolatey\bin;%PATH%
 set PATH=C:\Python27;%PATH%
 set PATH=C:\Python27\Scripts;%PATH%
-set PATH=C:\Program Files\7-Zip;%PATH%
 set PATH=C:\Program Files (x86)\Git\bin;%PATH%
+set PATH=%CD%\tmp-bin;%PATH%
+set PATH=%CD%\tmp-bin\cmake-3.1.0-win32-x86\bin;%PATH%
+
 
 if "%TOOLS_VERSION%" == "12.0" (
   SET MSVC_VER=1800
@@ -72,6 +78,27 @@ if "%TOOLS_VERSION%" == "14.0" (
     CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
   )
 )
+
+IF NOT EXIST tmp-bin\7z.exe (
+  echo "setting up 7z"
+  mkdir tmp-bin
+  cd tmp-bin
+  CALL curl -O https://mapnik.s3.amazonaws.com/deps/7z-%PLATFORMX%.exe
+  7z-%PLATFORMX%.exe -o"." -y
+  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+  cd ..
+)
+
+IF NOT EXIST tmp-bin\cmake-3.1.0-win32-x86\bin (
+  echo "setting up cmake"
+  mkdir tmp-bin
+  cd tmp-bin
+  CALL curl -O https://mapnik.s3.amazonaws.com/deps/cmake-3.1.0-win32-x86.7z
+  7z x cmake-3.1.0-win32-x86.7z
+  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+  cd ..
+)
+
 
 
 if NOT EXIST tmp-bin\bsdtar.exe (
@@ -137,7 +164,6 @@ IF NOT EXIST tmp-bin\ddt.exe (
     cd ..
 )
 
-set PATH=%CD%\tmp-bin;%PATH%
 echo "building within %current_script_dir%"
 set ICU_VERSION=54.1
 set ICU_VERSION2=54_1
