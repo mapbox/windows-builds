@@ -54,8 +54,10 @@ IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 set PATH=C:\Python27;%PATH%
 set PATH=C:\Python27\Scripts;%PATH%
 set PATH=C:\Program Files (x86)\Git\bin;%PATH%
-set PATH=%CD%\tmp-bin;%PATH%
 set PATH=%CD%\tmp-bin\cmake-3.1.0-win32-x86\bin;%PATH%
+set PATH=%CD%\tmp-bin;%PATH%
+::set path to make last. make that comes with gnu-win-tools doesn't work
+set PATH=%CD%\tmp-bin\make;%PATH%
 
 
 if "%TOOLS_VERSION%" == "12.0" (
@@ -100,7 +102,7 @@ IF NOT EXIST tmp-bin\cmake-3.1.0-win32-x86\bin (
 )
 
 if NOT EXIST tmp-bin\bsdtar.exe (
-  echo. && echo "getting bsdtar, wget, make"
+  echo. && echo "getting bsdtar, wget"
   mkdir tmp-bin
   cd tmp-bin
   CALL curl -L -O https://mapnik.s3.amazonaws.com/deps/gnu-win-tools.7z
@@ -108,6 +110,19 @@ if NOT EXIST tmp-bin\bsdtar.exe (
   CALL 7z e -y gnu-win-tools.7z >nul
   IF ERRORLEVEL 1 GOTO ERROR
   cd ..
+)
+
+if NOT EXIST tmp-bin\make\make.exe (
+  echo. && echo "make"
+  mkdir tmp-bin
+  cd tmp-bin
+  mkdir make
+  cd make
+  CALL wget ftp://ftp.equation.com/make/32/make.exe
+  IF ERRORLEVEL 1 GOTO ERROR
+  CALL 7z e -y gnu-win-tools.7z >nul
+  IF ERRORLEVEL 1 GOTO ERROR
+  cd %ROOTDIR%\tmp-bin
 )
 
 python setuptools-available.py
