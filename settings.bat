@@ -106,12 +106,12 @@ if NOT EXIST tmp-bin\bsdtar.exe (
     mkdir tmp-bin
     cd tmp-bin
     REM CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
-    CALL curl -O http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
+    CALL curl -L -O http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
     IF ERRORLEVEL 1 GOTO ERROR
     CALL 7z e -y libarchive-2.4.12-1-bin.zip
     IF ERRORLEVEL 1 GOTO ERROR
     REM CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
-    CALL curl -O http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
+    CALL curl -L -O http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
     IF ERRORLEVEL 1 GOTO ERROR
     CALL 7z e -y libarchive-2.4.12-1-dep.zip
     IF ERRORLEVEL 1 GOTO ERROR
