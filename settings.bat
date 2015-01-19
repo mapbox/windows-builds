@@ -80,42 +80,34 @@ if "%TOOLS_VERSION%" == "14.0" (
 )
 
 IF NOT EXIST tmp-bin\7z.exe (
-  echo "setting up 7z"
+  echo. && echo "getting 7z"
   mkdir tmp-bin
   cd tmp-bin
   CALL curl -O https://mapnik.s3.amazonaws.com/deps/7z-%PLATFORMX%.exe
-  7z-%PLATFORMX%.exe -o"." -y
+  7z-%PLATFORMX%.exe -o"." -y >nul
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR
   cd ..
 )
 
 IF NOT EXIST tmp-bin\cmake-3.1.0-win32-x86\bin (
-  echo "setting up cmake"
+  echo. && echo "getting cmake"
   mkdir tmp-bin
   cd tmp-bin
   CALL curl -O https://mapnik.s3.amazonaws.com/deps/cmake-3.1.0-win32-x86.7z
-  7z x cmake-3.1.0-win32-x86.7z
+  7z x cmake-3.1.0-win32-x86.7z -y >nul
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR
   cd ..
 )
 
-
-
 if NOT EXIST tmp-bin\bsdtar.exe (
-    echo "setting up bsdtar"
-    mkdir tmp-bin
-    cd tmp-bin
-    REM CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
-    CALL curl -L -O http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
-    IF ERRORLEVEL 1 GOTO ERROR
-    CALL 7z e -y libarchive-2.4.12-1-bin.zip
-    IF ERRORLEVEL 1 GOTO ERROR
-    REM CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
-    CALL curl -L -O http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
-    IF ERRORLEVEL 1 GOTO ERROR
-    CALL 7z e -y libarchive-2.4.12-1-dep.zip
-    IF ERRORLEVEL 1 GOTO ERROR
-    cd ..
+  echo. && echo "getting bsdtar, wget, make"
+  mkdir tmp-bin
+  cd tmp-bin
+  CALL curl -L -O https://mapnik.s3.amazonaws.com/deps/gnu-win-tools.7z
+  IF ERRORLEVEL 1 GOTO ERROR
+  CALL 7z e -y gnu-win-tools.7z >nul
+  IF ERRORLEVEL 1 GOTO ERROR
+  cd ..
 )
 
 python setuptools-available.py
@@ -126,48 +118,38 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 if NOT EXIST C:\Python27\Scripts\aws (
-    ddt /Q aws-cli
-    git clone --depth=1 https://github.com/aws/aws-cli.git
-    cd aws-cli
-    python setup.py install
-    cd ../
-)
-
-
-:: upgrade make in order to work around "Interrupt/Exception caught"
-if NOT EXIST tmp-bin\make.exe (
-    echo "setting up make"
-    mkdir tmp-bin
-    cd tmp-bin
-    REM CALL wget ftp://ftp.equation.com/make/32/make.exe
-    CALL curl -O ftp://ftp.equation.com/make/32/make.exe
-    IF ERRORLEVEL 1 GOTO ERROR
-    cd ..
+  echo. && echo getting aws-cli
+  ddt /Q aws-cli
+  git clone --depth=1 https://github.com/aws/aws-cli.git
+  cd aws-cli
+  python setup.py install
+  cd ..
 )
 
 if NOT EXIST tmp-bin\ragel.exe (
-    echo getting ragel
-    mkdir tmp-bin
-    cd tmp-bin
-    CALL curl -s -S -f -O -L -k --retry 3 http://w858rkbfg.homepage.t-online.de/files/9213/9317/6402/ragel-vs2012.7z
-    IF ERRORLEVEL 1 GOTO ERROR
-    CALL 7z e -y ragel-vs2012.7z
-    IF ERRORLEVEL 1 GOTO ERROR
-    cd ..
+  echo. && echo getting ragel
+  mkdir tmp-bin
+  cd tmp-bin
+  CALL curl -s -S -f -O -L -k --retry 3 http://w858rkbfg.homepage.t-online.de/files/9213/9317/6402/ragel-vs2012.7z
+  IF ERRORLEVEL 1 GOTO ERROR
+  CALL 7z e -y ragel-vs2012.7z >nul
+  IF ERRORLEVEL 1 GOTO ERROR
+  cd ..
 )
 
 IF NOT EXIST tmp-bin\ddt.exe (
-    echo getting "delete-directory-tree"
-    mkdir tmp-bin
-    cd tmp-bin
-    CALL curl -O https://mapnik.s3.amazonaws.com/dist/dev/delete-directory-tree.7z
-    IF ERRORLEVEL 1 GOTO ERROR
-    CALL 7z e delete-directory-tree.7z NET\%WEBP_PLATFORM%\ddt.exe
-    IF ERRORLEVEL 1 GOTO ERROR
-    cd ..
+  echo. && echo getting "delete-directory-tree"
+  mkdir tmp-bin
+  cd tmp-bin
+  CALL curl -O https://mapnik.s3.amazonaws.com/dist/dev/delete-directory-tree.7z
+  IF ERRORLEVEL 1 GOTO ERROR
+  CALL 7z e -y delete-directory-tree.7z NET\%WEBP_PLATFORM%\ddt.exe >nul
+  IF ERRORLEVEL 1 GOTO ERROR
+  cd ..
 )
 
-echo "building within %current_script_dir%"
+echo. && echo building within %current_script_dir%
+
 set ICU_VERSION=54.1
 set ICU_VERSION2=54_1
 set BOOST_VERSION=57
