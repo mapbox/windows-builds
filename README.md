@@ -5,16 +5,14 @@ Build scripts for Mapnik dependencies
 
 ## Requirements
 
+ - __64bit__ operating system (W7,8,8.1)
  - [Visual Studio 2014 CTP 4 or Visual Studio 2015 Preview](http://support.microsoft.com/kb/2967191)
  - [Python 2.7 32 bit](https://www.python.org/downloads/windows/) installed into `C:\Python27`
- - [git](https://msysgit.github.io/)
- - [7zip 64bit](http://www.7-zip.org/download.html)
- - [cmake](http://www.cmake.org/download/)
- - [gnu bsdtar, make and wget](http://gnuwin32.sourceforge.net/packages.html)
+ - [git](https://msysgit.github.io/) installed into `C:\Program Files (x86)\Git`
 
 ## Setup
 
-Install all requirements and make sure gnu tools and cmake are available on your PATH then
+Install Python, Git and Visual Studio then
 
     git clone https://github.com/BergWerkGIS/mapnik-dependencies.git
     cd mapnik-dependencies
