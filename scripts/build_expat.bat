@@ -13,18 +13,23 @@ if EXIST expat (
   echo found extracted sources
 )
 
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST expat (
   echo extracting
   CALL bsdtar xfz expat-%EXPAT_VERSION%.tar.gz
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename expat-%EXPAT_VERSION% expat
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%\expat
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  patch -N -p1 < %PATCHES%/expat.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
-cd expat
+cd %PKGDIR%\expat
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/expat.diff || %SKIP_FAILED_PATCH%
-IF ERRORLEVEL 1 GOTO ERROR
 
 msbuild ^
 .\expat.sln ^

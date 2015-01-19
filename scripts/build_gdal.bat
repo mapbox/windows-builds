@@ -14,18 +14,23 @@ if EXIST gdal (
   echo found extracted sources
 )
 
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST gdal (
   echo extracting
   CALL bsdtar xfz gdal-%GDAL_VERSION%.tar.gz
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename gdal-%GDAL_VERSION% gdal
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%gdal
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  patch -N -p1 < %PATCHES%/gdal.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
-cd gdal
+cd %PKGDIR%gdal
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/gdal.diff || %SKIP_FAILED_PATCH%
-IF ERRORLEVEL 1 GOTO ERROR
 
 ::echo When compiling 64bit download libexpat dev packages from http://www.gtk.org/download/win64.php
 ::echo Also un-comment WIN64=YES in nmake.opt -> can be passed as argument, see below

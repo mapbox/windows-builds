@@ -14,42 +14,36 @@ if EXIST libpng (
   echo found extracted sources
 )
 
+
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST libpng (
   echo extracting
   CALL bsdtar xfz libpng-%LIBPNG_VERSION%.tar.gz
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename libpng-%LIBPNG_VERSION% libpng
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%\libpng
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  ECHO patching ...
+  patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%\libpng\projects\vstudio\
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  ECHO replacing path to zlib.lib
+  find . -iname "*.vcxproj" -exec sed -i "s|zlib.lib|..\\\\..\\\\..\\\\..\\\\zlib\\\\zlib.lib|g" "{}" ;
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
-cd libpng
-IF ERRORLEVEL 1 GOTO ERROR
 
-goto SKIPTHISSECTION
 ::makefile just creates one .lib
-nmake /a /f scripts\makefile.vcwin32 test
+::nmake /a /f scripts\makefile.vcwin32 test
 
-:SKIPTHISSECTION
-
-
-
-patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
+cd %PKGDIR%\libpng\projects\vstudio\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-cd projects\vstudio\
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-
+ECHO deleting zlib project within libpng
 rmdir zlib /S /Q
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-
-::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-ECHO TODO!!!!! only SED once!!!!!
-::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-::!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-find . -iname "*.vcxproj" -exec sed -i "s|zlib.lib|..\\\\..\\\\..\\\\..\\\\zlib\\\\zlib.lib|g" "{}" ;
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 

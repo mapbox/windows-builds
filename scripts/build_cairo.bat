@@ -35,19 +35,25 @@ if EXIST cairo (
   echo found extracted sources
 )
 
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST cairo (
   echo extracting
   CALL 7z x -y cairo-%CAIRO_VERSION%.tar.xz
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   CALL bsdtar xfz cairo-%CAIRO_VERSION%.tar
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename cairo-%CAIRO_VERSION% cairo
   IF ERRORLEVEL 1 GOTO ERROR
+  cd cairo
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  patch -N -p1 < %PATCHES%/cairo_.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
-cd cairo
+cd %PKGDIR%\cairo
 IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/cairo_.diff || %SKIP_FAILED_PATCH%
-IF ERRORLEVEL 1 GOTO ERROR
 
 ::ECHO cleaning ....
 ::CALL make -f Makefile.win32 "CFG=release" clean

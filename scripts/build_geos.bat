@@ -5,15 +5,23 @@ echo ------ geos -----
 
 cd %PKGDIR%
 
+
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST geos (
 	echo cloning from github
 	git clone https://github.com/jehc/geos.git
+	IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+	cd %PKGDIR%\geos
+	IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+	echo patching
+	patch -N -p1 < %PATCHES%/geos.diff || %SKIP_FAILED_PATCH%
+	IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ENDLOCAL
 
 echo fetching/pulling from github
 
-cd geos
+cd %PKGDIR%\geos
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git fetch
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -23,11 +31,6 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL autogen.bat
 IF ERRORLEVEL 1 GOTO ERROR
 
-echo patching
-:: -p NUM  --strip=NUM  Strip NUM leading components from file names
-:: -N  --forward  Ignore patches that appear to be reversed or already applied
-patch -N -p1 < %PATCHES%/geos.diff || %SKIP_FAILED_PATCH%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO USEMSBUILD
 IF %BUILDPLATFORM% EQU x64 (

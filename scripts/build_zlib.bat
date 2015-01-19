@@ -14,33 +14,35 @@ if EXIST zlib (
   echo found extracted sources
 )
 
+
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST "zlib" (
-  echo extracting
+  echo extracting ...
   CALL bsdtar xfz zlib-%ZLIB_VERSION%.tar.gz
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename zlib-%ZLIB_VERSION% zlib
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%\zlib
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  ECHO patching ...
+  patch -N -p1 < %PATCHES%/zlib-1.2.8.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  CD %PKGDIR%\zlib\contrib\vstudio\vc11
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  ECHO removing ZLIB_WINAPI ...
+  find . -iname "*.vcxproj" -exec sed -i "s/ZLIB_WINAPI;/;/g" "{}" ;
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
-::extracting was enough, gets built by libpng -> normal mapnik workflow
-::IF "%1"=="" GOTO NOBUILD
-
-cd zlib
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-ECHO %CD%
-
-echo patching
-:: -p NUM  --strip=NUM  Strip NUM leading components from file names
-:: -N  --forward  Ignore patches that appear to be reversed or already applied
-patch -N -p1 < %PATCHES%/zlib-1.2.8.diff || %SKIP_FAILED_PATCH%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-
-
-
-::build zlib ourselves -> for libosimium
-
+ECHO.
+ECHO.
+ECHO -------------------------------------
+ECHO TODO add /SAFESEH to MASM projects and build normal Release
+ECHO that relies on MASM projects
+ECHO -------------------------------------
+ECHO.
+ECHO.
 ::SET ARCH=x64
 ::IF %TARGET_ARCH% EQU 32 SET ARCH=x86
 ::CD %PKGDIR%\zlib\contrib\masm%ARCH%
@@ -51,13 +53,6 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 :: --- build with Visual Studio
 CD %PKGDIR%\zlib\contrib\vstudio\vc11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-
-find . -iname "*.vcxproj" -exec sed -i "s/ZLIB_WINAPI;/;/g" "{}" ;
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-:: /SAFESEH:NO
-:: /p:ImageHasSafeExceptionHandlers=false
 
 SET BT=Debug
 IF "%BUILD_TYPE%"=="Release" SET BT=ReleaseWithoutAsm

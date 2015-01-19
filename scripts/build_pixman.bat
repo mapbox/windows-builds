@@ -14,21 +14,25 @@ if EXIST pixman (
   echo found extracted sources
 )
 
+
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST pixman (
   echo extracting
   CALL bsdtar xfz pixman-%PIXMAN_VERSION%.tar.gz
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename pixman-%PIXMAN_VERSION% pixman
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%\pixman
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  ECHO patching ...
+  patch -N -p1 < %PATCHES%/pixman.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
-cd pixman
-IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/pixman.diff || %SKIP_FAILED_PATCH%
-IF ERRORLEVEL 1 GOTO ERROR
-
-cd pixman
-IF ERRORLEVEL 1 GOTO ERROR
+cd %PKGDIR%\pixman\pixman
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::ECHO cleaning ....
 ::CALL make -f Makefile.win32 "CFG=release" clean

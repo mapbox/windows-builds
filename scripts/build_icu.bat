@@ -17,17 +17,23 @@ if EXIST icu (
   echo found extracted sources
 )
 
+
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST icu (
   echo extracting
   CALL bsdtar xfz %PKGDIR%\icu4c-%ICU_VERSION2%-src.tgz
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%\icu
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  ECHO patching
+  patch -N -p1 < %PATCHES%/icu4.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
-cd icu
-IF ERRORLEVEL 1 GOTO ERROR
 
-patch -N -p1 < %PATCHES%/icu4.diff || %SKIP_FAILED_PATCH%
-IF ERRORLEVEL 1 GOTO ERROR
+cd %PKGDIR%\icu
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 msbuild ^
 .\source\i18n\i18n.vcxproj ^
@@ -38,7 +44,7 @@ msbuild ^
 /p:Configuration=%BUILD_TYPE% ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 msbuild ^
 .\source\common\common.vcxproj ^
@@ -51,7 +57,7 @@ msbuild ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 ::call msbuild source\data\makedata.vcxproj /m /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
 ::call msbuild source\allinone\allinone.sln /m /target:common;makedata;i18n /toolsversion:%TOOLS_VERSION% /p:PlatformToolset=%PLATFORM_TOOLSET% /p:Configuration="Release" /p:Platform=%BUILDPLATFORM%
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::echo building release AND debug
 ::echo A boost build bug that tests for existence of *debug* version of ICU even when building release only version of boost.

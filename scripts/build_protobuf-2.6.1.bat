@@ -14,26 +14,26 @@ if EXIST protobuf (
   echo found extracted sources
 )
 
+
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST protobuf (
   echo extracting
   CALL bsdtar xfz protobuf-%PROTOBUF_VERSION%.tar.bz2
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename protobuf-%PROTOBUF_VERSION% protobuf
-  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+cd %PKGDIR%\protobuf
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  ECHO patching ...
+  patch -N -p1 < %PATCHES%/protobuf-%PROTOBUF_VERSION%.diff || true
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  patch -N -p1 < %PATCHES%/protobuf-%PROTOBUF_VERSION%-vsupgrade.diff || true
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
-
-cd protobuf
-IF ERRORLEVEL 1 GOTO ERROR
-
-::git apply %PATCHES%/protobuf-%PROTOBUF_VERSION%.diff
-patch -N -p1 < %PATCHES%/protobuf-%PROTOBUF_VERSION%.diff || true
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-::git apply %PATCHES%/protobuf-%PROTOBUF_VERSION%-vsupgrade.diff
-patch -N -p1 < %PATCHES%/protobuf-%PROTOBUF_VERSION%-vsupgrade.diff || true
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ENDLOCAL
 
 
-cd vsprojects
+cd %PKGDIR%\protobuf\vsprojects
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 

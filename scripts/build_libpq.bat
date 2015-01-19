@@ -14,13 +14,20 @@ if EXIST postgresql (
   echo found extracted sources
 )
 
+
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST postgresql (
   echo extracting
   CALL bsdtar xfz postgresql-%POSTGRESQL_VERSION%.tar.bz2
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename postgresql-%POSTGRESQL_VERSION% postgresql
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%\postgresql
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  patch -N -p1 < %PATCHES%/postgres.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
 
 echo If you receive an error about not finding Win32.mak, you may need to do something like:
@@ -42,14 +49,8 @@ echo.
 ::http://ftp.postgresql.org/pub/source/
 ::http://www.postgresql.org/docs/9.2/static/install-windows.html
 
-cd postgresql
-IF ERRORLEVEL 1 GOTO ERROR
-
-patch -N -p1 < %PATCHES%/postgres.diff || %SKIP_FAILED_PATCH%
-IF ERRORLEVEL 1 GOTO ERROR
-
-cd src
-IF ERRORLEVEL 1 GOTO ERROR
+cd %PKGDIR%\postgresql\src
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: !! http://www.postgresql.org/docs/9.0/static/install-windows-libpq.html
 ::NMAKE Options: http://msdn.microsoft.com/en-us/library/afyyse50%28v=vs.120%29.aspx
@@ -70,7 +71,7 @@ IF %BUILDPLATFORM% EQU x64 (
 ) ELSE (
     CALL nmake /A /F win32.mak %DEBUG_FLAG%
 )
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::>%ROOTDIR%\build_libpg-%POSTGRESQL_VERSION%.log 2>&1
 
