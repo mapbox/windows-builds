@@ -113,14 +113,12 @@ if NOT EXIST tmp-bin\bsdtar.exe (
 )
 
 if NOT EXIST tmp-bin\make\make.exe (
-  echo. && echo "make"
+  echo. && echo "getting make"
   mkdir tmp-bin
   cd tmp-bin
   mkdir make
   cd make
   CALL wget ftp://ftp.equation.com/make/32/make.exe
-  IF ERRORLEVEL 1 GOTO ERROR
-  CALL 7z e -y gnu-win-tools.7z >nul
   IF ERRORLEVEL 1 GOTO ERROR
   cd %ROOTDIR%\tmp-bin
 )
