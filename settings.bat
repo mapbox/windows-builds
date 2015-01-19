@@ -120,7 +120,7 @@ if NOT EXIST tmp-bin\make\make.exe (
   cd make
   CALL wget ftp://ftp.equation.com/make/32/make.exe
   IF ERRORLEVEL 1 GOTO ERROR
-  cd %ROOTDIR%\tmp-bin
+  cd %ROOTDIR%
 )
 
 python setuptools-available.py
