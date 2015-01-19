@@ -105,11 +105,13 @@ if NOT EXIST tmp-bin\bsdtar.exe (
     echo "setting up bsdtar"
     mkdir tmp-bin
     cd tmp-bin
-    CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
+    REM CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
+    CALL curl -O http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-bin.zip
     IF ERRORLEVEL 1 GOTO ERROR
     CALL 7z e -y libarchive-2.4.12-1-bin.zip
     IF ERRORLEVEL 1 GOTO ERROR
-    CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
+    REM CALL wget http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
+    CALL curl -O http://downloads.sourceforge.net/gnuwin32/libarchive-2.4.12-1-dep.zip
     IF ERRORLEVEL 1 GOTO ERROR
     CALL 7z e -y libarchive-2.4.12-1-dep.zip
     IF ERRORLEVEL 1 GOTO ERROR
@@ -137,7 +139,8 @@ if NOT EXIST tmp-bin\make.exe (
     echo "setting up bsdtar"
     mkdir tmp-bin
     cd tmp-bin
-    CALL wget ftp://ftp.equation.com/make/32/make.exe
+    REM CALL wget ftp://ftp.equation.com/make/32/make.exe
+    CALL curl -O ftp://ftp.equation.com/make/32/make.exe
     IF ERRORLEVEL 1 GOTO ERROR
     cd ..
 )
