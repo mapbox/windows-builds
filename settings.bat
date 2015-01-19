@@ -136,7 +136,7 @@ if NOT EXIST C:\Python27\Scripts\aws (
 
 :: upgrade make in order to work around "Interrupt/Exception caught"
 if NOT EXIST tmp-bin\make.exe (
-    echo "setting up bsdtar"
+    echo "setting up make"
     mkdir tmp-bin
     cd tmp-bin
     REM CALL wget ftp://ftp.equation.com/make/32/make.exe
