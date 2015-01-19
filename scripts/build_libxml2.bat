@@ -24,9 +24,9 @@ if NOT EXIST libxml2 (
   CALL bsdtar xfz libxml2-%LIBXML2_VERSION%.tar.gz
   rename libxml2-%LIBXML2_VERSION% libxml2
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  cd %PKGDIR%\libxml2
+  cd %PKGDIR%\libxml2\win32
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  patch -N -p1 < %PATCHES%/libxml2-2.9.2.diff || %SKIP_FAILED_PATCH%
+  patch -N -p4 < %PATCHES%/libxml2-%LIBXML2_VERSION%.diff || %SKIP_FAILED_PATCH%
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
 ENDLOCAL
@@ -71,6 +71,7 @@ SET EL=%ERRORLEVEL%
 echo ----------ERROR libXML2 --------------
 
 :DONE
+echo ----------DONE libXML2 --------------
 
 cd %ROOTDIR%
 EXIT /b %EL%
