@@ -71,10 +71,15 @@ REM -G "NMake Makefiles" ^
 REM -DCMAKE_BUILD_TYPE=Dev ^
 REM -DCMAKE_BUILD_TYPE=Release ^
 
+SET PROJECT_TYPE="NMake Makefiles"
+IF "%1"=="vs" ( ECHO Visual Studio SLN && SET PROJECT_TYPE="Visual Studio 14 Win64" )
+SET CMAKEBUILDTYPE=Release
+IF "%2"=="dev" ( ECHO building Dev && SET CMAKEBUILDTYPE=Dev )
+
 cmake .. ^
--G "Visual Studio 14 Win64" ^
+-G %PROJECT_TYPE% ^
 -DOsmium_DEBUG=TRUE ^
--DCMAKE_BUILD_TYPE=Release ^
+-DCMAKE_BUILD_TYPE=%CMAKEBUILDTYPE% ^
 -DBOOST_ROOT=%LODEPSDIR%\boost ^
 -DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
 -DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
@@ -99,35 +104,32 @@ cmake .. ^
 -DGETOPT_INCLUDE_DIR=%LODEPSDIR%\wingetopt\include
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+IF "%1"=="vs" GOTO USEMSBUILD
+
+nmake
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL ctest -C Release -V -E testdata-multipolygon
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+GOTO DONE
+
+
+:USEMSBUILD
 :: Debug
 :: MinSizeRel
 :: Release
 :: RelWithDebInfo
 msbuild libosmium.sln ^
 /nologo ^
-/m ^
-/toolsversion:14.0 ^
-/p:BuildInParallel=true ^
-/p:Configuration=Release ^
-/p:Platform=x64 ^
-/p:PlatformToolset=v140
-
-::nmake
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-CALL ctest -C Release -V -E testdata-multipolygon
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-GOTO NOMSBUILD
-msbuild libosmium.sln ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
-/p:Configuration=%BUILD_TYPE% ^
+/p:Configuration=Release ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-:NOMSBUILD
+
+ECHO -----  TODO --- MAKE TESTS work with VS ------
 
 GOTO DONE
 
