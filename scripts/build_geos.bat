@@ -65,6 +65,13 @@ msbuild ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+::call autogen.bat again. geos/platform.h somehow gets deleted by cmake or nmake
+::but it is needed later, e.g. to build libosmium
+CD ..
+CALL autogen.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
 GOTO DONE
 
 :ERROR
