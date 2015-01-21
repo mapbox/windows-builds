@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ libosmium -----
+echo ------ libosmium DEPS -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
@@ -13,7 +13,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL build_osmpbf.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_protobuf.bat
+CALL build_protobuf-%PROTOBUF_VERSION%.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_zlib.bat
@@ -48,10 +48,10 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR libosmium --------------
+echo ----------ERROR libosmium DEPS --------------
 
 :DONE
-echo ----------DONE libosmium --------------
+echo ----------DONE libosmium DEPS --------------
 
 cd %ROOTDIR%
 EXIT /b %EL%

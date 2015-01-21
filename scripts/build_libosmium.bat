@@ -6,15 +6,18 @@ echo ------ libosmium -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO ERROR )
 
+
+SETLOCAL ENABLEDELAYEDEXPANSION
 IF "%1"=="full" (
 	echo ======== BUILDING AND PACKAGING ALL DEPS ================
 	cd %ROOTDIR%\scripts
-	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+	IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 	CALL build_libosmium_deps.bat
-	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+	IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 	CALL package_libosmium_deps.bat
-	IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+	IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
 cd %PKGDIR%
 
@@ -66,9 +69,10 @@ SET LIBBZIP2=%LIBBZIP2:\=/%
 REM -G "Visual Studio 14 Win64" ^
 REM -G "NMake Makefiles" ^
 REM -DCMAKE_BUILD_TYPE=Dev ^
+REM -DCMAKE_BUILD_TYPE=Release ^
 
 cmake .. ^
--G "NMake Makefiles" ^
+-G "Visual Studio 14 Win64" ^
 -DOsmium_DEBUG=TRUE ^
 -DCMAKE_BUILD_TYPE=Release ^
 -DBOOST_ROOT=%LODEPSDIR%\boost ^
@@ -95,10 +99,23 @@ cmake .. ^
 -DGETOPT_INCLUDE_DIR=%LODEPSDIR%\wingetopt\include
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-nmake
+:: Debug
+:: MinSizeRel
+:: Release
+:: RelWithDebInfo
+msbuild libosmium.sln ^
+/nologo ^
+/m ^
+/toolsversion:14.0 ^
+/p:BuildInParallel=true ^
+/p:Configuration=Release ^
+/p:Platform=x64 ^
+/p:PlatformToolset=v140
+
+::nmake
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL ctest -V -E testdata-multipolygon
+CALL ctest -C Release -V -E testdata-multipolygon
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO NOMSBUILD

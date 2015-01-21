@@ -50,11 +50,13 @@ xcopy /S /Q %PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\*.lib %LOD
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- zlib
+SET BT=Debug
+IF "%BUILD_TYPE%"=="Release" SET BT=ReleaseWithoutAsm
 xcopy /S /Q %PKGDIR%\zlib\*.h %LODEPSDIR%\zlib\include\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc11\%BUILDPLATFORM%\ZlibDll%BUILD_TYPE%\*.lib %LODEPSDIR%\zlib\lib\
+xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc11\%BUILDPLATFORM%\ZlibDll%BT%\*.lib %LODEPSDIR%\zlib\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc11\%BUILDPLATFORM%\ZlibDll%BUILD_TYPE%\*.dll %LODEPSDIR%\zlib\lib\
+xcopy /S /Q %PKGDIR%\zlib\contrib\vstudio\vc11\%BUILDPLATFORM%\ZlibDll%BT%\*.dll %LODEPSDIR%\zlib\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- expat
@@ -123,13 +125,13 @@ SET PKGNAME=libosmium-deps-win-%TOOLS_VERSION%-%ARCH%.7z
 ECHO packaging to
 ECHO %SDKBASE%\%PKGNAME% ....
 
-CD %LODEPSDIR%
+CD %SDKBASE%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 IF EXIST %PKGNAME% DEL %PKGNAME%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-7z a -r -mx9 ..\%PKGNAME% > NUL
+7z a -r -mx9 %PKGNAME% %LODEPSDIR% > NUL
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
