@@ -25,10 +25,11 @@ cd %PKGDIR%
 if NOT EXIST node-mapnik (
     git clone https://github.com/mapnik/node-mapnik
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 cd node-mapnik
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git fetch
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git checkout %NODEMAPNIKBRANCH%
 IF ERRORLEVEL 1 GOTO ERROR
 git pull
@@ -49,19 +50,22 @@ if NOT EXIST node_modules (
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
-:: if this fails then clear our node_modules
+ECHO if this fails then clear our node_modules
 call npm ls
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 call .\node_modules\.bin\node-pre-gyp clean --target=%NODE_VER%
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if EXIST build (
     rd /q /s build
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 if EXIST lib\binding (
     rd /q /s lib\binding
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET DEBUG_FLAG=
 IF %BUILD_TYPE% EQU Debug (SET DEBUG_FLAG=--debug)
@@ -71,20 +75,31 @@ IF %BUILD_TYPE% EQU Debug (SET DEBUG_FLAG=--debug)
 if EXIST %USERPROFILE%\.node-gyp (
     rd /q /s %USERPROFILE%\.node-gyp
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+::add local node-pre-gyp dir to path
+SET PATH=%CD%\node_modules\.bin;%PATH%
 
 call .\node_modules\.bin\node-pre-gyp ^
-  rebuild %DEBUG_FLAG% --msvs_version=2013 --no-rollback ^
-  --target=%NODE_VER% --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
+rebuild %DEBUG_FLAG% ^
+--msvs_version=2013 ^
+--no-rollback ^
+--target=%NODE_VER% ^
+--dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-IF ERRORLEVEL 1 GOTO ERROR
-echo before test
-CALL npm test || true
-IF ERRORLEVEL 1 GOTO ERROR
-
-ECHO PUB %PUB%
 ::Windows batch file problems: everything within a block e.g.( ) will be evaluated at one
 ::split publishing into 3 blocks, otherwise output of xcopy will be written into mapnik_settings.js :-(
-FOR /F "tokens=*" %%i in ('.\node_modules\.bin\node-pre-gyp reveal module_path --target=%NODE_VER%  --silent') do SET BINDINGIDR=%%i
+FOR /F "tokens=*" %%i in ('.\node_modules\.bin\node-pre-gyp reveal module_path --target^=%NODE_VER%  --silent') do SET BINDINGIDR=%%i
+ECHO BINDINGIDR %BINDINGIDR%
+
+echo before test
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::CALL npm test || true
+CALL npm test
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO PUB %PUB%
 
 echo copying libs
 :: node-pre-gyp reveal spits out postix paths which xcopy does not like
