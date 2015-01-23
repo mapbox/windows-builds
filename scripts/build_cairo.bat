@@ -38,7 +38,7 @@ if EXIST cairo (
 SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST cairo (
   echo extracting
-  CALL 7z x -y cairo-%CAIRO_VERSION%.tar.xz
+  CALL 7z x -y cairo-%CAIRO_VERSION%.tar.xz | %windir%\system32\FIND "ing archive"
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   CALL bsdtar xfz cairo-%CAIRO_VERSION%.tar
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR

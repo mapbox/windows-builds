@@ -21,13 +21,13 @@ if "%TARGET_ARCH%"=="64" (
     echo installing 64 bit python
     CALL %ROOTDIR%\scripts\download %PKGNAME%
     IF ERRORLEVEL 1 GOTO ERROR
-    7z -y x %PKGNAME% -o%ROOTDIR%\tmp-bin\
+    7z -y x %PKGNAME% -o%ROOTDIR%\tmp-bin\ | %windir%\system32\FIND "ing archive"
     IF ERRORLEVEL 1 GOTO ERROR
 ) ELSE  (
     echo installing 32 bit python
     CALL %ROOTDIR%\scripts\download %PKGNAME%
     IF ERRORLEVEL 1 GOTO ERROR
-    7z -y x %PKGNAME% -o%ROOTDIR%\tmp-bin\
+    7z -y x %PKGNAME% -o%ROOTDIR%\tmp-bin\ | %windir%\system32\FIND "ing archive"
     IF ERRORLEVEL 1 GOTO ERROR
 )
 

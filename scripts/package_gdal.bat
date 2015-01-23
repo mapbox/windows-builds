@@ -70,7 +70,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF EXIST %PKGNAME% DEL %PKGNAME%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-7z a -r -mx9 ..\%PKGNAME% > nul
+7z a -r -mx9 ..\%PKGNAME% | %windir%\system32\FIND "ing archive"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
