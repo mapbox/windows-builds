@@ -42,7 +42,7 @@ set GDAL_DATA=%MAPNIK_SDK%\share\gdal
 set PATH=%MAPNIK_SDK%\bin;%PATH%
 set PATH=%MAPNIK_SDK%\libs;%PATH%
 
-call npm install -g node-gyp
+::call npm install -g node-gyp
 :: NOTE - requires you install 32 bit node.exe from nodejs.org
 
 if NOT EXIST node_modules (
@@ -75,6 +75,14 @@ IF %BUILD_TYPE% EQU Debug (SET DEBUG_FLAG=--debug)
 if EXIST %USERPROFILE%\.node-gyp (
     rd /q /s %USERPROFILE%\.node-gyp
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+::download custom Mapbox node.exe
+SET ARCHPATH=
+IF "%PLATFORMX%"=="x64" SET ARCHPATH=x64/
+SET MBNODEURL=https://mapbox.s3.amazonaws.com/node-cpp11/v%NODE_VER%/%ARCHPATH%node.exe
+ECHO downloading custom node.exe %MBNODEURL%
+curl %MBNODEURL% > node.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::add local node-pre-gyp dir to path
