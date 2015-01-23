@@ -31,15 +31,15 @@ cd %PKGDIR%\expat
 IF ERRORLEVEL 1 GOTO ERROR
 
 
-::DebugInformationFormatDebugInformationFormat
+::DebugInformationFormat
 ::OldStyle = /Z7 (within file)
 ::ProgramDatabase = /Zi (pdb)
 ::EditAndContinue = /ZI
+REM ::/p:DebugInformation=EditAndContinue ^
 
 msbuild ^
 .\expat.sln ^
 /nologo ^
-/p:DebugInformationFormat=OldStyle ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
