@@ -103,7 +103,7 @@ CALL scripts\build_node.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :NODEMAPNIK
-CALL scripts\build_node_mapnik.bat
+CALL scripts\build_node_mapnik.bat %NODE_VERSION%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :LIBOSMIUM
