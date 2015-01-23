@@ -35,8 +35,15 @@ ENDLOCAL
 cd %PKGDIR%\icu
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+::DebugInformationFormat
+::OldStyle = /Z7 (within file)
+::ProgramDatabase = /Zi (pdb)
+::EditAndContinue = /ZI
+REM ::/p:DebugInformationFormat=EditAndContinue ^
+
 msbuild ^
 .\source\i18n\i18n.vcxproj ^
+/p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /nologo ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
@@ -48,6 +55,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 msbuild ^
 .\source\common\common.vcxproj ^
+/p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /nologo ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^

@@ -31,10 +31,18 @@ if "%TARGET_ARCH%"=="64" (
   ECHO.
 )
 
+::DebugInformationFormat
+::OldStyle = /Z7 (within file)
+::ProgramDatabase = /Zi (pdb)
+::EditAndContinue = /ZI
+REM ::/p:DebugInformation=EditAndContinue ^
+
+
 ECHO building ...
 msbuild ^
 .\builds\windows\vc2010\freetype.sln ^
 /nologo ^
+/p:DebugInformationFormat=EditAndContinue ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
