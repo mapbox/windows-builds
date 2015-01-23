@@ -78,6 +78,8 @@ if EXIST %USERPROFILE%\.node-gyp (
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::download custom Mapbox node.exe
+::ALWAYS download in case there is another version of node.exe
+::here from another build
 SET ARCHPATH=
 IF "%PLATFORMX%"=="x64" SET ARCHPATH=x64/
 SET MBNODEURL=https://mapbox.s3.amazonaws.com/node-cpp11/v%NODE_VER%/%ARCHPATH%node.exe
@@ -96,7 +98,7 @@ rebuild %DEBUG_FLAG% ^
 --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-::Windows batch file problems: everything within a block e.g.( ) will be evaluated at one
+::Windows batch file problems: everything within a block e.g.( ) will be evaluated at once
 ::split publishing into 3 blocks, otherwise output of xcopy will be written into mapnik_settings.js :-(
 FOR /F "tokens=*" %%i in ('.\node_modules\.bin\node-pre-gyp reveal module_path --target^=%NODE_VER%  --silent') do SET BINDINGIDR=%%i
 ECHO BINDINGIDR %BINDINGIDR%
