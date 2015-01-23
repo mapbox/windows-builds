@@ -8,6 +8,8 @@ SET SINGLE=0
 IF "%1" NEQ "" (
 	SET SINGLE=1
 )
+
+IF "%2"=="override" (ECHO overriding && ECHO starting at %1 && SET SINGLE=0 && GOTO %1)
 IF %SINGLE% EQU 1 (ECHO SINGLE %SINGLE% && ECHO GOTO %1 && GOTO %1)
 
 
