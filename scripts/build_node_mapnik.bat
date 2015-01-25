@@ -31,9 +31,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git fetch
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git checkout %NODEMAPNIKBRANCH%
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git pull
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO building node-mapnik
 set MAPNIK_SDK=%CD%\..\mapnik-%MAPNIKBRANCH%\mapnik-gyp\mapnik-sdk
@@ -42,8 +42,9 @@ set GDAL_DATA=%MAPNIK_SDK%\share\gdal
 set PATH=%MAPNIK_SDK%\bin;%PATH%
 set PATH=%MAPNIK_SDK%\libs;%PATH%
 
-::call npm install -g node-gyp
 :: NOTE - requires you install 32 bit node.exe from nodejs.org
+call npm install -g node-gyp
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if NOT EXIST node_modules (
     call npm install mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp

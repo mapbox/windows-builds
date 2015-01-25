@@ -39,6 +39,7 @@ REM ::/p:DebugInformation=EditAndContinue ^
 
 msbuild ^
 .\expat.sln ^
+/p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /nologo ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
