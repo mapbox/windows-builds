@@ -50,6 +50,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO building ...
 msbuild ^
 .\vstudio.sln ^
+/p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /nologo ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^

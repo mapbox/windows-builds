@@ -41,8 +41,8 @@ REM ::/p:DebugInformation=EditAndContinue ^
 ECHO building ...
 msbuild ^
 .\builds\windows\vc2010\freetype.sln ^
+/p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /nologo ^
-/p:DebugInformationFormat=EditAndContinue ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^

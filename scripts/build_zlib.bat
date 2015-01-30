@@ -57,8 +57,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 SET BT=Debug
 IF "%BUILD_TYPE%"=="Release" SET BT=ReleaseWithoutAsm
 
+REM /p:ImageHasSafeExceptionHandlers=NO ^
+
 msbuild zlibvc.sln ^
-/p:ImageHasSafeExceptionHandlers=NO ^
+/p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^

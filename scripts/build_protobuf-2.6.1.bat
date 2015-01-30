@@ -40,6 +40,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 msbuild ^
 .\protobuf.sln ^
 /target:libprotobuf-lite;libprotobuf;protoc ^
+/p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /nologo ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
