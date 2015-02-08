@@ -77,6 +77,7 @@ IF "%1"=="vs" ( ECHO Visual Studio SLN && SET PROJECT_TYPE="Visual Studio 14 Win
 SET CMAKEBUILDTYPE=Release
 IF "%2"=="dev" ( ECHO building Dev && SET CMAKEBUILDTYPE=Dev )
 
+GOTO SKIPLIBOSMIUM
 cmake .. ^
 -G %PROJECT_TYPE% ^
 -DOsmium_DEBUG=TRUE ^
@@ -103,7 +104,37 @@ cmake .. ^
 -DSPARSEHASH_INCLUDE_DIR=%LODEPSDIR%\sparsehash\include ^
 -DGETOPT_LIBRARY=%LODEPSDIR%\wingetopt\lib\wingetopt.lib ^
 -DGETOPT_INCLUDE_DIR=%LODEPSDIR%\wingetopt\include
+
+
+:SKIPLIBOSMIUM
+
+cmake .. ^
+-LA ^
+-G %PROJECT_TYPE% ^
+-DOsmium_DEBUG=TRUE ^
+-DCMAKE_BUILD_TYPE=%CMAKEBUILDTYPE% ^
+-DBOOST_ROOT=%LODEPSDIR%\boost ^
+-DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
+-DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
+-DOSMPBF_INCLUDE_DIR=%LODEPSDIR%\osmpbf\include ^
+-DPROTOBUF_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf.lib ^
+-DPROTOBUF_LITE_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf-lite.lib ^
+-DPROTOBUF_INCLUDE_DIR=%LODEPSDIR%\protobuf\include ^
+-DZLIB_LIBRARY=%LODEPSDIR%\zlib\lib\zlibwapi.lib ^
+-DZLIB_INCLUDE_DIR=%LODEPSDIR%\zlib\include ^
+-DEXPAT_LIBRARY=%LODEPSDIR%\expat\lib\libexpat.lib ^
+-DEXPAT_INCLUDE_DIR=%LODEPSDIR%\expat\include ^
+-DBZIP2_LIBRARIES=%LIBBZIP2% ^
+-DBZIP2_INCLUDE_DIR=%LODEPSDIR%\bzip2\include
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+
+
+
+
+
+
 
 IF "%1"=="vs" GOTO USEMSBUILD
 
@@ -121,7 +152,7 @@ GOTO DONE
 :: MinSizeRel
 :: Release
 :: RelWithDebInfo
-msbuild libosmium.sln ^
+msbuild osmium.sln ^
 /nologo ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
