@@ -21,8 +21,23 @@ ENDLOCAL
 
 cd %PKGDIR%
 
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ECHO TODO
+ECHO     remove "ddt /Q libosmium" after local tests
+ECHO     change git clone to original repo
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REM ddt /Q libosmium
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 if NOT EXIST libosmium (
-	git clone https://github.com/osmcode/libosmium.git
+	git clone https://github.com/BergWerkGIS/libosmium.git
+	REM git clone https://github.com/osmcode/libosmium.git
 )
 cd libosmium
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -66,7 +81,7 @@ SET PATH=%LODEPSDIR%\zlib\lib;%PATH%
 SET LIBBZIP2=%LODEPSDIR%\bzip2\lib\libbz2.lib
 SET LIBBZIP2=%LIBBZIP2:\=/%
 
-REM -G "Visual Studio 14 Win64" ^
+REM -G "Visual Studio 14 2015 Win64" ^
 REM -G "NMake Makefiles" ^
 REM -DCMAKE_BUILD_TYPE=Dev ^
 REM -DCMAKE_BUILD_TYPE=Release ^
@@ -109,7 +124,7 @@ IF "%1"=="vs" GOTO USEMSBUILD
 nmake
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL ctest -C Release -V -E testdata-multipolygon
+CALL ctest -C Release -VV -E testdata-multipolygon
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
@@ -129,7 +144,53 @@ msbuild libosmium.sln ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 
+
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ECHO DIRTY HACK
+ECHO     generate project files again to create tests
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+del CMakeCache.txt
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+cmake .. ^
+-G "NMake Makefiles" ^
+-DOsmium_DEBUG=TRUE ^
+-DCMAKE_BUILD_TYPE=%CMAKEBUILDTYPE% ^
+-DBOOST_ROOT=%LODEPSDIR%\boost ^
+-DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
+-DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
+-DOSMPBF_INCLUDE_DIR=%LODEPSDIR%\osmpbf\include ^
+-DPROTOBUF_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf.lib ^
+-DPROTOBUF_LITE_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf-lite.lib ^
+-DPROTOBUF_INCLUDE_DIR=%LODEPSDIR%\protobuf\include ^
+-DZLIB_LIBRARY=%LODEPSDIR%\zlib\lib\zlibwapi.lib ^
+-DZLIB_INCLUDE_DIR=%LODEPSDIR%\zlib\include ^
+-DEXPAT_LIBRARY=%LODEPSDIR%\expat\lib\libexpat.lib ^
+-DEXPAT_INCLUDE_DIR=%LODEPSDIR%\expat\include ^
+-DBZIP2_LIBRARIES=%LIBBZIP2% ^
+-DBZIP2_INCLUDE_DIR=%LODEPSDIR%\bzip2\include ^
+-DGDAL_LIBRARY=%LODEPSDIR%\gdal\lib\gdal_i.lib ^
+-DGDAL_INCLUDE_DIR=%LODEPSDIR%\gdal\include ^
+-DGEOS_LIBRARY=%LODEPSDIR%\geos\lib\geos.lib ^
+-DGEOS_INCLUDE_DIR=%LODEPSDIR%\geos\include ^
+-DPROJ_LIBRARY=%LODEPSDIR%\proj\lib\proj.lib ^
+-DPROJ_INCLUDE_DIR=%LODEPSDIR%\proj\include ^
+-DSPARSEHASH_INCLUDE_DIR=%LODEPSDIR%\sparsehash\include ^
+-DGETOPT_LIBRARY=%LODEPSDIR%\wingetopt\lib\wingetopt.lib ^
+-DGETOPT_INCLUDE_DIR=%LODEPSDIR%\wingetopt\include
+
+
+
 ECHO -----  TODO --- MAKE TESTS work with VS ------
+CALL ctest --output-on-failure -C Release -VV -E testdata-multipolygon
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
 
