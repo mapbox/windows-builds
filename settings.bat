@@ -166,6 +166,7 @@ IF NOT EXIST tmp-bin\ddt.exe (
 )
 
 echo. && echo building within %current_script_dir%
+ECHO.
 ECHO using mapnik branch - %MAPNIKBRANCH%
 ECHO using mapnik-gyp branch - %MAPNIKGYPBRANCH%
 ECHO using node-mapnik branch - %NODEMAPNIKBRANCH%
