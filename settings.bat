@@ -3,12 +3,12 @@
 ::SET MAPNIKBRANCH=2.3.x
 SET MAPNIKBRANCH=master
 
-::SET MAPNIKGYPBRANCH=master
-SET MAPNIKGYPBRANCH=memory-fix
+SET MAPNIKGYPBRANCH=master
+::SET MAPNIKGYPBRANCH=memory-fix
 
 ::SET NODEMAPNIKBRANCH=1.x
-::SET NODEMAPNIKBRANCH=master
-SET NODEMAPNIKBRANCH=memory-fix
+SET NODEMAPNIKBRANCH=master
+::SET NODEMAPNIKBRANCH=memory-fix
 
 SET BUILD_TYPE=Release
 SET SKIP_FAILED_PATCH=false
@@ -166,6 +166,9 @@ IF NOT EXIST tmp-bin\ddt.exe (
 )
 
 echo. && echo building within %current_script_dir%
+ECHO using mapnik branch - %MAPNIKBRANCH%
+ECHO using mapnik-gyp branch - %MAPNIKGYPBRANCH%
+ECHO using node-mapnik branch - %NODEMAPNIKBRANCH%
 
 set ICU_VERSION=54.1
 set ICU_VERSION2=54_1
