@@ -1,0 +1,89 @@
+diff --git a/configure b/configure
+index d2998c8..b4c5e1c 100755
+--- a/configure
++++ b/configure
+@@ -655,7 +655,7 @@ def configure_winsdk(o):
+ 
+   winsdk_dir = os.environ.get("WindowsSdkDir")
+ 
+-  if winsdk_dir and os.path.isfile(winsdk_dir + '\\bin\\ctrpp.exe'):
++  if winsdk_dir and os.path.isfile(winsdk_dir + '\\bin\\x64\\ctrpp.exe'):
+     print "Found ctrpp in WinSDK--will build generated files into tools/msvs/genfiles."
+     o['variables']['node_has_winsdk'] = 'true'
+     return
+@@ -724,7 +724,7 @@ if options.use_ninja:
+ elif options.use_xcode:
+   gyp_args += ['-f', 'xcode']
+ elif flavor == 'win':
+-  gyp_args += ['-f', 'msvs', '-G', 'msvs_version=auto']
++  gyp_args += ['-f', 'msvs', '-G', 'msvs_version=2013']
+ else:
+   gyp_args += ['-f', 'make-' + flavor]
+ 
+diff --git a/deps/openssl/openssl/e_os.h b/deps/openssl/openssl/e_os.h
+index 733155e..71d9600 100644
+--- a/deps/openssl/openssl/e_os.h
++++ b/deps/openssl/openssl/e_os.h
+@@ -307,7 +307,7 @@ static unsigned int _strlen31(const char *str)
+ #      undef isxdigit
+ #    endif
+ #    if defined(_MSC_VER) && !defined(_DLL) && defined(stdin)
+-#      if _MSC_VER>=1300
++#      if _MSC_VER>=1300 && _MSC_VER<1900
+ #        undef stdin
+ #        undef stdout
+ #        undef stderr
+@@ -315,7 +315,7 @@ static unsigned int _strlen31(const char *str)
+ #        define stdin  (&__iob_func()[0])
+ #        define stdout (&__iob_func()[1])
+ #        define stderr (&__iob_func()[2])
+-#      elif defined(I_CAN_LIVE_WITH_LNK4049)
++#      elif _MSC_VER<1900 && defined(I_CAN_LIVE_WITH_LNK4049)
+ #        undef stdin
+ #        undef stdout
+ #        undef stderr
+diff --git a/deps/uv/src/win/fs.c b/deps/uv/src/win/fs.c
+index 7f3704e..74e78fa 100644
+--- a/deps/uv/src/win/fs.c
++++ b/deps/uv/src/win/fs.c
+@@ -732,9 +732,9 @@ void fs__readdir(uv_fs_t* req) {
+   if (len == 0) {
+     fmt = L"./*";
+   } else if (pathw[len - 1] == L'/' || pathw[len - 1] == L'\\') {
+-    fmt = L"%s*";
++    fmt = L"%S*";
+   } else {
+-    fmt = L"%s\\*";
++    fmt = L"%S\\*";
+   }
+ 
+   /* Figure out whether path is a file or a directory. */
+diff --git a/vcbuild.bat b/vcbuild.bat
+index 0c9b0b2..40f5b8e 100644
+--- a/vcbuild.bat
++++ b/vcbuild.bat
+@@ -99,6 +99,15 @@ ENDLOCAL
+ @rem Skip project generation if requested.
+ if defined nobuild goto sign
+ 
++@rem Look for Visual Studio 2014
++if not defined VS140COMNTOOLS goto vc-set-2013
++if not exist "%VS140COMNTOOLS%\..\..\vc\vcvarsall.bat" goto vc-set-2013
++call "%VS140COMNTOOLS%\..\..\vc\vcvarsall.bat"
++if not defined VCINSTALLDIR goto msbuild-not-found
++set GYP_MSVS_VERSION=2013
++goto msbuild-found
++
++:vc-set-2013
+ @rem Look for Visual Studio 2013
+ if not defined VS120COMNTOOLS goto vc-set-2012
+ if not exist "%VS120COMNTOOLS%\..\..\vc\vcvarsall.bat" goto vc-set-2012
+@@ -129,7 +138,7 @@ goto run
+ 
+ :msbuild-found
+ @rem Build the sln with msbuild.
+-msbuild node.sln /m /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
++msbuild node.sln /m /toolsversion:14.0 /p:PlatformToolset=v140 /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
+ if errorlevel 1 goto exit
+ 
+ :sign

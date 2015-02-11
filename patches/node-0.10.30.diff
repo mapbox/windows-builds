@@ -1,0 +1,230 @@
+diff --git a/configure b/configure
+index ecd375a..216dd29 100755
+--- a/configure
++++ b/configure
+@@ -639,8 +639,7 @@ def configure_winsdk(o):
+     return
+
+   winsdk_dir = os.environ.get("WindowsSdkDir")
+-
+-  if winsdk_dir and os.path.isfile(winsdk_dir + '\\bin\\ctrpp.exe'):
++  if winsdk_dir and os.path.isfile(winsdk_dir + '\\bin\\x64\\ctrpp.exe'):
+     print "Found ctrpp in WinSDK--will build generated files into tools/msvs/genfiles."
+     o['variables']['node_has_winsdk'] = 'true'
+     return
+@@ -709,7 +708,7 @@ if options.use_ninja:
+ elif options.use_xcode:
+   gyp_args += ['-f', 'xcode']
+ elif flavor == 'win':
+-  gyp_args += ['-f', 'msvs', '-G', 'msvs_version=auto']
++  gyp_args += ['-f', 'msvs', '-G', 'msvs_version=2013']
+ else:
+   gyp_args += ['-f', 'make-' + flavor]
+
+diff --git a/deps/openssl/openssl/e_os.h b/deps/openssl/openssl/e_os.h
+index 6a0aad1..ee2c192 100644
+--- a/deps/openssl/openssl/e_os.h
++++ b/deps/openssl/openssl/e_os.h
+@@ -5,21 +5,21 @@
+  * This package is an SSL implementation written
+  * by Eric Young (eay@cryptsoft.com).
+  * The implementation was written so as to conform with Netscapes SSL.
+- *
++ *
+  * This library is free for commercial and non-commercial use as long as
+  * the following conditions are aheared to.  The following conditions
+  * apply to all code found in this distribution, be it the RC4, RSA,
+  * lhash, DES, etc., code; not just the SSL code.  The SSL documentation
+  * included with this distribution is covered by the same copyright terms
+  * except that the holder is Tim Hudson (tjh@cryptsoft.com).
+- *
++ *
+  * Copyright remains Eric Young's, and as such any Copyright notices in
+  * the code are not to be removed.
+  * If this package is used in a product, Eric Young should be given attribution
+  * as the author of the parts of the library used.
+  * This can be in the form of a textual message at program startup or
+  * in documentation (online or textual) provided with the package.
+- *
++ *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+  * are met:
+@@ -34,10 +34,10 @@
+  *     Eric Young (eay@cryptsoft.com)"
+  *    The word 'cryptographic' can be left out if the rouines from the library
+  *    being used are not cryptographic related :-).
+- * 4. If you include any Windows specific code (or a derivative thereof) from
++ * 4. If you include any Windows specific code (or a derivative thereof) from
+  *    the apps directory (application code) you must include an acknowledgement:
+  *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+- *
++ *
+  * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
+  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+@@ -49,7 +49,7 @@
+  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+  * SUCH DAMAGE.
+- *
++ *
+  * The licence and distribution terms for any publically available version or
+  * derivative of this code cannot be changed.  i.e. this code cannot simply be
+  * copied and put under another distribution licence
+@@ -93,7 +93,7 @@ extern "C" {
+ #  define NO_CHMOD
+ #  define NO_SYSLOG
+ #endif
+-
++
+ #if defined(OPENSSL_SYS_MACINTOSH_CLASSIC)
+ # if macintosh==1
+ #  ifndef MAC_OS_GUSI_SOURCE
+@@ -306,8 +306,16 @@ static unsigned int _strlen31(const char *str)
+ #      undef isupper
+ #      undef isxdigit
+ #    endif
+-#    if defined(_MSC_VER) && !defined(_DLL) && defined(stdin)
+-#      if _MSC_VER>=1300
++#    if defined(_MSC_VER) && !defined(_WIN32_WCE) && !defined(_DLL) && defined(stdin)
++#      if _MSC_VER>=1900
++#        undef stdin
++#        undef stdout
++#        undef stderr
++         _ACRTIMP_ALT FILE* __cdecl __acrt_iob_func(unsigned);
++#        define stdin  (__acrt_iob_func(0))
++#        define stdout (__acrt_iob_func(1))
++#        define stderr (__acrt_iob_func(2))
++#      elif _MSC_VER>=1300 && _MSC_VER<1900
+ #        undef stdin
+ #        undef stdout
+ #        undef stderr
+@@ -315,7 +323,7 @@ static unsigned int _strlen31(const char *str)
+ #        define stdin  (&__iob_func()[0])
+ #        define stdout (&__iob_func()[1])
+ #        define stderr (&__iob_func()[2])
+-#      elif defined(I_CAN_LIVE_WITH_LNK4049)
++#      elif _MSC_VER<1300 && defined(I_CAN_LIVE_WITH_LNK4049)
+ #        undef stdin
+ #        undef stdout
+ #        undef stderr
+@@ -329,7 +337,7 @@ static unsigned int _strlen31(const char *str)
+ #        define stdin  (&_imp___iob[0])
+ #        define stdout (&_imp___iob[1])
+ #        define stderr (&_imp___iob[2])
+-#      endif
++#      endif*/
+ #    endif
+ #  endif
+ #  include <io.h>
+@@ -373,13 +381,13 @@ static unsigned int _strlen31(const char *str)
+ #  define check_winnt() (1)
+ #else
+ #  define check_winnt() (GetVersion() < 0x80000000)
+-#endif
++#endif
+
+ #else /* The non-microsoft world */
+
+ #  ifdef OPENSSL_SYS_VMS
+ #    define VMS 1
+-  /* some programs don't include stdlib, so exit() and others give implicit
++  /* some programs don't include stdlib, so exit() and others give implicit
+      function warnings */
+ #    include <stdlib.h>
+ #    if defined(__DECC)
+@@ -562,7 +570,7 @@ static unsigned int _strlen31(const char *str)
+ #      include <sys/param.h>
+ #    endif
+ #    ifdef OPENSSL_SYS_VXWORKS
+-#      include <time.h>
++#      include <time.h>
+ #    elif !defined(OPENSSL_SYS_MPE)
+ #      include <sys/time.h> /* Needed under linux for FD_XXX */
+ #    endif
+diff --git a/deps/uv/src/win/fs.c b/deps/uv/src/win/fs.c
+index 7f3704e..74e78fa 100644
+--- a/deps/uv/src/win/fs.c
++++ b/deps/uv/src/win/fs.c
+@@ -732,9 +732,9 @@ void fs__readdir(uv_fs_t* req) {
+   if (len == 0) {
+     fmt = L"./*";
+   } else if (pathw[len - 1] == L'/' || pathw[len - 1] == L'\\') {
+-    fmt = L"%s*";
++    fmt = L"%S*";
+   } else {
+-    fmt = L"%s\\*";
++    fmt = L"%S\\*";
+   }
+
+   /* Figure out whether path is a file or a directory. */
+diff --git a/node.gyp b/node.gyp
+index 33c4f0e..77b55dc 100644
+--- a/node.gyp
++++ b/node.gyp
+@@ -325,6 +325,7 @@
+         }],
+       ],
+       'msvs_settings': {
++        "msbuild_toolset": "v140",
+         'VCLinkerTool': {
+           'SubSystem': 1, # /subsystem:console
+         },
+diff --git a/vcbuild.bat b/vcbuild.bat
+index 0c9b0b2..b9503a7 100644
+--- a/vcbuild.bat
++++ b/vcbuild.bat
+@@ -89,6 +89,7 @@ if defined NIGHTLY set TAG=nightly-%NIGHTLY%
+ @rem Generate the VS project.
+ SETLOCAL
+   if defined VS100COMNTOOLS call "%VS100COMNTOOLS%\VCVarsQueryRegistry.bat"
++  REM python configure --without-ssl %debug_arg% %nosnapshot_arg% %noetw_arg% %noperfctr_arg% --dest-cpu=%target_arch% --tag=%TAG%
+   python configure %debug_arg% %nosnapshot_arg% %noetw_arg% %noperfctr_arg% --dest-cpu=%target_arch% --tag=%TAG%
+   if errorlevel 1 goto create-msvs-files-failed
+   if not exist node.sln goto create-msvs-files-failed
+@@ -99,7 +100,16 @@ ENDLOCAL
+ @rem Skip project generation if requested.
+ if defined nobuild goto sign
+
++@rem Look for Visual Studio 2014
++if not defined VS140COMNTOOLS goto vc-set-2013
++if not exist "%VS140COMNTOOLS%\..\..\vc\vcvarsall.bat" goto vc-set-2013
++call "%VS140COMNTOOLS%\..\..\vc\vcvarsall.bat"
++if not defined VCINSTALLDIR goto msbuild-not-found
++set GYP_MSVS_VERSION=2013
++goto msbuild-found
++
+ @rem Look for Visual Studio 2013
++:vc-set-2013
+ if not defined VS120COMNTOOLS goto vc-set-2012
+ if not exist "%VS120COMNTOOLS%\..\..\vc\vcvarsall.bat" goto vc-set-2012
+ call "%VS120COMNTOOLS%\..\..\vc\vcvarsall.bat"
+@@ -129,7 +139,8 @@ goto run
+
+ :msbuild-found
+ @rem Build the sln with msbuild.
+-msbuild node.sln /m /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
++echo building ...
++msbuild node.sln /m /toolsversion:14.0 /p:PlatformToolset=v140 /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
+ if errorlevel 1 goto exit
+
+ :sign
+@@ -181,7 +192,7 @@ if "%test%"=="test-all" set test_args=%test_args%
+ :build-node-weak
+ @rem Build node-weak if required
+ if "%buildnodeweak%"=="" goto run-tests
+-"%config%\node" deps\npm\node_modules\node-gyp\bin\node-gyp rebuild --directory="%~dp0test\gc\node_modules\weak" --nodedir="%~dp0."
++"%config%\node" deps\npm\node_modules\node-gyp\bin\node-gyp rebuild msvs_version=2013 --directory="%~dp0test\gc\node_modules\weak" --nodedir="%~dp0."
+ if errorlevel 1 goto build-node-weak-failed
+ goto run-tests
+
+@@ -196,7 +207,7 @@ if "%test%"=="test" goto jslint
+ goto exit
+
+ :create-msvs-files-failed
+-echo Failed to create vc project files.
++echo Failed to create vc project files.
+ goto exit
+
+ :upload

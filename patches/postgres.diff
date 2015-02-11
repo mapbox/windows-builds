@@ -1,0 +1,59 @@
+diff --git a/src/interfaces/libpq/win32.mak b/src/interfaces/libpq/win32.mak
+index ee1884f..5bb1237 100644
+--- a/src/interfaces/libpq/win32.mak
++++ b/src/interfaces/libpq/win32.mak
+@@ -115,6 +115,7 @@ CLEAN :
+ 	-@erase "$(INTDIR)\open.obj"
+ 	-@erase "$(INTDIR)\win32error.obj"
+ 	-@erase "$(INTDIR)\win32setlocale.obj"
++    -@erase "$(INTDIR)\fe_memutils.obj" 
+ 	-@erase "$(OUTDIR)\$(OUTFILENAME).lib"
+ 	-@erase "$(OUTDIR)\$(OUTFILENAME)dll.lib"
+ 	-@erase "$(OUTDIR)\libpq.res"
+@@ -161,7 +162,8 @@ LIB32_OBJS= \
+ 	"$(INTDIR)\open.obj" \
+ 	"$(INTDIR)\win32error.obj" \
+ 	"$(INTDIR)\win32setlocale.obj" \
+-	"$(INTDIR)\pthread-win32.obj"
++	"$(INTDIR)\pthread-win32.obj" \
++	"$(INTDIR)\fe_memutils.obj" 
+ 
+ 
+ config: ..\..\include\pg_config.h ..\..\include\pg_config_ext.h pg_config_paths.h  ..\..\include\pg_config_os.h
+@@ -235,9 +237,11 @@ LINK32_OBJS= \
+ # Inclusion of manifest
+ !IF "$(_NMAKE_VER)" != "6.00.8168.0" && "$(_NMAKE_VER)" != "7.00.9466"
+ !IF "$(_NMAKE_VER)" != "6.00.9782.0" && "$(_NMAKE_VER)" != "7.10.3077"
++!IF EXIST ($(OUTDIR)\$(OUTFILENAME).dll.manifest)
+         mt -manifest $(OUTDIR)\$(OUTFILENAME).dll.manifest -outputresource:$(OUTDIR)\$(OUTFILENAME).dll;2
+ !ENDIF
+ !ENDIF
++!ENDIF
+ 
+ "$(INTDIR)\getaddrinfo.obj" : ..\..\port\getaddrinfo.c
+ 	$(CPP) @<<
+@@ -345,6 +349,11 @@ LINK32_OBJS= \
+ 	$(CPP_PROJ) /I"." ..\..\port\win32setlocale.c
+ <<
+ 
++"$(INTDIR)\fe_memutils.obj" : ..\..\common\fe_memutils.c 
++        $(CPP) @<< 
++        $(CPP_PROJ) /I"." ..\..\common\fe_memutils.c 
++<< 
++
+ .c{$(CPP_OBJS)}.obj:
+ 	$(CPP) $(CPP_PROJ) $<
+ 
+diff --git a/src/port/chklocale.c b/src/port/chklocale.c
+index 36296a1..adb605f 100644
+--- a/src/port/chklocale.c
++++ b/src/port/chklocale.c
+@@ -203,7 +203,7 @@ win32_langinfo(const char *ctype)
+ {
+ 	char	   *r = NULL;
+ 
+-#if (_MSC_VER >= 1700)
++#if (_MSC_VER >= 1700) && (_MSC_VER < 1900)
+ 	_locale_t	loct = NULL;
+ 
+ 	loct = _create_locale(LC_CTYPE, ctype);

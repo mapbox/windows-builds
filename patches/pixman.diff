@@ -1,0 +1,13 @@
+diff --git a/Makefile.win32.common b/Makefile.win32.common
+index 777f94c..bc6cf11 100644
+--- a/Makefile.win32.common
++++ b/Makefile.win32.common
+@@ -47,7 +47,7 @@ endif
+ 
+ 
+ $(CFG_VAR)/%.obj: %.c $(libpixman_headers)
+-	@mkdir -p $(CFG_VAR)
++	@$(MKDIRP) -p $(CFG_VAR)
+ 	@$(CC) -c $(PIXMAN_CFLAGS) -Fo"$@" $<
+ 
+ clean: inform

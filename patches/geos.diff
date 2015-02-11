@@ -1,0 +1,49 @@
+diff --git a/src/algorithm/LineIntersector.cpp b/src/algorithm/LineIntersector.cpp
+index 4a60f18..3181c52 100644
+--- a/src/algorithm/LineIntersector.cpp
++++ b/src/algorithm/LineIntersector.cpp
+@@ -33,7 +33,7 @@
+ #include <string>
+ #include <cmath> // for fabs()
+ #include <cassert> 
+-
++#include <algorithm>
+ 
+ #ifndef GEOS_DEBUG
+ #define GEOS_DEBUG 0
+diff --git a/src/geom/LineSegment.cpp b/src/geom/LineSegment.cpp
+index 80c231d..3b98468 100644
+--- a/src/geom/LineSegment.cpp
++++ b/src/geom/LineSegment.cpp
+@@ -35,6 +35,7 @@
+ 
+ #include <sstream>
+ #include <cmath>
++#include <algorithm>
+ 
+ #ifndef GEOS_INLINE
+ # include <geos/geom/LineSegment.inl>
+diff --git a/src/io/WKTWriter.cpp b/src/io/WKTWriter.cpp
+index be06759..a8c392b 100644
+--- a/src/io/WKTWriter.cpp
++++ b/src/io/WKTWriter.cpp
+@@ -41,6 +41,7 @@
+ #include <cassert>
+ #include <cmath>
+ #include <iomanip>
++#include <algorithm>
+ 
+ using namespace std;
+ using namespace geos::geom;
+diff --git a/src/operation/buffer/OffsetCurveSetBuilder.cpp b/src/operation/buffer/OffsetCurveSetBuilder.cpp
+index d49f81f..f6e1ede 100644
+--- a/src/operation/buffer/OffsetCurveSetBuilder.cpp
++++ b/src/operation/buffer/OffsetCurveSetBuilder.cpp
+@@ -43,6 +43,7 @@
+ #include <memory>
+ #include <vector>
+ #include <typeinfo>
++#include <algorithm>
+ 
+ #ifndef GEOS_DEBUG
+ #define GEOS_DEBUG 0

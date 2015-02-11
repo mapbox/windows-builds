@@ -1,0 +1,16 @@
+diff --git a/vsprojects/config.h b/vsprojects/config.h
+index 2c64450..bbd3bab 100644
+--- a/vsprojects/config.h
++++ b/vsprojects/config.h
+@@ -1,6 +1,11 @@
+ /* protobuf config.h for MSVC.  On other platforms, this is generated
+  * automatically by autoheader / autoconf / configure. */
+ 
++#if _MSC_VER >= 1900
++#define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
++#endif
++#define HASH_MAP_H <hash_map>
++
+ /* the location of <hash_map> */
+ #define HASH_MAP_H <hash_map>
+ 
