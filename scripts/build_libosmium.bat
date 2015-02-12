@@ -6,9 +6,32 @@ echo ------ libosmium -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO ERROR )
 
+SET FULLBUILD=0
+SET USEDEVCONFIG=0
+SET USEMSVS=0
+
+:NEXT-ARG
+IF "%1"=="" GOTO ARGS-DONE
+IF /i "%1"=="vs" SET USEMSVS=1 && GOTO ARG-OK
+IF /i "%1"=="full" SET FULLBUILD=1 && GOTO ARG-OK
+IF /i "%1"=="dev" SET USEDEVCONFIG=1 && GOTO ARG-OK
+
+ECHO. && ECHO ------------------------------
+ECHO Invalid argument "%1"
+ECHO ------------------------------ && ECHO.
+
+:ARG-OK
+SHIFT
+GOTO NEXT-ARG
+
+:ARGS-DONE
+
+ECHO FULLBUILD %FULLBUILD%
+ECHO USEDEVCONFIG %USEDEVCONFIG%
+ECHO USEMSVS %USEMSVS%
 
 SETLOCAL ENABLEDELAYEDEXPANSION
-IF "%1"=="full" (
+IF %FULLBUILD% EQU 1 (
 	echo ======== BUILDING AND PACKAGING ALL DEPS ================
 	cd %ROOTDIR%\scripts
 	IF !ERRORLEVEL! NEQ 0 GOTO ERROR
@@ -100,9 +123,9 @@ REM -DCMAKE_BUILD_TYPE=Dev ^
 REM -DCMAKE_BUILD_TYPE=Release ^
 
 SET PROJECT_TYPE="NMake Makefiles"
-IF "%1"=="vs" ( ECHO Visual Studio SLN && SET PROJECT_TYPE="Visual Studio 14 Win64" )
-SET CMAKEBUILDTYPE=Release
-IF "%2"=="dev" ( ECHO building Dev && SET CMAKEBUILDTYPE=Dev )
+IF %USEMSVS% EQU 1 ( ECHO Visual Studio SLN && SET PROJECT_TYPE="Visual Studio 14 Win64" )
+SET CMAKECONFIG=Release
+IF %USEDEVCONFIG% EQU 1 ( ECHO building Dev && SET CMAKECONFIG=Dev )
 
 REM -DCMAKE_BUILD_TYPE=%CMAKEBUILDTYPE% ^
 
@@ -133,12 +156,12 @@ cmake .. ^
 -DGETOPT_INCLUDE_DIR=%LODEPSDIR%\wingetopt\include
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-IF "%1"=="vs" GOTO USEMSBUILD
+IF %USEMSVS% EQU 1 GOTO USEMSBUILD
 
 nmake
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL ctest -C Release -VV -E testdata-multipolygon
+CALL ctest -C %CMAKECONFIG% -VV
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
@@ -157,12 +180,12 @@ msbuild libosmium.sln ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
-/p:Configuration=Release ^
+/p:Configuration=%CMAKECONFIG% ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 
-REM CALL ctest -C Release
-CALL ctest --output-on-failure -C Release -VV
+REM CALL ctest -C %CMAKECONFIG%
+CALL ctest --output-on-failure -C %CMAKECONFIG% -VV
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE

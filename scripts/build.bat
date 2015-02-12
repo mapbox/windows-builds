@@ -107,7 +107,7 @@ CALL scripts\build_node_mapnik.bat %NODE_VERSION%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :LIBOSMIUM
-CALL scripts\build_libosmium.bat
+CALL scripts\build_libosmium.bat full vs
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
