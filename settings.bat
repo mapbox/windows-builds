@@ -55,15 +55,6 @@ GOTO NEXT-ARG
 :ARGS-DONE
 
 
-
-
-
-goto DONE
-
-
-
-
-
 ::::::::::::::: DO STUFF
 
 IF NOT EXIST C:\Python27 ( ECHO C:\Python27 not found && GOTO ERROR )
