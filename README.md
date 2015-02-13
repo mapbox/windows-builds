@@ -1,7 +1,7 @@
 mapnik-dependencies
 ===================
 
-Build scripts for Mapnik dependencies
+Windows build scripts for mapnik dependencies and mapnik itself.
 
 ## Requirements
 
@@ -14,16 +14,19 @@ Build scripts for Mapnik dependencies
 
 Install
 
-- Python 2.7 32 bit
-- Git
-- Visual Studio 2015 CTP5
+ - Python 2.7 32 bit
+ - Git
+ - Visual Studio 2015 CTP5
+
 
     git clone https://github.com/BergWerkGIS/mapnik-dependencies.git
     cd mapnik-dependencies
     settings.bat (default settings: e.g. 64bit)
 
 Options for settings.bat (see source for overridable parameters):
-`settings.bat ["OVERRIDABLE-PARAM=VALUE"] ["OVERRIDABLE-PARAM-TWO=VALUE"]`
+
+    settings.bat ["OVERRIDABLE-PARAM=VALUE"] ["OVERRIDABLE-PARAM-TWO=VALUE"]
+
 __Overridable parameters have to be quoted!__
 
 ## Building
