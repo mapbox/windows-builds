@@ -36,11 +36,6 @@ To download and build all dependencies, mapnik and node-mapnik run:
 
     scripts\build.bat
 
-
-Or to run individual builds e.g. do:
-
-    scripts\build_icu.bat
-
 ## Tip
 
 If you want to compile 32bit and 64bit use `clean.bat` before compling the second architecture, this will clean all package directories.
