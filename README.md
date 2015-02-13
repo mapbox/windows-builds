@@ -5,32 +5,37 @@ Build scripts for Mapnik dependencies
 
 ## Requirements
 
- - __64bit__ operating system (W7,8,8.1)
- - [Visual Studio 2014 CTP 4 or Visual Studio 2015 Preview](http://support.microsoft.com/kb/2967191)
+ - __64bit__ operating system (W7, 8, 8.1, Server 2012)
+ - [Visual Studio 2015 CTP5](http://support.microsoft.com/kb/2967191)
  - [Python 2.7 32 bit](https://www.python.org/downloads/windows/) installed into `C:\Python27`
  - [git](https://msysgit.github.io/) installed into `C:\Program Files (x86)\Git`
 
 ## Setup
 
-Install Python, Git and Visual Studio then
+Install
+
+- Python 2.7 32 bit
+- Git
+- Visual Studio 2015 CTP5
 
     git clone https://github.com/BergWerkGIS/mapnik-dependencies.git
     cd mapnik-dependencies
-    settings.bat 64 14
+    settings.bat (default settings: e.g. 64bit)
 
-Options for settings.bat:
-`settings.bat 32|64 14 Release|Debug`
+Options for settings.bat (see source for overridable parameters):
+`settings.bat ["OVERRIDABLE-PARAM=VALUE"] ["OVERRIDABLE-PARAM-TWO=VALUE"]`
+__Overridable parameters have to be quoted!__
 
 ## Building
 
 To download and build all dependencies, mapnik and node-mapnik run:
 
-    scripts/build.bat
+    scripts\build.bat
 
 
 Or to run individual builds e.g. do:
 
-    scripts/build_icu.bat
+    scripts\build_icu.bat
 
 ## Tip
 
@@ -42,26 +47,25 @@ A better way would be to create a dedicated directory for each architecture, e.g
 
     git clone https://github.com/BergWerkGIS/mapnik-dependencies.git mapnik-dependencies-64
     cd mapnik-dependencies-64
-    settings.bat 64 14
-    scripts/build.bat
+    settings.bat
+    scripts\build.bat
 
 ### 32bit
 
     git clone https://github.com/BergWerkGIS/mapnik-dependencies.git mapnik-dependencies-32
     cd mapnik-dependencies-32
-    settings.bat 32 14
-    scripts/build.bat
+    settings.bat
+    scripts\build.bat "TARGET_ARCH=32"
 
 ### Bonus Tip
 
-To create a mapnik SDK package, including all necessary header files, libs and dlls:
+To create a mapnik SDK package, including all necessary header files, libs and dlls adjust the `settings.bat` call:
 
-    cd packages\mapnik-master\mapnik-gyp
-    package.bat
+    settings.bat "PACKAGEMAPNIK=1"
 
-This will create a file in the form of
+The package will be created in the directory `packages\mapnik-<MAPNIKBRANCH>\mapnik-gyp` with this name:
 
-    mapnik-win-sdk-<MSBUILD VERSION>-<ARCHITECTURE>-<CURRENT MAPNIK GIT TAG>.7z`
+    mapnik-win-sdk-<MSBUILD VERSION>-<ARCHITECTURE>-<MAPNIK GIT TAG>.7z
 
  e.g.
 
