@@ -18,10 +18,11 @@ Install
  - Git
  - Visual Studio 2015 CTP5
 
-
-    git clone https://github.com/BergWerkGIS/mapnik-dependencies.git
-    cd mapnik-dependencies
-    settings.bat (default settings: e.g. 64bit)
+```
+git clone https://github.com/BergWerkGIS/mapnik-dependencies.git
+cd mapnik-dependencies
+settings.bat (default settings: e.g. 64bit)
+```
 
 Options for settings.bat (see source for overridable parameters):
 
