@@ -72,8 +72,8 @@ echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 if NOT EXIST libosmium (
-	git clone https://github.com/BergWerkGIS/libosmium.git
-	REM git clone https://github.com/osmcode/libosmium.git
+	REM git clone https://github.com/BergWerkGIS/libosmium.git
+	git clone https://github.com/osmcode/libosmium.git
 )
 cd libosmium
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR

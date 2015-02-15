@@ -7,16 +7,34 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %ROOTDIR%\scripts
 
-CALL build_boost.bat
+CALL build_zlib.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_osmpbf.bat
+CALL build_libpng.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL build_jpeg.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL build_tiff.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL build_icu.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL build_python.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL build_boost.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_protobuf-%PROTOBUF_VERSION%.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_zlib.bat
+CALL build_sparsehash.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL build_osmpbf.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_expat.bat
@@ -35,9 +53,6 @@ CALL build_gdal.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL package_gdal.bat libosmium
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-CALL build_sparsehash.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_wingetopt.bat
