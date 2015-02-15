@@ -6,7 +6,6 @@ echo ------ NODEJS -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-SET PUB=0
 IF "%1"=="" ( ECHO using default %NODE_VERSION% ) ELSE ( SET NODE_VERSION=%1)
 
 ECHO using %NODE_VER%
@@ -22,6 +21,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git fetch -v
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+SET BRANCH=v%NODE_VERSION%-nodecpp11
 CALL windows\build_node.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
