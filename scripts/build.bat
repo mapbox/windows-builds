@@ -118,8 +118,9 @@ CALL scripts\build_node_mapnik.bat %NODE_VERSION% %PUBNODE%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :LIBOSMIUM
-CALL scripts\build_libosmium.bat full vs
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+echo build_libosmium not activated
+::CALL scripts\build_libosmium.bat full vs
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
 
