@@ -108,7 +108,7 @@ IF %PACKAGEMAPNIK% EQU 1 (
 ENDLOCAL
 
 :NODE
-CALL scripts\build_node.bat
+CALL scripts\build_node.bat %NODE_VERSION%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :NODEMAPNIK
