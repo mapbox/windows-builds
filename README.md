@@ -1,7 +1,7 @@
-mapnik-dependencies
+windows-builds
 ===================
 
-Windows build scripts for mapnik dependencies and mapnik itself.
+Windows build scripts for mapnik dependencies, mapnik, node-mapnik and other software.
 
 ## Requirements
 
@@ -21,8 +21,8 @@ Install:
 Then:
 
 ```
-git clone https://github.com/BergWerkGIS/mapnik-dependencies.git
-cd mapnik-dependencies
+git clone https://github.com/mapbox/windows-builds.git
+cd windows-builds
 settings.bat (default settings: e.g. 64bit)
 ```
 
@@ -48,15 +48,15 @@ A better way would be to create a dedicated directory for each architecture, e.g
 
 ### 64bit
 
-    git clone https://github.com/BergWerkGIS/mapnik-dependencies.git mapnik-dependencies-64
-    cd mapnik-dependencies-64
+    git clone https://github.com/mapbox/windows-builds.git windows-builds-64
+    cd windows-builds-64
     settings.bat
     scripts\build.bat
 
 ### 32bit
 
-    git clone https://github.com/BergWerkGIS/mapnik-dependencies.git mapnik-dependencies-32
-    cd mapnik-dependencies-32
+    git clone https://github.com/mapbox/windows-builds.git windows-builds-32
+    cd windows-builds-32
     settings.bat
     scripts\build.bat "TARGET_ARCH=32"
 
