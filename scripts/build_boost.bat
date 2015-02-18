@@ -81,7 +81,7 @@ if NOT EXIST b2.exe (
 ::CALL b2 toolset=msvc-12.0 --clean
 
 IF %BUILD_TYPE% EQU Release (
-  SET BOOST_BUILD_TYPE=release
+  SET BOOST_BUILD_TYPE=release debug-symbols=on debug-store=database
 ) ELSE (
   REM debug-store=database (to create pdb files) does not work for static libs
   REM debug-store=object directly embeds the symbol information into the .lib file
