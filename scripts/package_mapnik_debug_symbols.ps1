@@ -53,7 +53,7 @@ $file_list = @{
         ("$pkg_dir" + "protobuf\vsprojects\$env:BUILDPLATFORM\$env:BUILD_TYPE\libprotobuf.pdb"),
         ("$pkg_dir" + "protobuf\vsprojects\$env:BUILDPLATFORM\$env:BUILD_TYPE\libprotobuf-lite.pdb"),
         ("$pkg_dir" + "libtiff\libtiff\libtiff.pdb"),
-        ("$pkg_dir" + "webp\output\$env:BUILD_TYPE-dynamic\$env:BUILDPLATFORM\bin\libwebp.pdb"),
+        ("$pkg_dir" + "webp\output\$env:BUILD_TYPE-dynamic\$env:BUILDPLATFORM\lib\libwebp_dll.pdb"),
         ("$pkg_dir" + "libxml2\win32\bin.msvc\libxml2.pdb"),
         ("$pkg_dir" + "proj\src\proj.pdb"),
         ("$pkg_dir" + "sqlite\sqlite3.pdb"),

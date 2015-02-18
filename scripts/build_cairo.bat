@@ -48,6 +48,8 @@ if NOT EXIST cairo (
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   patch -N -p1 < %PATCHES%/cairo_.diff || %SKIP_FAILED_PATCH%
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  patch -N -p1 < %PATCHES%/cairo_debug_symbols.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
 ENDLOCAL
 

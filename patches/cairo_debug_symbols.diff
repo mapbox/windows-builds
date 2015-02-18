@@ -1,0 +1,15 @@
+diff --git a/build/Makefile.win32.common b/build/Makefile.win32.common
+index dea2361..2279b50 100644
+--- a/build/Makefile.win32.common
++++ b/build/Makefile.win32.common
+@@ -19,8 +19,8 @@ ifeq ($(CFG),debug)
+ CFG_CFLAGS := -MDd -Od -Zi
+ CFG_LDFLAGS := -DEBUG
+ else
+-CFG_CFLAGS := -MD -O2
+-CFG_LDFLAGS :=
++CFG_CFLAGS := -MD -O2 -Zi
++CFG_LDFLAGS := -DEBUG
+ endif
+ 
+ PIXMAN_CFLAGS := -I$(top_srcdir)/../pixman/pixman -I$(top_srcdir)/../freetype/include

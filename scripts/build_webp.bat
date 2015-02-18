@@ -14,13 +14,19 @@ IF EXIST webp (
   echo found extracted sources
 )
 
+SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST webp (
   echo extracting
   CALL bsdtar xfz libwebp-%WEBP_VERSION%.tar.gz
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename libwebp-%WEBP_VERSION% webp
-  IF ERRORLEVEL 1 GOTO ERROR
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd webp
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  patch -N -p1 < %PATCHES%/webp_debug_symbols.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
+ENDLOCAL
 
 cd webp
 IF ERRORLEVEL 1 GOTO ERROR

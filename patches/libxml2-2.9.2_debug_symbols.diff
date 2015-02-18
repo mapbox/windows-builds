@@ -1,0 +1,15 @@
+--- Makefile.msvc
++++ Makefile.msvc
+@@ -101,10 +101,10 @@ ARFLAGS = /nologo
+ CFLAGS = $(CFLAGS) /D "_DEBUG" /Od /Z7
+ LDFLAGS = $(LDFLAGS) /DEBUG
+ !else
+-CFLAGS = $(CFLAGS) /D "NDEBUG" /O2 
++CFLAGS = $(CFLAGS) /D "NDEBUG" /O2 /Zi
+ # commented out as this break VC10 c.f. 634846
+ # LDFLAGS = $(LDFLAGS) /OPT:NOWIN98
+-LDFLAGS = $(LDFLAGS)
++LDFLAGS = $(LDFLAGS) /DEBUG
+ !endif
+ 
+ # Libxml object files.
