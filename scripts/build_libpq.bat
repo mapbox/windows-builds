@@ -26,6 +26,10 @@ if NOT EXIST postgresql (
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   patch -N -p1 < %PATCHES%/postgres.diff || %SKIP_FAILED_PATCH%
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  cd %PKGDIR%\postgresql\src
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  patch -N -p1 < %PATCHES%/postgres_debug_symbols.diff || %SKIP_FAILED_PATCH%
+  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
 )
 ENDLOCAL
 
@@ -90,6 +94,7 @@ SET EL=%ERRORLEVEL%
 ECHO ===== ERROR building libpq
 
 :DONE
+ECHO ===== DONE building libpq
 
 cd %ROOTDIR%
 EXIT /b %EL%

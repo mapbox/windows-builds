@@ -1,0 +1,13 @@
+--- a/interfaces/libpq/win32.mak
++++ b/interfaces/libpq/win32.mak
+@@ -32,8 +32,8 @@ LOPT=/DEBUG
+ DEBUGDEF=/D _DEBUG
+ OUTFILENAME=libpqd
+ !ELSE
+-OPT=/O2 /MD
+-LOPT=
++OPT=/O2 /MD /Zi
++LOPT=/DEBUG
+ DEBUGDEF=/D NDEBUG
+ OUTFILENAME=libpq
+ !ENDIF
