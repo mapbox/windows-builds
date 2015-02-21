@@ -57,8 +57,8 @@ A better way would be to create a dedicated directory for each architecture, e.g
 
     git clone https://github.com/mapbox/windows-builds.git windows-builds-32
     cd windows-builds-32
-    settings.bat
-    scripts\build.bat "TARGET_ARCH=32"
+    settings.bat "TARGET_ARCH=32"
+    scripts\build.bat
 
 ### Bonus Tip
 
