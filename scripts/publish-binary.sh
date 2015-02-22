@@ -7,7 +7,7 @@ date_time=`date +%Y%m%d%H%M`
 maxtimeout=600
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
-    Invoke-WebRequest http://www.BergWerk-GIS.at/dl/mapbox/build.txt -OutFile Z:\\build.bat
+    Invoke-WebRequest https://gist.githubusercontent.com/BergWerkGIS/504a3a4964a48ba3ac03/raw/4da30ca32dbc3750656a9287a5dd9082dce86db8/build.bat -OutFile Z:\\build.bat
     & Z:\\build.bat
     </powershell>
     <persist>true</persist>"
