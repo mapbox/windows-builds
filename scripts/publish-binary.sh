@@ -2,6 +2,8 @@
 cwd=$(pwd)
 set -e
 
+sudo pip install awscli
+
 gitsha="$1"
 date_time=`date +%Y%m%d%H%M`
 maxtimeout=600
