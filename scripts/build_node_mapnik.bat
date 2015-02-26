@@ -50,7 +50,7 @@ call npm install -g node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if NOT EXIST node_modules (
-    call npm install mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp
+    call npm install mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp jshint
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
