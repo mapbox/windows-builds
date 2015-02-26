@@ -43,7 +43,7 @@ set MAPNIK_SDK=%CD%\..\mapnik-%MAPNIKBRANCH%\mapnik-gyp\mapnik-sdk
 set PROJ_LIB=%MAPNIK_SDK%\share\proj
 set GDAL_DATA=%MAPNIK_SDK%\share\gdal
 set PATH=%MAPNIK_SDK%\bin;%PATH%
-set PATH=%MAPNIK_SDK%\libs;%PATH%
+set PATH=%MAPNIK_SDK%\lib;%PATH%
 
 :: NOTE - requires you install 32 bit node.exe from nodejs.org
 call npm install -g node-gyp
@@ -122,25 +122,25 @@ set HERENOW=%CD%
 cd %BINDINGIDR%
 SET BINDINGIDR=%CD%
 cd %HERENOW%
-xcopy /Q /S /Y %MAPNIK_SDK%\libs\mapnik\input %BINDINGIDR%\mapnik\input\
+xcopy /Q /S /Y %MAPNIK_SDK%\lib\mapnik\input %BINDINGIDR%\mapnik\input\
 IF ERRORLEVEL 1 GOTO ERROR
 xcopy /Q /S /Y %MAPNIK_SDK%\share %BINDINGIDR%\share\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\libs\cairo.dll %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\lib\cairo.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\libs\gdal111.dll %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\lib\gdal111.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\libs\icu*.dll %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\lib\icu*.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\libs\libexpat.dll %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\lib\libexpat.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\libs\libpng16.dll %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\lib\libpng16.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\libs\libtiff.dll %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\lib\libtiff.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\libs\libwebp.dll %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\lib\libwebp.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\libs\mapnik.dll %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\lib\mapnik.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
 xcopy /Q /Y %MAPNIK_SDK%\bin\nik2img.exe %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
