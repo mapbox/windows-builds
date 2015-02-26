@@ -6,7 +6,7 @@ echo ------ NODE_MAPNIK -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-SET NODE_VER=0.11.14
+SET NODE_VER=0.10.36
 SET PUB=0
 
 IF "%1"=="" (
