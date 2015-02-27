@@ -81,6 +81,29 @@ if EXIST %USERPROFILE%\.node-gyp (
 )
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+
+IF DEFINED PREFER_LOCAL_NODE_EXE (ECHO PREFER_LOCAL_NODE_EXE %PREFER_LOCAL_NODE_EXE%) ELSE (SET PREFER_LOCAL_NODE_EXE=0)
+IF %PREFER_LOCAL_NODE_EXE% EQU 0 GOTO USE_REMOTE_NODE
+
+::prefer local node.exe
+SET LOCAL_NODE_EXE=%PKGDIR%\node-v%NODE_VERSION%-%BUILDPLATFORM%\%BUILD_TYPE%\node.exe
+SET LOCAL_NODE_PDB=%PKGDIR%\node-v%NODE_VERSION%-%BUILDPLATFORM%\%BUILD_TYPE%\node.pdb
+IF %PREFER_LOCAL_NODE_EXE% EQU 1 IF NOT EXIST %LOCAL_NODE_EXE% GOTO USE_REMOTE_NODE
+
+ECHO ============= using LOCAL node.exe ==========
+IF EXIST node.exe del /F node.exe
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+COPY %LOCAL_NODE_EXE%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST node.pdb DEL /F node.pdb
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST %LOCAL_NODE_PDB% COPY %LOCAL_NODE_PDB%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+GOTO USED_LOCAL_NODE
+
+:USE_REMOTE_NODE
+ECHO ============= using REMOTE node.exe ==========
 ::download custom Mapbox node.exe
 ::ALWAYS download in case there is another version of node.exe
 ::here from another build
@@ -90,6 +113,8 @@ SET MBNODEURL=https://mapbox.s3.amazonaws.com/node-cpp11/v%NODE_VER%/%ARCHPATH%n
 ECHO downloading custom node.exe %MBNODEURL%
 curl %MBNODEURL% > node.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:USED_LOCAL_NODE
 
 ::add local node-pre-gyp dir to path
 SET PATH=%CD%\node_modules\.bin;%PATH%
