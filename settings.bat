@@ -242,4 +242,39 @@ echo Override like this (parameters MUST be quoted!)^: && ECHO.
 echo settings "MAPNIKBRANCH=mybranch" "GDAL_VERSION=2.0.1" "SKIP_FAILED_PATCH=true"
 echo.
 
+ECHO.
+ECHO ------------ checking for Powershell ------------
+ECHO Powershell version^:
+powershell $PSVersionTable.PSVersion
+IF %ERRORLEVEL% NEQ 0 GOTO PSNOTAVAILABLE
 
+FOR /F "tokens=*" %%i in ('powershell Get-ExecutionPolicy') do SET PSPOLICY=%%i
+ECHO Powershell execution policy^: %PSPOLICY%
+IF NOT "%PSPOLICY%"=="Unrestricted" powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force
+IF %ERRORLEVEL% NEQ 0 GOTO PSPOLICYERROR
+FOR /F "tokens=*" %%i in ('powershell Get-ExecutionPolicy') do SET PSPOLICY=%%i
+ECHO Powershell execution policy now is^: %PSPOLICY%
+
+
+GOTO DONE
+
+:PSNOTAVAILABLE
+ECHO.
+ECHO !!!!
+ECHO Powershell is not available!!!
+ECHO check PATH and if it is installed
+ECHO !!!!
+ECHO.
+GOTO DONE
+
+:PSPOLICYERROR
+ECHO.
+ECHO !!!!
+ECHO Could not set Powershell execution policy to 'Unrestricted'
+ECHO !!!!
+ECHO.
+GOTO DONE
+
+
+
+:DONE
