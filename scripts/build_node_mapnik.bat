@@ -147,6 +147,11 @@ IF ERRORLEVEL 1 GOTO ERROR
 xcopy /Q /Y %MAPNIK_SDK%\bin\shapeindex.exe %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
 
+ECHO PACKAGEDEBUGSYMBOLS %PACKAGEDEBUGSYMBOLS%
+IF %PACKAGEDEBUGSYMBOLS% EQU 1 powershell %ROOTDIR%\scripts\package_node-mapnik_debug_symbols.ps1
+ECHO ERRORLEVEL %ERRORLEVEL%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 echo creating settings
 ECHO var path = require('path'); > %BINDINGIDR%\mapnik_settings.js
 ECHO module.exports.paths = { >> %BINDINGIDR%\mapnik_settings.js
