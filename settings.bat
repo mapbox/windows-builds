@@ -13,6 +13,7 @@ SET NODEMAPNIKBRANCH=master
 SET BUILD_TYPE=Release
 SET SKIP_FAILED_PATCH=false
 SET PACKAGEMAPNIK=1
+SET PUBLISHMAPNIKSDK=0
 SET PUBLISHNODEMAPNIK=0
 SET PACKAGEDEBUGSYMBOLS=0
 SET VERBOSE=0
@@ -200,6 +201,35 @@ IF NOT EXIST tmp-bin\ddt.exe (
   cd ..
 )
 
+
+IF PUBLISHMAPNIKSDK NEQ 0 GOTO CHECKAWS
+IF PUBLISHNODEMAPNIK NEQ 0 GOTO CHECKAWS
+GOTO CHECKPOWERSHELL
+
+:CHECKAWS
+ECHO.
+ECHO checking for AWS-CLI
+aws --version
+::9009 -> "<CMD> is not recognized as an internal or external command, operable program or batch file."
+IF %ERRORLEVEL% EQU 9009 GOTO AWSNOTAVAILABLE
+IF %ERRORLEVEL% EQU 0 GOTO AWSUNKNOWNERROR
+
+:CHECKPOWERSHELL
+
+ECHO.
+ECHO ------------ checking for Powershell ------------
+ECHO Powershell version^:
+powershell $PSVersionTable.PSVersion
+IF %ERRORLEVEL% NEQ 0 GOTO PSNOTAVAILABLE
+
+FOR /F "tokens=*" %%i in ('powershell Get-ExecutionPolicy') do SET PSPOLICY=%%i
+ECHO Powershell execution policy^: %PSPOLICY%
+IF NOT "%PSPOLICY%"=="Unrestricted" powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force
+IF %ERRORLEVEL% NEQ 0 GOTO PSPOLICYERROR
+FOR /F "tokens=*" %%i in ('powershell Get-ExecutionPolicy') do SET PSPOLICY=%%i
+ECHO Powershell execution policy now is^: %PSPOLICY%
+
+
 GOTO DONE
 
 :USAGE
@@ -242,21 +272,27 @@ echo Override like this (parameters MUST be quoted!)^: && ECHO.
 echo settings "MAPNIKBRANCH=mybranch" "GDAL_VERSION=2.0.1" "SKIP_FAILED_PATCH=true"
 echo.
 
-ECHO.
-ECHO ------------ checking for Powershell ------------
-ECHO Powershell version^:
-powershell $PSVersionTable.PSVersion
-IF %ERRORLEVEL% NEQ 0 GOTO PSNOTAVAILABLE
-
-FOR /F "tokens=*" %%i in ('powershell Get-ExecutionPolicy') do SET PSPOLICY=%%i
-ECHO Powershell execution policy^: %PSPOLICY%
-IF NOT "%PSPOLICY%"=="Unrestricted" powershell Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force
-IF %ERRORLEVEL% NEQ 0 GOTO PSPOLICYERROR
-FOR /F "tokens=*" %%i in ('powershell Get-ExecutionPolicy') do SET PSPOLICY=%%i
-ECHO Powershell execution policy now is^: %PSPOLICY%
 
 
 GOTO DONE
+
+:AWSUNKNOWNERROR
+ECHO.
+ECHO !!!
+ECHO unexpected error calling AWS CLI!!
+ECHO !!!
+ECHO.
+GOTO DONE
+
+:AWSNOTAVAILABLE
+ECHO.
+ECHO !!!
+ECHO AWS CLI not found!!
+ECHO check installation and availabilty on PATH
+ECHO !!!
+ECHO.
+GOTO DONE
+
 
 :PSNOTAVAILABLE
 ECHO.
