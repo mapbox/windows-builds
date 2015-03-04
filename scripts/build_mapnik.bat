@@ -32,20 +32,36 @@ cd mapnik-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 git fetch
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git checkout %MAPNIKGYPBRANCH%
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ddt /Q mapnik-sdk
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 ECHO building mapnik
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%ROOTDIR%\tmp-bin\python2-x86-32\Scripts;%PATH%
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%ROOTDIR%\tmp-bin\python2\Scripts;%PATH%
 call build.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+IF %PUBLISHMAPNIKSDK% EQU 0 GOTO DONE
+
+:: PUBLISH MAPNIK SDK
+cd ..
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+FOR /F "tokens=*" %%i in ('git describe') do SET GITVERSION=%%i
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+SET SDK_PKG_NAME=mapnik-win-sdk-%TOOLS_VERSION%-%PLATFORMX%-%GITVERSION%.7z
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+cd mapnik-gyp
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF NOT EXIST %SDK_PKG_NAME% (ECHO SDK package not found %SDK_PKG_NAME% && GOTO ERROR)
+::CALL aws s3 cp --acl public-read %SDK_PKG_NAME% mapnik.s3.amazonaws.com/dist/dev/
+CALL aws s3 cp --acl public-read %SDK_PKG_NAME% s3://mapnik/dist/dev/
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
