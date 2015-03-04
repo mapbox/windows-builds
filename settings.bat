@@ -211,10 +211,12 @@ GOTO CHECKPOWERSHELL
 :CHECKAWS
 ECHO.
 ECHO checking for AWS-CLI
-aws --version
+CALL aws --version
 ::9009 -> "<CMD> is not recognized as an internal or external command, operable program or batch file."
 IF %ERRORLEVEL% EQU 9009 GOTO AWSNOTAVAILABLE
-IF %ERRORLEVEL% EQU 0 GOTO AWSUNKNOWNERROR
+IF %ERRORLEVEL% NEQ 0 GOTO AWSUNKNOWNERROR
+ECHO AWS-CLI OK
+ECHO.
 
 :CHECKPOWERSHELL
 
