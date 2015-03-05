@@ -48,21 +48,33 @@ if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOT
 call build.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+:: jump to end, ignore PUBLISHMAPNIKSDK when %PACKAGEMAPNIK% EQU 0
+IF %PACKAGEMAPNIK% EQU 0 GOTO DONE
+
+:: PACKAGE MAPNIK
+cd %PKGDIR%\mapnik-%MAPNIKBRANCH%\mapnik-gyp
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+CALL package.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+
 IF %PUBLISHMAPNIKSDK% EQU 0 GOTO DONE
 
 :: PUBLISH MAPNIK SDK
-cd ..
+cd %PKGDIR%\mapnik-%MAPNIKBRANCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 FOR /F "tokens=*" %%i in ('git describe') do SET GITVERSION=%%i
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 SET SDK_PKG_NAME=mapnik-win-sdk-%TOOLS_VERSION%-%PLATFORMX%-%GITVERSION%.7z
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-cd mapnik-gyp
+cd %PKGDIR%\mapnik-%MAPNIKBRANCH%\mapnik-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF NOT EXIST %SDK_PKG_NAME% (ECHO SDK package not found %SDK_PKG_NAME% && GOTO ERROR)
 ::CALL aws s3 cp --acl public-read %SDK_PKG_NAME% mapnik.s3.amazonaws.com/dist/dev/
-CALL aws s3 cp --acl public-read %SDK_PKG_NAME% s3://mapnik/dist/dev/
+CALL "C:\Program Files\Amazon\AWSCLI\aws.exe" s3 cp --acl public-read %SDK_PKG_NAME% s3://mapnik/dist/dev/
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ECHO upload of %SDK_PKG_NAME% completed
 
 GOTO DONE
 
