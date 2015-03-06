@@ -28,14 +28,14 @@ user_data="<powershell>
     [Environment]::SetEnvironmentVariable(\"PUBLISHMAPNIKSDK\", \"${PUBLISH_SDK}\", \"User\")
     [Environment]::SetEnvironmentVariable(\"AWS_ACCESS_KEY_ID\", \"${PUBLISH_KEY}\", \"User\")
     [Environment]::SetEnvironmentVariable(\"AWS_SECRET_ACCESS_KEY\", \"${PUBLISH_ACCESS}\", \"User\")
-    Invoke-WebRequest https://gist.githubusercontent.com/BergWerkGIS/504a3a4964a48ba3ac03/raw/4da30ca32dbc3750656a9287a5dd9082dce86db8/build.bat -OutFile Z:\\build.bat
-    & Z:\\build.bat
+    Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/build.ps1 -OutFile Z:\\build.ps1
+    & Z:\\build.ps1
     </powershell>
     <persist>true</persist>"
 
 id=$(aws ec2 run-instances \
     --region eu-central-1 \
-    --image-id ami-ec390bf1 \
+    --image-id ami-3690a22b \
     --count 1 \
     --instance-type c3.4xlarge \
     --user-data "$user_data" | jq -r '.Instances[0].InstanceId')
