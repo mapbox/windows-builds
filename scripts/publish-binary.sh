@@ -20,6 +20,7 @@ sudo pip install awscli
 
 gitsha="$1"
 date_time=`date +%Y%m%d%H%M`
+start_timestamp=`date +"%s"`
 maxtimeout=600
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
