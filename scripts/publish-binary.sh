@@ -36,11 +36,15 @@ id=$(aws ec2 run-instances \
     --image-id ami-ec390bf1 \
     --count 1 \
     --instance-type c3.4xlarge \
-    --user-data "$user_data")
+    --user-data "$user_data" | jq -r '.Instances[0].InstanceId')
 
 echo "Created instance: $id"
 
-aws ec2 create-tags --region eu-central-1 --resources $id --tags "Key=Name,Value=Temporary mapnik binary build instance"
+dns=$(aws ec2 describe-instances --instance-ids i-45cd6b84 --region eu-central-1 --query "Reservations[0].Instances[0].PublicDnsName")
+dns="${dns//\"/}"
+echo "temporary windows build server: $dns/wbs"
+
+aws ec2 create-tags --region eu-central-1 --resources $id --tags "Key=Name,Value=Temp-mapnik-windows-build-server-${TRAVIS_REPO_SLUG}-${TRAVIS_JOB_NUMBER}"
 aws ec2 create-tags --region eu-central-1 --resources $id --tags "Key=GitSha,Value=$gitsha"
 
 instance_status_stopped=$(aws ec2 describe-instances --region eu-central-1 --instance-id $id | jq -r '.Reservations[0].Instances[0].State.Name')
