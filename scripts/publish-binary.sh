@@ -2,6 +2,20 @@
 cwd=$(pwd)
 set -e
 
+
+PUBLISH_SDK=0
+COMMIT_MESSAGE=$(git show -s --format=%B $TRAVIS_COMMIT | tr -d '\n')
+echo $COMMIT_MESSAGE
+if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"
+then
+    echo "PUBLISHING mapnik SDK"
+    PUBLISH_SDK=1
+else
+    echo "NOT publishing"
+fi
+
+
+
 sudo pip install awscli
 
 gitsha="$1"
@@ -11,6 +25,7 @@ user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
     Invoke-WebRequest https://gist.githubusercontent.com/BergWerkGIS/504a3a4964a48ba3ac03/raw/4da30ca32dbc3750656a9287a5dd9082dce86db8/build.bat -OutFile Z:\\build.bat
     & Z:\\build.bat
+    [Environment]::SetEnvironmentVariable(\"PUBLISHMAPNIKSDK\", \"" + $PUBLISH_SDK + "\", \"User\")
     </powershell>
     <persist>true</persist>"
 
