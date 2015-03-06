@@ -25,7 +25,9 @@ user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
     Invoke-WebRequest https://gist.githubusercontent.com/BergWerkGIS/504a3a4964a48ba3ac03/raw/4da30ca32dbc3750656a9287a5dd9082dce86db8/build.bat -OutFile Z:\\build.bat
     & Z:\\build.bat
-    [Environment]::SetEnvironmentVariable(\"PUBLISHMAPNIKSDK\", \"" + $PUBLISH_SDK + "\", \"User\")
+    [Environment]::SetEnvironmentVariable(\"PUBLISHMAPNIKSDK\", \"${PUBLISH_SDK}\", \"User\")
+    [Environment]::SetEnvironmentVariable(\"AWS_ACCESS_KEY_ID\", \"${AWS_ACCESS_KEY_ID}\", \"User\")
+    [Environment]::SetEnvironmentVariable(\"AWS_SECRET_ACCESS_KEY\", \"${AWS_SECRET_ACCESS_KEY}\", \"User\")
     </powershell>
     <persist>true</persist>"
 
@@ -33,7 +35,7 @@ id=$(aws ec2 run-instances \
     --region eu-central-1 \
     --image-id ami-ec390bf1 \
     --count 1 \
-    --instance-type c3.large \
+    --instance-type c3.4xlarge \
     --user-data "$user_data")
 
 echo "Created instance: $id"

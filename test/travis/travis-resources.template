@@ -2,6 +2,26 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "windows build user",
     "Resources": {
+        "Security": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow web on 80 and RDP on 3389",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "3389",
+                        "ToPort": "3389",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
         "TestUser": {
             "Type": "AWS::IAM::User",
             "Properties": {
