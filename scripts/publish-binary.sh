@@ -19,6 +19,7 @@ fi
 sudo pip install awscli
 
 gitsha="$1"
+sleep=10
 date_time=`date +%Y%m%d%H%M`
 start_timestamp=`date +"%s"`
 maxtimeout=600
