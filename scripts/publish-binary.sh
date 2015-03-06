@@ -22,7 +22,7 @@ gitsha="$1"
 sleep=10
 date_time=`date +%Y%m%d%H%M`
 start_timestamp=`date +"%s"`
-maxtimeout=600
+maxtimeout=3600
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
     [Environment]::SetEnvironmentVariable(\"PUBLISHMAPNIKSDK\", \"${PUBLISH_SDK}\", \"User\")
@@ -42,7 +42,7 @@ id=$(aws ec2 run-instances \
 
 echo "Created instance: $id"
 
-dns=$(aws ec2 describe-instances --instance-ids i-45cd6b84 --region eu-central-1 --query "Reservations[0].Instances[0].PublicDnsName")
+dns=$(aws ec2 describe-instances --instance-ids $id --region eu-central-1 --query "Reservations[0].Instances[0].PublicDnsName")
 dns="${dns//\"/}"
 echo "temporary windows build server: $dns/wbs"
 
@@ -59,6 +59,7 @@ until [ "$instance_status_stopped" = "stopped" ]; do
 
     instance_status_stopped=$(aws ec2 describe-instances --region eu-central-1 --instance-id $id | jq -r '.Reservations[0].Instances[0].State.Name')
     echo "Instance stopping status eu-central-1 $id: $instance_status_stopped"
+
     sleep $sleep
 done
 
