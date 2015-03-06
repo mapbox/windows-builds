@@ -11,14 +11,33 @@
                         "PolicyDocument": {
                             "Statement": [
                                 {
+                                    "Effect": "Allow",
                                     "Action": [
                                         "s3:GetObject",
                                         "s3:PutObject",
                                         "s3:PutObjectAcl"
                                     ],
-                                    "Effect": "Allow",
                                     "Resource": [
                                         "arn:aws:s3:::mapbox/mapnik/*"
+                                    ]
+                                },
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "ec2:DescribeInstances",
+                                        "ec2:DescribeInstanceStatus",
+                                        "ec2:RunInstances",
+                                        "ec2:CreateImage",
+                                        "ec2:DescribeImages",
+                                        "ec2:CopyImage",
+                                        "ec2:ModifyImageAttribute",
+                                        "ec2:modifySnapshotAttribute",
+                                        "ec2:CreateTags",
+                                        "ec2:StopInstances",
+                                        "ec2:TerminateInstances"
+                                    ],
+                                    "Resource": [
+                                        "*"
                                     ]
                                 }
                             ]
@@ -29,10 +48,10 @@
                         "PolicyDocument": {
                             "Statement": [
                                 {
+                                    "Effect": "Allow",
                                     "Action": [
                                         "sts:GetFederationToken"
                                     ],
-                                    "Effect": "Allow",
                                     "Resource": "*"
                                 }
                             ]
