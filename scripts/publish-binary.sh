@@ -26,8 +26,8 @@ maxtimeout=3600
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
     [Environment]::SetEnvironmentVariable(\"PUBLISHMAPNIKSDK\", \"${PUBLISH_SDK}\", \"User\")
-    [Environment]::SetEnvironmentVariable(\"AWS_ACCESS_KEY_ID\", \"${AWS_ACCESS_KEY_ID}\", \"User\")
-    [Environment]::SetEnvironmentVariable(\"AWS_SECRET_ACCESS_KEY\", \"${AWS_SECRET_ACCESS_KEY}\", \"User\")
+    [Environment]::SetEnvironmentVariable(\"AWS_ACCESS_KEY_ID\", \"${PUBLISH_KEY}\", \"User\")
+    [Environment]::SetEnvironmentVariable(\"AWS_SECRET_ACCESS_KEY\", \"${PUBLISH_ACCESS}\", \"User\")
     Invoke-WebRequest https://gist.githubusercontent.com/BergWerkGIS/504a3a4964a48ba3ac03/raw/4da30ca32dbc3750656a9287a5dd9082dce86db8/build.bat -OutFile Z:\\build.bat
     & Z:\\build.bat
     </powershell>
