@@ -29,10 +29,11 @@ ami_id="ami-3690a22b"
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\");
     \$env:PUBLISHMAPNIKSDK=${PUBLISH_SDK};
-    \$env:AWS_ACCESS_KEY_ID=${PUBLISH_KEY};
-    \$env:AWS_SECRET_ACCESS_KEY=${PUBLISH_ACCESS};
+    \$env:AWS_ACCESS_KEY_ID=\"${PUBLISH_KEY}\";
+    \$env:AWS_SECRET_ACCESS_KEY=\"${PUBLISH_ACCESS}\";
     Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/build.ps1 -OutFile Z:\\build.ps1;
     & Z:\\build.ps1;
+    Stop-Computer
     </powershell>
     <persist>true</persist>"
 
@@ -67,7 +68,7 @@ until [ "$instance_status_stopped" = "stopped" ]; do
         echo "temporary windows build server: $dns/wbs"
     fi;
     if [[ ${#dns} -gt 1 ]]; then
-        instance_status_stopped = "stopped";
+        instance_status_stopped="stopped"
     fi;
 
     sleep $sleep
@@ -77,8 +78,8 @@ done
 #echo "Publish complete, terminating instance: $id"
 
 echo "build takes longer than 50 minutes"
-echo "instance will self-terminate"
-echo "exiting"
+echo "exiting travis build"
+echo "instance will self-terminate, when finished"
 
 
 exit 0
