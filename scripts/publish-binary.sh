@@ -26,17 +26,18 @@ maxtimeout=2880
 region="eu-central-1"
 ami_id="ami-3690a22b"
 
-user_data="<powershell>\r\n
-    ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")\r\n
-    \$env:PUBLISHMAPNIKSDK=${PUBLISH_SDK}\r\n
-    \$env:AWS_ACCESS_KEY_ID=${PUBLISH_KEY}\r\n
-    \$env:AWS_SECRET_ACCESS_KEY=${PUBLISH_ACCESS}\r\n
-    Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/build.ps1 -OutFile Z:\\build.ps1\r\n
-    & Z:\\build.ps1\r\n
-    </powershell>\r\n
+user_data="<powershell>
+    ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\");
+    \$env:PUBLISHMAPNIKSDK=${PUBLISH_SDK};
+    \$env:AWS_ACCESS_KEY_ID=${PUBLISH_KEY};
+    \$env:AWS_SECRET_ACCESS_KEY=${PUBLISH_ACCESS};
+    Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/build.ps1 -OutFile Z:\\build.ps1;
+    & Z:\\build.ps1;
+    </powershell>
     <persist>true</persist>"
 
 id=$(aws ec2 run-instances \
+    --instance-initiated-shutdown-behavior terminate \
     --region $region \
     --image-id $ami_id \
     --count 1 \
@@ -65,11 +66,19 @@ until [ "$instance_status_stopped" = "stopped" ]; do
         dns="${dns//\"/}"
         echo "temporary windows build server: $dns/wbs"
     fi;
+    if [[ ${#dns} -gt 1 ]]; then
+        instance_status_stopped = "stopped";
+    fi;
 
     sleep $sleep
 done
 
-terminating_status=$(aws ec2 terminate-instances --region $region --instance-ids $id | jq -r '.TerminatingInstances[0].CurrentState.Name')
-echo "Publish complete, terminating instance: $id"
+#terminating_status=$(aws ec2 terminate-instances --region $region --instance-ids $id | jq -r '.TerminatingInstances[0].CurrentState.Name')
+#echo "Publish complete, terminating instance: $id"
+
+echo "build takes longer than 50 minutes"
+echo "instance will self-terminate"
+echo "exiting"
+
 
 exit 0
