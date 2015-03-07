@@ -22,7 +22,7 @@ gitsha="$1"
 sleep=10
 date_time=`date +%Y%m%d%H%M`
 start_timestamp=`date +"%s"`
-maxtimeout=3600
+maxtimeout=2880
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
     [Environment]::SetEnvironmentVariable(\"PUBLISHMAPNIKSDK\", \"${PUBLISH_SDK}\", \"User\")
