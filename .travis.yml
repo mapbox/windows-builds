@@ -13,3 +13,5 @@ os:
 
 before_install:
  - ./scripts/publish-binary.sh $TRAVIS_COMMIT
+
+install: true

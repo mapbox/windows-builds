@@ -33,6 +33,7 @@ user_data="<powershell>
     \$env:AWS_SECRET_ACCESS_KEY=\"${PUBLISH_ACCESS}\";
     Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/build.ps1 -OutFile Z:\\build.ps1;
     & Z:\\build.ps1;
+    & \"C:\\Program Files\\Amazon\\AWSCLI\\aws.exe\" s3 cp --acl public-read \%BUILD_LOG_ZIP\% s3://mapnik/dist/dev/windows-build-server-logs/
     Stop-Computer
     </powershell>
     <persist>true</persist>"
