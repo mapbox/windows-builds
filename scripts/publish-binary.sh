@@ -42,6 +42,7 @@ id=$(aws ec2 run-instances \
 
 echo "Created instance: $id"
 
+# todo: get dns after instance has started
 dns=$(aws ec2 describe-instances --instance-ids $id --region eu-central-1 --query "Reservations[0].Instances[0].PublicDnsName")
 dns="${dns//\"/}"
 echo "temporary windows build server: $dns/wbs"
