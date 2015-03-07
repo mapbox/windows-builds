@@ -26,7 +26,7 @@ maxtimeout=2880
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
     \$env:PUBLISHMAPNIKSDK=${PUBLISH_SDK}
-    \$env:AWS_ACCESS_KEY_ID?${PUBLISH_KEY}
+    \$env:AWS_ACCESS_KEY_ID=${PUBLISH_KEY}
     \$env:AWS_SECRET_ACCESS_KEY=${PUBLISH_ACCESS}
     Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/build.ps1 -OutFile Z:\\build.ps1
     & Z:\\build.ps1
