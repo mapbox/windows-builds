@@ -23,6 +23,9 @@ sleep=10
 date_time=`date +%Y%m%d%H%M`
 start_timestamp=`date +"%s"`
 maxtimeout=2880
+region="eu-central-1"
+ami_id="ami-3690a22b"
+
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"Diogenes1234\")
     \$env:PUBLISHMAPNIKSDK=${PUBLISH_SDK}
@@ -34,37 +37,39 @@ user_data="<powershell>
     <persist>true</persist>"
 
 id=$(aws ec2 run-instances \
-    --region eu-central-1 \
-    --image-id ami-3690a22b \
+    --region $region \
+    --image-id $ami_id \
     --count 1 \
     --instance-type c3.4xlarge \
     --user-data "$user_data" | jq -r '.Instances[0].InstanceId')
 
 echo "Created instance: $id"
 
-# todo: get dns after instance has started
-dns=$(aws ec2 describe-instances --instance-ids $id --region eu-central-1 --query "Reservations[0].Instances[0].PublicDnsName")
-dns="${dns//\"/}"
-echo "temporary windows build server: $dns/wbs"
+aws ec2 create-tags --region $region --resources $id --tags "Key=Name,Value=Temp-mapnik-windows-build-server-${TRAVIS_REPO_SLUG}-${TRAVIS_JOB_NUMBER}"
+aws ec2 create-tags --region $region --resources $id --tags "Key=GitSha,Value=$gitsha"
 
-aws ec2 create-tags --region eu-central-1 --resources $id --tags "Key=Name,Value=Temp-mapnik-windows-build-server-${TRAVIS_REPO_SLUG}-${TRAVIS_JOB_NUMBER}"
-aws ec2 create-tags --region eu-central-1 --resources $id --tags "Key=GitSha,Value=$gitsha"
-
-instance_status_stopped=$(aws ec2 describe-instances --region eu-central-1 --instance-id $id | jq -r '.Reservations[0].Instances[0].State.Name')
+dns=''
+instance_status_stopped=$(aws ec2 describe-instances --region $region --instance-id $id | jq -r '.Reservations[0].Instances[0].State.Name')
 until [ "$instance_status_stopped" = "stopped" ]; do
     if [ `expr $(date "+%s") - $start_timestamp` -gt $maxtimeout ]; then
         echo "The instance has timed out. Terminating instance: $id"
-        terminating_status=$(aws ec2 terminate-instances --region eu-central-1 --instance-ids $id | jq -r '.TerminatingInstances[0].CurrentState.Name')
+        terminating_status=$(aws ec2 terminate-instances --region $region --instance-ids $id | jq -r '.TerminatingInstances[0].CurrentState.Name')
         exit 1
     fi
 
-    instance_status_stopped=$(aws ec2 describe-instances --region eu-central-1 --instance-id $id | jq -r '.Reservations[0].Instances[0].State.Name')
+    instance_status_stopped=$(aws ec2 describe-instances --region $region --instance-id $id | jq -r '.Reservations[0].Instances[0].State.Name')
     echo "Instance stopping status eu-central-1 $id: $instance_status_stopped"
+
+    if [[ -z $dns ]]; then
+        dns=$(aws ec2 describe-instances --instance-ids $id --region $region --query "Reservations[0].Instances[0].PublicDnsName")
+        dns="${dns//\"/}"
+        echo "temporary windows build server: $dns/wbs"
+    fi;
 
     sleep $sleep
 done
 
-terminating_status=$(aws ec2 terminate-instances --region eu-central-1 --instance-ids $id | jq -r '.TerminatingInstances[0].CurrentState.Name')
+terminating_status=$(aws ec2 terminate-instances --region $region --instance-ids $id | jq -r '.TerminatingInstances[0].CurrentState.Name')
 echo "Publish complete, terminating instance: $id"
 
 exit 0
