@@ -31,9 +31,9 @@ if (-not(Test-Path "Env:\PUBLISHMAPNIKSDK")){
 }
 
 Write-Host "writing config"
-"settings ""TARGET_ARCH=32"" ""IGNOREFAILEDTESTS=1"" ""PACKAGEMAPNIK=1"" ""$publish_mapnik_sdk"" && clean && scripts\build
+"settings ""TARGET_ARCH=32"" ""IGNOREFAILEDTESTS=1"" ""PACKAGEMAPNIK=1"" ""$publish_mapnik_sdk"" && del /q packages\*.* && clean && scripts\build
 Z:\mb\windows-builds-32
-settings ""PACKAGEMAPNIK=1"" ""$publish_mapnik_sdk"" && clean && scripts\build
+settings ""PACKAGEMAPNIK=1"" ""$publish_mapnik_sdk"" && del /q packages\*.* && clean && scripts\build
 Z:\mb\windows-builds-64
 " | Out-File -Encoding UTF8 Z:\wbs.cfg
 
