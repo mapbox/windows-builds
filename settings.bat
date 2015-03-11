@@ -160,7 +160,7 @@ if NOT EXIST tmp-bin\make\make.exe (
   cd tmp-bin
   mkdir make
   cd make
-  CALL wget ftp://ftp.equation.com/make/32/make.exe
+  CALL wget --no-check-certificate https://mapnik.s3.amazonaws.com/deps/make.exe
   IF ERRORLEVEL 1 GOTO ERROR
   cd %ROOTDIR%
 )

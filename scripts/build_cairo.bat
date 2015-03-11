@@ -29,32 +29,28 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download cairo-%CAIRO_VERSION%.tar.xz
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST cairo (
-  echo found extracted sources
-)
+if EXIST cairo echo found extracted sources && GOTO BUILD_STEP
 
-SETLOCAL ENABLEDELAYEDEXPANSION
-if NOT EXIST cairo (
-  echo extracting
-  CALL 7z x -y cairo-%CAIRO_VERSION%.tar.xz | %windir%\system32\FIND "ing archive"
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  CALL bsdtar xfz cairo-%CAIRO_VERSION%.tar
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  rename cairo-%CAIRO_VERSION% cairo
-  IF ERRORLEVEL 1 GOTO ERROR
-  cd cairo
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  patch -N -p1 < %PATCHES%/cairo_.diff || %SKIP_FAILED_PATCH%
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  patch -N -p1 < %PATCHES%/cairo_debug_symbols.diff || %SKIP_FAILED_PATCH%
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-)
-ENDLOCAL
+echo extracting ...
+CALL 7z x -y cairo-%CAIRO_VERSION%.tar.xz | %windir%\system32\FIND "ing archive"
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+CALL bsdtar xfz cairo-%CAIRO_VERSION%.tar
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+rename cairo-%CAIRO_VERSION% cairo
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+cd cairo
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+patch -N -p1 < %PATCHES%/cairo.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+patch -N -p1 < %PATCHES%/cairo_debug_symbols.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:BUILD_STEP
 
 cd %PKGDIR%\cairo
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 ::ECHO cleaning ....
@@ -67,10 +63,14 @@ IF %BUILD_TYPE% EQU Debug (SET CFG_TYPE=debug)
 
 echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
 ECHO setting MKDIRP ...
-set MKDIRP=C:\Program Files (x86)\Git\bin\mkdir.exe
+set MKDIRP=c:\Program Files (x86)\Git\bin\mkdir.exe
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ECHO fixing path...
+REM powershell %ROOTDIR%\scripts\fix-path.ps1
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO building ...
 CALL make --always-make -f Makefile.win32 CFG=%CFG_TYPE% MSVC_VER=%MSVC_VER%
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::rem - delete bogus cairo-version.h
 ::rem https://github.com/mapnik/mapnik-packaging/issues/56
