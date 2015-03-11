@@ -33,7 +33,7 @@ user_data="<powershell>
     \$env:AWS_SECRET_ACCESS_KEY=\"${PUBLISH_ACCESS}\";
     Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/build.ps1 -OutFile Z:\\build.ps1;
     & Z:\\build.ps1;
-    Stop-Computer
+    # Stop-Computer
     </powershell>
     <persist>true</persist>"
 
