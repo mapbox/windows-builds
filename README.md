@@ -28,7 +28,7 @@ settings.bat (default settings: e.g. 64bit)
 
 -----
 
-Options for settings.bat (see source for overridable parameters):
+Options for settings.bat ([see source for overridable parameters](/settings.bat)):
 
     settings.bat ["OVERRIDABLE-PARAM=VALUE"] ["OVERRIDABLE-PARAM-TWO=VALUE"]
 

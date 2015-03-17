@@ -6,6 +6,11 @@ echo ------ python -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
+ECHO not necessary anymore
+ECHO windows-builds-tmp-bin already contains Python 32bit and 64bit
+GOTO DONE
+
+
 cd %PKGDIR%
 
 SET PKGNAME=win-python-%PYTHON_VERSION%-%TARGET_ARCH%.7z

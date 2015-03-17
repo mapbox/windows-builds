@@ -2,6 +2,9 @@ aws-cli
 packages
 tmp-bin
 testing
+*.suo
+*.sdf
 
+windows-builds-tmp-bin.exe
 *.sublime-project
 *.sublime-workspace

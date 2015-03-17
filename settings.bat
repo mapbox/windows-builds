@@ -21,33 +21,33 @@ SET IGNOREFAILEDTESTS=0
 ::local meaning, built by these scripts
 SET PREFER_LOCAL_NODE_EXE=1
 
-set ICU_VERSION=54.1
-set ICU_VERSION2=54_1
-set BOOST_VERSION=57
-set WEBP_VERSION=0.4.2
-set JPEG_VERSION=8d
-set FREETYPE_VERSION=2.5.5
-set FREETYPE_VERSION_FILE=255
-set ZLIB_VERSION=1.2.8
-set BZIP2_VERSION=1.0.6
-set LIBPNG_VERSION=1.6.16
-set LIBPNG_VERSION_FILE=16
-set POSTGRESQL_VERSION=9.4.0
-set TIFF_VERSION=4.0.3
-set PIXMAN_VERSION=0.32.6
-set CAIRO_VERSION=1.12.18
-set LIBXML2_VERSION=2.9.2
-set PROJ_VERSION=4.8.0
-set PROJ_GRIDS_VERSION=1.5
-set EXPAT_VERSION=2.1.0
-set GDAL_VERSION=1.11.1
+SET ICU_VERSION=54.1
+SET ICU_VERSION2=54_1
+SET BOOST_VERSION=57
+SET WEBP_VERSION=0.4.2
+SET JPEG_VERSION=8d
+SET FREETYPE_VERSION=2.5.5
+SET FREETYPE_VERSION_FILE=255
+SET ZLIB_VERSION=1.2.8
+SET BZIP2_VERSION=1.0.6
+SET LIBPNG_VERSION=1.6.16
+SET LIBPNG_VERSION_FILE=16
+SET POSTGRESQL_VERSION=9.4.0
+SET TIFF_VERSION=4.0.3
+SET PIXMAN_VERSION=0.32.6
+SET CAIRO_VERSION=1.12.18
+SET LIBXML2_VERSION=2.9.2
+SET PROJ_VERSION=4.8.0
+SET PROJ_GRIDS_VERSION=1.5
+SET EXPAT_VERSION=2.1.0
+SET GDAL_VERSION=1.11.1
 SET GDAL_VERSION_FILE=111
-set SQLITE_VERSION=3080704
-set PROTOBUF_VERSION=2.6.1
-set SPARSEHASH_VERSION=2.0.2
-set HARFBUZZ_VERSION=0.9.37
-set GEOS_VERSION=3.4.2
-set PYTHON_VERSION=2.7.8
+SET SQLITE_VERSION=3080704
+SET PROTOBUF_VERSION=2.6.1
+SET SPARSEHASH_VERSION=2.0.2
+SET HARFBUZZ_VERSION=0.9.37
+SET GEOS_VERSION=3.4.2
+SET PYTHON_VERSION=2.7.8
 SET NODE_VERSION=0.10.33
 
 
@@ -93,13 +93,18 @@ IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 
 ::TODO: see what we can use from mysysgit
 ::wget cmake
-set PATH=C:\Python27;%PATH%
-set PATH=C:\Python27\Scripts;%PATH%
-set PATH=C:\Program Files (x86)\Git\bin;%PATH%
-set PATH=%CD%\tmp-bin\cmake-3.1.0-win32-x86\bin;%PATH%
-set PATH=%CD%\tmp-bin;%PATH%
-::set path to make last. make that comes with gnu-win-tools doesn't work
-set PATH=%CD%\tmp-bin\make;%PATH%
+SET PATH=C:\Python27;%PATH%
+SET PATH=C:\Python27\Scripts;%PATH%
+SET PATH=C:\Program Files (x86)\Git\bin;%PATH%
+SET PATH=%CD%\tmp-bin\cmake-3.1.0-win32-x86\bin;%PATH%
+SET PATH=%CD%\tmp-bin\gnu-win-tools;%PATH%
+SET PATH=%CD%\tmp-bin\ragel\%PLATFORMX%;%PATH%
+SET PATH=%CD%\tmp-bin\7zip\%PLATFORMX%;%PATH%
+SET PATH=%CD%\tmp-bin\ddt\%PLATFORMX%;%PATH%
+SET PATH=%CD%\tmp-bin;%PATH%
+::set path to make.exe at last.
+::make.exe that comes with gnu-win-tools cannot compile cairo
+SET PATH=%CD%\tmp-bin\make;%PATH%
 
 
 if "%TOOLS_VERSION%" == "12.0" (
@@ -123,47 +128,13 @@ if "%TOOLS_VERSION%" == "14.0" (
   )
 )
 
-IF NOT EXIST tmp-bin\7z.exe (
-  echo. && echo "getting 7z"
-  mkdir tmp-bin
-  cd tmp-bin
-  CALL curl -O https://mapnik.s3.amazonaws.com/deps/7z-%PLATFORMX%.exe
-  7z-%PLATFORMX%.exe -o"." -y >nul
-  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-  cd ..
-)
+CD %ROOTDIR%
 
-IF NOT EXIST tmp-bin\cmake-3.1.0-win32-x86\bin (
-  echo. && echo "getting cmake"
-  mkdir tmp-bin
-  cd tmp-bin
-  CALL curl -O https://mapnik.s3.amazonaws.com/deps/cmake-3.1.0-win32-x86.7z
-  7z x cmake-3.1.0-win32-x86.7z -y >nul
-  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-  cd ..
+IF NOT EXIST tmp-bin (
+  CALL curl -O https://mapnik.s3.amazonaws.com/deps/windows-builds-tmp-bin.exe
+  CALL windows-builds-tmp-bin.exe -y -o"."
 )
-
-if NOT EXIST tmp-bin\bsdtar.exe (
-  echo. && echo "getting bsdtar, wget"
-  mkdir tmp-bin
-  cd tmp-bin
-  CALL curl -L -O https://mapnik.s3.amazonaws.com/deps/gnu-win-tools.7z
-  IF ERRORLEVEL 1 GOTO ERROR
-  CALL 7z e -y gnu-win-tools.7z >nul
-  IF ERRORLEVEL 1 GOTO ERROR
-  cd ..
-)
-
-if NOT EXIST tmp-bin\make\make.exe (
-  echo. && echo "getting make"
-  mkdir tmp-bin
-  cd tmp-bin
-  mkdir make
-  cd make
-  CALL wget --no-check-certificate https://mapnik.s3.amazonaws.com/deps/make.exe
-  IF ERRORLEVEL 1 GOTO ERROR
-  cd %ROOTDIR%
-)
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 python setuptools-available.py
 IF %ERRORLEVEL% NEQ 0 (
@@ -181,27 +152,6 @@ if NOT EXIST C:\Python27\Scripts\aws (
   cd ..
 )
 
-if NOT EXIST tmp-bin\ragel.exe (
-  echo. && echo getting ragel
-  mkdir tmp-bin
-  cd tmp-bin
-  CALL curl -s -S -f -O -L -k --retry 3 http://w858rkbfg.homepage.t-online.de/files/9213/9317/6402/ragel-vs2012.7z
-  IF ERRORLEVEL 1 GOTO ERROR
-  CALL 7z e -y ragel-vs2012.7z >nul
-  IF ERRORLEVEL 1 GOTO ERROR
-  cd ..
-)
-
-IF NOT EXIST tmp-bin\ddt.exe (
-  echo. && echo getting "delete-directory-tree"
-  mkdir tmp-bin
-  cd tmp-bin
-  CALL curl -O https://mapnik.s3.amazonaws.com/dist/dev/delete-directory-tree.7z
-  IF ERRORLEVEL 1 GOTO ERROR
-  CALL 7z e -y delete-directory-tree.7z NET\%WEBP_PLATFORM%\ddt.exe >nul
-  IF ERRORLEVEL 1 GOTO ERROR
-  cd ..
-)
 
 :: need PACKAGEMAPNIK for PUBLISHMAPNIKSDK to work
 IF %PUBLISHMAPNIKSDK% NEQ 0 IF %PACKAGEMAPNIK% EQU 0 GOTO PUBLISHMAPNIKSDKERROR
@@ -210,6 +160,7 @@ IF %PUBLISHMAPNIKSDK% NEQ 0 GOTO CHECKAWS
 IF %PUBLISHNODEMAPNIK% NEQ 0 GOTO CHECKAWS
 
 GOTO CHECKPOWERSHELL
+
 
 :CHECKAWS
 ECHO.
@@ -226,8 +177,8 @@ IF %ERRORLEVEL% NEQ 0 GOTO AWSUNKNOWNERROR
 ECHO AWS-CLI OK
 ECHO.
 
-:CHECKPOWERSHELL
 
+:CHECKPOWERSHELL
 ECHO.
 ECHO ------------ checking for Powershell ------------
 ECHO Powershell version^:
