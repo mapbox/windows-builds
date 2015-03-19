@@ -3,6 +3,7 @@
 :::::::::::::: USAGE
 :: see bottom of this file
 
+set PATH=C:\Windows\System32\WindowsPowershell\v1.0;%PATH%
 
 :::::::::::::: OVERRIDABLE PARAMETERS
 set TARGET_ARCH=64
