@@ -3,8 +3,6 @@
 :::::::::::::: USAGE
 :: see bottom of this file
 
-set PATH=C:\Windows\System32\WindowsPowershell\v1.0;%PATH%
-
 :::::::::::::: OVERRIDABLE PARAMETERS
 set TARGET_ARCH=64
 SET TOOLS_VERSION=14.0
@@ -94,6 +92,7 @@ IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 
 ::TODO: see what we can use from mysysgit
 ::wget cmake
+SET PATH=C:\Windows\System32\WindowsPowershell\v1.0;%PATH%
 SET PATH=C:\Python27;%PATH%
 SET PATH=C:\Python27\Scripts;%PATH%
 SET PATH=C:\Program Files (x86)\Git\bin;%PATH%
