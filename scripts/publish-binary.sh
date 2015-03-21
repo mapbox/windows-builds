@@ -4,7 +4,7 @@ set -e
 
 
 PUBLISH_SDK=0
-BUILD_CMD="& Z:\\build.ps1"
+BUILD_CMD="wbs-build.ps1"
 STOP_COMPUTER="Stop-Computer"
 COMMIT_MESSAGE=$(git show -s --format=%B $TRAVIS_COMMIT | tr -d '\n')
 echo $COMMIT_MESSAGE
@@ -18,7 +18,7 @@ fi
 if test "${COMMIT_MESSAGE#*'[publish debug]'}" != "$COMMIT_MESSAGE"
 then
     echo "Commit includes [publish debug] skipping stack teardown."
-    BUILD_CMD=""
+    BUILD_CMD="wbs-build-prepare.ps1"
     STOP_COMPUTER=""
 fi
 
@@ -39,8 +39,8 @@ user_data="<powershell>
     \$env:PUBLISHMAPNIKSDK=${PUBLISH_SDK};
     \$env:AWS_ACCESS_KEY_ID=\"${PUBLISH_KEY}\";
     \$env:AWS_SECRET_ACCESS_KEY=\"${PUBLISH_ACCESS}\";
-    Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/build.ps1 -OutFile Z:\\build.ps1;
-    ${BUILD_CMD}
+    Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/${BUILD_CMD} -OutFile Z:\\${BUILD_CMD};
+    & Z:\\${BUILD_CMD}
     ${STOP_COMPUTER}
     </powershell>
     <persist>true</persist>"
