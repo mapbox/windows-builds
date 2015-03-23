@@ -42,6 +42,16 @@ ddt /Q mapnik-sdk
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
+::download prebuilt binary deps
+IF %FASTBUILD% NEQ 1 GOTO FULLBUILD
+SET BINDEPSPGK=mapnik-win-sdk-binary-deps-%TOOLS_VERSION%-%PLATFORMX%.7z
+CALL %ROOTDIR%\scripts\download BINDEPSPGK
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+CALL 7z x -y BINDEPSPGK | %windir%\system32\FIND "ing archive"
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+:FULLBUILD
 ECHO building mapnik
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%ROOTDIR%\tmp-bin\python2-x86-32\Scripts;%PATH%
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%ROOTDIR%\tmp-bin\python2\Scripts;%PATH%
