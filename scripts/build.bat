@@ -2,6 +2,7 @@
 
 set STARTTIME=%TIME%
 
+IF %FASTBUILD% EQU 1 ( ECHO FASTBUILD skipping deps && GOTO MAPNIK)
 IF "%1"=="" ( ECHO "building everything ..." ) ELSE ( GOTO %1 )
 
 :ALL
