@@ -30,10 +30,33 @@ if (-not(Test-Path "Env:\PUBLISHMAPNIKSDK")){
     $publish_mapnik_sdk="PUBLISHMAPNIKSDK=$env:PUBLISHMAPNIKSDK"
 }
 
+Write-Host "FASTBUILD: $env:FASTBUILD"
+if (-not(Test-Path "Env:\FASTBUILD")){
+    $fast_build='FASTBUILD=1'
+} else {
+    $fast_build="FASTBUILD=$env:FASTBUILD"
+}
+
+Write-Host "PACKAGEDEBUGSYMBOLS: $env:PACKAGEDEBUGSYMBOLS"
+if (-not(Test-Path "Env:\PACKAGEDEBUGSYMBOLS")){
+    $package_pdb='PACKAGEDEBUGSYMBOLS=0'
+} else {
+    $package_pdb="PACKAGEDEBUGSYMBOLS=$env:PACKAGEDEBUGSYMBOLS"
+}
+
+$x86cmd="settings ""TARGET_ARCH=32"" ""PACKAGEMAPNIK=1"" ""$fast_build"" ""$publish_mapnik_sdk"" ""$package_pdb"" && del /q packages\*.* && clean && scripts\build"
+$x86dir="Z:\mb\windows-builds-32"
+
+if (-not(Test-Path "Env:\BUILD32BIT")){
+    $x86cmd="[DISABLED] $x86cmd"
+    $x86dir="[DISABLED] $x86dir"
+}
+
+
 Write-Host "writing config"
-"settings ""TARGET_ARCH=32"" ""IGNOREFAILEDTESTS=1"" ""PACKAGEMAPNIK=1"" ""$publish_mapnik_sdk"" && del /q packages\*.* && clean && scripts\build
-Z:\mb\windows-builds-32
-settings ""PACKAGEMAPNIK=1"" ""$publish_mapnik_sdk"" && del /q packages\*.* && clean && scripts\build
+"$x86cmd
+$x86dir
+settings ""PACKAGEMAPNIK=1"" ""$fast_build"" ""$publish_mapnik_sdk"" ""$package_pdb"" && del /q packages\*.* && clean && scripts\build
 Z:\mb\windows-builds-64
 " | Out-File -Encoding UTF8 Z:\wbs.cfg
 
