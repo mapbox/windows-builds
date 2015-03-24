@@ -39,12 +39,29 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 REM -G "Visual Studio 14 Win64"
 REM -G "NMake Makefiles"
 
+
+
+
+:::::::::::::: TODO
+::https://github.com/mapnik/mapnik-packaging/blob/master/osx/scripts/build_jpeg_turbo.sh
+::parameter --with-jpeg8
+
+
 ECHO calling cmake
 CALL cmake .. ^
--G "NMake Makefiles"
+-G "Visual Studio 14 Win64"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL nmake
+msbuild ^
+libjpeg-turbo.sln ^
+/p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
+/nologo ^
+/m:%NUMBER_OF_PROCESSORS% ^
+/toolsversion:%TOOLS_VERSION% ^
+/p:BuildInParallel=true ^
+/p:Configuration=%BUILD_TYPE% ^
+/p:Platform=%BUILDPLATFORM% ^
+/p:PlatformToolset=%PLATFORM_TOOLSET%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
