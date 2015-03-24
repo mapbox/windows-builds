@@ -264,6 +264,7 @@ GOTO ERROR
 ECHO.
 ECHO !!!
 ECHO unexpected error calling AWS CLI!!
+ECHO is AWS CLI installed
 ECHO !!!
 ECHO.
 GOTO ERROR
