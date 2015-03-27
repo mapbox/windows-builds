@@ -4,8 +4,8 @@ set -e
 
 
 BUILD32BIT=""
-FASTBUILD="\$FASTBUILD=1"
-PACKAGEDEBUGSYMBOLS="\$PACKAGEDEBUGSYMBOLS=0"
+FASTBUILD="\$env:FASTBUILD=1"
+PACKAGEDEBUGSYMBOLS="\$env:PACKAGEDEBUGSYMBOLS=0"
 PUBLISH_SDK=0
 BUILD_CMD="wbs-build.ps1"
 STOP_COMPUTER="Stop-Computer"
@@ -34,13 +34,13 @@ fi
 if test "${COMMIT_MESSAGE#*'[nofastbuild]'}" != "$COMMIT_MESSAGE"
 then
     echo "doing a full build."
-    FASTBUILD="\$FASTBUILD=0"
+    FASTBUILD="\$env:FASTBUILD=0"
 fi
 
 if test "${COMMIT_MESSAGE#*'[packagedebugsymbols]'}" != "$COMMIT_MESSAGE"
 then
     echo "packaging debug symbols."
-    PACKAGEDEBUGSYMBOLS="\$PACKAGEDEBUGSYMBOLS=1"
+    PACKAGEDEBUGSYMBOLS="\$env:PACKAGEDEBUGSYMBOLS=1"
 fi
 
 sudo pip install awscli
