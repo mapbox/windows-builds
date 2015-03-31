@@ -88,9 +88,11 @@ IF %PREFER_LOCAL_NODE_EXE% EQU 0 GOTO USE_REMOTE_NODE
 ::prefer local node.exe
 SET LOCAL_NODE_EXE=%PKGDIR%\node-v%NODE_VERSION%-%BUILDPLATFORM%\%BUILD_TYPE%\node.exe
 SET LOCAL_NODE_PDB=%PKGDIR%\node-v%NODE_VERSION%-%BUILDPLATFORM%\%BUILD_TYPE%\node.pdb
-IF %PREFER_LOCAL_NODE_EXE% EQU 1 IF NOT EXIST %LOCAL_NODE_EXE% GOTO USE_REMOTE_NODE
+IF %PREFER_LOCAL_NODE_EXE% EQU 1 IF NOT EXIST %LOCAL_NODE_EXE% ECHO local node not found && GOTO USE_REMOTE_NODE
 
 ECHO ============= using LOCAL node.exe ==========
+ECHO %LOCAL_NODE_EXE%
+ECHO %LOCAL_NODE_PDB%
 IF EXIST node.exe del /F node.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 COPY %LOCAL_NODE_EXE%
@@ -126,6 +128,8 @@ rebuild %DEBUG_FLAG% ^
 --target=%NODE_VER% ^
 --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO build finished
 
 ::Windows batch file problems: everything within a block e.g.( ) will be evaluated at once
 ::split publishing into 3 blocks, otherwise output of xcopy will be written into mapnik_settings.js :-(
