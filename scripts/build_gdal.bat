@@ -31,7 +31,7 @@ ENDLOCAL
 cd %PKGDIR%\gdal
 IF ERRORLEVEL 1 GOTO ERROR
 
-
+pause
 ::echo When compiling 64bit download libexpat dev packages from http://www.gtk.org/download/win64.php
 ::echo Also un-comment WIN64=YES in nmake.opt -> can be passed as argument, see below
 
@@ -55,14 +55,14 @@ IF %BUILDPLATFORM% EQU x64 (
     CALL nmake /F makefile.vc clean WIN64=YES
     IF ERRORLEVEL 1 GOTO ERROR
     ECHO building ....
-    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER% WIN64=YES
+    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER% WIN64=YES ODBC_SUPPORTED=1
     IF ERRORLEVEL 1 GOTO ERROR
 ) ELSE (
     ::ECHO cleaning .....
     ::CALL nmake /F makefile.vc clean
     ::IF ERRORLEVEL 1 GOTO ERROR
     ECHO building ....
-    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER%
+    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER% ODBC_SUPPORTED=1
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
