@@ -55,14 +55,14 @@ IF %BUILDPLATFORM% EQU x64 (
     CALL nmake /F makefile.vc clean WIN64=YES
     IF ERRORLEVEL 1 GOTO ERROR
     ECHO building ....
-    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER% WIN64=YES
+    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER% WIN64=YES ODBC_SUPPORTED=1
     IF ERRORLEVEL 1 GOTO ERROR
 ) ELSE (
     ::ECHO cleaning .....
     ::CALL nmake /F makefile.vc clean
     ::IF ERRORLEVEL 1 GOTO ERROR
     ECHO building ....
-    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER%
+    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER% ODBC_SUPPORTED=1
     IF ERRORLEVEL 1 GOTO ERROR
 )
 
