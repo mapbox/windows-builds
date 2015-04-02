@@ -21,7 +21,7 @@ ECHO pulling ...
 git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST %USERPROFILE%\.node-gyp RD /Q /S %USERPROFILE%\.node-gyp
+if EXIST %USERPROFILE%\.node-gyp ddt /Q %USERPROFILE%\.node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL npm install node-pre-gyp
