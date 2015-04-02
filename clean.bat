@@ -165,6 +165,11 @@ ddt /Q packages\node-mapnik
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
+:NODEGDAL
+ddt /Q packages\node-gdal
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
 :LIBOSMIUM
 ddt /Q packages\libosmium
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
