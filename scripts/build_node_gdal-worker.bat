@@ -23,10 +23,10 @@ IF EXIST node.exe DEL /Q node.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET NODEARCH=x64
-IF "%PLATFORMX%"=="x86" SET SUFFIX=x64/
+IF "%PLATFORMX%"=="x86" SET NODEARCH=ia32
 
 SET SUFFIX=
-IF "%PLATFORMX%"=="x64" SET NODEARCH=ia32
+IF "%PLATFORMX%"=="x64" SET SUFFIX=x64/
 ECHO downloading node.exe https://mapbox.s3.amazonaws.com/node-cpp11/v%NODE_VERSION%/%SUFFIX%node.exe
 powershell Invoke-WebRequest "https://mapbox.s3.amazonaws.com/node-cpp11/v$env:NODE_VERSION/${env:SUFFIX}node.exe" -OutFile $env:PKGDIR\node-gdal\node.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
