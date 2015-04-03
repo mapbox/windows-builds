@@ -43,28 +43,21 @@ SET EXPAT_DIR="%PKGDIR%\expat"
 SET TIFF_INC="-I%PKGDIR%\libtiff\libtiff"
 SET TIFF_LIB="%PKGDIR%\libtiff\libtiff\libtiff_i.lib"
 SET TIFF_OPTS=/DBIGTIFF_SUPPORT /DCHUNKY_STRIP_READ_SUPPORT=1 /DDEFER_STRILE_LOAD=1
-set JPEGDIR="%PKGDIR%\jpeg"
+SET JPEGDIR="%PKGDIR%\jpeg"
+SET SQLITE_INC=-I%PKGDIR%\sqlite
+SET SQLITE_LIB=%PKGDIR%\sqlite\sqlite3.lib
+SET DEBUG=1
+SET WITH_PDB=1
+::MSSQL support
+::SET ODBC_SUPPORTED=1
+IF "%PLATFORMX%"=="x64" SET WIN64=YES
 
-SET DEBUG_FLAG=0
-IF %BUILD_TYPE% EQU Debug (
-  SET DEBUG_FLAG=1 WITH_PDB=1 EXPAT_LIB=%PKGDIR%\expat\win32\bin\%BUILD_TYPE%\libexpat.lib
-)
-
-IF %BUILDPLATFORM% EQU x64 (
-    ECHO cleaning .....
-    CALL nmake /F makefile.vc clean WIN64=YES
-    IF ERRORLEVEL 1 GOTO ERROR
-    ECHO building ....
-    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER% WIN64=YES ODBC_SUPPORTED=1
-    IF ERRORLEVEL 1 GOTO ERROR
-) ELSE (
-    ::ECHO cleaning .....
-    ::CALL nmake /F makefile.vc clean
-    ::IF ERRORLEVEL 1 GOTO ERROR
-    ECHO building ....
-    CALL nmake /A /F makefile.vc DEBUG=%DEBUG_FLAG% MSVC_VER=%MSVC_VER% ODBC_SUPPORTED=1
-    IF ERRORLEVEL 1 GOTO ERROR
-)
+ECHO cleaning .....
+CALL nmake /F makefile.vc clean
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ECHO building ....
+CALL nmake /A /F makefile.vc
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 ::odbccp32.lib(dllload.obj) : error LNK2019: unresolved external symbol __vsnwprintf_s referenced in function _StringCchPrintfW
