@@ -7,6 +7,7 @@ BUILD32BIT=""
 FASTBUILD="\$env:FASTBUILD=1"
 PACKAGEDEBUGSYMBOLS="\$env:PACKAGEDEBUGSYMBOLS=0"
 PUBLISH_SDK=0
+PUBLISH_NODEGDAL="\$env:PUBLISH_NODEGDAL=0"
 BUILD_CMD="wbs-build.ps1"
 STOP_COMPUTER="Stop-Computer"
 COMMIT_MESSAGE=$(git show -s --format=%B $TRAVIS_COMMIT | tr -d '\n')
@@ -43,6 +44,12 @@ then
     PACKAGEDEBUGSYMBOLS="\$env:PACKAGEDEBUGSYMBOLS=1"
 fi
 
+if test "${COMMIT_MESSAGE#*'[publish node-gdal]'}" != "$COMMIT_MESSAGE"
+then
+    echo "publishing just node-gdal."
+    PUBLISH_NODEGDAL="\$env:PUBLISH_NODEGDAL=1"
+fi
+
 sudo pip install awscli
 
 gitsha="$1"
@@ -58,10 +65,11 @@ user_data="<powershell>
     ${BUILD32BIT}
     ${FASTBUILD}
     ${PACKAGEDEBUGSYMBOLS}
+    ${PUBLISH_NODEGDAL}
     \$env:PUBLISHMAPNIKSDK=${PUBLISH_SDK};
     \$env:AWS_ACCESS_KEY_ID=\"${PUBLISH_KEY}\";
     \$env:AWS_SECRET_ACCESS_KEY=\"${PUBLISH_ACCESS}\";
-    Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/${BUILD_CMD} -OutFile Z:\\${BUILD_CMD};
+    Invoke-WebRequest https://mapbox.s3.amazonaws.com/windows-builds/windows-build-server/${BUILD_CMD} -OutFile Z:\\${BUILD_CMD};
     & Z:\\${BUILD_CMD}
     ${STOP_COMPUTER}
     </powershell>

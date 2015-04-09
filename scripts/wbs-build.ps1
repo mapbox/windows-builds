@@ -44,7 +44,17 @@ if (-not(Test-Path "Env:\PACKAGEDEBUGSYMBOLS")){
     $package_pdb="PACKAGEDEBUGSYMBOLS=$env:PACKAGEDEBUGSYMBOLS"
 }
 
-$x86cmd="settings ""TARGET_ARCH=32"" ""PACKAGEMAPNIK=1"" ""$fast_build"" ""$publish_mapnik_sdk"" ""$package_pdb"" && del /q packages\*.* && clean && scripts\build"
+$buildcmd="scripts\build"
+
+Write-Host "PUBLISH_NODEGDAL: $env:PUBLISH_NODEGDAL"
+if (-not(Test-Path "Env:\PUBLISH_NODEGDAL")){
+    $buildcmd="scripts\build"
+} else {
+    $buildcmd="scripts\build_node_gdal"
+}
+
+
+$x86cmd="settings ""TARGET_ARCH=32"" ""PACKAGEMAPNIK=1"" ""$fast_build"" ""$publish_mapnik_sdk"" ""$package_pdb"" && del /q packages\*.* && clean && $buildcmd"
 $x86dir="Z:\mb\windows-builds-32"
 
 if (-not(Test-Path "Env:\BUILD32BIT")){
@@ -56,7 +66,7 @@ if (-not(Test-Path "Env:\BUILD32BIT")){
 Write-Host "writing config"
 "$x86cmd
 $x86dir
-settings ""PACKAGEMAPNIK=1"" ""$fast_build"" ""$publish_mapnik_sdk"" ""$package_pdb"" && del /q packages\*.* && clean && scripts\build
+settings ""PACKAGEMAPNIK=1"" ""$fast_build"" ""$publish_mapnik_sdk"" ""$package_pdb"" && del /q packages\*.* && clean && $buildcmd
 Z:\mb\windows-builds-64
 " | Out-File -Encoding UTF8 Z:\wbs.cfg
 

@@ -61,7 +61,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO.
 ECHO ---------------- PUBLISHING  NODE-GDAL node^: %NODE_VERSION% %PLATFORMX%--------------
 call node_modules\.bin\node-pre-gyp.cmd ^
---target=%NODE_VERSION% package publish ^
+--target=%NODE_VERSION% package unpublish publish ^
 --msvs_version=2013 ^
 --toolset=v140 ^
 --target_arch=%NODEARCH% ^
