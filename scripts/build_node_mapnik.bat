@@ -6,7 +6,7 @@ echo ------ NODE_MAPNIK -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
-SET NODE_VER=0.10.36
+SET NODE_VER=0.10.33
 SET PUB=0
 
 IF "%1"=="" (
@@ -45,30 +45,35 @@ set GDAL_DATA=%MAPNIK_SDK%\share\gdal
 set PATH=%MAPNIK_SDK%\bin;%PATH%
 set PATH=%MAPNIK_SDK%\lib;%PATH%
 
+::delete node.exe from previous runs
+IF EXIST node.exe del /F node.exe
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST node.pdb DEL /F node.pdb
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 :: NOTE - requires you install 32 bit node.exe from nodejs.org
 call npm install -g node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+call npm update -g node-gyp
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 if NOT EXIST node_modules (
     call npm install mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp jshint
-    IF ERRORLEVEL 1 GOTO ERROR
 )
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-ECHO if this fails then clear our node_modules
 call npm ls
+ECHO if this failed then clear out node_modules
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 call .\node_modules\.bin\node-pre-gyp clean --target=%NODE_VER%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST build (
-    rd /q /s build
-)
+if EXIST build ddt /q build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST lib\binding (
-    rd /q /s lib\binding
-)
+if EXIST lib\binding ddt /q lib\binding
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET DEBUG_FLAG=
@@ -93,11 +98,7 @@ IF %PREFER_LOCAL_NODE_EXE% EQU 1 IF NOT EXIST %LOCAL_NODE_EXE% ECHO local node n
 ECHO ============= using LOCAL node.exe ==========
 ECHO %LOCAL_NODE_EXE%
 ECHO %LOCAL_NODE_PDB%
-IF EXIST node.exe del /F node.exe
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 COPY %LOCAL_NODE_EXE%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-IF EXIST node.pdb DEL /F node.pdb
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF EXIST %LOCAL_NODE_PDB% COPY %LOCAL_NODE_PDB%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
