@@ -20,9 +20,14 @@ IF ERRORLEVEL 1 GOTO ERROR
 :SRCFOUND
 
 cd libspatialite
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-
+ECHO cleaning .....
+CALL nmake /F makefile.vc clean
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ECHO building ....
+CALL nmake /A /F makefile.vc
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 GOTO DONE
