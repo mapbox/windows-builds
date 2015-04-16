@@ -128,15 +128,17 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::add local node-pre-gyp dir to path
 SET PATH=%CD%\node_modules\.bin;%PATH%
 
-REM --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
-REM --nodedir=C:\nodetmp
+SET NODE_LOCATION=--dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
+IF %PREFER_LOCAL_NODE_EXE% EQU 1 SET NODE_LOCATION=--nodedir=%PKGDIR%\node-v%NODE_VERSION%-%BUILDPLATFORM%
+
+ECHO NODE_LOCATION %NODE_LOCATION%
 
 call .\node_modules\.bin\node-pre-gyp ^
 rebuild %DEBUG_FLAG% ^
 --msvs_version=2013 ^
 --no-rollback ^
 --target=%NODE_VER% ^
---dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
+%NODE_LOCATION%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO build finished
