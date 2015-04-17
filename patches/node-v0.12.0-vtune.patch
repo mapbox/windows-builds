@@ -1,0 +1,33 @@
+diff --git a/node.gyp b/node.gyp
+index f60b294..1a62389 100644
+--- a/node.gyp
++++ b/node.gyp
+@@ -78,6 +78,7 @@
+       'dependencies': [
+         'node_js2c#host',
+         'deps/debugger-agent/debugger-agent.gyp:debugger-agent',
++        'deps/v8/src/third_party/vtune/v8vtune.gyp:v8_vtune',
+       ],
+ 
+       'include_dirs': [
+diff --git a/src/node.cc b/src/node.cc
+index c8dfe04..fbbf9d6 100644
+--- a/src/node.cc
++++ b/src/node.cc
+@@ -92,6 +92,8 @@ typedef int mode_t;
+ extern char **environ;
+ #endif
+ 
++#include "../deps/v8/src/third_party/vtune/v8-vtune.h"
++
+ namespace node {
+ 
+ using v8::Array;
+@@ -3683,6 +3685,7 @@ int Start(int argc, char** argv) {
+   {
+     Locker locker(node_isolate);
+     Isolate::Scope isolate_scope(node_isolate);
++    vTune::InitializeVtuneForV8();
+     HandleScope handle_scope(node_isolate);
+     Local<Context> context = Context::New(node_isolate);
+     Environment* env = CreateEnvironment(
