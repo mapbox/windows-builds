@@ -26,7 +26,28 @@ ECHO cleaning .....
 CALL nmake /F makefile.vc clean
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO building ....
-CALL nmake /A /F makefile.vc
+
+SET INSTDIR=C:\mb\windows-builds-64\packages\libspatialite\install
+SET enable_freexl=no
+SET enable_iconv=xno
+SET enable_dependency_tracking=no
+SET enable_mathsql=no
+SET enable_geocallbacks=no
+SET enable_epsg=no
+SET enable_geosadvanced=no
+SET enable_lwgeom=no
+SET enable_libxml2=no
+SET enable_geopackage=no
+SET enable_gcov=no
+SET enable_examples=no
+
+SET OPTFLAGS=-IC:\mb\windows-builds-64\packages\sqlite 
+SET OPTFLAGS= %OPTFLAGS% -IC:\mb\windows-builds-64\packages\zlib
+SET OPTFLAGS= %OPTFLAGS% -IC:\mb\windows-builds-64\packages\postgresql\src\include\port\win32_msvc
+SET OPTFLAGS= %OPTFLAGS% /Zi /Fdspatialite.pdb /nologo /Ox /fp:precise /W3 /MD /D_CRT_SECURE_NO_WARNINGS /DDLL_EXPORT /DYY_NO_UNISTD_H
+
+
+CALL nmake /A /E /D /P /F makefile.vc 
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 

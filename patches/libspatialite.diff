@@ -1,0 +1,32 @@
+diff --git a/makefile.vc b/makefile.vc
+index 208f460..e33cebc 100644
+--- a/makefile.vc
++++ b/makefile.vc
+@@ -72,10 +72,9 @@ $(SPATIALITE_DLL):	spatialite_i.lib
+ spatialite_i.lib:     $(LIBOBJ)
+ 	link /debug /dll /out:$(SPATIALITE_DLL) \
+ 		/implib:spatialite_i.lib $(LIBOBJ) \
+-		C:\OSGeo4W\lib\proj_i.lib C:\OSGeo4W\lib\geos_c.lib \
+-		C:\OSGeo4w\lib\freexl_i.lib C:\OSGeo4w\lib\iconv.lib \
+-		C:\OSGeo4W\lib\sqlite3_i.lib C:\OSGeo4W\lib\zlib.lib \
+-		C:\OSGeo4W\lib\libxml2.lib
++		C:\mb\windows-builds-64\packages\proj\src\proj_i.lib C:\mb\windows-builds-64\packages\geos\build\lib\Release\geos_c.lib \
++		C:\mb\windows-builds-64\packages\sqlite\sqlite3.lib C:\mb\windows-builds-64\packages\zlib\zlibwapi.lib \
++		C:\mb\windows-builds-64\packages\libxml2\win32\bin.msvc\libxml2.lib
+ 	if exist $(SPATIALITE_DLL).manifest mt -manifest \
+ 		$(SPATIALITE_DLL).manifest -outputresource:$(SPATIALITE_DLL);2
+ 		
+diff --git a/nmake.opt b/nmake.opt
+index 0960ec1..a82d595 100644
+--- a/nmake.opt
++++ b/nmake.opt
+@@ -2,8 +2,7 @@
+ INSTDIR=C:\OSGeo4W
+ 
+ # Uncomment the first for an optimized build, or the second for debug.
+-OPTFLAGS=	/nologo /Ox /fp:precise /W3 /MD /D_CRT_SECURE_NO_WARNINGS \
+-		/DDLL_EXPORT /DYY_NO_UNISTD_H
++OPTFLAGS=-IC:\mb\windows-builds-64\packages\sqlite /Zi /Fdspatialite.pdb /nologo /Ox /fp:precise /W3 /MD /D_CRT_SECURE_NO_WARNINGS /DDLL_EXPORT /DYY_NO_UNISTD_H
+ #OPTFLAGS=	/nologo /Zi /MD /Fdspatialite.pdb /DDLL_EXPORT
+ 
+ # Set the version number for the DLL.  Normally we leave this blank since
