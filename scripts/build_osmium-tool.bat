@@ -20,11 +20,11 @@ IF "%1"=="full" (
 ENDLOCAL
 
 cd %PKGDIR%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if NOT EXIST osmium-tool (
-	REM https://github.com/osmcode/osmium-tool.git
-	git clone https://github.com/BergWerkGIS/osmium-tool.git
-)
+if NOT EXIST osmium-tool git clone https://github.com/osmcode/osmium-tool.git
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 cd osmium-tool
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git fetch
@@ -32,10 +32,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST build (
-	ECHO deleting build dir
-	ddt /Q build
-)
+if EXIST build ECHO deleting build dir && ddt /Q build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 mkdir build
