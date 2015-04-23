@@ -8,10 +8,17 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 cd %PKGDIR%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if NOT EXIST stxxl git clone https://github.com/stxxl/stxxl.git
+IF EXIST stxxl GOTO STXXLFETCH
+
+git clone https://github.com/stxxl/stxxl.git
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+cd stxxl
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+patch -N -p1 < %PATCHES%/stxxl-CTP4-HACK.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-cd stxxl
+:STXXLFETCH
+cd %PKGDIR%\stxxl
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git fetch
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -33,23 +40,34 @@ cmake .. ^
 -DCMAKE_BUILD_TYPE=Release
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+ECHO building
+
+REM #define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
+REM /m:%NUMBER_OF_PROCESSORS% ^
+REM /p:BuildInParallel=true ^
+REM /detailedsummary ^
+
 :: Debug
 :: MinSizeRel
 :: Release
 :: RelWithDebInfo
 :: /verbosity q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
 msbuild stxxl.sln ^
-/nologo ^
-/verbosity:minimal ^
-/t:rebuild ^
+/t:stxxl:rebuild ^
 /m:%NUMBER_OF_PROCESSORS% ^
-/toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
+/nologo ^
+/verbosity:normal ^
+/toolsversion:%TOOLS_VERSION% ^
 /p:Configuration=RelWithDebInfo ^
 /p:Platform=%BUILDPLATFORM% ^
-/p:PlatformToolset=%PLATFORM_TOOLSET%
+/p:PlatformToolset=%PLATFORM_TOOLSET% ^
+/detailedsummary ^
+/consoleloggerparameters:PerformanceSummary;Summary
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+COPY /Y include\stxxl\bits\config.h ..\include\stxxl\bits\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
 
