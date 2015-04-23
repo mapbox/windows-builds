@@ -59,6 +59,9 @@ cd build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET BOOST_LIBRARYDIR=%PKGDIR%\boost\stage\lib
+set TBB_INSTALL_DIR=%PKGDIR%\tbb
+set TBB_ARCH_PLATFORM=build\vs2010\intel64\Release
+
 
 cmake .. ^
 -G "Visual Studio 14 2015 Win64" ^
