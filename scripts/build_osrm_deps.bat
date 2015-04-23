@@ -13,6 +13,15 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL build_zlib.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+CALL build_icu.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL build_python.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL build_boost.bat
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 CALL build_expat.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
@@ -28,13 +37,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL build_osmpbf.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_icu.bat
+CALL build_stxxl.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_python.bat
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-CALL build_boost.bat
+CALL build_lua.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
