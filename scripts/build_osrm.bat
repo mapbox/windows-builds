@@ -60,7 +60,12 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET BOOST_LIBRARYDIR=%PKGDIR%\boost\stage\lib
 set TBB_INSTALL_DIR=%PKGDIR%\tbb
-set TBB_ARCH_PLATFORM=build\vs2010\intel64\Release
+set TBB_ARCH_PLATFORM=%PLATFORM_TOOLSET%\intel64\%BUILD_TYPE%
+
+
+::cmake test for bzip2 needs forward slashes or 4(!) backward slashes http://stackoverflow.com/a/13052993/2333354
+SET BZIP2DIR=%PKGDIR%\bzip2
+SET BZIP2DIR=%BZIP2DIR:\=/%
 
 
 cmake .. ^
@@ -70,7 +75,30 @@ cmake .. ^
 -DCMAKE_INSTALL_PREFIX=%PREFIX% ^
 -DBOOST_ROOT=%PKGDIR%\boost ^
 -DBOOST_LIBRARYDIR=%PKGDIR%\boost\stage\lib ^
--DBoost_USE_STATIC_LIBS=ON
+-DBOOST_INCLUDE_DIR=%PKGDIR%\boost\boost ^
+-DBoost_USE_STATIC_LIBS=ON ^
+-DLUABIND_LIBRARIES=%PKGDIR%\luabind\build\src\RelWithDebInfo ^
+-DLUABIND_LIBRARY=%PKGDIR%\luabind\build\src\RelWithDebInfo\luabind.lib ^
+-DLUABIND_INCLUDE_DIR=%PKGDIR%\luabind ^
+-DLUA_LIBRARIES=%PKGDIR%\lua\build\RelWithDebInfo ^
+-DLUA_LIBRARY=%PKGDIR%\lua\build\RelWithDebInfo\lua.lib ^
+-DLUA_INCLUDE_DIR=%PKGDIR%\lua\src ^
+-DLUAJIT_LIBRARIES=%PKGDIR%\luajit\build\RelWithDebInfo ^
+-DLUAJIT_LIBRARY=%PKGDIR%\luajit\build\RelWithDebInfo\lua.lib ^
+-DLUAJIT_INCLUDE_DIR=%PKGDIR%\luajit\src ^
+-DEXPAT_LIBRARY=%PKGDIR%\expat\win32\bin\Release\libexpat.lib ^
+-DEXPAT_INCLUDE_DIR=%PKGDIR%\expat\lib ^
+-DSTXXL_LIBRARY=%PKGDIR%\stxxl\build\lib\RelWithDebInfo\stxxl.lib ^
+-DSTXXL_INCLUDE_DIR=%PKGDIR%\stxxl\include ^
+-DOSMPBF_LIBRARY=%PKGDIR%\OSM-binary\deploy\lib\osmpbf.lib ^
+-DOSMPBF_INCLUDE_DIR=%PKGDIR%\OSM-binary\deploy\include ^
+-DPROTOBUF_LIBRARY=%PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\libprotobuf.lib ^
+-DPROTOBUF_INCLUDE_DIR=%PKGDIR%\protobuf\src ^
+-DBZIP2_LIBRARIES=%BZIP2DIR%/libbz2.lib ^
+-DBZIP2_LIBRARY=%BZIP2DIR%/libbz2.lib ^
+-DBZIP2_INCLUDE_DIR=%BZIP2DIR% ^
+-DZLIB_LIBRARY=%PKGDIR%\zlib\zlibwapi.lib ^
+-DZLIB_INCLUDE_DIR=%PKGDIR%\zlib
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 msbuild OSRM.sln ^
