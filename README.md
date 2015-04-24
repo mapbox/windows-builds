@@ -1,70 +1,84 @@
 windows-builds
 ===================
 
-Windows build scripts for mapnik dependencies, mapnik, node-mapnik and other software.
+**Things are moving fast and sometimes break.
+If something doesn't work for you, please [open an issue](https://github.com/mapbox/windows-builds/issues/new).**
+
+Windows build scripts mainly targeting:
+* mapnik and its dependencies
+* C++11 build of node
+* node-mapnik
+
+Other supported software: .
+* node-gdal
+* osmium: libosmium, node-osmium, osmium-tool
+* osrm
 
 ## Requirements
 
  - __64bit__ operating system (W7, 8, 8.1, Server 2012)
- - [Visual Studio 2015 CTP5](http://support.microsoft.com/kb/2967191)
+ - [Visual Studio 2015 CTP5](http://support.microsoft.com/kb/2967191), **No earlier versions suppported, because of need of C++11!**
  - [Python 2.7 32 bit](https://www.python.org/downloads/windows/) installed into `C:\Python27`
  - [git](https://msysgit.github.io/) installed into `C:\Program Files (x86)\Git`
 
-## Setup
+## System Setup
 
 Install:
 
  - Python 2.7 32 bit
  - Git
- - Visual Studio 2015 CTP5
+ - Visual Studio 2014 CTP4, VS2015 CTP5 or VS2015 CTP6
 
-Then:
+**When using your builds on other machines, that don't have Visual Studio installed, you will need to install the C++ runtime corresponding to the VS version that was used for building:**
+* VS2014 CTP4 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_x86.exe>)
+* VS2015 CTP5 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP5/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP5/vcredist_x86.exe>)
+* VS2015 CTP6 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP6/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP6/vcredist_x86.exe>)
+
+## Build Setup
+
+There is no need to manually download any dependencies, they all get downloaded automatically when needed.
+
 
 ```
 git clone https://github.com/mapbox/windows-builds.git
 cd windows-builds
-settings.bat (default settings: e.g. 64bit)
+settings.bat
 ```
 
------
+This defines default options to get a quick 64bit build of mapnik: e.g dependencies are not compiled, but **already compiled binary dependencies** get downloaded.
 
-Options for settings.bat ([see source for overridable parameters](/settings.bat)):
+**At the moment these pre-compiled dependencies are compiled with VS2014 CTP4. If you are using a different VS version you have to compile them yourself using `"FASTBUILD=0"`!!!** 
+
+### Options for settings.bat ([see source for overridable parameters](/settings.bat)):
 
     settings.bat ["OVERRIDABLE-PARAM=VALUE"] ["OVERRIDABLE-PARAM-TWO=VALUE"]
 
-__Overridable parameters have to be quoted!__
+You can combine as many overridable parameters as you like, **but each one has to be quoted with double quotes!**
 
-## Building
+Examples:
+* Turning on compilation of dependencies: `settings "FASTBUILD=0"`
+* Building 32bit and using mapnik branch `win-perf`: `settings "TARGET_ARCH=32" "MAPNIKBRANCH=win-perf"` 
 
-To download and build all dependencies, mapnik and node-mapnik run:
+
+## Building mapnik and node-mapnik
 
     scripts\build.bat
 
-## Tip
+With `"FASTBUILD=1"` (the default):
+* downloads pre-compiled dependencies
+* pulls latest mapnik (honoring `MAPNIKBRANCH`)
+* builds mapnik only
+* to also build node-mapnik, issue `scripts\build_node_mapnik.bat` afterwards
 
-If you want to compile 32bit and 64bit use `clean.bat` before compling the second architecture, this will clean all package directories.
+With `"FASTBUILD=0"`:
+* downloads/pulls source and builds each dependencies
+* pulls latest mapnik (honoring `MAPNIKBRANCH`)
+* builds mapnik
+* pulls and builds nodejs
+* pulls latest node-mapnik (honoring `NODEMAPNIKBRANCH`)
+* builds node-mapnik
 
-A better way would be to create a dedicated directory for each architecture, e.g.:
-
-### 64bit
-
-    git clone https://github.com/mapbox/windows-builds.git windows-builds-64
-    cd windows-builds-64
-    settings.bat
-    scripts\build.bat
-
-### 32bit
-
-    git clone https://github.com/mapbox/windows-builds.git windows-builds-32
-    cd windows-builds-32
-    settings.bat "TARGET_ARCH=32"
-    scripts\build.bat
-
-### Bonus Tip
-
-To create a mapnik SDK package, including all necessary header files, libs and dlls adjust the `settings.bat` call:
-
-    settings.bat "PACKAGEMAPNIK=1"
+With `"PACKAGEMAPNIK=1"` (the default) a mapnik SDK package is created, including all necessary header files, libs and DLLs.
 
 The package will be created in the directory `packages\mapnik-<MAPNIKBRANCH>\mapnik-gyp` with this name:
 
@@ -73,3 +87,24 @@ The package will be created in the directory `packages\mapnik-<MAPNIKBRANCH>\map
  e.g.
 
     `mapnik-win-sdk-14.0-x64-v3.0.0-rc1-242-g2a33ead.7z`
+
+
+## Building osmium
+
+    scripts\build_libosmium_deps
+    scripts\package_libosmium_deps
+    scripts\build_libosmium vs
+    scripts\build_osmium-tool
+    
+## Building node-gdal
+
+    scripts\build_node_gdal.bat
+    
+## Building nodejs
+
+    scripts\build_node
+    
+## Building osrm - WORK IN PROGRESS
+
+    scripts\build_osrm_deps
+    scripts\build_osrm
