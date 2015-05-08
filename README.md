@@ -29,7 +29,7 @@ Install:
  - Git
  - Visual Studio 2014 CTP4, VS2015 CTP5, VS2015 CTP6 or VS2015 RC1
 
-**When using your builds on other machines, that don't have Visual Studio installed, you will need to install the C++ runtime corresponding to the VS version that was used for building:**
+**When using your builds on machines, that don't have Visual Studio installed, you have to install the C++ runtime corresponding to the VS version that was used for building:**
 * VS2014 CTP4 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_x86.exe>)
 * VS2015 CTP5 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP5/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP5/vcredist_x86.exe>)
 * VS2015 CTP6 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP6/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP6/vcredist_x86.exe>)
