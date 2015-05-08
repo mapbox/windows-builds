@@ -17,7 +17,7 @@ Other supported software: .
 ## Requirements
 
  - __64bit__ operating system (W7, 8, 8.1, Server 2012)
- - [Visual Studio 2015 CTP5](http://support.microsoft.com/kb/2967191), **No earlier versions suppported, because of need of C++11!**
+ - [Visual Studio 2015 CTP4](http://support.microsoft.com/kb/2967191), **No earlier versions suppported, C++11 support needed!**
  - [Python 2.7 32 bit](https://www.python.org/downloads/windows/) installed into `C:\Python27`
  - [git](https://msysgit.github.io/) installed into `C:\Program Files (x86)\Git`
 
@@ -27,12 +27,13 @@ Install:
 
  - Python 2.7 32 bit
  - Git
- - Visual Studio 2014 CTP4, VS2015 CTP5 or VS2015 CTP6
+ - Visual Studio 2014 CTP4, VS2015 CTP5, VS2015 CTP6 or VS2015 RC1
 
 **When using your builds on other machines, that don't have Visual Studio installed, you will need to install the C++ runtime corresponding to the VS version that was used for building:**
 * VS2014 CTP4 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_x86.exe>)
 * VS2015 CTP5 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP5/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP5/vcredist_x86.exe>)
 * VS2015 CTP6 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP6/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015-CTP6/vcredist_x86.exe>)
+* VS2015 RC1 runtime: [x64](<https://mapnik.s3.amazonaws.com/dist/dev/visual-studio-runtimes/vcredist-VS2015-RC1/vc_redist.x64.exe>) [x86](<https://mapnik.s3.amazonaws.com/dist/dev/visual-studio-runtimes/vcredist-VS2015-RC1/vc_redist.x86.exe>)
 
 ## Build Setup
 
