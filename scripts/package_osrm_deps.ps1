@@ -30,6 +30,7 @@ $boost_include_dest_dir = "${osrm_deps_dir}boost\include\boost-1_$env:BOOST_VERS
 $tbb_lib_src_dir = "$env:PKGDIR\tbb\lib\v140\intel64\Release\"
 $tbb_include_src_dir = "$env:PKGDIR\tbb\include\"
 
+#delete existing deps dir
 &ddt /Q $osrm_deps_dir
 
 # hashtable with destinations and corresponding files in arrays
@@ -45,17 +46,17 @@ $file_list = @{
         ("$boost_lib_src_dir" + "libboost_thread-$tools_version-mt-1_$env:BOOST_VERSION.lib"),
         ("$boost_lib_src_dir" + "libboost_unit_test_framework-$tools_version-mt-1_$env:BOOST_VERSION.lib"),
         ("$boost_lib_src_dir" + "libboost_zlib-$tools_version-mt-1_$env:BOOST_VERSION.lib")
-    )
+    );
     "$boost_include_dest_dir" = @(
         ("$boost_include_src_dir" + "*.*")
-    )
+    );
     "$osrm_libs_bin_dest_dir" = @(
         ("$env:PKGDIR" + "\lua\build\RelWithDebInfo\lua.dll"),
         ("$env:PKGDIR" + "\protobuf\vsprojects\x64\Release\protoc.exe"),
         ("$tbb_lib_src_dir" + "tbb.dll"),
         ("$tbb_lib_src_dir" + "tbbmalloc.dll"),
         ("$tbb_lib_src_dir" + "tbbmalloc_proxy.dll")
-    )
+    );
     "$osrm_libs_include_dest_dir" = @(
         ("$env:PKGDIR" + "\bzip2\bzlib.h"),
         ("$env:PKGDIR" + "\expat\lib\expat.h"),
@@ -72,7 +73,7 @@ $file_list = @{
         ("$env:PKGDIR" + "\luabind\luabind\*.*"),
         ("$env:PKGDIR" + "\OSM-binary\include\osmpbf\*.*"),
         ("$env:PKGDIR" + "\stxxl\include\stxxl\*.*")
-    )
+    );
     "$osrm_libs_lib_dest_dir" = @(
         ("$env:PKGDIR" + "\bzip2\libbz2.lib"),
         ("$env:PKGDIR" + "\expat\win32\bin\Release\libexpat.lib"),
@@ -82,15 +83,38 @@ $file_list = @{
         ("$env:PKGDIR" + "\protobuf\vsprojects\x64\Release\libprotobuf.lib"),
         ("$env:PKGDIR" + "\stxxl\build\lib\RelWithDebInfo\stxxl.lib"),
         ("$env:PKGDIR" + "\zlib\zlib.lib")
-    )
+    );
     "$osrm_tbb_lib_dest_dir" = @(
         ("$tbb_lib_src_dir" + "tbb.dll"),
         ("$tbb_lib_src_dir" + "tbbmalloc.dll"),
         ("$tbb_lib_src_dir" + "tbbmalloc_proxy.dll")
-    )
+    );
     "$osrm_tbb_include_dest_dir" = @(
         ("$tbb_include_src_dir" + "*.*")
-    )
+    );
+};
+
+
+function Write-Callstack([System.Management.Automation.ErrorRecord]$ErrorRecord=$null, [int]$Skip=1){
+    Write-Host # blank line
+    if ($ErrorRecord){
+        Write-Host -ForegroundColor Red "$ErrorRecord $($ErrorRecord.InvocationInfo.PositionMessage)"
+
+        if ($ErrorRecord.Exception){
+            Write-Host -ForegroundColor Red $ErrorRecord.Exception
+        }
+
+        if ((Get-Member -InputObject $ErrorRecord -Name ScriptStackTrace) -ne $null) {
+            #PS 3.0 has a stack trace on the ErrorRecord; if we have it, use it & skip the manual stack trace below
+            Write-Host -ForegroundColor Red $ErrorRecord.ScriptStackTrace
+            return
+        }
+    }
+
+    Get-PSCallStack | Select -Skip $Skip | % {
+        Write-Host -ForegroundColor Yellow -NoNewLine "! "
+        Write-Host -ForegroundColor Red $_.Command $_.Location $(if ($_.Arguments.Length -le 80) { $_.Arguments })
+    }
 }
 
 
@@ -106,68 +130,43 @@ Function test-env-var() {
 
 
 Function copy-all-files(){
+
     $err_files = @()
 
     $file_list.GetEnumerator() | % {
+
         $dest = $_.Key
-        if($env:VERBOSE -eq 1){
-            Write-Host $nl$nl "---->" $dest $nl -ForegroundColor Blue
-        }
-        Write-Host "$_.Value"
+        if($env:VERBOSE -eq 1){ Write-Host "$nl$nl dest ----> $dest $nl" -ForegroundColor Blue }
+
         foreach($file in $_.Value){
             try {
-                if($env:VERBOSE -eq 1){
-                    Write-Host $file
-                }
-                if(!(Test-Path -Path $dest )){
-                    New-Item -ItemType directory -Path $dest
-                }
+                if($env:VERBOSE -eq 1){ Write-Host "copying $file" -ForegroundColor Yellow }
+                if(!(Test-Path -Path $dest )){ New-Item -ItemType directory -Path $dest }
+
                 $file_name = Split-Path -Leaf "$file"
                 if($file_name -eq "*.*"){
-                    $src_dir = Split-Path "$file"
+                   $src_dir = Split-Path "$file"
                    Copy-Item -Path $src_dir -Destination $dest -Recurse -Force
                    $script:cnt_success += (Get-ChildItem $src_dir -Recurse).Count - 1
                } else {
                     Copy-Item $file $dest -Force
-                }
-                $script:cnt_success++
+               }
+               $script:cnt_success++
             }
             catch {
                 $script:cnt_fail++
                 $err_files += ,$file
-                Write-Host $file -ForegroundColor Red
-                Write-Host $_.Exception.Message $nl -ForegroundColor Red
+                Write-Host "COPY FAIL $file" -ForegroundColor Yellow
+                Write-Host $_.Exception.Message $nl -ForegroundColor Yellow
+                Write-Host $_.Exception|format-list -Force
+                Write-Host "$Error"
+                Write-Host "$Error[0]"
+                Write-Callstack $Error[0]
             }
         }
     }
+    Write-Host "${nl}before return, err_files:$nl", ($err_files -join $nl) -ForegroundColor Yellow
     return $err_files
-}
-
-
-function Write-Callstack([System.Management.Automation.ErrorRecord]$ErrorRecord=$null, [int]$Skip=1)
-{
-    Write-Host # blank line
-    if ($ErrorRecord)
-    {
-        Write-Host -ForegroundColor Red "$ErrorRecord $($ErrorRecord.InvocationInfo.PositionMessage)"
-
-        if ($ErrorRecord.Exception)
-        {
-            Write-Host -ForegroundColor Red $ErrorRecord.Exception
-        }
-
-        if ((Get-Member -InputObject $ErrorRecord -Name ScriptStackTrace) -ne $null)
-        {
-            #PS 3.0 has a stack trace on the ErrorRecord; if we have it, use it & skip the manual stack trace below
-            Write-Host -ForegroundColor Red $ErrorRecord.ScriptStackTrace
-            return
-        }
-    }
-
-    Get-PSCallStack | Select -Skip $Skip | % {
-        Write-Host -ForegroundColor Yellow -NoNewLine "! "
-        Write-Host -ForegroundColor Red $_.Command $_.Location $(if ($_.Arguments.Length -le 80) { $_.Arguments })
-    }
 }
 
 
@@ -187,13 +186,16 @@ Function main(){
             exit 1
         }
 
+        $files_err = @()
         $files_err = copy-all-files
-        Write-Host "error files: $files_err"
-        if($files_err -gt 0){
+        Write-Host "error files, after return:$nl", ($files_err -join $nl)
+        Write-Host "before err files compare"
+        if($files_err.Count -gt 0){
             Write-Host $err_line -ForegroundColor Red
             Write-Host "File copy failed (details above):$nl", ($files_err -join $nl) -ForegroundColor Red
             exit 1
         }
+        Write-Host "after err files compare"
     }
     catch {
         Write-Host "EXCEPTION"

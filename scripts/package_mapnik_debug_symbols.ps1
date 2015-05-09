@@ -151,7 +151,7 @@ Function main(){
         }
 
         $files_err = copy-all-files
-        if($files_err -gt 0){
+        if($files_err.Count -gt 0){
             Write-Host $err_line -ForegroundColor Red
             Write-Host "File copy failed (details above):$nl", ($files_err -join $nl) -ForegroundColor Red
             exit 1
