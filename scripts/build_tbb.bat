@@ -5,6 +5,22 @@ echo ------ tbb -----
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 
+cd %PKGDIR%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL %ROOTDIR%\scripts\download tbb%TBB_VERSION%_src.tgz
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+if EXIST tbb ECHO found extracted sources && GOTO SRCFOUND
+
+ECHO extracting
+CALL bsdtar xfz tbb%TBB_VERSION%_src.tgz
+RENAME tbb%TBB_VERSION% tbb
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+:SRCFOUND
+
 cd %PKGDIR%\tbb\build\vs2010
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
