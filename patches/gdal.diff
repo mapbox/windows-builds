@@ -2,15 +2,6 @@ diff --git a/nmake.opt b/nmake.opt
 index 936cfcc..bf7072e 100644
 --- a/nmake.opt
 +++ b/nmake.opt
-@@ -215,7 +215,7 @@ INCLUDE_OGR_FRMTS = YES
- BSB_SUPPORTED = 1
- 
- # Comment out the following to disable ODBC support.
--ODBC_SUPPORTED = 1
-+#ODBC_SUPPORTED = 0
- 
- # Comment out the following to disable JPEG support.
- JPEG_SUPPORTED = 1
 @@ -224,9 +224,9 @@ JPEG_SUPPORTED = 1
  JPEG12_SUPPORTED = 1
  
@@ -35,6 +26,15 @@ index 936cfcc..bf7072e 100644
  
  # Uncomment for Xerces based GML and ILI support.
  #XERCES_DIR =	c:\warmerda\supportlibs\xerces-c_2_6_0
+@@ -626,7 +626,7 @@ GDALLIB	=    $(GDAL_ROOT)/gdal.lib
+ !ENDIF
+
+ !IFDEF ODBC_SUPPORTED
+-ODBCLIB = odbc32.lib odbccp32.lib user32.lib
++ODBCLIB = legacy_stdio_definitions.lib odbc32.lib odbccp32.lib user32.lib
+ !ENDIF
+
+ !IF DEFINED(MRSID_DIR) || DEFINED(MRSID_RASTER_DIR) || DEFINED(MRSID_LIDAR_DIR)
 diff --git a/port/cpl_config.h.vc b/port/cpl_config.h.vc
 index bfff8f6..35311b2 100644
 --- a/port/cpl_config.h.vc
