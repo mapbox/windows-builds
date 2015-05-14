@@ -135,12 +135,16 @@ Function copy-all-files(){
 
     $file_list.GetEnumerator() | % {
 
-        if($env:VERBOSE -eq 1){ Write-Host "$nl$nl dest ----> $_.Key $nl" -ForegroundColor Blue }
+        if($env:VERBOSE -eq 1){ Write-Host $nl$nl "dest ---->" $_.Key $nl -ForegroundColor Blue; }
 
         foreach($file in $_.Value){
             try {
-                if($env:VERBOSE -eq 1){ Write-Host "copying $file" -ForegroundColor Yellow }
-                if(!(Test-Path -Path $_.Key )){ New-Item -ItemType directory -Path $_.Key }
+                if($env:VERBOSE -eq 1){ Write-Host "copying $file" -ForegroundColor Yellow; }
+                if(!(Test-Path -Path $_.Key )){ 
+                    #!!! capture output of New-Item, otherwise it will write
+                    #to the outputpipeline of this function!!!
+                    $bla = New-Item -ItemType Directory $_.Key; 
+                }
 
                 $file_name = Split-Path -Leaf "$file"
                 if($file_name -eq "*.*"){
@@ -164,9 +168,6 @@ Function copy-all-files(){
             }
         }
     }
-    $err_files += ,'ablabla'
-    Write-Host "${nl}before return, err_files:$nl", ($err_files -join $nl) -ForegroundColor Yellow
-    Write-Host "${nl}before return, dest:$nl", $_.Key -ForegroundColor Yellow
     return $err_files
 }
 
@@ -189,18 +190,12 @@ Function main(){
 
         $files_err = @()
         $files_err = copy-all-files
-        Write-Host $files_err.GetType()
-        Write-Host "${nl}files_err", $files_err
-        Write-Host "${nl}files_err $files_err"
-        Write-Host "error files, after return:$nl", ($files_err -join $nl)
-        Write-Host "before err files compare"
         if($files_err.Count -gt 0){
             Write-Host $err_line -ForegroundColor Red
             Write-Host $files_err.Count
             Write-Host "File copy failed (details above):$nl", ($files_err -join $nl) -ForegroundColor Red
             exit 1
         }
-        Write-Host "after err files compare"
     }
     catch {
         Write-Host "EXCEPTION"
