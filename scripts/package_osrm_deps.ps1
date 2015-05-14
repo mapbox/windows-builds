@@ -85,9 +85,9 @@ $file_list = @{
         ("$env:PKGDIR" + "\zlib\zlib.lib")
     );
     "$osrm_tbb_lib_dest_dir" = @(
-        ("$tbb_lib_src_dir" + "tbb.dll"),
-        ("$tbb_lib_src_dir" + "tbbmalloc.dll"),
-        ("$tbb_lib_src_dir" + "tbbmalloc_proxy.dll")
+        ("$tbb_lib_src_dir" + "tbb.lib"),
+        ("$tbb_lib_src_dir" + "tbbmalloc.lib"),
+        ("$tbb_lib_src_dir" + "tbbmalloc_proxy.lib")
     );
     "$osrm_tbb_include_dest_dir" = @(
         ("$tbb_include_src_dir" + "*.*")
