@@ -8,6 +8,8 @@ IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO
 
 SET BUILD_DEPS=0
 
+::GOTO PREPARETESTS
+
 :NEXT-ARG
 IF "%1"=="" GOTO ARGS-DONE
 IF /i "%1"=="builddeps" SET BUILD_DEPS=1 && GOTO ARG-OK
@@ -104,6 +106,30 @@ msbuild OSRM.sln ^
 /flp1:logfile=build_errors.txt;errorsonly ^
 /flp2:logfile=build_warnings.txt;warningsonly
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:PREPARETESTS
+ECHO getting ruby
+IF EXIST %ROOTDIR%tmp-bin\ruby-2.2.2-x64-mingw32 GOTO RUNTESTS
+
+cd %ROOTDIR%\tmp-bin
+CALL %ROOTDIR%\scripts\download ruby-2.2.2-x64-mingw32.7z
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CALL 7z x -y ruby-2.2.2-x64-mingw32.7z | %windir%\system32\FIND "ing archive"
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:RUNTESTS
+ECHO running tests
+SET PATH=%OSRMDEPSDIR%\libs\bin;%ROOTDIR%\tmp-bin\ruby-2.2.2-x64-mingw32\bin;%PKGDIR%\osrm-backend\build;%PATH%
+::echo disk=%CD%\stxxl,1000,wincall > test/stxxl.txt
+SET OSRM_TIMEOUT=200
+SET STXXLCFG=stxxl.txt
+CD %PKGDIR%\osrm-backend
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ECHO calling cucumber
+::CALL cucumber
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 
 ECHO =========== TRYING TO RUN OSRM ===============
 
