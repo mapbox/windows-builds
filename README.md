@@ -17,7 +17,7 @@ Other supported software: .
 ## Requirements
 
  - __64bit__ operating system (W7, 8, 8.1, Server 2012)
- - [Visual Studio 2015 CTP4](http://support.microsoft.com/kb/2967191), **No earlier versions suppported, C++11 support needed!**
+ - [Visual Studio 2015 RC](http://support.microsoft.com/kb/2967191), **No earlier versions suppported, C++11 support needed!**
  - [Python 2.7 32 bit](https://www.python.org/downloads/windows/) installed into `C:\Python27`
  - [git](https://msysgit.github.io/) installed into `C:\Program Files (x86)\Git`
 
@@ -27,7 +27,7 @@ Install:
 
  - Python 2.7 32 bit
  - Git
- - Visual Studio 2014 CTP4, VS2015 CTP5, VS2015 CTP6 or VS2015 RC1
+ - Visual Studio VS2015 RC1
 
 **When using your builds on machines, that don't have Visual Studio installed, you have to install the C++ runtime corresponding to the VS version that was used for building:**
 * VS2014 CTP4 runtime: [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_x64.exe>) [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2014-CTP4/vcredist_x86.exe>)
@@ -87,7 +87,7 @@ The package will be created in the directory `packages\mapnik-<MAPNIKBRANCH>\map
 
  e.g.
 
-    `mapnik-win-sdk-14.0-x64-v3.0.0-rc1-242-g2a33ead.7z`
+    mapnik-win-sdk-14.0-x64-v3.0.0-rc1-242-g2a33ead.7z
 
 
 ## Building osmium
@@ -107,5 +107,8 @@ The package will be created in the directory `packages\mapnik-<MAPNIKBRANCH>\map
     
 ## Building osrm - WORK IN PROGRESS
 
-    scripts\build_osrm_deps
-    scripts\build_osrm
+    scripts\build_osrm builddeps
+
+Will create:
+* `bin\osrm-deps-win-x64-14.0.7z`
+* `bin\osrm-release-<GIT-TAG>-x64-win-14.0.7z`
