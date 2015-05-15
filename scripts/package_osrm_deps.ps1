@@ -51,11 +51,12 @@ $file_list = @{
         ("$boost_include_src_dir" + "*.*")
     );
     "$osrm_libs_bin_dest_dir" = @(
-        ("$env:PKGDIR" + "\lua\build\RelWithDebInfo\lua.dll"),
-        ("$env:PKGDIR" + "\protobuf\vsprojects\x64\Release\protoc.exe"),
-        ("$tbb_lib_src_dir" + "tbb.dll"),
-        ("$tbb_lib_src_dir" + "tbbmalloc.dll"),
-        ("$tbb_lib_src_dir" + "tbbmalloc_proxy.dll")
+        ("${env:PKGDIR}\lua\build\RelWithDebInfo\lua.dll"),
+        ("${env:PKGDIR}\protobuf\vsprojects\x64\Release\protoc.exe"),
+        ("${env:PKGDIR}\expat\win32\bin\Release\libexpat.dll"),
+        ("${tbb_lib_src_dir}tbb.dll"),
+        ("${tbb_lib_src_dir}tbbmalloc.dll"),
+        ("${tbb_lib_src_dir}tbbmalloc_proxy.dll")
     );
     "$osrm_libs_include_dest_dir" = @(
         ("$env:PKGDIR" + "\bzip2\bzlib.h"),
@@ -196,7 +197,6 @@ Function main(){
         $files_err = copy-all-files
         if($files_err.Count -gt 0){
             Write-Host $err_line -ForegroundColor Red
-            Write-Host $files_err.Count
             Write-Host "File copy failed (details above):$nl", ($files_err -join $nl) -ForegroundColor Red
             exit 1
         }

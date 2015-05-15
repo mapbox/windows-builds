@@ -11,7 +11,7 @@ $needed_env_vars = @(
 $osrm_pkg_dir = "$env:PKGDIR\osrm-release\osrm-release\"
 
 #profiles
-$osrm_src_dir_profiles = "$env:PKGDIR\osrm-backend\profiles\*.*"
+$osrm_src_dir_profiles = "$env:PKGDIR\osrm-backend\profiles\*"
 $osrm_src_dir_build = "$env:PKGDIR\osrm-backend\build\Release\"
 $osrm_src_dir_deps = "$env:PKGDIR\osrm-deps\osrm-deps\"
 $osrm_src_dir_deps_bin = "${osrm_src_dir_deps}libs\bin\"
@@ -23,6 +23,7 @@ $osrm_src_dir_deps_bin = "${osrm_src_dir_deps}libs\bin\"
 $file_list = @{
     "$osrm_pkg_dir" = @(
         ($osrm_src_dir_profiles),
+        ("${osrm_src_dir_deps_bin}libexpat.dll"),
         ("${osrm_src_dir_deps_bin}lua.dll"),
         ("${osrm_src_dir_deps_bin}tbb.dll"),
         ("${osrm_src_dir_deps_bin}tbbmalloc.dll"),
@@ -93,8 +94,8 @@ Function copy-all-files(){
                 $file_name = Split-Path -Leaf "$file"
                 if($file_name -eq "*.*"){
                    $src_dir = Split-Path "$file"
-                   Copy-Item -Path $src_dir -Destination $dest -Recurse -Force
-                   #Copy-Item -Path $file -Destination $dest -Recurse -Force
+                   #Copy-Item -Path $src_dir -Destination $dest -Recurse -Force
+                   Copy-Item $file $dest -Recurse -Force
                    $script:cnt_success += (Get-ChildItem $src_dir -Recurse).Count - 1
                } else {
                     Copy-Item $file $dest -Force

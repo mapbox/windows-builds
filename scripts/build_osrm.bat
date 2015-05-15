@@ -105,6 +105,72 @@ msbuild OSRM.sln ^
 /flp2:logfile=build_warnings.txt;warningsonly
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+ECHO =========== TRYING TO RUN OSRM ===============
+
+CALL powershell %ROOTDIR%scripts\package_osrm.ps1
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CD %PKGDIR%\osrm-release\osrm-release
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+COPY car.lua profile.lua
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+SET TESTDATABASENAME=berlin-latest
+SET TESTDATAPBF=berlin-latest.osm.pbf
+SET TESTDATAOSRM=berlin-latest.osrm
+ECHO downloading %TESTDATA%
+CALL curl -O http://download.geofabrik.de/europe/germany/%TESTDATAPBF%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+osrm-extract %berlin-latest.osm.pbf%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+osrm-prepare %TESTDATAOSRM%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO ======== TODO^: TEST IF SERVER WORKS ===========
+::osrm-routed %TESTDATAOSRM%
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::http://localhost:5000/locate?loc=52.4224,13.333086
+::http://localhost:5000/nearest?loc=52.4224,13.333086
+::http://localhost:5000/viaroute?loc=52.503033,13.420526&loc=52.516582,13.429290&instructions=true
+
+DEL %TESTDATABASENAME%*
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+ECHO ========= PACKAGING ===============
+
+CD %PKGDIR%\osrm-backend
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+FOR /F "tokens=*" %%i in ('git describe') do SET GITVERSION=%%i
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+SET ARCH=x64
+if %TARGET_ARCH% EQU 32 SET ARCH=x86
+
+SET PKGNAME=osrm-release-%GITVERSION%-%ARCH%-win-%TOOLS_VERSION%.7z
+
+cd %PKGDIR%\osrm-release
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+IF EXIST %PKGNAME% DEL %PKGNAME%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST %ROOTDIR%\bin\%PKGNAME% DEL %ROOTDIR%\bin\%PKGNAME%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+7z a -r -mx9 %PKGNAME% osrm-release | %windir%\system32\FIND "ing archive"
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+COPY %PKGNAME% %ROOTDIR%\bin\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO osrm-release copied to %ROOTDIR%\bin\%PKGNAME%
+GOTO DONE
+
+
 GOTO DONE
 
 :ERROR
