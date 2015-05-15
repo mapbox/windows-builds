@@ -135,24 +135,28 @@ Function copy-all-files(){
 
     $file_list.GetEnumerator() | % {
 
-        if($env:VERBOSE -eq 1){ Write-Host $nl$nl "dest ---->" $_.Key $nl -ForegroundColor Blue; }
+        $dest = $_.Key
+        if($env:VERBOSE -eq 1){ Write-Host $nl$nl "dest ---->" $dest $nl -ForegroundColor Blue; }
 
         foreach($file in $_.Value){
             try {
                 if($env:VERBOSE -eq 1){ Write-Host "copying $file" -ForegroundColor Yellow; }
-                if(!(Test-Path -Path $_.Key )){ 
+                if(!(Test-Path -Path $dest )){ 
                     #!!! capture output of New-Item, otherwise it will write
                     #to the outputpipeline of this function!!!
-                    $bla = New-Item -ItemType Directory $_.Key; 
+                    $bla = New-Item -ItemType Directory $dest; 
                 }
 
                 $file_name = Split-Path -Leaf "$file"
                 if($file_name -eq "*.*"){
                    $src_dir = Split-Path "$file"
-                   Copy-Item -Path $src_dir -Destination $_.Key -Recurse -Force
+                   Copy-Item -Path $src_dir -Destination $dest -Recurse -Force
                    $script:cnt_success += (Get-ChildItem $src_dir -Recurse).Count - 1
+                } ElseIf($file_name -eq "libbz2.lib"){
+                    #rename to bzip2.lib, otherwise cmake won't find it
+                    Copy-Item $file "${dest}bzip2.lib" -Force
                } else {
-                    Copy-Item $file $_.Key -Force
+                    Copy-Item $file $dest -Force
                }
                $script:cnt_success++
             }
@@ -207,11 +211,6 @@ Function main(){
         exit 1
     }
     finally {
-        $cnt_files = 0
-        $file_list.GetEnumerator() | % {
-            $cnt_files += $_.Value.count
-        }
-
         Write-Host "$script:cnt_success files copied, $script:cnt_fail failed"
         Write-Host "============= DONE COPY OSRM DEPS ================$nl" -ForegroundColor Green
         Write-Host "$nl MAYBE USE LUABIND libs???$nl" -ForegroundColor Red
