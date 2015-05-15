@@ -123,7 +123,7 @@ ECHO downloading %TESTDATA%
 CALL curl -O http://download.geofabrik.de/europe/germany/%TESTDATAPBF%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-osrm-extract %berlin-latest.osm.pbf%
+osrm-extract %TESTDATAPBF%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 osrm-prepare %TESTDATAOSRM%

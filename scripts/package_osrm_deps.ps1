@@ -213,7 +213,6 @@ Function main(){
     finally {
         Write-Host "$script:cnt_success files copied, $script:cnt_fail failed"
         Write-Host "============= DONE COPY OSRM DEPS ================$nl" -ForegroundColor Green
-        Write-Host "$nl MAYBE USE LUABIND libs???$nl" -ForegroundColor Red
     }
 }
 
