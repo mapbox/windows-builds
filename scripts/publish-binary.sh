@@ -22,7 +22,8 @@ fi
 if test "${COMMIT_MESSAGE#*'[publish debug]'}" != "$COMMIT_MESSAGE"
 then
     echo "Commit includes [publish debug] skipping stack teardown."
-    BUILD_CMD="wbs-build-prepare.ps1"
+    #temporarily deactivate for debugging issues
+    #BUILD_CMD="wbs-build-prepare.ps1"
     STOP_COMPUTER=""
 fi
 
