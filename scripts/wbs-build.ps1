@@ -50,7 +50,9 @@ Write-Host "PUBLISH_NODEGDAL: $env:PUBLISH_NODEGDAL"
 if (-not(Test-Path "Env:\PUBLISH_NODEGDAL")){
     $buildcmd="scripts\build"
 } else {
-    $buildcmd="scripts\build_node_gdal"
+    if ($env:PUBLISH_NODEGDAL -ne 0) {
+        $buildcmd="scripts\build_node_gdal"
+    }
 }
 
 
