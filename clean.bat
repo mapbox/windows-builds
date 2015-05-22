@@ -54,6 +54,8 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
 :GDAL
+ddt /Q packages\gdal-%GDAL_VERSION%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ddt /Q packages\gdal
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ddt /Q packages\gdal-sdk
