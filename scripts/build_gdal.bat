@@ -10,23 +10,24 @@ cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download gdal-%GDAL_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
-if EXIST gdal (
-  echo found extracted sources
-)
+if EXIST gdal echo found extracted sources GOTO SRCALREADYEXTRACTED
 
-SETLOCAL ENABLEDELAYEDEXPANSION
-if NOT EXIST gdal (
-  echo extracting ...
-  CALL bsdtar xfz gdal-%GDAL_VERSION%.tar.gz
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  rename gdal-%GDAL_VERSION% gdal
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  cd %PKGDIR%\gdal
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  patch -N -p1 < %PATCHES%/gdal.diff || %SKIP_FAILED_PATCH%
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-)
-ENDLOCAL
+echo extracting ...
+CALL bsdtar xfz gdal-%GDAL_VERSION%.tar.gz
+IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+rename gdal-%GDAL_VERSION% gdal
+IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+cd %PKGDIR%\gdal
+IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+
+SET GDAL_PATCH=%PATCHES%\gdal-VS2015RC1.diff
+CALL %ROOTDIR%\scripts\check-cl.bat 19.00.22129.1
+IF %ERRORLEVEL% EQU 0 ECHO VS2014 CTP4 detected && SET GDAL_PATCH=%PATCHES%\gdal-VS2014CTP4.diff
+
+patch -N -p1 < %GDAL_PATCH% || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:SRCALREADYEXTRACTED
 
 cd %PKGDIR%\gdal
 IF ERRORLEVEL 1 GOTO ERROR
