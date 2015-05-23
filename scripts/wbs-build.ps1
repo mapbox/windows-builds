@@ -1,5 +1,5 @@
 ﻿
-Invoke-WebRequest https://mapnik.s3.amazonaws.com/dist/dev/windows-build-server/windows-build-server-publish.7z -OutFile Z:\\wbs.7z
+Invoke-WebRequest https://mapbox.s3.amazonaws.com/windows-builds/windows-build-server/windows-build-server-publish.7z -OutFile Z:\\wbs.7z
 Stop-WebSite -Name "Default Web Site"
 
 #change 'Connect as...' to 'Pass-through authentication
