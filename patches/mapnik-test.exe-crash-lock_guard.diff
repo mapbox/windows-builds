@@ -1,0 +1,13 @@
+diff --git a/include/mapnik/utils.hpp b/include/mapnik/utils.hpp
+index a306f1c..cb2c996 100644
+--- a/include/mapnik/utils.hpp
++++ b/include/mapnik/utils.hpp
+@@ -122,7 +122,7 @@ protected:
+             if (! pInstance_)
+             {
+ #ifdef MAPNIK_THREADSAFE
+-                std::lock_guard<std::mutex> lock(mutex_);
++                //std::lock_guard<std::mutex> lock(mutex_);
+ #endif
+                 if (! pInstance_)
+                 {

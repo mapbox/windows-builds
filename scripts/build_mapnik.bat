@@ -13,6 +13,11 @@ ECHO cloning mapnik
 git clone https://github.com/mapnik/mapnik mapnik-%MAPNIKBRANCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+patch -N -p1 < %PATCHES%\mapnik-test.exe-crash.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+patch -N -p1 < %PATCHES%\mapnik-test.exe-crash-lock_guard.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 :FETCHMAPNIK
 cd mapnik-%MAPNIKBRANCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
