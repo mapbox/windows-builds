@@ -172,7 +172,7 @@ IF %BUNDLE_RUNTIME% EQU 0 GOTO COPYMAPNIKLIBS
 SET RT_FILE=vcredist_%PLATFORMX%-mini.7z
 curl -s -S -f -L -k --retry 3 https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/%RUNTIME_VERSION%/%RT_FILE% -o %BINDINGIDR%\%RT_FILE%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-::7z x %BINDINGIDR%\%RT_FILE% -o%BINDINGIDR% | %windir%\system32\FIND "ing archive"
+7z x %BINDINGIDR%\%RT_FILE% -o%BINDINGIDR% | %windir%\system32\FIND "ing archive"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 DEL /F %BINDINGIDR%\%RT_FILE%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
