@@ -21,6 +21,8 @@ IF "%1"=="" (
 
 ECHO using node %NODE_VER%
 ECHO PACKAGEDEBUGSYMBOLS %PACKAGEDEBUGSYMBOLS%
+ECHO BUNDLE_RUNTIME %BUNDLE_RUNTIME%
+ECHO RUNTIME_VERSION %RUNTIME_VERSION%
 
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%PATH%
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
@@ -165,6 +167,17 @@ set HERENOW=%CD%
 cd %BINDINGIDR%
 SET BINDINGIDR=%CD%
 cd %HERENOW%
+
+IF %BUNDLE_RUNTIME% EQU 0 GOTO COPYMAPNIKLIBS
+SET RT_FILE=vcredist_%PLATFORMX%-mini.7z
+curl -s -S -f -L -k --retry 3 https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/%RUNTIME_VERSION%/%RT_FILE% -o %BINDINGIDR%\%RT_FILE%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::7z x %BINDINGIDR%\%RT_FILE% -o%BINDINGIDR% | %windir%\system32\FIND "ing archive"
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+DEL /F %BINDINGIDR%\%RT_FILE%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:COPYMAPNIKLIBS
 xcopy /Q /S /Y %MAPNIK_SDK%\lib\mapnik\input %BINDINGIDR%\mapnik\input\
 IF ERRORLEVEL 1 GOTO ERROR
 xcopy /Q /S /Y %MAPNIK_SDK%\share %BINDINGIDR%\share\
@@ -208,8 +221,10 @@ ECHO     'PROJ_LIB': path.join(__dirname, 'share/proj'), >> %BINDINGIDR%\mapnik_
 ECHO     'PATH': __dirname >> %BINDINGIDR%\mapnik_settings.js
 ECHO }; >> %BINDINGIDR%\mapnik_settings.js
 
-echo running tests against
-CALL npm test || true
+
+echo running tests again
+:: CALL npm test || true
+CALL npm test
 IF %IGNOREFAILEDTESTS% EQU 0 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %IGNOREFAILEDTESTS% EQU 1 SET ERRORLEVEL=0
 
