@@ -7,10 +7,11 @@ echo ------ gdal -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
+
+if EXIST gdal echo found extracted sources && GOTO SRCALREADYEXTRACTED
+
 CALL %ROOTDIR%\scripts\download gdal-%GDAL_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
-
-if EXIST gdal echo found extracted sources GOTO SRCALREADYEXTRACTED
 
 echo extracting ...
 CALL bsdtar xfz gdal-%GDAL_VERSION%.tar.gz
