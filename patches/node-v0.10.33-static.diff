@@ -1,0 +1,110 @@
+diff --git a/common.gypi b/common.gypi
+index fd2ff84..f9d2a97 100644
+--- a/common.gypi
++++ b/common.gypi
+@@ -44,7 +44,7 @@
+         ],
+         'msvs_settings': {
+           'VCCLCompilerTool': {
+-            'RuntimeLibrary': 3, # MDd
++            'RuntimeLibrary': 1, # MTd
+             'Optimization': 0, # /Od, no optimization
+             'MinimalRebuild': 'false',
+             'OmitFramePointers': 'false',
+@@ -96,7 +96,7 @@
+         ],
+         'msvs_settings': {
+           'VCCLCompilerTool': {
+-            'RuntimeLibrary': 2, # MD
++            'RuntimeLibrary': 0, # MT
+             'Optimization': 3, # /Ox, full optimization
+             'FavorSizeOrSpeed': 1, # /Ot, favour speed over size
+             'InlineFunctionExpansion': 2, # /Ob2, inline anything eligible
+diff --git a/deps/cares/common.gypi b/deps/cares/common.gypi
+index 9ffd7ce..645c4a0 100644
+--- a/deps/cares/common.gypi
++++ b/deps/cares/common.gypi
+@@ -18,7 +18,7 @@
+           'VCCLCompilerTool': {
+             'target_conditions': [
+               ['library=="static_library"', {
+-                'RuntimeLibrary': 3 # MDd
++                'RuntimeLibrary': 1 # MTd
+               }, {
+                 'RuntimeLibrary': 3 # MDd
+               }]
+@@ -49,7 +49,7 @@
+           'VCCLCompilerTool': {
+             'target_conditions': [
+               ['library=="static_library"', {
+-                'RuntimeLibrary': 2 # MD
++                'RuntimeLibrary': 0 # MT
+               }, {
+                 'RuntimeLibrary': 2 # MD
+               }],
+diff --git a/deps/http_parser/http_parser.gyp b/deps/http_parser/http_parser.gyp
+index 4963f7b..c777618 100644
+--- a/deps/http_parser/http_parser.gyp
++++ b/deps/http_parser/http_parser.gyp
+@@ -14,7 +14,7 @@
+         'defines': [ 'DEBUG', '_DEBUG' ],
+         'msvs_settings': {
+           'VCCLCompilerTool': {
+-            'RuntimeLibrary': 3 # MDd
++            'RuntimeLibrary': 1 # MTd
+           },
+         },
+       },
+@@ -22,7 +22,7 @@
+         'defines': [ 'NDEBUG' ],
+         'msvs_settings': {
+           'VCCLCompilerTool': {
+-            'RuntimeLibrary': 2 # MD
++            'RuntimeLibrary': 0 # MT
+           },
+         },
+       }
+diff --git a/deps/uv/common.gypi b/deps/uv/common.gypi
+index 1e29511..69b0a6b 100644
+--- a/deps/uv/common.gypi
++++ b/deps/uv/common.gypi
+@@ -20,7 +20,7 @@
+           'VCCLCompilerTool': {
+             'target_conditions': [
+               ['library=="static_library"', {
+-                'RuntimeLibrary': 3 # MDd
++                'RuntimeLibrary': 1 # MTd
+               }, {
+                 'RuntimeLibrary': 3 # MDd
+               }],
+@@ -57,7 +57,7 @@
+           'VCCLCompilerTool': {
+             'target_conditions': [
+               ['library=="static_library"', {
+-                'RuntimeLibrary': 2 # MD
++                'RuntimeLibrary': 0 # MT
+               }, {
+                 'RuntimeLibrary': 2 # MD
+               }],
+diff --git a/deps/v8/build/common.gypi b/deps/v8/build/common.gypi
+index a7cdfcd..4bdd1b9 100644
+--- a/deps/v8/build/common.gypi
++++ b/deps/v8/build/common.gypi
+@@ -346,7 +346,7 @@
+               ['OS=="win" and component=="shared_library"', {
+                 'RuntimeLibrary': 3 # MDd
+               }, {
+-                'RuntimeLibrary': 3 # MDd
++                'RuntimeLibrary': 1 # MTd
+               }],
+             ],
+           },
+@@ -411,7 +411,7 @@
+                   ['OS=="win" and component=="shared_library"', {
+                     'RuntimeLibrary': 2 # MD
+                   }, {
+-                    'RuntimeLibrary': 2 # MD
++                    'RuntimeLibrary': 0 # MT
+                   }],
+                   ['v8_target_arch=="x64"', {
+                     # TODO(2207): remove this option once the bug is fixed.

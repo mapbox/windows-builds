@@ -42,7 +42,10 @@ if EXIST %BUILD_TYPE% ddt %BUILD_TYPE%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::when packaging debug symbols, also activate javascript display in the vtune profiler
-REM IF %PACKAGEDEBUGSYMBOLS% EQU 1 IF "%NODE_VERSION%"=="0.12.0" patch -N -p1 < %PATCHES%/node-v0.12.0-vtune.patch || %SKIP_FAILED_PATCH%
+:: IF %PACKAGEDEBUGSYMBOLS% EQU 1 IF "%NODE_VERSION%"=="0.12.0" patch -N -p1 < %PATCHES%/node-v0.12.0-vtune.patch || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+IF %BUILD_STATIC% EQU 1 IF EXIST %PATCHES%\node-v%NODE_VERSION%-static.diff patch -N -p1 < %PATCHES%/node-v%NODE_VERSION%-static.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO.

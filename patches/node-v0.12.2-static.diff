@@ -1,0 +1,128 @@
+diff --git a/common.gypi b/common.gypi
+index e9271bf..8f94d51 100644
+--- a/common.gypi
++++ b/common.gypi
+@@ -50,7 +50,7 @@
+         ],
+         'msvs_settings': {
+           'VCCLCompilerTool': {
+-            'RuntimeLibrary': 3, # MDd
++            'RuntimeLibrary': 1, # MTd
+             'Optimization': 0, # /Od, no optimization
+             'MinimalRebuild': 'false',
+             'OmitFramePointers': 'false',
+@@ -89,7 +89,7 @@
+         ],
+         'msvs_settings': {
+           'VCCLCompilerTool': {
+-            'RuntimeLibrary': 2, # MD
++            'RuntimeLibrary': 0, # MT
+             'Optimization': 3, # /Ox, full optimization
+             'FavorSizeOrSpeed': 1, # /Ot, favour speed over size
+             'InlineFunctionExpansion': 2, # /Ob2, inline anything eligible
+diff --git a/deps/cares/common.gypi b/deps/cares/common.gypi
+index 522dc55..3996ab3 100644
+--- a/deps/cares/common.gypi
++++ b/deps/cares/common.gypi
+@@ -18,7 +18,7 @@
+           'VCCLCompilerTool': {
+             'target_conditions': [
+               ['library=="static_library"', {
+-                'RuntimeLibrary': 3 # MDd
++                'RuntimeLibrary': 1 # MTd
+               }, {
+                 'RuntimeLibrary': 3 # MDd
+               }]
+@@ -49,7 +49,7 @@
+           'VCCLCompilerTool': {
+             'target_conditions': [
+               ['library=="static_library"', {
+-                'RuntimeLibrary': 2 # MD
++                'RuntimeLibrary': 0 # MT
+               }, {
+                 'RuntimeLibrary': 2 # MD
+               }],
+diff --git a/deps/http_parser/http_parser.gyp b/deps/http_parser/http_parser.gyp
+index da30ee6..710bbe7 100644
+--- a/deps/http_parser/http_parser.gyp
++++ b/deps/http_parser/http_parser.gyp
+@@ -15,7 +15,7 @@
+         'cflags': [ '-Wall', '-Wextra', '-O0', '-g', '-ftrapv' ],
+         'msvs_settings': {
+           'VCCLCompilerTool': {
+-            'RuntimeLibrary': 3 # MDd
++            'RuntimeLibrary': 1 # MTd
+           },
+         },
+       },
+@@ -24,7 +24,7 @@
+         'cflags': [ '-Wall', '-Wextra', '-O3' ],
+         'msvs_settings': {
+           'VCCLCompilerTool': {
+-            'RuntimeLibrary': 2 # MD
++            'RuntimeLibrary': 0 # MT
+           },
+         },
+       }
+diff --git a/deps/uv/common.gypi b/deps/uv/common.gypi
+index a4e3808..18b1793 100644
+--- a/deps/uv/common.gypi
++++ b/deps/uv/common.gypi
+@@ -18,7 +18,7 @@
+           'VCCLCompilerTool': {
+             'target_conditions': [
+               ['uv_library=="static_library"', {
+-                'RuntimeLibrary': 3 # MDd
++                'RuntimeLibrary': 1 # MTd
+               }, {
+                 'RuntimeLibrary': 3 # MDd
+               }],
+@@ -55,7 +55,7 @@
+           'VCCLCompilerTool': {
+             'target_conditions': [
+               ['uv_library=="static_library"', {
+-                'RuntimeLibrary': 2 # MD
++                'RuntimeLibrary': 0 # MT
+               }, {
+                 'RuntimeLibrary': 2 # MD
+               }],
+diff --git a/deps/v8/build/toolchain.gypi b/deps/v8/build/toolchain.gypi
+index ad87c37..358547c 100644
+--- a/deps/v8/build/toolchain.gypi
++++ b/deps/v8/build/toolchain.gypi
+@@ -556,7 +556,7 @@
+               ['component=="shared_library"', {
+                 'RuntimeLibrary': 3 # MDd
+               }, {
+-                'RuntimeLibrary': 3 # MDd
++                'RuntimeLibrary': 1 # MTd
+               }],
+             ],
+           },
+@@ -601,7 +601,7 @@
+               ['component=="shared_library"', {
+                 'RuntimeLibrary': 3 # MDd
+               }, {
+-                'RuntimeLibrary': 3 # MDd
++                'RuntimeLibrary': 1 # MTd
+               }],
+             ],
+           },
+@@ -655,7 +655,7 @@
+               ['component=="shared_library"', {
+                 'RuntimeLibrary': 3 # MDd
+               }, {
+-                'RuntimeLibrary': 3 # MDd
++                'RuntimeLibrary': 1 # MTd
+               }],
+               ['v8_target_arch=="x64"', {
+                 # TODO(2207): remove this option once the bug is fixed.
+@@ -828,7 +828,7 @@
+                   ['component=="shared_library"', {
+                     'RuntimeLibrary': 2 # MD
+                   }, {
+-                    'RuntimeLibrary': 2 # MD
++                    'RuntimeLibrary': 0 # MT
+                   }],
+                   ['v8_target_arch=="x64"', {
+                     # TODO(2207): remove this option once the bug is fixed.
