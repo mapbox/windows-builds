@@ -31,7 +31,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 REM patch -N -p1 < %PATCHES%\mapnik-test.exe-crash.diff || %SKIP_FAILED_PATCH%
 REM IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-patch -N -p1 < %PATCHES%\mapnik-test.exe-crash-lock_guard.diff || %SKIP_FAILED_PATCH%
+REM patch -N -p1 < %PATCHES%\mapnik-test.exe-crash-lock_guard.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if EXIST mapnik-gyp GOTO FETCHMAPNIKGYP
