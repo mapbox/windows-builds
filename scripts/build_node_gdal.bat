@@ -24,11 +24,13 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 if EXIST %USERPROFILE%\.node-gyp ddt /Q %USERPROFILE%\.node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+ECHO installing node-pre-gyp ...
 CALL npm install node-pre-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::to get node-pre-gyp and other deps
 ::IS THERE A BETTER WAY TO INSTALL JUST THE DEPS????
+ECHO npm install ...
 CALL npm install
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
