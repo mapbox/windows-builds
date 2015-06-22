@@ -31,7 +31,6 @@ $file_list = @{
         ("$sdk_bin" + "nik2img.pdb"),
         ("$sdk_bin" + "shapeindex.pdb"),
         ("$build_dir" + "mapnik.node.pdb"),
-        ("$sdk_lib" + "_mapnik.pdb"),
         ("$sdk_lib" + "mapnik.pdb"),
         ("$sdk_lib" + "cairo.pdb"),
         ("$sdk_lib" + "gdal$env:GDAL_VERSION_FILE.pdb"),

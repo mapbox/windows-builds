@@ -51,7 +51,6 @@ $file_list = @{
         ("$pkg_dir" + $protoc_pdb + "protoc.pdb")
     )
     "$dest_sdk_lib" = @(
-        ("$src_mapnik_lib" + "_mapnik.pdb"),
         ("$src_mapnik_lib" + "mapnik.pdb"),
         ("$pkg_dir" + "mapnik-$env:MAPNIKBRANCH\mapnik-gyp\build\$env:BUILD_TYPE\obj\mapnik-json\mapnik-json.pdb"),
         ("$pkg_dir" + "mapnik-$env:MAPNIKBRANCH\mapnik-gyp\build\$env:BUILD_TYPE\obj\mapnik-wkt\mapnik-wkt.pdb"),
