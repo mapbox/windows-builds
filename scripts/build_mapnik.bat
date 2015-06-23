@@ -63,7 +63,7 @@ IF %FASTBUILD% NEQ 1 GOTO FULLBUILD
 SET BINDEPSPGK=mapnik-win-sdk-binary-deps-%TOOLS_VERSION%-%PLATFORMX%.7z
 IF EXIST %BINDEPSPGK% DEL /Q %BINDEPSPGK%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-CALL %ROOTDIR%\scripts\download %BINDEPSPGK%
+CALL %ROOTDIR%\scripts\download https://mapbox.s3.amazonaws.com/windows-builds/windows-build-deps/%BINDEPSPGK%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL 7z x -y %BINDEPSPGK% | %windir%\system32\FIND "ing archive"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -73,7 +73,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO building mapnik
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%ROOTDIR%\tmp-bin\python2-x86-32\Scripts;%PATH%
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%ROOTDIR%\tmp-bin\python2\Scripts;%PATH%
+ECHO calling build.bat of mapnik-gyp ...
 call build.bat
+ECHO finished build.bat of mapnik-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: jump to end, ignore PUBLISHMAPNIKSDK when %PACKAGEMAPNIK% EQU 0
@@ -108,9 +110,9 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR MAPNIK --------------
+ECHO ---------- ERROR windows-builds MAPNIK --------------
 
 :DONE
-
+ECHO ---------- DONE windows-builds MAPNIK --------------
 cd %ROOTDIR%
 EXIT /b %EL%

@@ -29,7 +29,7 @@ $pkg_dir="$env:PKGDIR\"
 $protoc_pdb = "protobuf\vsprojects\$env:BUILDPLATFORM\$env:BUILD_TYPE\"
 $icu_in_uc_pdb = "icu\lib$env:TARGET_ARCH\"
 $expat_pdb = "expat\$env:BUILDPLATFORM\$env:BUILD_TYPE\"
-$jpeg_pdb = "jpeg\$env:PLATFORMX\Release\"
+$jpeg_pdb = "libjpegturbo\build\sharedlib\$env:BUILD_TYPE\"
 $png_version_pdb = "libpng\projects\vstudio\$env:PLATFORMX\$env:BUILD_TYPE\"
 $proto_pdb = "protobuf\vsprojects\$env:BUILDPLATFORM\$env:BUILD_TYPE\"
 
@@ -37,7 +37,6 @@ if($env:TARGET_ARCH -eq 32){
     $protoc_pdb = "protobuf\vsprojects\$env:BUILD_TYPE\"
     $icu_in_uc_pdb = "icu\lib\"
     $expat_pdb = "expat\$env:BUILDPLATFORM\bin\$env:BUILD_TYPE\"
-    $jpeg_pdb = "jpeg\Release\"
     $png_version_pdb = "libpng\projects\vstudio\$env:BUILD_TYPE\"
     $proto_pdb = "protobuf\vsprojects\$env:BUILD_TYPE\"
 }
@@ -61,7 +60,6 @@ $file_list = @{
         ("$pkg_dir" + $icu_in_uc_pdb + "icuuc.pdb"),
         ("$pkg_dir" + $expat_pdb + "expat.pdb"),
         ("$pkg_dir" + $jpeg_pdb + "jpeg.pdb"),
-        ("$pkg_dir" + "jpeg\libjpeg.pdb"),
         ("$pkg_dir" + "libpng\libpng.pdb"),
         ("$pkg_dir" + $png_version_pdb + "libpng$env:LIBPNG_VERSION_FILE.pdb"),
         ("$pkg_dir" + "postgresql\src\interfaces\libpq\$env:BUILD_TYPE\libpqdll.pdb"),

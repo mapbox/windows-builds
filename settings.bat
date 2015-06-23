@@ -142,7 +142,7 @@ if "%TOOLS_VERSION%" == "14.0" (
 CD %ROOTDIR%
 
 IF NOT EXIST tmp-bin (
-  CALL curl -k -O https://mapnik.s3.amazonaws.com/deps/windows-builds-tmp-bin.exe
+  CALL curl -k -O https://mapbox.s3.amazonaws.com/windows-builds/windows-build-deps/windows-builds-tmp-bin.exe
   CALL windows-builds-tmp-bin.exe -y -o"."
 )
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
