@@ -49,9 +49,12 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::-G "Visual Studio 14 Win64"
 ::-G "Visual Studio 14"
 
+SET BITNESS= Win64
+if "%TARGET_ARCH%" == "32" SET BITNESS= 
+
 ECHO calling cmake
 CALL cmake .. ^
--G "Visual Studio 14"
+-G "Visual Studio 14%BITNESS%"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 msbuild ^
