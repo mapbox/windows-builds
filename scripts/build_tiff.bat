@@ -10,16 +10,22 @@ cd %PKGDIR%
 ::CALL %ROOTDIR%\scripts\download tiff-%TIFF_VERSION%.tar.gz
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST libtiff echo found extracted sources
+if EXIST libtiff echo found extracted sources && GOTO SRCALREADYTHERE
 
-if NOT EXIST libtiff (
-  echo downloading from github https://github.com/vadz/libtiff.git
-  git clone --quiet --depth=1 https://github.com/vadz/libtiff.git
-  ::echo extracting
-  ::CALL bsdtar xfz tiff-%TIFF_VERSION%.tar.gz
-  ::rename tiff-%TIFF_VERSION% libtiff
-  IF ERRORLEVEL 1 GOTO ERROR
-)
+echo downloading from github https://github.com/vadz/libtiff.git
+
+ECHO ===!!!! pin to 4-0-4 =====
+ECHO ---latest commits don't compile on Windows ----!!!!
+
+::git clone --quiet --depth=1 https://github.com/vadz/libtiff.git
+git clone --branch Release-v4-0-4 https://github.com/vadz/libtiff.git
+::echo extracting
+::CALL bsdtar xfz tiff-%TIFF_VERSION%.tar.gz
+::rename tiff-%TIFF_VERSION% libtiff
+IF ERRORLEVEL 1 GOTO ERROR
+
+
+:SRCALREADYTHERE
 
 cd libtiff
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
