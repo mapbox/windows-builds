@@ -38,6 +38,7 @@ $file_list = @{
         ("$sdk_lib" + "icuin.pdb"),
         ("$sdk_lib" + "icuuc.pdb"),
         ("$sdk_lib" + "expat.pdb"),
+        ("$sdk_lib" + "jpeg.pdb"),
         ("$sdk_lib" + "libpng.pdb"),
         ("$sdk_lib" + "libpng$env:LIBPNG_VERSION_FILE.pdb"),
         ("$sdk_lib" + "libtiff.pdb"),
