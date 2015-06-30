@@ -2,6 +2,7 @@ windows-builds
 ===================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/5bgyk71sbsg58n77?svg=true)](https://ci.appveyor.com/project/Mapbox/windows-builds)
+[![Build Status](https://travis-ci.org/mapbox/windows-builds.svg?branch=master)](https://travis-ci.org/mapbox/windows-builds)
 
 **Things are moving fast and sometimes break.
 If something doesn't work for you, please [open an issue](https://github.com/mapbox/windows-builds/issues/new).**
