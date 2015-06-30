@@ -1,6 +1,8 @@
 windows-builds
 ===================
 
+[![Build status](https://ci.appveyor.com/api/projects/status/5bgyk71sbsg58n77?svg=true)](https://ci.appveyor.com/project/Mapbox/windows-builds)
+
 **Things are moving fast and sometimes break.
 If something doesn't work for you, please [open an issue](https://github.com/mapbox/windows-builds/issues/new).**
 
@@ -9,7 +11,7 @@ Windows build scripts mainly targeting:
 * C++11 build of node
 * node-mapnik
 
-Other supported software: .
+Other supported software:
 * node-gdal
 * osmium: libosmium, node-osmium, osmium-tool
 * osrm
