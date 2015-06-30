@@ -1,6 +1,6 @@
 environment:
   matrix:
-    #- vs_version: 12
+    - vs_version: 12
     - vs_version: 14
 
 # http://help.appveyor.com/discussions/questions/557-visual-studio-2014
@@ -8,19 +8,22 @@ environment:
 os: Visual Studio 2014 CTP4
 
 configuration:
-  #- Debug
+  - Debug
   - Release
 
 platform:
-  #- x86
+  - x86
   - x64
 
 install:
   #- cinst wget msysgit
-  - set FINAL_ARCH=64
-  - if "%platform%" == "x86" set FINAL_ARCH=32
-  - .\settings-minimal.bat %FINAL_ARCH% %vs_version% %configuration%
-  - scripts\build_node.bat
+  - set TARGET_ARCH=64
+  - if "%platform%" == "x86" set TARGET_ARCH=32
+  - .\settings.bat "TARGET_ARCH=%TARGET_ARCH%" "BUILD_TYPE=%configuration%" "TOOLS_VERSION=%vs_version%.0"
+  - scripts\build_zlib.bat
+  - scripts\build_libpng.bat
+  - scripts\build_jpeg.bat
+  - scripts\build_libjpegturbo.bat
 
 build: off
 test: off
