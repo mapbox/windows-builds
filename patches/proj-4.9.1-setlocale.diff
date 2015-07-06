@@ -1,0 +1,27 @@
+diff --git a/src/pj_init.c b/src/pj_init.c
+index a40ab39..6b3a988 100644
+--- a/src/pj_init.c
++++ b/src/pj_init.c
+@@ -402,11 +402,11 @@ pj_init_ctx(projCtx ctx, int argc, char **argv) {
+     ** as discussed in this ticket:
+     ** http://trac.osgeo.org/proj/ticket/226
+     */
+-    old_locale = setlocale(LC_NUMERIC, NULL);
++    old_locale = _wsetlocale(LC_NUMERIC, NULL);
+     if (old_locale != NULL) {
+        if (strcmp(old_locale,"C") != 0) {
+ 	  old_locale = strdup(old_locale);
+-	  setlocale(LC_NUMERIC,"C");
++	  _wsetlocale(LC_NUMERIC,"C");
+        }else
+ 	  old_locale = NULL;
+     }
+@@ -622,7 +622,7 @@ pj_init_ctx(projCtx ctx, int argc, char **argv) {
+     }
+ 
+     if (old_locale != NULL) {
+-       setlocale(LC_NUMERIC,old_locale);
++       _wsetlocale(LC_NUMERIC,old_locale);
+        free( (char*)old_locale );
+     }
+ 
