@@ -12,11 +12,26 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL %ROOTDIR%\scripts\download proj-datumgrid-%PROJ_GRIDS_VERSION%.zip
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST proj echo found extracted sources GOTO SRCALREAYTHERE
+ECHO.
+ECHO.
+ECHO ===================================
+ECHO temporarily switched to master https://github.com/OSGeo/proj.4,
+ECHO because of setlocale problem with threads
+ECHO ===================================
+ECHO.
+ECHO TODO^: maybe switch to cmake, like https://github.com/OSGeo/proj.4/blob/master/appveyor.yml
+ECHO ===================================
+ECHO.
+ECHO.
 
-echo extracting
-CALL bsdtar xfz proj-%PROJ_VERSION%.tar.gz
-rename proj-%PROJ_VERSION% proj
+if EXIST proj echo found extracted sources && GOTO SRCALREAYTHERE
+
+::echo extracting
+::CALL bsdtar xfz proj-%PROJ_VERSION%.tar.gz
+::rename proj-%PROJ_VERSION% proj
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+git clone https://github.com/OSGeo/proj.4.git proj
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cd proj/nad
@@ -26,14 +41,19 @@ echo extracting nad grids
 CALL unzip -o %PKGDIR%/proj-datumgrid-%PROJ_GRIDS_VERSION%.zip
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CD %PKGDIR%\proj
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-IF EXIST %PATCHES%\proj-%PROJ_VERSION%-setlocale.diff patch -N -p1 < %PATCHES%\proj-%PROJ_VERSION%-setlocale.diff || %SKIP_FAILED_PATCH%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::CD %PKGDIR%\proj
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::IF EXIST %PATCHES%\proj-%PROJ_VERSION%-setlocale.diff patch -N -p1 < %PATCHES%\proj-%PROJ_VERSION%-setlocale.diff || %SKIP_FAILED_PATCH%
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :SRCALREAYTHERE
 
 CD %PKGDIR%\proj
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+git fetch
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO cleaning ....
