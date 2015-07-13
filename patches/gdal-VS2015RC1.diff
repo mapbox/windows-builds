@@ -10,7 +10,7 @@ index 936cfcc..bf7072e 100644
 +JPEG_EXTERNAL_LIB = 1
  #JPEGDIR = c:/projects/jpeg-6b
 -#JPEG_LIB = $(JPEGDIR)/libjpeg.lib
-+JPEG_LIB = $(JPEGDIR)/libjpeg.lib
++JPEG_LIB = $(JPEGDIR)/build/sharedlib/Release/jpeg.lib
  
  #if using an external png library uncomment the follwing lines
  #PNG_EXTERNAL_LIB = 1
