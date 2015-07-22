@@ -1,0 +1,13 @@
+diff --git a/nmake.opt b/nmake.opt
+index 88a7ad5..a0661ab 100644
+--- a/nmake.opt
++++ b/nmake.opt
+@@ -736,7 +736,7 @@ NAS_ENABLED = YES
+ SYM_PREFIX=_
+ !ENDIF
+ 
+-EXTERNAL_LIBS =	$(OGDILIB) $(XERCES_LIB) $(EXPAT_LIB) $(OCI_LIB) $(PG_LIB) \
++EXTERNAL_LIBS =	legacy_stdio_definitions.lib $(OGDILIB) $(XERCES_LIB) $(EXPAT_LIB) $(OCI_LIB) $(PG_LIB) \
+ 	$(ECW_LIB_LINK) $(HDF4_LIB_LINK) $(FME_LIB) $(MRSID_LIB_LINK) \
+ 	$(FITS_LIB_LINK) $(JPEG_LIB) $(NETCDF_LIB_LINK) $(PROJ4_LIB) \
+ 	$(GEOTIFF_LIB) $(TIFF_LIB) $(PROJ_LIBRARY) $(SQLITE_LIB) \
