@@ -18,13 +18,13 @@ SET PACKAGEDEPS=0
 SET PACKAGEMAPNIK=1
 SET PUBLISHMAPNIKSDK=0
 SET PUBLISHNODEMAPNIK=0
-SET PACKAGEDEBUGSYMBOLS=0
+SET PACKAGEDEBUGSYMBOLS=1
 SET VERBOSE=0
 SET IGNOREFAILEDTESTS=1
 ::local meaning, built by these scripts
 SET PREFER_LOCAL_NODE_EXE=1
 SET BUNDLE_RUNTIME=0
-SET RUNTIME_VERSION=vcredist-VS2014-CTP4
+SET RUNTIME_VERSION=vcredist-VS2015
 
 SET ICU_VERSION=54.1
 SET ICU_VERSION2=54_1
@@ -110,7 +110,8 @@ SET PATH=%CD%\tmp-bin\cmake-3.1.0-win32-x86\bin;%PATH%
 SET PATH=%CD%\tmp-bin\nasm-2.11.08;%PATH%
 SET PATH=%CD%\tmp-bin\gnu-win-tools;%PATH%
 SET PATH=%CD%\tmp-bin\ragel\%PLATFORMX%;%PATH%
-SET PATH=%CD%\tmp-bin\7zip\%PLATFORMX%;%PATH%
+::always use 7z x64, 32bit version cannot handle size of mapnik + PDBs
+SET PATH=%CD%\tmp-bin\7zip\x64;%PATH%
 SET PATH=%CD%\tmp-bin\ddt\%PLATFORMX%;%PATH%
 SET PATH=%CD%\tmp-bin;%PATH%
 ::set path to make.exe at last.
