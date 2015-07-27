@@ -25,10 +25,7 @@ if EXIST %USERPROFILE%\.node-gyp ddt /Q %USERPROFILE%\.node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO downloading temporary node.exe to install deps ...
-SET SUFFIX=
-IF "%PLATFORMX%"=="x64" SET SUFFIX=x64/
-ECHO downloading node.exe https://mapbox.s3.amazonaws.com/node-cpp11/v%NODE_VERSION%/%SUFFIX%node.exe
-powershell Invoke-WebRequest "https://mapbox.s3.amazonaws.com/node-cpp11/v$env:NODE_VERSION/${env:SUFFIX}node.exe" -OutFile $env:PKGDIR\node-gdal\node.exe
+CALL %ROOTDIR%\scripts\get_node.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO installing node-pre-gyp ...
