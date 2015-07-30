@@ -24,6 +24,11 @@ Other supported software:
  - [Python 2.7 32 bit](https://www.python.org/downloads/windows/) installed into `C:\Python27`
  - [git](https://msysgit.github.io/) installed into `C:\Program Files (x86)\Git`
 
+### Recommendations:
+
+ - If you are using AWS, then [this `ami-6f2cf804` in `us-east-1`](https://aws.amazon.com/marketplace/ordering?productId=6880e80b-b23d-4689-877e-02e40bdfe170&ref_=dtl_psb_continue&region=us-east-1) is a good starting point
+ - Then install `Visual Studio Express 2015 for Windows Desktop` from https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx ([direct download](http://download.microsoft.com/download/D/E/5/DE5263E9-A58D-469A-BA16-14786E2E2B1C/wdexpress_full.exe))
+
 ## System Setup
 
 Install:
@@ -32,7 +37,7 @@ Install:
  - Git
  - Visual Studio VS2015
 
-**When using your builds on machines, that don't have Visual Studio installed, you have to install the C++ runtime corresponding to the VS version that was used for building:**
+**When using your builds on machines that don't have Visual Studio installed you have to install the C++ runtime corresponding to the VS version that was used for building:**
 * VS2015 runtime:
   * [x64](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015/vc_redist.x64.exe>)
   * [x86](<https://mapbox.s3.amazonaws.com/windows-builds/visual-studio-runtimes/vcredist-VS2015/vc_redist.x86.exe>)
