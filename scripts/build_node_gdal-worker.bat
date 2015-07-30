@@ -44,7 +44,7 @@ ECHO ---------------- BUILDING  NODE-GDAL node^: %NODE_VERSION% %PLATFORMX% ----
 CALL node_modules\.bin\node-pre-gyp.cmd ^
 --target=%NODE_VERSION% rebuild ^
 --build-from-source ^
---msvs_version=2013 ^
+--msvs_version=2015 ^
 --toolset=v140 ^
 --target_arch=%NODEARCH% ^
 --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11 ^
@@ -61,7 +61,7 @@ ECHO.
 ECHO ---------------- PUBLISHING  NODE-GDAL node^: %NODE_VERSION% %PLATFORMX%--------------
 call node_modules\.bin\node-pre-gyp.cmd ^
 --target=%NODE_VERSION% package unpublish publish ^
---msvs_version=2013 ^
+--msvs_version=2015 ^
 --toolset=v140 ^
 --target_arch=%NODEARCH% ^
 --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11 ^

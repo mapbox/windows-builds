@@ -106,7 +106,7 @@ ECHO NODE_LOCATION %NODE_LOCATION%
 
 call .\node_modules\.bin\node-pre-gyp ^
 rebuild %DEBUG_FLAG% ^
---msvs_version=2013 ^
+--msvs_version=2015 ^
 --no-rollback ^
 --target=%NODE_VER% ^
 %NODE_LOCATION%
