@@ -8,7 +8,6 @@ environment:
 os: Visual Studio 2014 CTP4
 
 configuration:
-  - Debug
   - Release
 
 platform:
