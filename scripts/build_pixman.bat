@@ -46,8 +46,8 @@ echo.
 echo ATTENTION using "MMX=off" to compile cairo with 64bit
 echo.
 ECHO building ...
-ECHO DIR /S pixman-ppc.c
-DIR /S pixman-ppc.c
+ECHO DIR /S *.c
+DIR /S *.c
 set MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
 echo %PATH%
 CALL make.exe -f Makefile.win32 CFG=%CFG_TYPE% MMX=off MSVC_VER=%MSVC_VER%
