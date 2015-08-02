@@ -81,7 +81,6 @@ id=$(aws ec2 run-instances \
     --image-id $ami_id \
     --count 1 \
     --instance-type c3.4xlarge \
-    --block-device-mappings "[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"DeleteOnTermination\":true,\"SnapshotId\":\"snap-e53a4bec\",\"VolumeSize\":160,\"VolumeType\":\"gp2\"}},{\"DeviceName\": \"xvdl\",\"VirtualName\":\"ephemeral0\"},{\"DeviceName\": \"xvdm\",\"VirtualName\":\"ephemeral1\"}]" \
     --user-data "$user_data" | jq -r '.Instances[0].InstanceId')
 
 echo "Created instance: $id"
