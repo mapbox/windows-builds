@@ -84,6 +84,7 @@ id=$(aws ec2 run-instances \
     --image-id $ami_id \
     --count 1 \
     --instance-type c3.4xlarge \
+    --security-groups windows-builds \
     --user-data "$user_data" | jq -r '.Instances[0].InstanceId')
 
 echo "Created instance: $id"
@@ -101,7 +102,7 @@ until [ "$instance_status_stopped" = "stopped" ]; do
     fi
 
     instance_status_stopped=$(aws ec2 describe-instances --region $region --instance-id $id | jq -r '.Reservations[0].Instances[0].State.Name')
-    echo "Instance stopping status eu-central-1 $id: $instance_status_stopped"
+    echo "Instance stopping status $region $id: $instance_status_stopped"
 
     if [[ -z $dns ]]; then
         dns=$(aws ec2 describe-instances --instance-ids $id --region $region --query "Reservations[0].Instances[0].PublicDnsName")
