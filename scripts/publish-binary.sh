@@ -57,8 +57,11 @@ sleep=10
 date_time=`date +%Y%m%d%H%M`
 start_timestamp=`date +"%s"`
 maxtimeout=2880
-region="eu-central-1"
-ami_id="ami-a4181cb9"
+#region="eu-central-1"
+#ami_id="ami-a4181cb9"
+region="us-west-2"
+ami_id="ami-3d232a0d"
+
 
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"${CRED}\");
