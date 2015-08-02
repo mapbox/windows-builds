@@ -58,7 +58,7 @@ date_time=`date +%Y%m%d%H%M`
 start_timestamp=`date +"%s"`
 maxtimeout=2880
 region="eu-central-1"
-ami_id="ami-640f0b79"
+ami_id="ami-a4181cb9"
 
 user_data="<powershell>
     ([ADSI]\"WinNT://./Administrator\").SetPassword(\"${CRED}\");
