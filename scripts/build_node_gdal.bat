@@ -39,7 +39,7 @@ CALL npm install
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SETLOCAL EnableDelayedExpansion
-FOR %%N IN (0.10.33 0.11.14 0.12.2) DO (
+FOR %%N IN (0.10.40 0.11.14 0.12.7) DO (
 	ECHO about to build %%N %PLATFORMX%
 	CALL %ROOTDIR%\scripts\build_node_gdal-worker.bat %%N
 	ECHO ERRORLEVEL %%N %PLATFORMX% !ERRORLEVEL!
