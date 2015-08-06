@@ -57,10 +57,18 @@ sleep=10
 date_time=`date +%Y%m%d%H%M`
 start_timestamp=`date +"%s"`
 maxtimeout=2880
+######first 2015 ami
 #region="eu-central-1"
 #ami_id="ami-a4181cb9"
-region="us-west-2"
-ami_id="ami-3d232a0d"
+#security_groups=""
+######first 2015 ami
+#region="us-west-2"
+#ami_id="ami-3d232a0d"
+#security_groups="--security-groups windows-builds"
+######2015 ami with updated EC2Config
+region="eu-central-1"
+ami_id="ami-1c828601"
+security_groups=""
 
 
 user_data="<powershell>
@@ -84,7 +92,7 @@ id=$(aws ec2 run-instances \
     --image-id $ami_id \
     --count 1 \
     --instance-type c3.4xlarge \
-    --security-groups windows-builds \
+    $security_groups \
     --user-data "$user_data" | jq -r '.Instances[0].InstanceId')
 
 echo "Created instance: $id"
