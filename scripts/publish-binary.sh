@@ -9,7 +9,6 @@ PACKAGEDEBUGSYMBOLS="\$env:PACKAGEDEBUGSYMBOLS=0"
 PUBLISH_SDK=0
 PUBLISH_NODEGDAL="\$env:PUBLISH_NODEGDAL=0"
 BUILD_CMD="wbs-build.ps1"
-STOP_COMPUTER="Stop-Computer"
 COMMIT_MESSAGE=$(git show -s --format=%B $TRAVIS_COMMIT | tr -d '\n')
 echo $COMMIT_MESSAGE
 if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"
@@ -23,7 +22,6 @@ if test "${COMMIT_MESSAGE#*'[publish debug]'}" != "$COMMIT_MESSAGE"
 then
     echo "Commit includes [publish debug] skipping stack teardown."
     BUILD_CMD="wbs-build-prepare.ps1"
-    STOP_COMPUTER=""
 fi
 
 if test "${COMMIT_MESSAGE#*'[build32bit]'}" != "$COMMIT_MESSAGE"
@@ -82,7 +80,7 @@ user_data="<powershell>
     \$env:AWS_SECRET_ACCESS_KEY=\"${PUBLISH_ACCESS}\";
     Invoke-WebRequest https://mapbox.s3.amazonaws.com/windows-builds/windows-build-server/${BUILD_CMD} -OutFile Z:\\${BUILD_CMD};
     & Z:\\${BUILD_CMD}
-    ${STOP_COMPUTER}
+    Write-Host \"exiting userdata\"
     </powershell>
     <persist>true</persist>"
 

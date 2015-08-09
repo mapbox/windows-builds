@@ -75,4 +75,8 @@ Z:\mb\windows-builds-64
 Get-ChildItem Env: | Out-File -Encoding utf8 Z:\env-vars.txt
 
 Write-Host "Starting build"
-& C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
+#& C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
+#use Start-Process to break out of userdata execution
+Start-Process C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
+
+Write-Host "exiting wbs-build.ps1"
