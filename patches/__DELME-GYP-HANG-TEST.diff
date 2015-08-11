@@ -1,0 +1,105 @@
+diff --git a/gyp.bat b/gyp.bat
+index c0b4ca2..9e0bd8c 100755
+--- a/gyp.bat
++++ b/gyp.bat
+@@ -1,5 +1,8 @@
++@ECHO OFF
+ @rem Copyright (c) 2009 Google Inc. All rights reserved.
+ @rem Use of this source code is governed by a BSD-style license that can be
+ @rem found in the LICENSE file.
+ 
++ECHO looking for python
++where python
+ @python "%~dp0gyp_main.py" %*
+diff --git a/pylib/gyp/__init__.py b/pylib/gyp/__init__.py
+index 668f38b..f47c1d2 100755
+--- a/pylib/gyp/__init__.py
++++ b/pylib/gyp/__init__.py
+@@ -349,7 +349,12 @@ def gyp_main(args):
+   options, build_files_arg = parser.parse_args(args)
+   build_files = build_files_arg
+ 
++  print "options:", options
++  print "build_files_arg:", build_files_arg
++  print "build_files:", build_files
++
+   # Set up the configuration directory (defaults to ~/.gyp)
++  print "before options.config_dir"
+   if not options.config_dir:
+     home = None
+     home_dot_gyp = None
+@@ -376,6 +381,7 @@ def gyp_main(args):
+   if home_dot_gyp and not os.path.exists(home_dot_gyp):
+     home_dot_gyp = None
+ 
++  print "before options.formats"
+   if not options.formats:
+     # If no format was given on the command line, then check the env variable.
+     generate_formats = []
+@@ -394,6 +400,7 @@ def gyp_main(args):
+       else:
+         options.formats = ['make']
+ 
++  print "before options.generator_output"
+   if not options.generator_output and options.use_environment:
+     g_o = os.environ.get('GYP_GENERATOR_OUTPUT')
+     if g_o:
+@@ -415,6 +422,7 @@ def gyp_main(args):
+       else:
+         DebugOutput(DEBUG_GENERAL, "  %s: %s", option, value)
+ 
++  print "before if not build_files"
+   if not build_files:
+     build_files = FindBuildFiles()
+   if not build_files:
+@@ -427,6 +435,7 @@ def gyp_main(args):
+   # on the command line, try to find a "src" directory by looking at the
+   # absolute path to each build file's directory.  The first "src" component
+   # found will be treated as though it were the path used for --depth.
++  print "before if not options.depth"
+   if not options.depth:
+     for build_file in build_files:
+       build_file_dir = os.path.abspath(os.path.dirname(build_file))
+@@ -450,6 +459,7 @@ def gyp_main(args):
+ 
+   # If toplevel-dir is not set, we assume that depth is the root of our source
+   # tree.
++  print "before if not options.toplevel_dir"
+   if not options.toplevel_dir:
+     options.toplevel_dir = options.depth
+ 
+@@ -467,6 +477,7 @@ def gyp_main(args):
+     DebugOutput(DEBUG_GENERAL,
+                 "cmdline_default_variables: %s", cmdline_default_variables)
+ 
++  print "before Set up includes"
+   # Set up includes.
+   includes = []
+ 
+@@ -493,6 +504,7 @@ def gyp_main(args):
+   if DEBUG_GENERAL in gyp.debug.keys():
+     DebugOutput(DEBUG_GENERAL, "generator_flags: %s", generator_flags)
+ 
++  print "before Generate all requested formats"
+   # Generate all requested formats (use a set in case we got one format request
+   # twice)
+   for format in set(options.formats):
+@@ -507,6 +519,7 @@ def gyp_main(args):
+               'root_targets': options.root_targets,
+               'target_arch': cmdline_default_variables.get('target_arch', '')}
+ 
++    print "before Start with the default variables from the command line"
+     # Start with the default variables from the command line.
+     [generator, flat_list, targets, data] = Load(
+         build_files, format, cmdline_default_variables, includes, options.depth,
+@@ -520,8 +533,10 @@ def gyp_main(args):
+     # that targets may be built.  Build systems that operate serially or that
+     # need to have dependencies defined before dependents reference them should
+     # generate targets in the order specified in flat_list.
++    print "before generator.GenerateOutput"
+     generator.GenerateOutput(flat_list, targets, data, params)
+ 
++    print "before if options.configs"
+     if options.configs:
+       valid_configs = targets[flat_list[0]]['configurations'].keys()
+       for conf in options.configs:
