@@ -8,7 +8,7 @@ $pathToSite="system.applicationhost/sites/site[@name='Default Web Site']/applica
 $wc=Get-WebConfiguration $pathToSite | select *
 $wc.Collection | select *
 set-webconfigurationproperty "$pathToSite/virtualDirectory[@path='/']" -name username -value 'Administrator'
-set-webconfigurationproperty "$pathToSite/virtualDirectory[@path='/']" -name password -value 'Diogenes1234'
+set-webconfigurationproperty "$pathToSite/virtualDirectory[@path='/']" -name password -value '$env:CRED'
 $wc=Get-WebConfiguration $pathToSite | select *
 $wc.Collection | select *
 
