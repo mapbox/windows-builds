@@ -1,21 +1,114 @@
 diff --git a/gyp.bat b/gyp.bat
-index c0b4ca2..9e0bd8c 100755
+index c0b4ca2..808fcb7 100755
 --- a/gyp.bat
 +++ b/gyp.bat
 @@ -1,5 +1,8 @@
+-@rem Copyright (c) 2009 Google Inc. All rights reserved.
+-@rem Use of this source code is governed by a BSD-style license that can be
+-@rem found in the LICENSE file.
+-
+-@python "%~dp0gyp_main.py" %*
 +@ECHO OFF
- @rem Copyright (c) 2009 Google Inc. All rights reserved.
- @rem Use of this source code is governed by a BSD-style license that can be
- @rem found in the LICENSE file.
- 
++@rem Copyright (c) 2009 Google Inc. All rights reserved.
++@rem Use of this source code is governed by a BSD-style license that can be
++@rem found in the LICENSE file.
++
 +ECHO looking for python
 +where python
- @python "%~dp0gyp_main.py" %*
++@python "%~dp0gyp_main.py" %*
 diff --git a/pylib/gyp/__init__.py b/pylib/gyp/__init__.py
-index 668f38b..f47c1d2 100755
+index 668f38b..b9077a4 100755
 --- a/pylib/gyp/__init__.py
 +++ b/pylib/gyp/__init__.py
-@@ -349,7 +349,12 @@ def gyp_main(args):
+@@ -277,41 +277,55 @@ class RegeneratableOptionParser(optparse.OptionParser):
+     return values, args
+ 
+ def gyp_main(args):
++  print "entering gyp_main"
+   my_name = os.path.basename(sys.argv[0])
+ 
++  print "before RegeneratableOptionParser()"
+   parser = RegeneratableOptionParser()
+   usage = 'usage: %s [options ...] [build_file ...]'
++  print "before parser.set_usage()"
+   parser.set_usage(usage.replace('%s', '%prog'))
++  print "before parser.add_option('--build'"
+   parser.add_option('--build', dest='configs', action='append',
+                     help='configuration for build after project generation')
++  print "before parser.add_option('--check'"
+   parser.add_option('--check', dest='check', action='store_true',
+                     help='check format of gyp files')
++  print "before parser.add_option('--config-dir'"
+   parser.add_option('--config-dir', dest='config_dir', action='store',
+                     env_name='GYP_CONFIG_DIR', default=None,
+                     help='The location for configuration files like '
+                     'include.gypi.')
++  print "before parser.add_option('--debug'"
+   parser.add_option('-d', '--debug', dest='debug', metavar='DEBUGMODE',
+                     action='append', default=[], help='turn on a debugging '
+                     'mode for debugging GYP.  Supported modes are "variables", '
+                     '"includes" and "general" or "all" for all of them.')
++  print "before parser.add_option('-D'"
+   parser.add_option('-D', dest='defines', action='append', metavar='VAR=VAL',
+                     env_name='GYP_DEFINES',
+                     help='sets variable VAR to value VAL')
++  print "before parser.add_option('--depth'"
+   parser.add_option('--depth', dest='depth', metavar='PATH', type='path',
+                     help='set DEPTH gyp variable to a relative path to PATH')
++  print "before parser.add_option('--format'"
+   parser.add_option('-f', '--format', dest='formats', action='append',
+                     env_name='GYP_GENERATORS', regenerate=False,
+                     help='output formats to generate')
++  print "before parser.add_option('-G'"
+   parser.add_option('-G', dest='generator_flags', action='append', default=[],
+                     metavar='FLAG=VAL', env_name='GYP_GENERATOR_FLAGS',
+                     help='sets generator flag FLAG to VAL')
++  print "before parser.add_option('--generator-output'"
+   parser.add_option('--generator-output', dest='generator_output',
+                     action='store', default=None, metavar='DIR', type='path',
+                     env_name='GYP_GENERATOR_OUTPUT',
+                     help='puts generated build files under DIR')
++  print "before parser.add_option('--ignore-environment'"
+   parser.add_option('--ignore-environment', dest='use_environment',
+                     action='store_false', default=True, regenerate=False,
+                     help='do not read options from environment variables')
++  print "before parser.add_option('--include'"
+   parser.add_option('-I', '--include', dest='includes', action='append',
+                     metavar='INCLUDE', type='path',
+                     help='files to include in all loaded .gyp files')
+@@ -322,6 +336,7 @@ def gyp_main(args):
+   # option allows the strict behavior to be used on Macs and the lenient
+   # behavior to be used elsewhere.
+   # TODO(mark): Remove this option when http://crbug.com/35878 is fixed.
++  print "before parser.add_option('--no-circular-check'"
+   parser.add_option('--no-circular-check', dest='circular_check',
+                     action='store_false', default=True, regenerate=False,
+                     help="don't check for circular relationships between files")
+@@ -331,25 +346,36 @@ def gyp_main(args):
+   # when duplicate basenames are passed into Make generator on Mac.
+   # TODO(yukawa): Remove this option when these legacy generators are
+   # deprecated.
++  print "before parser.add_option('--no-duplicate-basename-check'"
+   parser.add_option('--no-duplicate-basename-check',
+                     dest='duplicate_basename_check', action='store_false',
+                     default=True, regenerate=False,
+                     help="don't check for duplicate basenames")
++  print "before parser.add_option('--no-parallel'"
+   parser.add_option('--no-parallel', action='store_true', default=False,
+                     help='Disable multiprocessing')
++  print "before parser.add_option('--suffix'"
+   parser.add_option('-S', '--suffix', dest='suffix', default='',
+                     help='suffix to add to generated files')
++  print "before parser.add_option('--toplevel-dir'"
+   parser.add_option('--toplevel-dir', dest='toplevel_dir', action='store',
+                     default=None, metavar='DIR', type='path',
+                     help='directory to use as the root of the source tree')
++  print "before parser.add_option('--root-target'"
+   parser.add_option('-R', '--root-target', dest='root_targets',
+                     action='append', metavar='TARGET',
+                     help='include only TARGET and its deep dependencies')
+ 
++  print "before parser.parse_args(args)"
    options, build_files_arg = parser.parse_args(args)
    build_files = build_files_arg
  
@@ -28,7 +121,7 @@ index 668f38b..f47c1d2 100755
    if not options.config_dir:
      home = None
      home_dot_gyp = None
-@@ -376,6 +381,7 @@ def gyp_main(args):
+@@ -376,6 +402,7 @@ def gyp_main(args):
    if home_dot_gyp and not os.path.exists(home_dot_gyp):
      home_dot_gyp = None
  
@@ -36,7 +129,7 @@ index 668f38b..f47c1d2 100755
    if not options.formats:
      # If no format was given on the command line, then check the env variable.
      generate_formats = []
-@@ -394,6 +400,7 @@ def gyp_main(args):
+@@ -394,6 +421,7 @@ def gyp_main(args):
        else:
          options.formats = ['make']
  
@@ -44,7 +137,7 @@ index 668f38b..f47c1d2 100755
    if not options.generator_output and options.use_environment:
      g_o = os.environ.get('GYP_GENERATOR_OUTPUT')
      if g_o:
-@@ -415,6 +422,7 @@ def gyp_main(args):
+@@ -415,6 +443,7 @@ def gyp_main(args):
        else:
          DebugOutput(DEBUG_GENERAL, "  %s: %s", option, value)
  
@@ -52,7 +145,7 @@ index 668f38b..f47c1d2 100755
    if not build_files:
      build_files = FindBuildFiles()
    if not build_files:
-@@ -427,6 +435,7 @@ def gyp_main(args):
+@@ -427,6 +456,7 @@ def gyp_main(args):
    # on the command line, try to find a "src" directory by looking at the
    # absolute path to each build file's directory.  The first "src" component
    # found will be treated as though it were the path used for --depth.
@@ -60,7 +153,7 @@ index 668f38b..f47c1d2 100755
    if not options.depth:
      for build_file in build_files:
        build_file_dir = os.path.abspath(os.path.dirname(build_file))
-@@ -450,6 +459,7 @@ def gyp_main(args):
+@@ -450,6 +480,7 @@ def gyp_main(args):
  
    # If toplevel-dir is not set, we assume that depth is the root of our source
    # tree.
@@ -68,7 +161,7 @@ index 668f38b..f47c1d2 100755
    if not options.toplevel_dir:
      options.toplevel_dir = options.depth
  
-@@ -467,6 +477,7 @@ def gyp_main(args):
+@@ -467,6 +498,7 @@ def gyp_main(args):
      DebugOutput(DEBUG_GENERAL,
                  "cmdline_default_variables: %s", cmdline_default_variables)
  
@@ -76,7 +169,7 @@ index 668f38b..f47c1d2 100755
    # Set up includes.
    includes = []
  
-@@ -493,6 +504,7 @@ def gyp_main(args):
+@@ -493,6 +525,7 @@ def gyp_main(args):
    if DEBUG_GENERAL in gyp.debug.keys():
      DebugOutput(DEBUG_GENERAL, "generator_flags: %s", generator_flags)
  
@@ -84,7 +177,7 @@ index 668f38b..f47c1d2 100755
    # Generate all requested formats (use a set in case we got one format request
    # twice)
    for format in set(options.formats):
-@@ -507,6 +519,7 @@ def gyp_main(args):
+@@ -507,6 +540,7 @@ def gyp_main(args):
                'root_targets': options.root_targets,
                'target_arch': cmdline_default_variables.get('target_arch', '')}
  
@@ -92,7 +185,7 @@ index 668f38b..f47c1d2 100755
      # Start with the default variables from the command line.
      [generator, flat_list, targets, data] = Load(
          build_files, format, cmdline_default_variables, includes, options.depth,
-@@ -520,8 +533,10 @@ def gyp_main(args):
+@@ -520,8 +554,10 @@ def gyp_main(args):
      # that targets may be built.  Build systems that operate serially or that
      # need to have dependencies defined before dependents reference them should
      # generate targets in the order specified in flat_list.
@@ -103,3 +196,17 @@ index 668f38b..f47c1d2 100755
      if options.configs:
        valid_configs = targets[flat_list[0]]['configurations'].keys()
        for conf in options.configs:
+@@ -535,6 +571,7 @@ def gyp_main(args):
+ 
+ def main(args):
+   try:
++    print "before return gyp_main(args)"
+     return gyp_main(args)
+   except GypError, e:
+     sys.stderr.write("gyp: %s\n" % e)
+@@ -545,4 +582,5 @@ def script_main():
+   return main(sys.argv[1:])
+ 
+ if __name__ == '__main__':
++  print "before sys.exit(script_main())"
+   sys.exit(script_main())
