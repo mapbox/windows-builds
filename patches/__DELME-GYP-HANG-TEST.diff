@@ -1,8 +1,8 @@
 diff --git a/gyp.bat b/gyp.bat
-index c0b4ca2..808fcb7 100755
+index c0b4ca2..bb6fa37 100755
 --- a/gyp.bat
 +++ b/gyp.bat
-@@ -1,5 +1,8 @@
+@@ -1,5 +1,9 @@
 -@rem Copyright (c) 2009 Google Inc. All rights reserved.
 -@rem Use of this source code is governed by a BSD-style license that can be
 -@rem found in the LICENSE file.
@@ -15,16 +15,45 @@ index c0b4ca2..808fcb7 100755
 +
 +ECHO looking for python
 +where python
++ECHO "calling python %~dp0gyp_main.py %*"
 +@python "%~dp0gyp_main.py" %*
+diff --git a/gyp_main.py b/gyp_main.py
+index 4ec872f..0deffc0 100755
+--- a/gyp_main.py
++++ b/gyp_main.py
+@@ -8,11 +8,23 @@ import sys
+ 
+ # TODO(mark): sys.path manipulation is some temporary testing stuff.
+ try:
++#  print "gyp_main.py, sys.argv", sys.argv
++  print "gyp_main.py, before import gyp 1st try"
+   import gyp
++  print "gyp_main.py, after import gyp 1st try"
+ except ImportError, e:
++  print "import exception"
++  print e
+   import os.path
++  print "sys.argv[0]", sys.argv[0]
++  print "os.path.dirname(sys.argv[0])", os.path.dirname(sys.argv[0])
++  print "os.path.join(os.path.dirname(sys.argv[0]), 'pylib')", os.path.join(os.path.dirname(sys.argv[0]), 'pylib')
++  print "gyp_main.py, before sys.path.append"
+   sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), 'pylib'))
++  print "gyp_main.py, before import gyp 2nd try"
+   import gyp
++  print "gyp_main.py, after import gyp 2nd try"
+ 
+ if __name__ == '__main__':
++  print "gyp_main.py, __main__, before sys.exit(gyp.script_main())"
+   sys.exit(gyp.script_main())
 diff --git a/pylib/gyp/__init__.py b/pylib/gyp/__init__.py
-index 668f38b..b9077a4 100755
+index 668f38b..df672db 100755
 --- a/pylib/gyp/__init__.py
 +++ b/pylib/gyp/__init__.py
 @@ -277,41 +277,55 @@ class RegeneratableOptionParser(optparse.OptionParser):
      return values, args
  
  def gyp_main(args):
-+  print "entering gyp_main"
++  print "__init__.py, entering gyp_main"
    my_name = os.path.basename(sys.argv[0])
  
 +  print "before RegeneratableOptionParser()"
@@ -196,17 +225,22 @@ index 668f38b..b9077a4 100755
      if options.configs:
        valid_configs = targets[flat_list[0]]['configurations'].keys()
        for conf in options.configs:
-@@ -535,6 +571,7 @@ def gyp_main(args):
+@@ -535,6 +571,8 @@ def gyp_main(args):
  
  def main(args):
    try:
-+    print "before return gyp_main(args)"
++    print "__init__.py, before return gyp_main(args)"
++    print "args", args
      return gyp_main(args)
    except GypError, e:
      sys.stderr.write("gyp: %s\n" % e)
-@@ -545,4 +582,5 @@ def script_main():
+@@ -542,7 +580,9 @@ def main(args):
+ 
+ # NOTE: setuptools generated console_scripts calls function with no arguments
+ def script_main():
++  print "__init__.py, before main(sys.argv[1:])"
    return main(sys.argv[1:])
  
  if __name__ == '__main__':
-+  print "before sys.exit(script_main())"
++  print "__init__.py, before sys.exit(script_main())"
    sys.exit(script_main())
