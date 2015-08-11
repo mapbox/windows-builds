@@ -8,7 +8,7 @@ $pathToSite="system.applicationhost/sites/site[@name='Default Web Site']/applica
 $wc=Get-WebConfiguration $pathToSite | select *
 $wc.Collection | select *
 set-webconfigurationproperty "$pathToSite/virtualDirectory[@path='/']" -name username -value 'Administrator'
-set-webconfigurationproperty "$pathToSite/virtualDirectory[@path='/']" -name password -value '$env:CRED'
+set-webconfigurationproperty "$pathToSite/virtualDirectory[@path='/']" -name password -value $env:CRED
 $wc=Get-WebConfiguration $pathToSite | select *
 $wc.Collection | select *
 
@@ -77,6 +77,6 @@ Get-ChildItem Env: | Out-File -Encoding utf8 Z:\env-vars.txt
 Write-Host "Starting build"
 #& C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
 #use Start-Process to break out of userdata execution
-Start-Process C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
+#Start-Process C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
 
 Write-Host "exiting wbs-build.ps1"
