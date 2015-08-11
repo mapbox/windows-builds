@@ -1,5 +1,5 @@
 diff --git a/gyp.bat b/gyp.bat
-index c0b4ca2..bb6fa37 100755
+index c0b4ca2..406643c 100755
 --- a/gyp.bat
 +++ b/gyp.bat
 @@ -1,5 +1,9 @@
@@ -16,16 +16,18 @@ index c0b4ca2..bb6fa37 100755
 +ECHO looking for python
 +where python
 +ECHO "calling python %~dp0gyp_main.py %*"
-+@python "%~dp0gyp_main.py" %*
++python "%~dp0gyp_main.py" %*
 diff --git a/gyp_main.py b/gyp_main.py
-index 4ec872f..0deffc0 100755
+index 4ec872f..d24e680 100755
 --- a/gyp_main.py
 +++ b/gyp_main.py
-@@ -8,11 +8,23 @@ import sys
+@@ -8,11 +8,26 @@ import sys
  
  # TODO(mark): sys.path manipulation is some temporary testing stuff.
  try:
 +#  print "gyp_main.py, sys.argv", sys.argv
++  for a in sys.argv:
++    print "arg:", a
 +  print "gyp_main.py, before import gyp 1st try"
    import gyp
 +  print "gyp_main.py, after import gyp 1st try"
@@ -37,6 +39,7 @@ index 4ec872f..0deffc0 100755
 +  print "os.path.dirname(sys.argv[0])", os.path.dirname(sys.argv[0])
 +  print "os.path.join(os.path.dirname(sys.argv[0]), 'pylib')", os.path.join(os.path.dirname(sys.argv[0]), 'pylib')
 +  print "gyp_main.py, before sys.path.append"
++  print "sys.path", sys.path
    sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), 'pylib'))
 +  print "gyp_main.py, before import gyp 2nd try"
    import gyp
