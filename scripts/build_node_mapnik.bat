@@ -67,14 +67,21 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 call npm update -g node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+:INSTALL_NODE_MODULES
 if NOT EXIST node_modules (
     call npm install mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp jshint
 )
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-call npm ls
-ECHO if this failed then clear out node_modules
+CALL npm ls
+IF %ERRORLEVEL% EQU 0 GOTO NPM_LS_OK
+
+ECHO 'npm ls' failed!!!!!! clearing out node_modules...
+ddt /q node_modules
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+GOTO INSTALL_NODE_MODULES
+
+:NPM_LS_OK
 
 call .\node_modules\.bin\node-pre-gyp clean --target=%NODE_VER%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
