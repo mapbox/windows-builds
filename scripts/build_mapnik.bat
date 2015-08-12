@@ -59,15 +59,12 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ddt /Q mapnik-sdk
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-
 ::download prebuilt binary deps
 IF %FASTBUILD% NEQ 1 GOTO FULLBUILD
 SET BINDEPSPGK=mapnik-win-sdk-binary-deps-%TOOLS_VERSION%-%PLATFORMX%.7z
-IF EXIST %BINDEPSPGK% DEL /Q %BINDEPSPGK%
+IF NOT EXIST %BINDEPSPGK% ECHO downloading binary deps package... && CALL %ROOTDIR%\scripts\download https://mapbox.s3.amazonaws.com/windows-builds/windows-build-deps/%BINDEPSPGK%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-CALL %ROOTDIR%\scripts\download https://mapbox.s3.amazonaws.com/windows-builds/windows-build-deps/%BINDEPSPGK%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-CALL 7z x -y %BINDEPSPGK% | %windir%\system32\FIND "ing archive"
+IF NOT EXIST mapnik-sdk ECHO extracting binary deps package... && CALL 7z x -y %BINDEPSPGK% | %windir%\system32\FIND "ing archive"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
