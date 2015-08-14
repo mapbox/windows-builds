@@ -95,7 +95,8 @@ Get-ChildItem Env: | Out-File -Encoding utf8 Z:\env-vars.txt
 Write-Host "Starting build"
 #use Start-Process instead of "&" to break out of userdata execution
 $wbscli="C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe"
-$wbscli_args="--cm ""$commit_msg"" --gs ""$gitsha"""
+#$wbscli="c:\mb\windows-build-server\windows-build-server-cli\bin\x64\debug\windows-build-server-cli.exe"
+$wbscli_args="--cm ""$commit_msg"" --gs ""$git_sha"""
 Write-Host "wbs-cli      : " $wbscli
 Write-Host "wbs-cli-args : " $wbscli_args
 Start-Process $wbscli $wbscli_args
