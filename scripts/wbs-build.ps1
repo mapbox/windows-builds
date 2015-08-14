@@ -1,4 +1,47 @@
-﻿
+﻿param(
+    [string]$commit_msg,
+    [string]$git_sha
+)
+
+Write-Host "commit message:", $commit_msg
+Write-Host "gitsha:", $git_sha
+
+
+if([string]::IsNullOrWhiteSpace($commit_msg) -or [string]::IsNullOrWhiteSpace($git_sha)){
+    Write-Host "no commit message or gitsha"
+    exit
+}
+
+
+#http://stackoverflow.com/questions/2403122/regular-expression-to-extract-text-between-square-brackets
+#$regex='\[(.*?)\]'
+#$regex='\[([^]]+)\]'
+$regex='(?<=\[).+?(?=\])'
+$options = $commit_msg | Select-String  -Pattern $regex -AllMatches | % {$_.Matches} | % {$_.Value}
+
+
+####
+####[publish debug] $env:SHUTDOWN=0
+$build32bit=$false
+$settings_cmd="settings"
+
+foreach($opt in $options){
+    Write-Host "option: " $opt
+    if('publish debug' -eq $opt){
+        Write-Host "not shutting down after build"
+        $env:SHUTDOWN=0
+    } elseif('build32bit' -eq $opt){
+        Write-Host "building 32bit, too"
+        $build32bit=$true
+    } elseif($opt -like "*=*" ){
+        $settings_cmd = "$settings_cmd ""$opt"""
+    } else {
+        Write-Host "unknown option: " $opt
+    }
+}
+
+
+
 Invoke-WebRequest https://mapbox.s3.amazonaws.com/windows-builds/windows-build-server/windows-build-server-publish.7z -OutFile Z:\\wbs.7z
 Stop-WebSite -Name "Default Web Site"
 
@@ -23,43 +66,18 @@ Write-Host "cloning repos"
 & "C:\Program Files (x86)\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-32
 & "C:\Program Files (x86)\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-64
 
-Write-Host "PUBLISHMAPNIKSDK: $env:PUBLISHMAPNIKSDK"
-if (-not(Test-Path "Env:\PUBLISHMAPNIKSDK")){
-    $publish_mapnik_sdk='PUBLISHMAPNIKSDK=0'
-} else {
-    $publish_mapnik_sdk="PUBLISHMAPNIKSDK=$env:PUBLISHMAPNIKSDK"
-}
-
-Write-Host "FASTBUILD: $env:FASTBUILD"
-if (-not(Test-Path "Env:\FASTBUILD")){
-    $fast_build='FASTBUILD=1'
-} else {
-    $fast_build="FASTBUILD=$env:FASTBUILD"
-}
-
-Write-Host "PACKAGEDEBUGSYMBOLS: $env:PACKAGEDEBUGSYMBOLS"
-if (-not(Test-Path "Env:\PACKAGEDEBUGSYMBOLS")){
-    $package_pdb='PACKAGEDEBUGSYMBOLS=0'
-} else {
-    $package_pdb="PACKAGEDEBUGSYMBOLS=$env:PACKAGEDEBUGSYMBOLS"
-}
 
 $buildcmd="scripts\build"
 
-Write-Host "PUBLISH_NODEGDAL: $env:PUBLISH_NODEGDAL"
-if (-not(Test-Path "Env:\PUBLISH_NODEGDAL")){
-    $buildcmd="scripts\build"
-} else {
-    if ($env:PUBLISH_NODEGDAL -ne 0) {
-        $buildcmd="scripts\build_node_gdal"
-    }
-}
+
+Write-Host "`nbuilding 32bit: " $build32bit
+Write-Host $settings_cmd
 
 
-$x86cmd="settings ""TARGET_ARCH=32"" ""PACKAGEMAPNIK=1"" ""$fast_build"" ""$publish_mapnik_sdk"" ""$package_pdb"" && del /q packages\*.* && clean && $buildcmd"
+$x86cmd="$settings_cmd ""TARGET_ARCH=32"" && del /q packages\*.* && clean && $buildcmd"
 $x86dir="Z:\mb\windows-builds-32"
 
-if (-not(Test-Path "Env:\BUILD32BIT")){
+if (-not($build32bit)){
     $x86cmd="[DISABLED] $x86cmd"
     $x86dir="[DISABLED] $x86dir"
 }
@@ -68,15 +86,14 @@ if (-not(Test-Path "Env:\BUILD32BIT")){
 Write-Host "writing config"
 "$x86cmd
 $x86dir
-settings ""PACKAGEMAPNIK=1"" ""$fast_build"" ""$publish_mapnik_sdk"" ""$package_pdb"" && del /q packages\*.* && clean && $buildcmd
+$settings_cmd && del /q packages\*.* && clean && $buildcmd
 Z:\mb\windows-builds-64
 " | Out-File -Encoding UTF8 Z:\wbs.cfg
 
 Get-ChildItem Env: | Out-File -Encoding utf8 Z:\env-vars.txt
 
 Write-Host "Starting build"
-#& C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
-#use Start-Process to break out of userdata execution
+#use Start-Process instead of "&" to break out of userdata execution
 Start-Process C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
 
 Write-Host "exiting wbs-build.ps1"
