@@ -71,7 +71,7 @@ $buildcmd="scripts\build"
 
 
 Write-Host "`nbuilding 32bit: " $build32bit
-Write-Host $settings_cmd
+Write-Host "settings cmd: " $settings_cmd
 
 
 $x86cmd="$settings_cmd ""TARGET_ARCH=32"" && del /q packages\*.* && clean && $buildcmd"
@@ -94,6 +94,8 @@ Get-ChildItem Env: | Out-File -Encoding utf8 Z:\env-vars.txt
 
 Write-Host "Starting build"
 #use Start-Process instead of "&" to break out of userdata execution
-Start-Process C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe
+$wbscli="C:\windows-build-server-publish\wbs-cli\windows-build-server-cli.exe"
+$wbscli_args="--cm '$commit_msg' --gs '$gitsha'"
+Start-Process $wbscli $wbscli_args
 
 Write-Host "exiting wbs-build.ps1"
