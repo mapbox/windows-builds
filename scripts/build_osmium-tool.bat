@@ -1,7 +1,9 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ osmium tool -----
+
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
+
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO ERROR )
@@ -64,13 +66,13 @@ SET PATH=%LODEPSDIR%\zlib\lib;%PATH%
 SET LIBBZIP2=%LODEPSDIR%\bzip2\lib\libbz2.lib
 SET LIBBZIP2=%LIBBZIP2:\=/%
 
-REM -G "Visual Studio 14 Win64" ^
+REM -G "Visual Studio 15 Win64" ^
 REM -G "NMake Makefiles" ^
 REM -DCMAKE_BUILD_TYPE=Dev ^
 REM -DCMAKE_BUILD_TYPE=Release ^
 
 SET PROJECT_TYPE="NMake Makefiles"
-IF "%1"=="vs" ( ECHO Visual Studio SLN && SET PROJECT_TYPE="Visual Studio 14 Win64" )
+IF "%1"=="vs" ( ECHO Visual Studio SLN && SET PROJECT_TYPE="Visual Studio 15 Win64" )
 SET CMAKEBUILDTYPE=Release
 IF "%2"=="dev" ( ECHO building Dev && SET CMAKEBUILDTYPE=Dev )
 
@@ -164,10 +166,11 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR libosmium --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
-echo ----------DONE libosmium --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 cd %ROOTDIR%
 EXIT /b %EL%

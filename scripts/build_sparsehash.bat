@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ sparsehash -----
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
@@ -43,11 +43,12 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 GOTO DONE
 
 :ERROR
-echo ------ ERROR sparsehash -----
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
 SET EL=%ERRORLEVEL%
+ECHO ERRORLEVEL^: %EL%
 
 
 :DONE
-echo ------ DONE sparsehash -----
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 cd %ROOTDIR%
 EXIT /b %EL%

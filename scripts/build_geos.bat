@@ -1,7 +1,7 @@
 echo off
 SETLOCAL
 SET EL=0
-echo ------ geos -----
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 cd %PKGDIR%
 
@@ -69,7 +69,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::call autogen.bat again. geos/platform.h somehow gets deleted by cmake or nmake
 ::but it is needed later, e.g. to build libosmium
 CD ..
-CALL autogen.bat
+ECHO calling autogen.bat again && CALL autogen.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
@@ -77,9 +77,11 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR geos --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 cd %ROOTDIR%
 EXIT /b %EL%

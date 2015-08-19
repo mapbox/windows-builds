@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ tiff -----
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
@@ -18,16 +18,20 @@ ECHO ===!!!! pin to 4-0-4 =====
 ECHO ---latest commits don't compile on Windows ----!!!!
 
 ::git clone --quiet --depth=1 https://github.com/vadz/libtiff.git
-git clone --branch Release-v4-0-4 https://github.com/vadz/libtiff.git
+git clone  https://github.com/vadz/libtiff.git
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+cd %PKGDIR%\libtiff
+git checkout tags/Release-v4-0-4
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::echo extracting
 ::CALL bsdtar xfz tiff-%TIFF_VERSION%.tar.gz
 ::rename tiff-%TIFF_VERSION% libtiff
-IF ERRORLEVEL 1 GOTO ERROR
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 :SRCALREADYTHERE
 
-cd libtiff
+cd %PKGDIR%\libtiff
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 COPY /Y %PKGDIR%\libjpegturbo\build\jconfig.h %PKGDIR%\libjpegturbo\
@@ -63,9 +67,11 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-ECHO =========== ERROR TIFF
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 cd %ROOTDIR%
 EXIT /b %EL%
