@@ -1,7 +1,9 @@
-@echo off
+@ECHO off
 SETLOCAL
 SET EL=0
-echo ------ libosmium -----
+
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
+
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO ERROR )
@@ -34,11 +36,11 @@ IF %FULLBUILD% EQU 0 ECHO NOT building deps && GOTO DEPSBUILT
 
 echo ======== BUILDING AND PACKAGING ALL DEPS ================
 cd %ROOTDIR%\scripts
-IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL build_libosmium_deps.bat
-IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL package_libosmium_deps.bat
-IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :DEPSBUILT
 
@@ -103,12 +105,7 @@ cmake .. ^
 -G %PROJECT_TYPE% ^
 -DOsmium_DEBUG=TRUE ^
 -DBOOST_ROOT=%LODEPSDIR%\boost ^
--DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
--DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
--DOSMPBF_INCLUDE_DIR=%LODEPSDIR%\osmpbf\include ^
--DPROTOBUF_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf.lib ^
--DPROTOBUF_LITE_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf-lite.lib ^
--DPROTOBUF_INCLUDE_DIR=%LODEPSDIR%\protobuf\include ^
+-DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_%BOOST_VERSION%.lib ^
 -DZLIB_LIBRARY=%LODEPSDIR%\zlib\lib\zlibwapi.lib ^
 -DZLIB_INCLUDE_DIR=%LODEPSDIR%\zlib\include ^
 -DEXPAT_LIBRARY=%LODEPSDIR%\expat\lib\libexpat.lib ^
@@ -153,6 +150,7 @@ msbuild libosmium.sln ^
 /p:Configuration=%CMAKECONFIG% ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 REM CALL ctest -C %CMAKECONFIG%
 CALL ctest --output-on-failure -C %CMAKECONFIG% -VV
@@ -162,10 +160,11 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR libosmium --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
-echo ----------DONE libosmium --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 cd %ROOTDIR%
 EXIT /b %EL%

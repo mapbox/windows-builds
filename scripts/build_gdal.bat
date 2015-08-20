@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ gdal -----
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
@@ -97,10 +97,11 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR gdal --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
-echo ----------DONE gdal --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 cd %ROOTDIR%
 EXIT /b %EL%

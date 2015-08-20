@@ -66,10 +66,10 @@ SET PATH=%LODEPSDIR%\zlib\lib;%PATH%
 SET LIBBZIP2=%LODEPSDIR%\bzip2\lib\libbz2.lib
 SET LIBBZIP2=%LIBBZIP2:\=/%
 
-REM -G "Visual Studio 15 Win64" ^
-REM -G "NMake Makefiles" ^
-REM -DCMAKE_BUILD_TYPE=Dev ^
-REM -DCMAKE_BUILD_TYPE=Release ^
+:: -G "Visual Studio 15 Win64" ^
+:: -G "NMake Makefiles" ^
+:: -DCMAKE_BUILD_TYPE=Dev ^
+:: -DCMAKE_BUILD_TYPE=Release ^
 
 SET PROJECT_TYPE="NMake Makefiles"
 IF "%1"=="vs" ( ECHO Visual Studio SLN && SET PROJECT_TYPE="Visual Studio 15 Win64" )
@@ -114,11 +114,6 @@ cmake .. ^
 -DCMAKE_BUILD_TYPE=%CMAKEBUILDTYPE% ^
 -DBOOST_ROOT=%LODEPSDIR%\boost ^
 -DBoost_PROGRAM_OPTIONS_LIBRARY=%LODEPSDIR%\boost\lib\libboost_program_options-vc140-mt-1_57.lib ^
--DOSMPBF_LIBRARY=%LODEPSDIR%\osmpbf\lib\osmpbf.lib ^
--DOSMPBF_INCLUDE_DIR=%LODEPSDIR%\osmpbf\include ^
--DPROTOBUF_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf.lib ^
--DPROTOBUF_LITE_LIBRARY=%LODEPSDIR%\protobuf\lib\libprotobuf-lite.lib ^
--DPROTOBUF_INCLUDE_DIR=%LODEPSDIR%\protobuf\include ^
 -DZLIB_LIBRARY=%LODEPSDIR%\zlib\lib\zlibwapi.lib ^
 -DZLIB_INCLUDE_DIR=%LODEPSDIR%\zlib\include ^
 -DEXPAT_LIBRARY=%LODEPSDIR%\expat\lib\libexpat.lib ^

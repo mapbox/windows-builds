@@ -30,14 +30,14 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL build_boost.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_protobuf-%PROTOBUF_VERSION%.bat
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::CALL build_protobuf-%PROTOBUF_VERSION%.bat
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_sparsehash.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL build_osmpbf.bat
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::CALL build_osmpbf.bat
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_expat.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -51,7 +51,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL build_geos.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL scripts\build_sqlite.bat
+CALL build_sqlite.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CALL build_gdal.bat

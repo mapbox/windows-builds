@@ -1,7 +1,8 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ============ packing gdal =========
+
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%PKGDIR%"=="" ( echo "PKGDIR variable not set" && GOTO DONE )
@@ -52,7 +53,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 :: skip packaging if preparing for libosmium
-IF "%1" EQU "libosmium" GOTO DONE
+IF /I "%1"=="libosmium" ECHO libosmium, skipping 7z && GOTO DONE
 
 
 if %TARGET_ARCH% EQU 32 (
@@ -78,10 +79,11 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ------------ ERROR packaging gdal ------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
-echo ============ DONE packing gdal =========
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 
 cd %ROOTDIR%

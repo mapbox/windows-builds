@@ -1,7 +1,8 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ sqlite -----
+
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
@@ -39,9 +40,11 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR sqlite --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 cd %ROOTDIR%
 EXIT /b %EL%

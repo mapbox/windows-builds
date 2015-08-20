@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ============ packing libosmium deps =========
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%PKGDIR%"=="" ( echo "PKGDIR variable not set" && SET ERRORLEVEL=1 && GOTO ERROR )
@@ -10,8 +10,8 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && SET ERRORLEVEL=1 && GOTO
 echo TODO also check for individual files
 IF NOT EXIST %PKGDIR%\boost ( echo "no boost dir" && SET ERRORLEVEL=1 && GOTO ERROR )
 IF NOT EXIST %PKGDIR%\boost\stage\lib ( echo "no boost libs dir" && SET ERRORLEVEL=1 && GOTO ERROR )
-IF NOT EXIST %PKGDIR%\OSM-binary ( echo "no osmpbf dir" && SET ERRORLEVEL=1 && GOTO ERROR )
-IF NOT EXIST %PKGDIR%\protobuf ( echo "no protobuf dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+::IF NOT EXIST %PKGDIR%\OSM-binary ( echo "no osmpbf dir" && SET ERRORLEVEL=1 && GOTO ERROR )
+::IF NOT EXIST %PKGDIR%\protobuf ( echo "no protobuf dir" && SET ERRORLEVEL=1 && GOTO ERROR )
 IF NOT EXIST %PKGDIR%\zlib ( echo "no zlib dir" && SET ERRORLEVEL=1 && GOTO ERROR )
 IF NOT EXIST %PKGDIR%\expat ( echo "no expat dir" && SET ERRORLEVEL=1 && GOTO ERROR )
 IF NOT EXIST %PKGDIR%\bzip2 ( echo "no bzip dir" && SET ERRORLEVEL=1 && GOTO ERROR )
@@ -28,7 +28,7 @@ SET LODEPSDIR=%SDKBASE%\libosmium-deps
 ECHO packaging to %SDKBASE%
 
 ::remove previous SDK
-ddt /Q %SDKBASE%
+IF EXIST %SDKBASE% ECHO deleting existing SDK dir... && ddt /Q %SDKBASE%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- boost
@@ -39,15 +39,15 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\boost\stage\lib\*.* %LODEPSDIR%\boost\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-ECHO copying ---------------- OSMPBF
-xcopy /S /Q %PKGDIR%\OSM-binary\deploy\*.* %LODEPSDIR%\osmpbf\
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::ECHO copying ---------------- OSMPBF
+::xcopy /S /Q %PKGDIR%\OSM-binary\deploy\*.* %LODEPSDIR%\osmpbf\
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-ECHO copying ---------------- protobuf
-xcopy /S /Q %PKGDIR%\protobuf\src\*.h %LODEPSDIR%\protobuf\include\
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-xcopy /S /Q %PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\*.lib %LODEPSDIR%\protobuf\lib\
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::ECHO copying ---------------- protobuf
+::xcopy /S /Q %PKGDIR%\protobuf\src\*.h %LODEPSDIR%\protobuf\include\
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::xcopy /S /Q %PKGDIR%\protobuf\vsprojects\%BUILDPLATFORM%\%BUILD_TYPE%\*.lib %LODEPSDIR%\protobuf\lib\
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- zlib
 SET BT=Debug
@@ -87,6 +87,8 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO copying ---------------- geos
 xcopy /S /Q %PKGDIR%\geos\include\*.h %LODEPSDIR%\geos\include\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+xcopy /S /Q %PKGDIR%\geos\build\include\geos\platform.h %LODEPSDIR%\geos\include\geos\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\geos\build\lib\%BUILD_TYPE%\geos.lib %LODEPSDIR%\geos\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -139,10 +141,11 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ------------ ERROR packaging libosmium deps ------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
-echo ============ DONE packing libosmium deps =========
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 
 cd %ROOTDIR%
