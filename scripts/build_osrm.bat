@@ -56,7 +56,7 @@ ECHO packaged to %PKGDIR%\osrm-deps\%PKGNAME%
 cd %PKGDIR%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if NOT EXIST osrm-backend git clone -b develop https://github.com/Project-OSRM/osrm-backend osrm-backend
+if NOT EXIST osrm-backend git clone -b use_libosmium_2_3_0 https://github.com/Project-OSRM/osrm-backend osrm-backend
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cd osrm-backend

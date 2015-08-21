@@ -10,7 +10,7 @@ IF %TARGET_ARCH% EQU 32 ( echo "32bit not supported" && SET ERRORLEVEL=1 && GOTO
 
 SET FULLBUILD=0
 SET USEDEVCONFIG=0
-SET USEMSVS=0
+SET USEMSVS=1
 
 :NEXT-ARG
 IF "%1"=="" GOTO ARGS-DONE
@@ -81,6 +81,8 @@ SET PATH=%LODEPSDIR%\gdal\lib;%PATH%
 SET PATH=%LODEPSDIR%\expat\lib;%PATH%
 ::libtiff.dll
 SET PATH=%LODEPSDIR%\libtiff\lib;%PATH%
+::jpeg.dll
+SET PATH=%LODEPSDIR%\jpeg\lib;%PATH%
 ::zlibwapi.dll
 SET PATH=%LODEPSDIR%\zlib\lib;%PATH%
 

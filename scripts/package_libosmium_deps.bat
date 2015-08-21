@@ -81,6 +81,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 xcopy /S /Q %PKGDIR%\libtiff\libtiff\*.dll %LODEPSDIR%\libtiff\lib\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+ECHO copying ---------------- jpeg
+xcopy /S /Q %PKGDIR%\libjpegturbo\build\sharedlib\Release\*.dll %LODEPSDIR%\jpeg\lib\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 ECHO copying ---------------- gdal
 xcopy /S /Q %PKGDIR%\gdal-sdk\gdal\*.* %LODEPSDIR%\gdal\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
