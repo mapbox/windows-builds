@@ -32,7 +32,7 @@ foreach($opt in $options){
         $env:SHUTDOWN=0
     } elseif('publish binary' -eq $opt) {
         Write-Host "publishing mapnik"
-        $env:PUBLISHMAPNIKSDK=1
+        $settings_cmd = "$settings_cmd ""PUBLISHMAPNIKSDK=1"""
     } elseif('build32bit' -eq $opt){
         Write-Host "building 32bit, too"
         $build32bit=$true
