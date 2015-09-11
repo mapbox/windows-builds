@@ -94,10 +94,10 @@ ddt /Q packages\libtiff
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
-:LIBXML2
-ddt /Q packages\libxml2
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-IF %SINGLE% EQU 1 GOTO DONE
+:: :LIBXML2
+::ddt /Q packages\libxml2
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::IF %SINGLE% EQU 1 GOTO DONE
 
 :PIXMAN
 ddt /Q packages\pixman

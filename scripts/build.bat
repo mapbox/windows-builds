@@ -51,9 +51,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 CALL scripts\build_proj4.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-:LIBXML2
-CALL scripts\build_libxml2.bat
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+:: :LIBXML2
+::CALL scripts\build_libxml2.bat
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :PROTOBUF
 SET protobufbat=scripts\build_protobuf-%PROTOBUF_VERSION%.bat

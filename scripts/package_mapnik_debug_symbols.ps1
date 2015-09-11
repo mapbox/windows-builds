@@ -68,7 +68,7 @@ $file_list = @{
         ("$pkg_dir" + $proto_pdb + "libprotobuf-lite.pdb"),
         ("$pkg_dir" + "libtiff\libtiff\libtiff.pdb"),
         ("$pkg_dir" + "webp\output\$env:BUILD_TYPE-dynamic\$env:PLATFORMX\lib\libwebp_dll.pdb"),
-        ("$pkg_dir" + "libxml2\win32\bin.msvc\libxml2.pdb"),
+        #("$pkg_dir" + "libxml2\win32\bin.msvc\libxml2.pdb"),
         ("$pkg_dir" + "proj\src\proj.pdb"),
         ("$pkg_dir" + "sqlite\sqlite3.pdb"),
         ("$pkg_dir" + "zlib\contrib\vstudio\vc11\$env:PLATFORMX\ZlibStat" + $env:BUILD_TYPE + "WithoutAsm\zlibstat.pdb"),
