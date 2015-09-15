@@ -85,14 +85,14 @@ Function copy-all-files(){
         foreach($file in $_.Value){
             try {
                 if($env:VERBOSE -eq 1){ Write-Host "copying $file" -ForegroundColor Yellow; }
-                if(!(Test-Path -Path $dest )){ 
+                if(!(Test-Path -Path $dest )){
                     #!!! capture output of New-Item, otherwise it will write
                     #to the outputpipeline of this function!!!
-                    $bla = New-Item -ItemType Directory $dest; 
+                    $bla = New-Item -ItemType Directory $dest;
                 }
 
                 $file_name = Split-Path -Leaf "$file"
-                if($file_name -eq "*.*"){
+                if($file_name -eq "*"){
                    $src_dir = Split-Path "$file"
                    #Copy-Item -Path $src_dir -Destination $dest -Recurse -Force
                    Copy-Item $file $dest -Recurse -Force

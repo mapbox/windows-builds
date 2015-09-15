@@ -119,14 +119,14 @@ CALL 7z x -y ruby-2.2.2-x64-mingw32.7z | %windir%\system32\FIND "ing archive"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :RUNTESTS
-ECHO running tests
+ECHO TODO! running cucumber tests ...
 SET PATH=%OSRMDEPSDIR%\libs\bin;%ROOTDIR%\tmp-bin\ruby-2.2.2-x64-mingw32\bin;%PKGDIR%\osrm-backend\build;%PATH%
 ::echo disk=%CD%\stxxl,1000,wincall > test/stxxl.txt
 SET OSRM_TIMEOUT=200
 SET STXXLCFG=stxxl.txt
 CD %PKGDIR%\osrm-backend
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-ECHO calling cucumber
+ECHO TODO! calling cucumber
 ::CALL cucumber
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
@@ -141,6 +141,16 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 COPY car.lua profile.lua
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO running datastructure-tests.exe ...
+datastructure-tests.exe
+ECHO ERRORLEVEL^: %ERRORLEVEL%
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ECHO running algorithm-tests.exe ...
+algorithm-tests.exe
+ECHO ERRORLEVEL^: %ERRORLEVEL%
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 
 SET TESTDATABASENAME=berlin-latest
 SET TESTDATAPBF=berlin-latest.osm.pbf

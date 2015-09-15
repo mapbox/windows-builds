@@ -14,7 +14,10 @@ git clone https://github.com/stxxl/stxxl.git
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 cd stxxl
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-patch -N -p1 < %PATCHES%/stxxl-CTP4-HACK.diff || %SKIP_FAILED_PATCH%
+
+::patch -N -p1 < %PATCHES%/stxxl-CTP4-HACK.diff || %SKIP_FAILED_PATCH%
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+patch -N -p1 < %PATCHES%/stxxl-msc_ver-1900.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :STXXLFETCH

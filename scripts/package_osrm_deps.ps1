@@ -52,7 +52,6 @@ $file_list = @{
     );
     "$osrm_libs_bin_dest_dir" = @(
         ("${env:PKGDIR}\lua\build\RelWithDebInfo\lua.dll"),
-        ("${env:PKGDIR}\protobuf\vsprojects\x64\Release\protoc.exe"),
         ("${env:PKGDIR}\expat\win32\bin\Release\libexpat.dll"),
         ("${tbb_lib_src_dir}tbb.dll"),
         ("${tbb_lib_src_dir}tbbmalloc.dll"),
@@ -70,9 +69,7 @@ $file_list = @{
         ("$env:PKGDIR" + "\stxxl\include\stxxl.h"),
         ("$env:PKGDIR" + "\zlib\zconf.h"),
         ("$env:PKGDIR" + "\zlib\zlib.h"),
-        ("$env:PKGDIR" + "\protobuf\src\google\*.*"),
         ("$env:PKGDIR" + "\luabind\luabind\*.*"),
-        ("$env:PKGDIR" + "\OSM-binary\include\osmpbf\*.*"),
         ("$env:PKGDIR" + "\stxxl\include\stxxl\*.*")
     );
     "$osrm_libs_lib_dest_dir" = @(
@@ -80,8 +77,6 @@ $file_list = @{
         ("$env:PKGDIR" + "\expat\win32\bin\Release\libexpat.lib"),
         ("$env:PKGDIR" + "\lua\build\RelWithDebInfo\lua.lib"),
         ("$env:PKGDIR" + "\luabind\build\src\RelWithDebInfo\luabind.lib"),
-        ("$env:PKGDIR" + "\OSM-binary\deploy\lib\osmpbf.lib"),
-        ("$env:PKGDIR" + "\protobuf\vsprojects\x64\Release\libprotobuf.lib"),
         ("$env:PKGDIR" + "\stxxl\build\lib\RelWithDebInfo\stxxl.lib"),
         ("$env:PKGDIR" + "\zlib\zlib.lib")
     );

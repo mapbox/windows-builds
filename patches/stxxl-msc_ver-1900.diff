@@ -1,0 +1,40 @@
+diff --git a/include/stxxl/bits/common/mutex.h b/include/stxxl/bits/common/mutex.h
+index f89a137..039cc3f 100644
+--- a/include/stxxl/bits/common/mutex.h
++++ b/include/stxxl/bits/common/mutex.h
+@@ -164,7 +164,7 @@ typedef scoped_mutex_lock scoped_fast_mutex_lock;
+ class spin_lock
+ {
+ public:
+-#if STXXL_MSVC < 1800
++#if STXXL_MSVC < 2000
+     spin_lock()
+     {
+         lck.clear(std::memory_order_release);
+@@ -183,7 +183,7 @@ public:
+     }
+
+ private:
+-#if STXXL_MSVC >= 1800
++#if STXXL_MSVC >= 2000
+     std::atomic_flag lck = ATOMIC_FLAG_INIT;
+     spin_lock(const spin_lock&) = delete;
+     spin_lock& operator = (const spin_lock&) = delete;
+diff --git a/include/stxxl/bits/msvc_compatibility.h b/include/stxxl/bits/msvc_compatibility.h
+index c2c937d..dbc32cd 100644
+--- a/include/stxxl/bits/msvc_compatibility.h
++++ b/include/stxxl/bits/msvc_compatibility.h
+@@ -27,11 +27,13 @@ inline double log2(double x)
+ // http://msdn.microsoft.com/en-us/library/2ts7cx93.aspx
+ #define snprintf _snprintf
+
++#if (_MSC_VER < 1900)
+ // http://msdn.microsoft.com/en-us/library/h80404d3.aspx
+ #define strtoll _strtoi64
+
+ // http://msdn.microsoft.com/en-us/library/85zk715d.aspx
+ #define strtoull _strtoui64
++#endif // _MSC_VER < 1900
+
+ #endif // STXXL_MSVC
+
