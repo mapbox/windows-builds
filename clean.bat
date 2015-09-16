@@ -184,6 +184,11 @@ ddt /Q packages\libosmium-deps
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
+:NODEOSMIUM
+ddt /Q packages\node-osmium
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF %SINGLE% EQU 1 GOTO DONE
+
 :WINGETOPT
 ddt /Q packages\wingetopt
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR

@@ -17,6 +17,7 @@ if EXIST sparsehash (
 if NOT EXIST "sparsehash" (
   echo extracting
   CALL bsdtar xfz sparsehash-%sparsehash_VERSION%.tar.gz
+  TIMEOUT 3
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR
   rename sparsehash-%sparsehash_VERSION% sparsehash
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR

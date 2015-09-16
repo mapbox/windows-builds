@@ -19,6 +19,7 @@ if NOT EXIST jpeg (
   echo extracting
   CALL bsdtar xfz jpegsrc.v%JPEG_VERSION%.tar.gz
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  TIMEOUT 3
   rename jpeg-%JPEG_VERSION% jpeg
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   cd %PKGDIR%\jpeg
