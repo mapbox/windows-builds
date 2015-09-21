@@ -72,8 +72,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO building mapnik
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%ROOTDIR%\tmp-bin\python2-x86-32\Scripts;%PATH%
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%ROOTDIR%\tmp-bin\python2\Scripts;%PATH%
-ECHO %TIME%^: calling build.bat of mapnik-gyp ...
+SET TIME_BEFORE_BUILD=%TIME%
+ECHO %TIME_BEFORE_BUILD%^: calling build.bat of mapnik-gyp ...
 call build.bat
+ECHO %TIME_BEFORE_BUILD%^: started build.bat of mapnik-gyp ...
 ECHO %TIME%^: finished build.bat of mapnik-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
