@@ -1,14 +1,15 @@
 environment:
   matrix:
-    - vs_version: 12
+#    - vs_version: 12 # not supported anymore, as most of Mapbox's modules require C++11
     - vs_version: 14
 
 # http://help.appveyor.com/discussions/questions/557-visual-studio-2014
 
-os: Visual Studio 2014 CTP4
+os: Visual Studio 2015
 
 configuration:
   - Release
+  #- Debug #Debug is not supported. We build Release with debug symbols (*.pdb)
 
 platform:
   - x86
@@ -17,7 +18,7 @@ platform:
 install:
   #- cinst wget msysgit
   - set TARGET_ARCH=64
-  - if "%platform%" == "x86" set TARGET_ARCH=32
+  - if /I "%platform%"=="x86" set TARGET_ARCH=32
   - .\settings.bat "TARGET_ARCH=%TARGET_ARCH%" "BUILD_TYPE=%configuration%" "TOOLS_VERSION=%vs_version%.0"
   - scripts\build_zlib.bat
   - scripts\build_libpng.bat

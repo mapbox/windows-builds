@@ -61,19 +61,21 @@ REM CALL npm update
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: NOTE - requires you install 32 bit node.exe from nodejs.org
-call npm install -g node-gyp
+ECHO installing node-gyp... && CALL npm install -g node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-call npm update -g node-gyp
+ECHO updateing node-gyp... &&call npm update -g node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+::DANGER ZONE!!! might end in an endless loop with node_modules cannot be deleted.
 :INSTALL_NODE_MODULES
 if NOT EXIST node_modules (
+    ECHO pre-installing some node_modules...
     call npm install mapnik-vector-tile nan sphericalmercator mocha node-pre-gyp jshint
 )
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL npm ls
+ECHO npm ls && CALL npm ls
 IF %ERRORLEVEL% EQU 0 GOTO NPM_LS_OK
 
 ECHO 'npm ls' failed!!!!!! clearing out node_modules...
@@ -83,12 +85,15 @@ GOTO INSTALL_NODE_MODULES
 
 :NPM_LS_OK
 
+ECHO node-pre-gyp clean...
 call .\node_modules\.bin\node-pre-gyp clean --target=%NODE_VER%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+ECHO ddt build...
 if EXIST build ddt /q build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+ECHO ddt lib\binding
 if EXIST lib\binding ddt /q lib\binding
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
@@ -113,6 +118,7 @@ ECHO NODE_LOCATION %NODE_LOCATION%
 
 call .\node_modules\.bin\node-pre-gyp ^
 rebuild %DEBUG_FLAG% ^
+--verbose ^
 --msvs_version=2015 ^
 --no-rollback ^
 --target=%NODE_VER% ^

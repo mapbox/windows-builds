@@ -72,9 +72,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO building mapnik
 if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%ROOTDIR%\tmp-bin\python2-x86-32\Scripts;%PATH%
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%ROOTDIR%\tmp-bin\python2\Scripts;%PATH%
-ECHO calling build.bat of mapnik-gyp ...
+ECHO %TIME%^: calling build.bat of mapnik-gyp ...
 call build.bat
-ECHO finished build.bat of mapnik-gyp
+ECHO %TIME%^: finished build.bat of mapnik-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: jump to end, ignore PUBLISHMAPNIKSDK when %PACKAGEMAPNIK% EQU 0
