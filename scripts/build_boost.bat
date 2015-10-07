@@ -100,7 +100,7 @@ address-model=%BOOSTADDRESSMODEL% ^
 --with-iostreams ^
 --with-test ^
 --with-thread ^
---with-filesystem  ^
+--with-filesystem ^
 --with-date_time ^
 --with-system ^
 --with-program_options ^
