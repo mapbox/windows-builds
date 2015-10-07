@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ cairo -----
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 echo.
 echo See http://cairographics.org/download/ Build in Visual Studio
@@ -42,9 +42,10 @@ rename cairo-%CAIRO_VERSION% cairo
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 cd cairo
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-patch -N -p1 < %PATCHES%/cairo.diff || %SKIP_FAILED_PATCH%
+
+IF EXIST %PATCHES%\cairo-%CAIRO_VERSION%.diff ECHO applying cairo-%CAIRO_VERSION%.diff && patch -N -p1 < %PATCHES%/cairo-%CAIRO_VERSION%.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-patch -N -p1 < %PATCHES%/cairo_debug_symbols.diff || %SKIP_FAILED_PATCH%
+ECHO enabling debug symbols && patch -N -p1 < %PATCHES%/cairo_debug_symbols.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :BUILD_STEP
@@ -83,9 +84,12 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR CAIRO --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
-cd %ROOTDIR%
+
+CD %ROOTDIR%
 EXIT /b %EL%
