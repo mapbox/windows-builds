@@ -60,9 +60,9 @@ ECHO downloading node.exe 32bit to install node-gyp && powershell Invoke-WebRequ
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::copy 32bit node.exe
-copy node.exe "C:\Program Files (x86)\nodejs\"
+IF EXIST "C:\Program Files (x86)\nodejs\" copy node.exe "C:\Program Files (x86)\nodejs\"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-copy node.exe "C:\Program Files\nodejs\"
+IF EXIST "C:\Program Files\nodejs\" copy node.exe "C:\Program Files\nodejs\"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO installing node-gyp... && CALL npm install -g node-gyp
@@ -82,13 +82,13 @@ CALL %ROOTDIR%\scripts\get_node.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::copy custom node.exe
-copy node.exe "C:\Program Files (x86)\nodejs\"
+IF EXIST "C:\Program Files (x86)\nodejs\" copy node.exe "C:\Program Files (x86)\nodejs\"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-copy node.exe "C:\Program Files\nodejs\"
+IF EXIST "C:\Program Files\nodejs\" copy node.exe "C:\Program Files\nodejs\"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
-ECHO npm cache clean && CALL npm cache clean
+::ECHO npm cache clean && CALL npm cache clean
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO npm update && CALL npm update
