@@ -1,7 +1,8 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ NODE_MAPNIK -----
+
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 IF DEFINED PACKAGEDEBUGSYMBOLS (ECHO PACKAGEDEBUGSYMBOLS %PACKAGEDEBUGSYMBOLS%) ELSE (SET PACKAGEDEBUGSYMBOLS=0)
 IF DEFINED IGNOREFAILEDTESTS (ECHO IGNOREFAILEDTESTS %IGNOREFAILEDTESTS%) ELSE (SET IGNOREFAILEDTESTS=0)
@@ -30,9 +31,7 @@ if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PAT
 if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
 
 cd %PKGDIR%
-if NOT EXIST node-mapnik (
-    git clone https://github.com/mapnik/node-mapnik
-)
+if NOT EXIST node-mapnik git clone https://github.com/mapnik/node-mapnik
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 cd node-mapnik
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -50,21 +49,49 @@ set GDAL_DATA=%MAPNIK_SDK%\share\gdal
 set PATH=%MAPNIK_SDK%\bin;%PATH%
 set PATH=%MAPNIK_SDK%\lib;%PATH%
 
+::add local node-pre-gyp dir to path
+SET PATH=%CD%\node_modules\.bin;%PATH%
+
+
+:: NOTE - requires you install 32 bit node.exe from nodejs.org
+IF EXIST node.exe DEL node.exe
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ECHO downloading node.exe 32bit to install node-gyp && powershell Invoke-WebRequest https://nodejs.org/dist/v$env:NODE_VER/node.exe -OutFile $env:PKGDIR\\node-mapnik\\node.exe
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+::copy 32bit node.exe
+copy node.exe "C:\Program Files (x86)\nodejs\"
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+copy node.exe "C:\Program Files\nodejs\"
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO installing node-gyp... && CALL npm install -g node-gyp
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO updating node-gyp... &&call npm update -g node-gyp
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO deleting node.exe 32bit
+IF EXIST node.exe DEL node.exe
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+
 ECHO fetching node.exe ...
 CALL %ROOTDIR%\scripts\get_node.bat
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-REM CALL npm cache clean
+::copy custom node.exe
+copy node.exe "C:\Program Files (x86)\nodejs\"
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+copy node.exe "C:\Program Files\nodejs\"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-REM CALL npm update
+
+ECHO npm cache clean && CALL npm cache clean
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-:: NOTE - requires you install 32 bit node.exe from nodejs.org
-ECHO installing node-gyp... && CALL npm install -g node-gyp
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-
-ECHO updateing node-gyp... &&call npm update -g node-gyp
+ECHO npm update && CALL npm update
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::DANGER ZONE!!! might end in an endless loop with node_modules cannot be deleted.
@@ -102,14 +129,10 @@ IF %BUILD_TYPE% EQU Debug (SET DEBUG_FLAG=--debug)
 
 :: clear out cached node-gyp dist
 :: to force re-download from dist-url
-if EXIST %USERPROFILE%\.node-gyp (
-    rd /q /s %USERPROFILE%\.node-gyp
-)
+IF EXIST %USERPROFILE%\.node-gyp RD /q /s %USERPROFILE%\.node-gyp
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
-::add local node-pre-gyp dir to path
-SET PATH=%CD%\node_modules\.bin;%PATH%
 
 SET NODE_LOCATION=--dist-url=https://s3.amazonaws.com/mapbox/node-cpp11
 IF %PREFER_LOCAL_NODE_EXE% EQU 1 SET NODE_LOCATION=--nodedir=%PKGDIR%\node-v%NODE_VERSION%-%BUILDPLATFORM%
@@ -227,9 +250,12 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR NODE_MAPNIK --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
-cd %ROOTDIR%
+
+CD %ROOTDIR%
 EXIT /b %EL%
