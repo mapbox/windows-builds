@@ -35,7 +35,8 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::to get node-pre-gyp and other deps
 ::IS THERE A BETTER WAY TO INSTALL JUST THE DEPS????
 ECHO npm install ...
-CALL npm install
+::CALL npm install
+CALL npm install node-pre-gyp nan mocha chai aws-sdk gh-pages yuidoc-lucid-theme yuidocjs
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SETLOCAL EnableDelayedExpansion
