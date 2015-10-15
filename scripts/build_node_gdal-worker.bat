@@ -41,6 +41,19 @@ REM IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO.
 ECHO ---------------- BUILDING  NODE-GDAL node^: %NODE_VERSION% %PLATFORMX% --------------
 
+
+CALL node_modules\.bin\node-pre-gyp.cmd ^
+--target=%NODE_VERSION% rebuild ^
+--build-from-source ^
+--msvs_version=2015 ^
+--toolset=v140 ^
+--target_arch=%NODEARCH% ^
+--enable-logging=true ^
+--loglevel=http
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+GOTO AFTER_THE_JUMP
+
 CALL node_modules\.bin\node-pre-gyp.cmd ^
 --target=%NODE_VERSION% rebuild ^
 --build-from-source ^
@@ -52,10 +65,19 @@ CALL node_modules\.bin\node-pre-gyp.cmd ^
 --loglevel=http
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+:AFTER_THE_JUMP
+
 ECHO.
 ECHO ---------------- TESTING  NODE-GDAL node^: %NODE_VERSION% %PLATFORMX% --------------
 CALL npm test
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO °°°°!!!!!!!!!!!!!!!!!!!°°°°°°°°°°°°°°°°
+ECHO °°°°!!!!!!!!!!!!!!!!!!!°°°°°°°°°°°°°°°°
+ECHO      publishing disabled
+ECHO °°°°!!!!!!!!!!!!!!!!!!!°°°°°°°°°°°°°°°°
+ECHO °°°°!!!!!!!!!!!!!!!!!!!°°°°°°°°°°°°°°°°
+GOTO DONE
 
 ECHO.
 ECHO ---------------- PUBLISHING  NODE-GDAL node^: %NODE_VERSION% %PLATFORMX%--------------

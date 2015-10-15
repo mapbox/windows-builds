@@ -40,7 +40,8 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SETLOCAL EnableDelayedExpansion
 ::FOR %%N IN (0.10.40 0.12.7) DO (
-FOR %%N IN (0.12.7) DO (
+::FOR %%N IN (0.12.7) DO (
+FOR %%N IN (4.2.1) DO (
 	ECHO about to build %%N %PLATFORMX%
 	CALL %ROOTDIR%\scripts\build_node_gdal-worker.bat %%N
 	ECHO ERRORLEVEL %%N %PLATFORMX% !ERRORLEVEL!

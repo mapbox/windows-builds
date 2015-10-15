@@ -52,11 +52,17 @@ set PATH=%MAPNIK_SDK%\lib;%PATH%
 ::add local node-pre-gyp dir to path
 SET PATH=%CD%\node_modules\.bin;%PATH%
 
+SET NODE_MAJOR=%NODE_VER:~0,1%
+ECHO node major version^: %NODE_MAJOR%
+IF %NODE_MAJOR% GTR 0 ECHO node version greater than zero
+SET NODEJS_ORG_X86_PATH=v%NODE_VER%
+IF %NODE_MAJOR% GTR 0 SET NODEJS_ORG_X86_PATH=v%NODE_VER%/win-x86
 
 :: NOTE - requires you install 32 bit node.exe from nodejs.org
 IF EXIST node.exe DEL node.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-ECHO downloading node.exe 32bit to install node-gyp && powershell Invoke-WebRequest https://nodejs.org/dist/v$env:NODE_VER/node.exe -OutFile $env:PKGDIR\\node-mapnik\\node.exe
+powershell Write-Host "$env:NODEJS_ORG_X86_PATH"
+ECHO downloading node.exe 32bit to install node-gyp && powershell Invoke-WebRequest https://nodejs.org/dist/$env:NODEJS_ORG_X86_PATH/node.exe -OutFile $env:PKGDIR\\node-mapnik\\node.exe
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::copy 32bit node.exe
