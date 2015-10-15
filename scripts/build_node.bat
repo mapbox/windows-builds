@@ -10,9 +10,8 @@ IF "%1"=="" ( ECHO using default %NODE_VERSION% ) ELSE ( SET NODE_VERSION=%1)
 
 
 cd %PKGDIR%
-if NOT EXIST node-cpp11 (
-    git clone https://github.com/mapbox/node-cpp11.git
-)
+if NOT EXIST node-cpp11 git clone https://github.com/mapbox/node-cpp11.git
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cd node-cpp11
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -21,6 +20,7 @@ git fetch -v
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET NODE_BRANCH=v%NODE_VERSION%-nodecpp11
+IF "%NODE_VERSION%"=="4.2.1" SET NODE_BRANCH=v%NODE_VERSION%
 
 ECHO NODE_VERSION: %NODE_VERSION%
 ECHO NAME: %NAME%
@@ -30,11 +30,23 @@ ECHO BUILD_TYPE: %BUILD_TYPE%
 ECHO ROOTDIR: %ROOTDIR%
 
 cd %PKGDIR%
-if NOT EXIST node-v%NODE_VERSION%-%BUILDPLATFORM% (
-    git clone https://github.com/mapbox/node.git -b %NODE_BRANCH% node-v%NODE_VERSION%-%BUILDPLATFORM%
-)
+if EXIST node-v%NODE_VERSION%-%BUILDPLATFORM% GOTO NODE_CLONED
 
+SET NODE_REPO=https://github.com/mapbox/node.git
+IF "%NODE_VERSION%"=="4.2.1" SET NODE_REPO=https://github.com/nodejs/node.git
+ECHO cloning node from %NODE_REPO%
+git clone %NODE_REPO% -b %NODE_BRANCH% node-v%NODE_VERSION%-%BUILDPLATFORM%
+::don't check ERRORLEVEL as we are checking out a tag and not a BRANCH
+::returns ERRORLEVEL>0
 cd node-v%NODE_VERSION%-%BUILDPLATFORM%
+ECHO %CD%
+IF "%NODE_VERSION%"=="4.2.1" IF EXIST %PATCHES%\node-v4.2.1-MD.diff patch -N -p1 < %PATCHES%/node-v4.2.1-MD.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:NODE_CLONED
+ECHO NODE_CLONED
+
+cd %PKGDIR%\node-v%NODE_VERSION%-%BUILDPLATFORM%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: clear out previous builds

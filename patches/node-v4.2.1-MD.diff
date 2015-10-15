@@ -1,0 +1,13 @@
+diff --git a/vcbuild.bat b/vcbuild.bat
+index 08b1462..ae51719 100644
+--- a/vcbuild.bat
++++ b/vcbuild.bat
+@@ -178,7 +178,7 @@ echo Project files generated.
+ if defined nobuild goto sign
+ 
+ @rem Build the sln with msbuild.
+-msbuild node.sln /m /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
++msbuild node.sln /p:ForceImportBeforeCppTargets=%ROOTDIR%\patches\node-force-MD.props /m /t:%target% /p:Configuration=%config% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
+ if errorlevel 1 goto exit
+ if "%target%" == "Clean" goto exit
+ 
