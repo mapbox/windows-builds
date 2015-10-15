@@ -8,6 +8,9 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 IF "%1"=="" ( ECHO using default %NODE_VERSION% ) ELSE ( SET NODE_VERSION=%1)
 
+SET NODE_MAJOR=%NODE_VERSION:~0,1%
+ECHO node major version^: %NODE_MAJOR%
+IF %NODE_MAJOR% GTR 0 ECHO node version greater than zero
 
 cd %PKGDIR%
 if NOT EXIST node-cpp11 git clone https://github.com/mapbox/node-cpp11.git
@@ -20,7 +23,7 @@ git fetch -v
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SET NODE_BRANCH=v%NODE_VERSION%-nodecpp11
-IF "%NODE_VERSION%"=="4.2.1" SET NODE_BRANCH=v%NODE_VERSION%
+IF %NODE_MAJOR% GTR 0 SET NODE_BRANCH=v%NODE_VERSION%
 
 ECHO NODE_VERSION: %NODE_VERSION%
 ECHO NAME: %NAME%
@@ -33,14 +36,14 @@ cd %PKGDIR%
 if EXIST node-v%NODE_VERSION%-%BUILDPLATFORM% GOTO NODE_CLONED
 
 SET NODE_REPO=https://github.com/mapbox/node.git
-IF "%NODE_VERSION%"=="4.2.1" SET NODE_REPO=https://github.com/nodejs/node.git
+IF %NODE_MAJOR% GTR 0 SET NODE_REPO=https://github.com/nodejs/node.git
 ECHO cloning node from %NODE_REPO%
 git clone %NODE_REPO% -b %NODE_BRANCH% node-v%NODE_VERSION%-%BUILDPLATFORM%
 ::don't check ERRORLEVEL as we are checking out a tag and not a BRANCH
 ::returns ERRORLEVEL>0
 cd node-v%NODE_VERSION%-%BUILDPLATFORM%
 ECHO %CD%
-IF "%NODE_VERSION%"=="4.2.1" IF EXIST %PATCHES%\node-v4.2.1-MD.diff patch -N -p1 < %PATCHES%/node-v4.2.1-MD.diff || %SKIP_FAILED_PATCH%
+IF %NODE_MAJOR% GTR 0 IF EXIST %PATCHES%\node-v4.2.1-MD.diff patch -N -p1 < %PATCHES%/node-v4.2.1-MD.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :NODE_CLONED
@@ -64,8 +67,8 @@ ECHO.
 ECHO ---------------- BUILDING  NODE %NODE_VERSION% --------------
 
 SET ARCH=%BUILDPLATFORM%
-IF "%NODE_VERSION%"=="4.2.1" SET ARCH=%PLATFORMX%
-IF "%NODE_VERSION%"=="4.2.1" IF /I "%PLATFORMX%"=="x86" SET PLATFORM=Win32
+IF %NODE_MAJOR% GTR 0 SET ARCH=%PLATFORMX%
+IF %NODE_MAJOR% GTR 0 IF /I "%PLATFORMX%"=="x86" SET PLATFORM=Win32
 CALL vcbuild.bat %BUILD_TYPE% %ARCH% nosign
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
