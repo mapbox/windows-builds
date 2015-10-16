@@ -43,16 +43,16 @@ ECHO ---------------- BUILDING  NODE-GDAL node^: %NODE_VERSION% %PLATFORMX% ----
 
 SET LOCAL_NODE_ROOT_DIR=%PKGDIR%\node-v%NODE_VERSION%-%BUILDPLATFORM%
 ECHO LOCAL_NODE_ROOT_DIR^: %LOCAL_NODE_ROOT_DIR%
-:: --rootdir=%LOCAL_NODE_ROOT_DIR% ^
+:: --rootdir=%LOCAL_NODE_ROOT_DIR%
+:: --nodedir=%LOCAL_NODE_ROOT_DIR%
 
-
-CALL node_modules\.bin\node-pre-gyp.cmd ^
---target=%NODE_VERSION% rebuild ^
+CALL node_modules\.bin\node-pre-gyp.cmd rebuild ^
+--target=%NODE_VERSION% ^
 --build-from-source ^
 --msvs_version=2015 ^
 --toolset=v140 ^
 --target_arch=%NODEARCH% ^
---rootdir=%LOCAL_NODE_ROOT_DIR% ^
+--nodedir=%LOCAL_NODE_ROOT_DIR% ^
 --enable-logging=true ^
 --loglevel=verbose
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR

@@ -21,7 +21,10 @@ ECHO pulling ...
 git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST %USERPROFILE%\.node-gyp ddt /Q %USERPROFILE%\.node-gyp
+IF EXIST %USERPROFILE%\.node-gyp ddt /Q %USERPROFILE%\.node-gyp
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+IF EXIST node_modules ddt /Q node_modules
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO downloading temporary node.exe to install deps ...
@@ -34,15 +37,17 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::to get node-pre-gyp and other deps
 ::IS THERE A BETTER WAY TO INSTALL JUST THE DEPS????
-ECHO npm install ...
+ECHO npm install deps before building ...
 ::CALL npm install
-CALL npm install node-pre-gyp nan mocha chai aws-sdk gh-pages yuidoc-lucid-theme yuidocjs
+CALL npm install nan mocha chai aws-sdk gh-pages yuidoc-lucid-theme yuidocjs
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 SETLOCAL EnableDelayedExpansion
 ::FOR %%N IN (0.10.40 0.12.7) DO (
+::FOR %%N IN (4.2.1) DO (
 ::FOR %%N IN (0.12.7) DO (
-FOR %%N IN (4.2.1) DO (
+::FOR %%N IN (3.3.1) DO (
+FOR %%N IN (%NODE_VERSION%) DO (
 	ECHO about to build %%N %PLATFORMX%
 	CALL %ROOTDIR%\scripts\build_node_gdal-worker.bat %%N
 	ECHO ERRORLEVEL %%N %PLATFORMX% !ERRORLEVEL!
