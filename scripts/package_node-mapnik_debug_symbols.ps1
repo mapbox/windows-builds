@@ -28,7 +28,8 @@ $binding_input_dir="$env:BINDINGIDR\mapnik\input\"
 # hashtable with destinations and corresponding files in arrays
 $file_list = @{
     "$binding_dir" = @(
-        ("$sdk_bin" + "nik2img.pdb"),
+        ("$sdk_bin" + "mapnik-render.pdb"),
+        ("$sdk_bin" + "mapnik-index.pdb"),
         ("$sdk_bin" + "shapeindex.pdb"),
         ("$build_dir" + "mapnik.node.pdb"),
         ("$sdk_lib" + "mapnik.pdb"),

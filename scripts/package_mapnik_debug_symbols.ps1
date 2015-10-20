@@ -45,7 +45,8 @@ if($env:TARGET_ARCH -eq 32){
 # hashtable with destinations and corresponding files in arrays
 $file_list = @{
     "$dest_sdk_bin" = @(
-        ("$src_mapnik_lib" + "nik2img.pdb"),
+        ("$src_mapnik_lib" + "mapnik-render.pdb"),
+        ("$src_mapnik_lib" + "mapnik-index.pdb"),
         ("$src_mapnik_lib" + "shapeindex.pdb"),
         ("$pkg_dir" + $protoc_pdb + "protoc.pdb")
     )

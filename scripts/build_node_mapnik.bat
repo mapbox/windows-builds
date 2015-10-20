@@ -211,7 +211,9 @@ xcopy /Q /Y %MAPNIK_SDK%\lib\libwebp.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
 xcopy /Q /Y %MAPNIK_SDK%\lib\mapnik.dll %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
-xcopy /Q /Y %MAPNIK_SDK%\bin\nik2img.exe %BINDINGIDR%\
+xcopy /Q /Y %MAPNIK_SDK%\bin\mapnik-render.exe %BINDINGIDR%\
+IF ERRORLEVEL 1 GOTO ERROR
+xcopy /Q /Y %MAPNIK_SDK%\bin\mapnik-index.exe %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
 xcopy /Q /Y %MAPNIK_SDK%\bin\shapeindex.exe %BINDINGIDR%\
 IF ERRORLEVEL 1 GOTO ERROR
