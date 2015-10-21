@@ -67,6 +67,8 @@ ddt /Q packages\harfbuzz
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ddt /Q packages\harfbuzz-build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST packages\CMakeLists.txt DEL CMakeLists.txt
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
 :ICU
