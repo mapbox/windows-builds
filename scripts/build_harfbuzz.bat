@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ harfbuzz -----
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
@@ -10,32 +10,39 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download harfbuzz-%HARFBUZZ_VERSION%.tar.bz2
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST harfbuzz (
-  echo found extracted sources
-)
+IF EXIST harfbuzz ECHO found extracted sources && GOTO SRC_EXTRACTED
 
-if NOT EXIST harfbuzz (
-  echo extracting
-  CALL bsdtar xfz harfbuzz-%HARFBUZZ_VERSION%.tar.bz2
-  rename harfbuzz-%HARFBUZZ_VERSION% harfbuzz
-  IF ERRORLEVEL 1 GOTO ERROR
-)
+ECHO extracting
+CALL bsdtar xfz harfbuzz-%HARFBUZZ_VERSION%.tar.bz2
+rename harfbuzz-%HARFBUZZ_VERSION% harfbuzz
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if NOT EXIST CMakeLists.txt (
-	curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/master/harfbuzz.cmake
-	rename harfbuzz.cmake CMakeLists.txt
-)
+:SRC_EXTRACTED
 
-if EXIST harfbuzz-build (
-    ddt /q harfbuzz-build
-)
+IF EXIST CMakeLists.txt ECHO CMakeLists.txt found && GOTO CMAKELISTS_FOUND
+
+::LATEST
+curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/master/harfbuzz.cmake
+::PREVIOUS
+::curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/b864147eac40943fd72c2b94948f767a6529466c/harfbuzz.cmake
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+rename harfbuzz.cmake CMakeLists.txt
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+IF EXIST %PATCHES%\harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff ECHO applying harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff && patch -N -p1 < %PATCHES%/harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:CMAKELISTS_FOUND
+
+if EXIST harfbuzz-build ddt /q harfbuzz-build
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 mkdir harfbuzz-build
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 cd harfbuzz-build
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 mkdir freetype-sdk
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
@@ -75,9 +82,12 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo ----------ERROR HARFBUZZ --------------
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
-cd %ROOTDIR%
+
+CD %ROOTDIR%
 EXIT /b %EL%
