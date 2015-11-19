@@ -24,13 +24,15 @@ diff --git a/include/stxxl/bits/msvc_compatibility.h b/include/stxxl/bits/msvc_c
 index c2c937d..dbc32cd 100644
 --- a/include/stxxl/bits/msvc_compatibility.h
 +++ b/include/stxxl/bits/msvc_compatibility.h
-@@ -27,11 +27,13 @@ inline double log2(double x)
+@@ -24,6 +24,7 @@ inline double log2(double x)
+     return (log(x) / log(2.));
+ }
+
++#if (_MSC_VER < 1900)
  // http://msdn.microsoft.com/en-us/library/2ts7cx93.aspx
  #define snprintf _snprintf
 
-+#if (_MSC_VER < 1900)
- // http://msdn.microsoft.com/en-us/library/h80404d3.aspx
- #define strtoll _strtoi64
+@@ -32,6 +33,7 @@ inline double log2(double x)
 
  // http://msdn.microsoft.com/en-us/library/85zk715d.aspx
  #define strtoull _strtoui64
