@@ -39,8 +39,8 @@ rename harfbuzz.cmake CMakeLists.txt
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
-::DEL CMakeLists.txt
-::copy C:\mb\_TEMP\harfbuzz\CMakeLists.txt .
+
+:: DEL CMakeLists.txt && copy C:\mb\_TEMP\harfbuzz-v1.1.1-cmake-patch\CMakeLists.txt . && ECHO ======!!!!!!!!======= && ECHO. ECHO ============!!!!!!!!!!!!====== && ECHO copying NOT PATCHING
 IF EXIST %PATCHES%\harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff ECHO applying %PATCHES%\harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff && patch -N -p1 < %PATCHES%/harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 

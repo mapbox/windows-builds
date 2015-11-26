@@ -19,6 +19,10 @@ echo extracting
 CALL bsdtar xfz %PKGDIR%\icu4c-%ICU_VERSION2%-src.tgz
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+cd icu
+IF EXIST %PATCHES%\icu-%ICU_VERSION%.diff ECHO patching with %PATCHES%\icu-%ICU_VERSION%.diff && patch -N -p1 < %PATCHES%/icu-%ICU_VERSION%.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 :SRC_EXTRACTED
 
 cd %PKGDIR%\icu
