@@ -86,22 +86,25 @@ SET RUNTIME_VERSION=vcredist-VS2015
 
 IF NOT EXIST C:\Python27 ( ECHO C:\Python27 not found && GOTO ERROR )
 
-WHERE git
-IF %ERRORLEVEL% EQU 0 GOTO GIT_FOUND
-ECHO git not on PATH, trying to autodetect
+:: testing for git and *nix style find command comes with git:
+ECHO checking for git and unix style 'find'
+find %USERPROFILE% -name "*.blabla"
+IF %ERRORLEVEL% EQU 0 GOTO NIX_FIND_FOUND
 
-IF DEFINED GIT_INSTALL_ROOT (SET PATH=%GIT_INSTALL_ROOT%\usr\bin;%PATH% && SET PATH=%GIT_INSTALL_ROOT%;%PATH% && GOTO GIT_FOUND)
-IF EXIST "C:\Program Files (x86)\Git\bin" (SET PATH=C:\Program Files (x86)\Git\usr\bin;%PATH% && SET PATH=C:\Program Files (x86)\Git\bin;%PATH% && GOTO GIT_FOUND)
-IF EXIST "C:\Program Files\Git\bin" (SET PATH=C:\Program Files\Git\usr\bin;%PATH% && SET PATH=C:\Program Files\Git\bin;%PATH% && GOTO GIT_FOUND)
+IF DEFINED GIT_INSTALL_ROOT SET TEMP_GIT_DIR=%GIT_INSTALL_ROOT%&& GOTO TEST_FIND_AGAIN
+IF EXIST "C:\Program Files (x86)\Git" SET TEMP_GIT_DIR=C:\Program Files (x86)\Git&& GOTO TEST_FIND_AGAIN
+IF EXIST "C:\Program Files\Git" SET TEMP_GIT_DIR=C:\Program Files\Git&& GOTO TEST_FIND_AGAIN
 
-WHERE git
-IF %ERRORLEVEL% EQU 0 GOTO GIT_FOUND
+:TEST_FIND_AGAIN
+SET PATH=%TEMP_GIT_DIR%\bin;%PATH%
+SET PATH=%TEMP_GIT_DIR%\usr\bin;%PATH%
+::ECHO %PATH%
+::check again
+find %USERPROFILE% -name "*.blabla"
+IF %ERRORLEVEL% NEQ 0 (ECHO git and unix style find not found && GOTO ERROR)
 
-:GIT_NOT_FOUND
-ECHO git not found!
-GOTO ERROR
-
-:GIT_FOUND
+:NIX_FIND_FOUND
+ECHO git and find were found
 
 if "%TARGET_ARCH%" == "32" (
   SET BUILDPLATFORM=Win32
