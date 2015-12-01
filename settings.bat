@@ -85,9 +85,23 @@ SET RUNTIME_VERSION=vcredist-VS2015
 ::::::::::::::: DO STUFF
 
 IF NOT EXIST C:\Python27 ( ECHO C:\Python27 not found && GOTO ERROR )
-IF NOT EXIST "C:\Program Files (x86)\Git\bin" (ECHO "C:\Program Files (x86)\Git\bin" not found && GOTO ERROR)
 
+WHERE git
+IF %ERRORLEVEL% EQU 0 GOTO GIT_FOUND
+ECHO git not on PATH, trying to autodetect
 
+IF DEFINED GIT_INSTALL_ROOT (SET PATH=%GIT_INSTALL_ROOT%\usr\bin;%PATH% && SET PATH=%GIT_INSTALL_ROOT%;%PATH% && GOTO GIT_FOUND)
+IF EXIST "C:\Program Files (x86)\Git\bin" (SET PATH=C:\Program Files (x86)\Git\usr\bin;%PATH% && SET PATH=C:\Program Files (x86)\Git\bin;%PATH% && GOTO GIT_FOUND)
+IF EXIST "C:\Program Files\Git\bin" (SET PATH=C:\Program Files\Git\usr\bin;%PATH% && SET PATH=C:\Program Files\Git\bin;%PATH% && GOTO GIT_FOUND)
+
+WHERE git
+IF %ERRORLEVEL% EQU 0 GOTO GIT_FOUND
+
+:GIT_NOT_FOUND
+ECHO git not found!
+GOTO ERROR
+
+:GIT_FOUND
 
 if "%TARGET_ARCH%" == "32" (
   SET BUILDPLATFORM=Win32
@@ -115,7 +129,6 @@ IF NOT EXIST %PATCHES% MKDIR %PATCHES%
 SET PATH=C:\Windows\System32\WindowsPowershell\v1.0;%PATH%
 SET PATH=C:\Python27;%PATH%
 SET PATH=C:\Python27\Scripts;%PATH%
-SET PATH=C:\Program Files (x86)\Git\bin;%PATH%
 SET PATH=%CD%\tmp-bin\cmake-3.1.0-win32-x86\bin;%PATH%
 SET PATH=%CD%\tmp-bin\nasm-2.11.08;%PATH%
 SET PATH=%CD%\tmp-bin\gnu-win-tools;%PATH%
@@ -226,7 +239,8 @@ EXIT /b 1
 GOTO DONE
 
 :ERROR
-ECHO ===== ERROR ====
+ECHO !!!!!!!! ===== ERROR ==== !!!!!!!!
+ECHO builds cannot be run unless settings.bat finished successfully
 CD %ROOTDIR%
 EXIT /b 1
 
