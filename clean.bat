@@ -63,11 +63,15 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 
 :HARFBUZZ
-ddt /Q packages\harfbuzz
+ddt /Q %PKGDIR%\harfbuzz
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-ddt /Q packages\harfbuzz-build
+ddt /Q %PKGDIR%\harfbuzz-build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-IF EXIST packages\CMakeLists.txt DEL packages\CMakeLists.txt
+IF EXIST %PKGDIR%\CMakeLists.txt DEL %PKGDIR%\CMakeLists.txt
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST %PKGDIR%\CMakeLists.txt.orig DEL %PKGDIR%\CMakeLists.txt.orig
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST %PKGDIR%\CMakeLists.txt.rej DEL %PKGDIR%\CMakeLists.txt.rej
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %SINGLE% EQU 1 GOTO DONE
 

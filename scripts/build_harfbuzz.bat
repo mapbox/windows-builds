@@ -21,8 +21,15 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :SRC_EXTRACTED
 
-IF EXIST CMakeLists.txt ECHO CMakeLists.txt found && GOTO CMAKELISTS_FOUND
+::IF EXIST CMakeLists.txt ECHO CMakeLists.txt found && GOTO CMAKELISTS_FOUND
+IF EXIST CMakeLists.txt DEL CMakeLists.txt
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST CMakeLists.txt.orig DEL CMakeLists.txt.orig
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST CMakeLists.txt.rej DEL CMakeLists.txt.rej
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+ECHO downloading harfbuzz.cmake to %PKGDIR%\CMakeLists.txt
 ::LATEST
 curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/master/harfbuzz.cmake
 ::PREVIOUS
@@ -31,7 +38,10 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 rename harfbuzz.cmake CMakeLists.txt
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-IF EXIST %PATCHES%\harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff ECHO applying harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff && patch -N -p1 < %PATCHES%/harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff || %SKIP_FAILED_PATCH%
+
+
+:: DEL CMakeLists.txt && copy C:\mb\_TEMP\harfbuzz-v1.1.1-cmake-patch\CMakeLists.txt . && ECHO ======!!!!!!!!======= && ECHO. ECHO ============!!!!!!!!!!!!====== && ECHO copying NOT PATCHING
+IF EXIST %PATCHES%\harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff ECHO applying %PATCHES%\harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff && patch -N -p1 < %PATCHES%/harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :CMAKELISTS_FOUND

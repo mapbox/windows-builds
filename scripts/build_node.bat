@@ -13,7 +13,7 @@ ECHO node major version^: %NODE_MAJOR%
 IF %NODE_MAJOR% GTR 0 ECHO node version greater than zero
 
 cd %PKGDIR%
-IF %NODE_MAJOR% GTR 0 GOTO NO_CPP11
+IF %NODE_MAJOR% GTR 0 IF %NODE_MAJOR% LSS 5 GOTO NO_CPP11
 if NOT EXIST node-cpp11 git clone https://github.com/mapbox/node-cpp11.git
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
