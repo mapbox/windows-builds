@@ -64,7 +64,7 @@ IF %BUILD_TYPE% EQU Debug (SET CFG_TYPE=debug)
 
 echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
 ECHO setting MKDIRP ...
-set MKDIRP=c:\Program Files (x86)\Git\bin\mkdir.exe
+set MKDIRP="%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO fixing path...
 REM powershell %ROOTDIR%\scripts\fix-path.ps1
