@@ -31,11 +31,25 @@ ECHO ERRORLEVEL^: %ERRORLEVEL%
 git submodule update --init
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+
+:: python bindings
+IF NOT EXIST bindings\python git clone https://github.com/mapnik/python-mapnik.git bindings/python
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+CD bindings\python & IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+git fetch & IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+git pull & IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+CD ..\.. & IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+
 REM patch -N -p1 < %PATCHES%\mapnik-test.exe-crash.diff || %SKIP_FAILED_PATCH%
 REM IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 REM patch -N -p1 < %PATCHES%\mapnik-test.exe-crash-lock_guard.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+
+::mapnik-gyp
 if EXIST mapnik-gyp GOTO FETCHMAPNIKGYP
 
 ECHO cloning mapnik-gyp
@@ -55,6 +69,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO pulling mapnik-gyp
 git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 
 ddt /Q mapnik-sdk
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
