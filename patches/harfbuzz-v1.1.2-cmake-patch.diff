@@ -1,8 +1,16 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index de1925c..4a3d91c 100644
+index de1925c..d332074 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -44,7 +44,6 @@ ragel_preproc(harfbuzz/src hb-buffer-deserialize-json .hh)
+@@ -19,7 +19,6 @@ include_directories(AFTER
+ 
+ add_definitions(-DHAVE_OT)
+ add_definitions(-DHAVE_ATEXIT)
+-add_definitions(-DHB_NO_MT)
+ add_definitions(-DHB_DISABLE_DEPRECATED)
+ ##
+ 
+@@ -44,7 +43,6 @@ ragel_preproc(harfbuzz/src hb-buffer-deserialize-json .hh)
  ragel_preproc(harfbuzz/src hb-buffer-deserialize-text .hh)
  ragel_preproc(harfbuzz/src hb-ot-shape-complex-indic-machine .hh)
  ragel_preproc(harfbuzz/src hb-ot-shape-complex-myanmar-machine .hh)
@@ -10,7 +18,7 @@ index de1925c..4a3d91c 100644
  ##
  
  ## Make hb-version.h
-@@ -74,7 +73,6 @@ set(project_sources
+@@ -74,7 +72,6 @@ set(project_sources
    ${CMAKE_CURRENT_BINARY_DIR}/hb-buffer-deserialize-text.hh
    ${CMAKE_CURRENT_BINARY_DIR}/hb-ot-shape-complex-indic-machine.hh
    ${CMAKE_CURRENT_BINARY_DIR}/hb-ot-shape-complex-myanmar-machine.hh
@@ -18,7 +26,7 @@ index de1925c..4a3d91c 100644
    )
  
  set(project_headers
-@@ -147,11 +145,12 @@ set(project_sources
+@@ -147,11 +144,12 @@ set(project_sources
    harfbuzz/src/hb-ot-shape-complex-indic.cc
    harfbuzz/src/hb-ot-shape-complex-indic-table.cc
    harfbuzz/src/hb-ot-shape-complex-myanmar.cc
@@ -32,7 +40,7 @@ index de1925c..4a3d91c 100644
  
    harfbuzz/src/hb-ot-layout-common-private.hh
    harfbuzz/src/hb-ot-layout-gdef-table.hh
-@@ -202,7 +201,7 @@ endif ()
+@@ -202,7 +200,7 @@ endif ()
  if (HB_BUILTIN_UCDN)
    include_directories(harfbuzz/src/hb-ucdn)
    add_definitions(-DHAVE_UCDN)
