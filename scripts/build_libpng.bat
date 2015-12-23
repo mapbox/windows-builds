@@ -10,31 +10,30 @@ cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download libpng-%LIBPNG_VERSION%.tar.gz
 IF ERRORLEVEL 1 GOTO ERROR
 
-if EXIST libpng (
-  echo found extracted sources
-)
+if EXIST libpng ECHO found extracted sources && GOTO SRC_ALREADY_HERE
 
+echo extracting
+CALL bsdtar xfz libpng-%LIBPNG_VERSION%.tar.gz
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-SETLOCAL ENABLEDELAYEDEXPANSION
-if NOT EXIST libpng (
-  echo extracting
-  CALL bsdtar xfz libpng-%LIBPNG_VERSION%.tar.gz
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  rename libpng-%LIBPNG_VERSION% libpng
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  cd %PKGDIR%\libpng
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  ECHO patching ...
-  patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  cd %PKGDIR%\libpng\projects\vstudio\
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-  ECHO replacing path to zlib.lib
-  find . -iname "*.vcxproj" -exec sed -i "s|zlib.lib|..\\\\..\\\\..\\\\..\\\\zlib\\\\zlib.lib|g" "{}" ;
-  IF !ERRORLEVEL! NEQ 0 GOTO ERROR
-)
-ENDLOCAL
+rename libpng-%LIBPNG_VERSION% libpng
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+cd %PKGDIR%\libpng
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO patching ...
+patch -N -p1 < %PATCHES%/png.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+cd %PKGDIR%\libpng\projects\vstudio\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+ECHO replacing path to zlib.lib
+find . -iname "*.vcxproj" -exec sed -i "s|zlib.lib|..\\\\..\\\\..\\\\..\\\\zlib\\\\zlib.lib|g" "{}" ;
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:SRC_ALREADY_HERE
 
 ::makefile just creates one .lib
 ::nmake /a /f scripts\makefile.vcwin32 test
@@ -44,20 +43,24 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO deleting zlib project within libpng
 rmdir zlib /S /Q
+ECHO ERRORLEVEL^: %ERRORLEVEL%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 ECHO building ...
+REM /m:%NUMBER_OF_PROCESSORS% ^
+REM /p:BuildInParallel=true ^
+REM /detailedsummary ^
+
 msbuild ^
 .\vstudio.sln ^
 /p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /nologo ^
-/m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
-/p:BuildInParallel=true ^
 /p:Configuration=%BUILD_TYPE% ^
 /p:Platform=%BUILDPLATFORM% ^
-/p:PlatformToolset=%PLATFORM_TOOLSET%
+/p:PlatformToolset=%PLATFORM_TOOLSET% ^
+/consoleloggerparameters:summary
 IF ERRORLEVEL 1 GOTO ERROR
 
 
