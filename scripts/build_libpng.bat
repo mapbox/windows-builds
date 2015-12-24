@@ -52,8 +52,13 @@ REM /m:%NUMBER_OF_PROCESSORS% ^
 REM /p:BuildInParallel=true ^
 REM /detailedsummary ^
 
+::build the library project only
+::with 1.16.19 tests started failing for x64 builds
+::testcoverage for png is very good in mapnik/node-mapnik
+::so stop buildings tests that come with libpng
 msbuild ^
 .\vstudio.sln ^
+/t:libpng ^
 /p:ForceImportBeforeCppTargets=%ROOTDIR%\scripts\force-debug-information-for-sln.props ^
 /nologo ^
 /toolsversion:%TOOLS_VERSION% ^
