@@ -1,14 +1,14 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ------ pixman -----
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download pixman-%PIXMAN_VERSION%.tar.gz
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 if EXIST pixman ECHO found extracted sources && GOTO PIXMAN_EXTRACTED
@@ -44,18 +44,24 @@ echo.
 ECHO building ...
 ECHO DIR /S *.c
 DIR /S *.c
-set MKDIRP="%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe"
+ECHO GIT_INSTALL_ROOT^: %GIT_INSTALL_ROOT%
+IF EXIST "%GIT_INSTALL_ROOT%\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\bin\mkdir.exe"
+IF EXIST "%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe"
 echo %PATH%
 CALL make.exe -f Makefile.win32 CFG=%CFG_TYPE% MMX=off MSVC_VER=%MSVC_VER%
 ::>%ROOTDIR%\build_pixman-%PIXMAN_VERSION%.log 2>&1
-IF ERRORLEVEL 1 GOTO ERROR
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 GOTO DONE
 
 :ERROR
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
 SET EL=%ERRORLEVEL%
-ECHO ========= ERROR PIXMAN
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
-cd %ROOTDIR%
+ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
+
+
+CD %ROOTDIR%
 EXIT /b %EL%
