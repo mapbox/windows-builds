@@ -48,8 +48,6 @@ ECHO GIT_INSTALL_ROOT^: %GIT_INSTALL_ROOT%
 SET MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
 IF EXIST "%GIT_INSTALL_ROOT%\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\bin\mkdir.exe"
 IF EXIST "%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe"
-WHERE %MKDIRP%
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 echo %PATH%
 CALL make.exe -f Makefile.win32 CFG=%CFG_TYPE% MMX=off MSVC_VER=%MSVC_VER%
