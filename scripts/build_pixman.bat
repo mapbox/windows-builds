@@ -45,6 +45,7 @@ ECHO building ...
 ECHO DIR /S *.c
 DIR /S *.c
 ECHO GIT_INSTALL_ROOT^: %GIT_INSTALL_ROOT%
+SET MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
 IF EXIST "%GIT_INSTALL_ROOT%\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\bin\mkdir.exe"
 IF EXIST "%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe"
 echo %PATH%
