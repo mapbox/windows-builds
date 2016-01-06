@@ -63,7 +63,7 @@ $file_list = @{
         ("$env:PKGDIR" + "\expat\lib\expat_external.h"),
         ("$env:PKGDIR" + "\lua\src\lauxlib.h"),
         ("$env:PKGDIR" + "\lua\src\lua.h"),
-        ("$env:PKGDIR" + "\lua\src\lua.hpp"),
+        #("$env:PKGDIR" + "\lua\src\lua.hpp"),
         ("$env:PKGDIR" + "\lua\src\luaconf.h"),
         ("$env:PKGDIR" + "\lua\src\lualib.h"),
         ("$env:PKGDIR" + "\stxxl\include\stxxl.h"),
@@ -137,10 +137,10 @@ Function copy-all-files(){
         foreach($file in $_.Value){
             try {
                 if($env:VERBOSE -eq 1){ Write-Host "copying $file" -ForegroundColor Yellow; }
-                if(!(Test-Path -Path $dest )){ 
+                if(!(Test-Path -Path $dest )){
                     #!!! capture output of New-Item, otherwise it will write
                     #to the outputpipeline of this function!!!
-                    $bla = New-Item -ItemType Directory $dest; 
+                    $bla = New-Item -ItemType Directory $dest;
                 }
 
                 $file_name = Split-Path -Leaf "$file"
