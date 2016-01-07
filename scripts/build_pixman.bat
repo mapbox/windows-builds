@@ -42,12 +42,15 @@ echo.
 echo ATTENTION using "MMX=off" to compile cairo with 64bit
 echo.
 ECHO building ...
-ECHO DIR /S *.c
-DIR /S *.c
+::ECHO DIR /S *.c
+::DIR /S *.c
+
+ECHO setting MKDIRP ...
 ECHO GIT_INSTALL_ROOT^: %GIT_INSTALL_ROOT%
-SET MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
-IF EXIST "%GIT_INSTALL_ROOT%\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\bin\mkdir.exe"
-IF EXIST "%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe"
+IF EXIST "C:\Program Files (x86)\Git\bin\mkdir.exe" SET MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
+IF EXIST "C:\Program Files\Git\usr\bin\mkdir.exe" SET MKDIRP="C:\Program Files\Git\usr\bin\mkdir.exe"
+WHERE mkdir
+IF %ERRORLEVEL% NEQ 0 (ECHO mkdir.exe not found, is git installed? && GOTO ERROR)
 
 echo %PATH%
 CALL make.exe -f Makefile.win32 CFG=%CFG_TYPE% MMX=off MSVC_VER=%MSVC_VER%

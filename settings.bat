@@ -89,7 +89,9 @@ IF NOT EXIST C:\Python27 ( ECHO C:\Python27 not found && GOTO ERROR )
 
 IF EXIST "C:\Program Files (x86)\Git\bin" SET PATH=C:\Program Files (x86)\Git\bin;%PATH%
 IF EXIST "C:\Program Files\Git\usr\bin" SET PATH=C:\Program Files\Git\usr\bin;%PATH%
-
+IF EXIST "C:\Program Files\Git\bin" SET PATH=C:\Program Files\Git\bin;%PATH%
+WHERE git
+IF %ERRORLEVEL% NEQ 0 (ECHO git not found && GOTO ERROR)
 WHERE curl
 IF %ERRORLEVEL% NEQ 0 (ECHO curl not found, is git installed && GOTO ERROR)
 

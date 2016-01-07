@@ -63,11 +63,14 @@ SET CFG_TYPE=release
 IF %BUILD_TYPE% EQU Debug (SET CFG_TYPE=debug)
 
 echo ATTENTION using "MMX=off" for pixman to compile cairo with 64bit
+
 ECHO setting MKDIRP ...
 ECHO GIT_INSTALL_ROOT^: %GIT_INSTALL_ROOT%
-SET MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
-IF EXIST "%GIT_INSTALL_ROOT%\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\bin\mkdir.exe"
-IF EXIST "%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe" SET MKDIRP="%GIT_INSTALL_ROOT%\usr\bin\mkdir.exe"
+IF EXIST "C:\Program Files (x86)\Git\bin\mkdir.exe" SET MKDIRP="C:\Program Files (x86)\Git\bin\mkdir.exe"
+IF EXIST "C:\Program Files\Git\usr\bin\mkdir.exe" SET MKDIRP="C:\Program Files\Git\usr\bin\mkdir.exe"
+WHERE mkdir
+IF %ERRORLEVEL% NEQ 0 (ECHO mkdir.exe not found, is git installed? && GOTO ERROR)
+
 ECHO fixing path...
 REM powershell %ROOTDIR%\scripts\fix-path.ps1
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR

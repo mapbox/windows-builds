@@ -1,5 +1,23 @@
+#r System.Management
 #load "build-targets.csx"
 #load "build-module.csx"
+using System.Diagnostics;
+using System.Management;
+using System.Text;
+
+Console.CancelKeyPress += Console_CancelKeyPress;
+private static void Console_CancelKeyPress( object sender, ConsoleCancelEventArgs e ) {
+	build_runner.abort_build();
+}
+
+private static void show_failed_build_log(string module ) {
+	try {
+
+	}
+	catch (Exception ex) {
+		Console.WriteLine( ex );
+	}
+}
 
 string cwd = Environment.CurrentDirectory;
 
@@ -18,7 +36,7 @@ if (1 != Env.ScriptArgs.Count) {
 }
 
 string[] build_tokens = Env.ScriptArgs[0].Split( "=".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
-if (build_tokens.Length < 2) { throw new ArgumentException( string.Format( "argument [{0}] not valid", Env.ScriptArgs[0] ) ); }
+if (2 != build_tokens.Length) { throw new ArgumentException( string.Format( "argument [{0}] not valid", Env.ScriptArgs[0] ) ); }
 
 string cmd = build_tokens[0].ToLower();
 string module = build_tokens[1].ToLower();
@@ -30,10 +48,12 @@ if (default( string ) == target_mapnik.FirstOrDefault( t => t.Key.Equals( module
 	throw new ArgumentException( string.Format( "[{0}] is not a valid module", module ) );
 }
 
-if ("1".Equals( Environment.GetEnvironmentVariable( "FASTBUILD" ) )) {
-	Console.WriteLine( "doing a FASTBUILD of mapnik" );
+if (
+	"1".Equals( Environment.GetEnvironmentVariable( "FASTBUILD" ) )
+	&& "mapnik".Equals( module )
+){
+	Console.WriteLine( "found env var 'FASTBUILD=1' -> doing a mapnik build with binary deps package" );
 	cmd = "build";
-	module = "mapnik";
 }
 
 DateTime time_build_start = DateTime.Now;
@@ -63,7 +83,10 @@ if (cmd.Equals( "upto" )) {
 			do_build = true;
 		}
 		if (do_build) {
-			Console.WriteLine( "building {0}, calling {1}", target.Key, target.Value );
+			if (!build_runner.build_module( cwd, target.Key, target.Value )) {
+				Console.WriteLine( "[{0}] !!!!!! BUILD FAILED !!!!!!", target.Key );
+				break;
+			}
 		}
 	}
 } else {
