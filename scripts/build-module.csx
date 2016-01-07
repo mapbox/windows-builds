@@ -67,7 +67,7 @@ public static class build_runner {
 							, time_finish.Subtract( time_start ).TotalMinutes
 						);
 
-						Console.WriteLine( "build process exit code: {0}", p.ExitCode );
+						Console.WriteLine( "[{0}] build process exit code: {1}", module_name, p.ExitCode );
 						build_success = 0 == p.ExitCode;
 						return build_success;
 					}

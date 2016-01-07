@@ -5,19 +5,12 @@ using System.Diagnostics;
 using System.Management;
 using System.Text;
 
+//catch Ctrl+C in the console to abort build process and its children
 Console.CancelKeyPress += Console_CancelKeyPress;
 private static void Console_CancelKeyPress( object sender, ConsoleCancelEventArgs e ) {
 	build_runner.abort_build();
 }
 
-private static void show_failed_build_log(string module ) {
-	try {
-
-	}
-	catch (Exception ex) {
-		Console.WriteLine( ex );
-	}
-}
 
 string cwd = Environment.CurrentDirectory;
 
@@ -30,7 +23,7 @@ if (1 != Env.ScriptArgs.Count) {
 	) );
 	Console.WriteLine( "available modules: " );
 	foreach (var module in target_mapnik.Select( m => m.Key )) {
-		Console.WriteLine( "  {0}", module );
+		Console.WriteLine( "    {0}", module );
 	}
 	throw new ArgumentNullException( "no build command" );
 }
@@ -95,7 +88,7 @@ if (cmd.Equals( "upto" )) {
 
 DateTime time_build_finished = DateTime.Now;
 Console.WriteLine(
-	"{1} build started{0}{2} build finished{0}duration {3} minutes"
+	"----------------{0}{1} build started{0}{2} build finished{0}duration {3} minutes{0}----------------"
 	, Environment.NewLine
 	, time_build_start.ToString( "yyyy-MM-dd HH:mm:ss" )
 	, time_build_finished.ToString( "yyyy-MM-dd HH:mm:ss" )
