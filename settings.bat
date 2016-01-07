@@ -220,16 +220,16 @@ ECHO Powershell execution policy now is^: %PSPOLICY%
 
 :: delete existing scriptcs install
 :: on EC2s svm seems to be installed already and cannot be overwritten
-IF NOT EXIST %HOME%\.svm GOTO INSTALL_SCRIPTCS
-ECHO found %HOME%\.svm
-ECHO deleting %HOME%\.svm
-ddt /Q %HOME%\.svm
-IF %ERRORLEVEL% NEQ 0 (ECHO failed to delete %HOME%\.svm && GOTO ERROR)
+IF NOT EXIST %USERPROFILE%\.svm (ECHO %USERPROFILE%\.svm not found && GOTO INSTALL_SCRIPTCS)
+ECHO found %USERPROFILE%\.svm
+ECHO deleting %USERPROFILE%\.svm
+ddt /Q %USERPROFILE%\.svm
+IF %ERRORLEVEL% NEQ 0 (ECHO failed to delete %USERPROFILE%\.svm && GOTO ERROR)
 
 
 ::install scriptcs
 :INSTALL_SCRIPTCS
-powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/scriptcs-contrib/svm/master/install/installer.ps1'))" && SET PATH=%HOME%\.svm\bin\;%HOME%\.svm\shims\;%PATH%
+powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/scriptcs-contrib/svm/master/install/installer.ps1'))" && SET PATH=%USERPROFILE%\.svm\bin\;%USERPROFILE%\.svm\shims\;%PATH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 svm install latest
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
