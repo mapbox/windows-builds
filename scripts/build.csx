@@ -30,6 +30,15 @@ if (default( string ) == target_mapnik.FirstOrDefault( t => t.Key.Equals( module
 	throw new ArgumentException( string.Format( "[{0}] is not a valid module", module ) );
 }
 
+if ("1".Equals( Environment.GetEnvironmentVariable( "FASTBUILD" ) )) {
+	Console.WriteLine( "doing a FASTBUILD of mapnik" );
+	cmd = "build";
+	module = "mapnik";
+}
+
+DateTime time_build_start = DateTime.Now;
+Console.WriteLine( "{0} build started", time_build_start.ToString( "yyyy-MM-dd HH:mm:ss" ) );
+
 if (cmd.Equals( "upto" )) {
 	Console.WriteLine( "building up to {0}", module );
 	foreach (var target in target_mapnik) {
@@ -43,7 +52,9 @@ if (cmd.Equals( "upto" )) {
 		}
 	}
 } else if (cmd.Equals( "build" )) {
-	Console.WriteLine( "building just {0}, calling {1}", module, target_mapnik.FirstOrDefault( t => t.Key == module ).Value );
+	if (!build_runner.build_module( cwd, module, target_mapnik.FirstOrDefault( t => t.Key == module ).Value )) {
+		Console.WriteLine( "[{0}] !!!!!! BUILD FAILED !!!!!!", module );
+	}
 } else if (cmd.Equals( "from" )) {
 	Console.WriteLine( "building from {0} on", module );
 	bool do_build = false;
@@ -59,4 +70,12 @@ if (cmd.Equals( "upto" )) {
 	Console.WriteLine( "nothing to do" );
 }
 
+DateTime time_build_finished = DateTime.Now;
+Console.WriteLine(
+	"{1} build started{0}{2} build finished{0}duration {3} minutes"
+	, Environment.NewLine
+	, time_build_start.ToString( "yyyy-MM-dd HH:mm:ss" )
+	, time_build_finished.ToString( "yyyy-MM-dd HH:mm:ss" )
+	, time_build_finished.Subtract( time_build_start ).TotalMinutes
+);
 Console.WriteLine( "FINISHED" );

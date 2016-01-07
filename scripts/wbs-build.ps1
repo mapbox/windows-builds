@@ -70,7 +70,8 @@ Write-Host "cloning repos"
 & "C:\Program Files (x86)\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-64
 
 
-$buildcmd="scripts\build"
+#$buildcmd="scripts\build"
+$buildcmd="scriptcs scripts\build.csx -- upto=mapnik"
 
 
 Write-Host "`nbuilding 32bit: " $build32bit

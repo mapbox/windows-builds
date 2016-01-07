@@ -14,60 +14,66 @@ public static class build_runner {
 		string log_file = Path.Combine( current_working_directory, "build-logs", module_name + ".txt" );
 		DateTime time_start = DateTime.Now;
 
-		using (FileStream fs = new FileStream( log_file, FileMode.Create, FileAccess.Write, FileShare.ReadWrite )) {
-			using (TextWriter tw = new StreamWriter( fs, Encoding.UTF8 )) {
-				using (Process p = new Process()) {
-					p.StartInfo = new ProcessStartInfo( "cmd", @"/c """ + build_cmd + "\"" )
-					//p.StartInfo = new ProcessStartInfo("cmd", @"/c " + command)
-					{
-						UseShellExecute = false,
-						CreateNoWindow = true,
-						RedirectStandardOutput = true,
-						RedirectStandardError = true,
-						WorkingDirectory = current_working_directory,
-						StandardOutputEncoding = Encoding.UTF8,
-						StandardErrorEncoding = Encoding.UTF8
-					};
+		try {
+			using (FileStream fs = new FileStream( log_file, FileMode.Create, FileAccess.Write, FileShare.ReadWrite )) {
+				using (TextWriter tw = new StreamWriter( fs, Encoding.UTF8 )) {
+					using (Process p = new Process()) {
+						p.StartInfo = new ProcessStartInfo( "cmd", @"/c """ + build_cmd + "\"" )
+						//p.StartInfo = new ProcessStartInfo("cmd", @"/c " + command)
+						{
+							UseShellExecute = false,
+							CreateNoWindow = true,
+							RedirectStandardOutput = true,
+							RedirectStandardError = true,
+							WorkingDirectory = current_working_directory,
+							StandardOutputEncoding = Encoding.UTF8,
+							StandardErrorEncoding = Encoding.UTF8
+						};
 
-					p.OutputDataReceived += ( sender, e ) => {
-						string msg;
-						if (e.Data != null) {
-							msg = construct_message( e.Data, "stdout" );
-						} else {
-							msg = construct_message( "DATA:NULL", "stdout" );
-						}
-						tw.WriteLine( msg );
-						tw.Flush();
-						if (log_2_console) { Console.WriteLine( msg ); }
-					};
-					p.ErrorDataReceived += ( sender, e ) => {
-						string msg;
-						if (e.Data != null) {
-							msg = construct_message( e.Data, "stderr" );
-						} else {
-							msg = construct_message( "ERROR:NULL", "stderr" );
-						}
-						tw.WriteLine( msg );
-						tw.Flush();
-						if (log_2_console) { Console.WriteLine( msg ); }
-					};
+						p.OutputDataReceived += ( sender, e ) => {
+							string msg;
+							if (e.Data != null) {
+								msg = construct_message( e.Data, "stdout" );
+							} else {
+								msg = construct_message( "DATA:NULL", "stdout" );
+							}
+							tw.WriteLine( msg );
+							tw.Flush();
+							if (log_2_console) { Console.WriteLine( msg ); }
+						};
+						p.ErrorDataReceived += ( sender, e ) => {
+							string msg;
+							if (e.Data != null) {
+								msg = construct_message( e.Data, "stderr" );
+							} else {
+								msg = construct_message( "ERROR:NULL", "stderr" );
+							}
+							tw.WriteLine( msg );
+							tw.Flush();
+							if (log_2_console) { Console.WriteLine( msg ); }
+						};
 
-					p.Start();
-					Console.WriteLine( "[{0}] root build thread id: {1}", module_name, p.Id );
-					p.BeginOutputReadLine();
-					p.BeginErrorReadLine();
-					p.WaitForExit();
+						p.Start();
+						Console.WriteLine( "[{0}] root build thread id: {1}", module_name, p.Id );
+						p.BeginOutputReadLine();
+						p.BeginErrorReadLine();
+						p.WaitForExit();
 
-					DateTime time_finish = DateTime.Now;
-					Console.WriteLine(
-						"[{0}] build duration {1} minutes"
-						, module_name
-						, time_finish.Subtract( time_start ).TotalMinutes
-					);
+						DateTime time_finish = DateTime.Now;
+						Console.WriteLine(
+							"[{0}] build duration {1} minutes"
+							, module_name
+							, time_finish.Subtract( time_start ).TotalMinutes
+						);
 
-					return 0 == p.ExitCode;
+						return 0 == p.ExitCode;
+					}
 				}
 			}
+		}
+		catch(Exception ex) {
+			Console.WriteLine( ex );
+			return false;
 		}
 	}
 
