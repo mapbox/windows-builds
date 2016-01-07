@@ -87,6 +87,13 @@ SET RUNTIME_VERSION=vcredist-VS2015
 IF NOT EXIST C:\Python27 ( ECHO C:\Python27 not found && GOTO ERROR )
 
 
+IF EXIST "C:\Program Files (x86)\Git\bin" SET PATH=C:\Program Files (x86)\Git\bin;%PATH%
+IF EXIST "C:\Program Files\Git\usr\bin" SET PATH=C:\Program Files\Git\usr\bin;%PATH%
+
+WHERE curl
+IF %ERRORLEVEL% NEQ 0 (ECHO curl not found, is git installed && GOTO ERROR)
+
+
 if "%TARGET_ARCH%" == "32" (
   SET BUILDPLATFORM=Win32
   SET BOOSTADDRESSMODEL=32
