@@ -66,8 +66,10 @@ Write-Host "deleting Z:\mb"
 Remove-Item -Recurse -Force Z:\mb
 
 Write-Host "cloning repos"
-& "C:\Program Files (x86)\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-32
-& "C:\Program Files (x86)\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-64
+#& "C:\Program Files (x86)\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-32
+#& "C:\Program Files (x86)\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-64
+& "C:\Program Files\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-32
+& "C:\Program Files\Git\bin\git" clone https://github.com/mapbox/windows-builds.git Z:\mb\windows-builds-64
 
 
 #$buildcmd="scripts\build"
