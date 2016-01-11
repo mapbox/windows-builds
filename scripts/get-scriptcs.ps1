@@ -8,6 +8,7 @@ $wc = New-Object System.Net.WebClient
 $message = $xml.svm.message
 if ($message -ne $null) {
     Write-ErrorMessage $message
+    Exit 1
 }
 
 $versions = @();

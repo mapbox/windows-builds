@@ -9,7 +9,7 @@ Write-Host "gitsha:", $git_sha
 
 if([string]::IsNullOrWhiteSpace($commit_msg) -or [string]::IsNullOrWhiteSpace($git_sha)){
     Write-Host "no commit message or gitsha"
-    exit
+    exit 1
 }
 
 
