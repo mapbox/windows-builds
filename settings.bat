@@ -129,6 +129,7 @@ SET PATH=%CD%\tmp-bin\ragel\%PLATFORMX%;%PATH%
 ::always use 7z x64, 32bit version cannot handle size of mapnik + PDBs
 SET PATH=%CD%\tmp-bin\7zip\x64;%PATH%
 SET PATH=%CD%\tmp-bin\ddt\%PLATFORMX%;%PATH%
+SET PATH=%CD%\tmp-bin\scriptcs;%PATH%
 SET PATH=%CD%\tmp-bin;%PATH%
 ::set path to make.exe at last.
 ::make.exe that comes with gnu-win-tools cannot compile cairo
@@ -221,10 +222,10 @@ FOR /F "tokens=*" %%i in ('powershell Get-ExecutionPolicy') do SET PSPOLICY=%%i
 ECHO Powershell execution policy now is^: %PSPOLICY%
 
 ::install scriptcs
-powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/scriptcs-contrib/svm/master/install/installer.ps1'))" && SET PATH=%USERPROFILE%\.svm\bin\;%USERPROFILE%\.svm\shims\;%PATH%
+powershell .\scripts\get-scriptcs.ps1
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-svm install latest
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+WHERE scriptcs
+IF %ERRORLEVEL% NEQ 0 ECHO scriptcs not found && GOTO ERROR
 
 GOTO DONE
 
