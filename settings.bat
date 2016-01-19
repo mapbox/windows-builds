@@ -90,9 +90,9 @@ IF NOT EXIST C:\Python27 ( ECHO C:\Python27 not found && GOTO ERROR )
 IF EXIST "C:\Program Files (x86)\Git\bin" SET PATH=C:\Program Files (x86)\Git\bin;%PATH%
 IF EXIST "C:\Program Files\Git\usr\bin" SET PATH=C:\Program Files\Git\usr\bin;%PATH%
 IF EXIST "C:\Program Files\Git\bin" SET PATH=C:\Program Files\Git\bin;%PATH%
-WHERE git
+WHERE git >NUL
 IF %ERRORLEVEL% NEQ 0 (ECHO git not found && GOTO ERROR)
-WHERE curl
+WHERE curl >NUL
 IF %ERRORLEVEL% NEQ 0 (ECHO curl not found, is git installed && GOTO ERROR)
 
 
@@ -136,26 +136,18 @@ SET PATH=%CD%\tmp-bin;%PATH%
 SET PATH=%CD%\tmp-bin\make;%PATH%
 
 
-if "%TOOLS_VERSION%" == "12.0" (
-  SET MSVC_VER=1800
-  SET PLATFORM_TOOLSET=v120
-  CALL "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/vcvarsall.bat" x86
-)
+SET MSVC_VER=1900
+SET PLATFORM_TOOLSET=v140
+REM :: CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+REM :: >..\..\src\agg\process_markers_symbolizer.cpp(108): fatal error C1060: compiler is out of heap space [C:\dev2\mapnik-dependencies\packages\mapnik-3.x\mapnik-gyp\build\mapnik.vcxproj]
+REM :: configure this Command Prompt window for 64-bit command-line builds that target x86 platforms
+REM :: http://msdn.microsoft.com/en-us/library/x4d2c09s.aspx
+IF "%TARGET_ARCH%" == "32" CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64_x86
+IF "%TARGET_ARCH%" == "64" CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+IF %ERRORLEVEL% NEQ 0 ECHO error calling vcvarsall.bat && GOTO ERROR
 
-if "%TOOLS_VERSION%" == "14.0" (
-  SET MSVC_VER=1900
-  SET PLATFORM_TOOLSET=v140
-  if "%TARGET_ARCH%" == "32" (
-    REM :: CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
-    REM :: >..\..\src\agg\process_markers_symbolizer.cpp(108): fatal error C1060: compiler is out of heap space [C:\dev2\mapnik-dependencies\packages\mapnik-3.x\mapnik-gyp\build\mapnik.vcxproj]
-    REM :: configure this Command Prompt window for 64-bit command-line builds that target x86 platforms
-    REM :: http://msdn.microsoft.com/en-us/library/x4d2c09s.aspx
-    CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64_x86
-  )
-  if "%TARGET_ARCH%" == "64" (
-    CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
-  )
-)
+WHERE msbuild >NUL
+IF %ERRORLEVEL% NEQ 0 ECHO msbuild not found && GOTO ERROR
 
 CD %ROOTDIR%
 
@@ -224,7 +216,7 @@ ECHO Powershell execution policy now is^: %PSPOLICY%
 ::install scriptcs
 powershell .\scripts\get-scriptcs.ps1
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-WHERE scriptcs
+WHERE scriptcs >NUL
 IF %ERRORLEVEL% NEQ 0 ECHO scriptcs not found && GOTO ERROR
 
 GOTO DONE
