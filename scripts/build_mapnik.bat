@@ -28,11 +28,15 @@ git pull
 ECHO ERRORLEVEL^: %ERRORLEVEL%
 ::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+::necessary for python bindings
+if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%ROOTDIR%\tmp-bin\python2-x86-32\Scripts;%PATH%
+if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%ROOTDIR%\tmp-bin\python2\Scripts;%PATH%
+
 ECHO SUPERFASTBUILD^: %SUPERFASTBUILD%
 IF NOT DEFINED SUPERFASTBUILD GOTO DEFAULT_BUILD
 IF %SUPERFASTBUILD% NEQ 1 GOTO DEFAULT_BUILD
 ECHO doing a SUPERFASTBUILD via AppVeyor build scripts
-CALL scripts\build-local.bat
+CALL scripts\build-local.bat "LOCAL_BUILD_DONT_SKIP_TESTS="
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 GOTO DONE
 
@@ -94,8 +98,6 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :FULLBUILD
 ECHO building mapnik
-if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%ROOTDIR%\tmp-bin\python2-x86-32\Scripts;%PATH%
-if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%ROOTDIR%\tmp-bin\python2\Scripts;%PATH%
 SET TIME_BEFORE_BUILD=%TIME%
 ECHO %TIME_BEFORE_BUILD%^: calling build.bat of mapnik-gyp ...
 call build.bat
