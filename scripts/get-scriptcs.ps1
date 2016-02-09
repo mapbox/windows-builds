@@ -35,4 +35,5 @@ Write-Host "cwd:"  $cwd
 $dl_file = [System.IO.Path]::Combine($cwd, 'packages', 'scriptcs.zip')
 $wc.DownloadFile($dl_url, $dl_file)
 
-7z -y e "packages\scriptcs.zip" "tools\*" -otmp-bin\scriptcs
+$cmd = "7z -y e `"packages\scriptcs.zip`" tools\* -otmp-bin\scriptcs | $env:windir\system32\FIND `"ing archive`""
+iex $cmd
