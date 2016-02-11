@@ -81,7 +81,8 @@ git checkout %MAPNIKGYPBRANCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO pulling mapnik-gyp
 git pull
-IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::don't check error level: if we are on a commit pull returns !=0
+::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 ddt /Q mapnik-sdk

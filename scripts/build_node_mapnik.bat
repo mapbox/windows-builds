@@ -23,7 +23,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 DDT /Q lib\binding
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CALL scripts\build-local.bat "USE_LOCAL_MAPNIK_SDK=1" "nodejs_version=%NODE_VERSION%" "platform=%PLATFORMX%"
+CALL scripts\build-local.bat "USE_LOCAL_MAPNIK_SDK=%USE_LOCAL_MAPNIK_SDK%" "nodejs_version=%NODE_VERSION%" "platform=%PLATFORMX%"
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 

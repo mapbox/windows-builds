@@ -22,6 +22,8 @@ SET VERBOSE=0
 SET IGNOREFAILEDTESTS=1
 ::local meaning, built by these scripts
 SET PREFER_LOCAL_NODE_EXE=1
+::node-mapnik: use local mapnik sdk or download sdk defined for AppVeyor
+SET USE_LOCAL_MAPNIK_SDK=1
 SET BUNDLE_RUNTIME=0
 
 ::try to stay in sync with https://github.com/mapnik/mapnik-packaging/blob/master/osx/settings.sh#L414
