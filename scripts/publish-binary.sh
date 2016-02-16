@@ -14,7 +14,7 @@ else
     echo "NOT publishing"
 fi
 
-sudo pip install awscli
+pip install --user awscli
 
 gitsha="$1"
 sleep=10
