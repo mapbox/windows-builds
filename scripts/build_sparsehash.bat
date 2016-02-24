@@ -19,7 +19,7 @@ if NOT EXIST "sparsehash" (
   CALL bsdtar xfz sparsehash-%sparsehash_VERSION%.tar.gz
   TIMEOUT 3
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-  rename sparsehash-%sparsehash_VERSION% sparsehash
+  rename sparsehash-sparsehash-%sparsehash_VERSION% sparsehash
   IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 )
 
