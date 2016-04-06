@@ -66,7 +66,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git pull
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST build ddt /Q build
+IF EXIST build ddt /Q build
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 mkdir build
@@ -93,10 +93,13 @@ cmake .. ^
 -DCMAKE_INSTALL_PREFIX=%PREFIX%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+REM /p:BuildInParallel=true ^
+REM /m:%NUMBER_OF_PROCESSORS% ^
+REM msbuild OSRM.sln /t:ALL_BUILD;rebuild ^
+
 msbuild OSRM.sln ^
 /p:Configuration=Release ^
 /p:Platform=x64 ^
-/t:rebuild ^
 /p:BuildInParallel=true ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^

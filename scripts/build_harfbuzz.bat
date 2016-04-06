@@ -31,7 +31,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO downloading harfbuzz.cmake to %PKGDIR%\CMakeLists.txt
 ::LATEST
-curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/master/harfbuzz.cmake
+curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/3bdec853885211d87e7947926b66bfdedd271b21/harfbuzz.cmake
 ::PREVIOUS
 ::curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/b864147eac40943fd72c2b94948f767a6529466c/harfbuzz.cmake
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
