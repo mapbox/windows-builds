@@ -67,6 +67,8 @@ SET WITH_PDB=1
 ::SET ODBC_SUPPORTED=1
 IF "%PLATFORMX%"=="x64" SET WIN64=YES
 
+SET CL=/MP
+
 ECHO cleaning .....
 CALL nmake /F makefile.vc clean
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
