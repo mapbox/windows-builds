@@ -35,9 +35,9 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if "%BOOSTADDRESSMODEL%"=="64" (
   IF %BUILD_TYPE% EQU Release (
-    SET ICU_LINK=%PKGDIR%\icu\lib64\icuuc.lib
+    SET ICU_LINK="/LIBPATH:%PKGDIR%\icu\lib64 icuuc.lib icuin.lib icudt.lib"
   ) ELSE (
-    SET ICU_LINK=%PKGDIR%\icu\lib64\icuucd.lib
+    SET ICU_LINK="/LIBPATH:%PKGDIR%\icu\lib64 icuucd.lib icuind.lib icudtd.lib"
   )
   echo !!!!!!!!!
   echo USING x86 COMMANDPROMPT!!!!!!!!
@@ -54,12 +54,14 @@ if "%BOOSTADDRESSMODEL%"=="64" (
   )
 ) ELSE (
   IF %BUILD_TYPE% EQU Release (
-    SET ICU_LINK=%PKGDIR%\icu\lib\icuuc.lib
+    SET ICU_LINK="/LIBPATH:%PKGDIR%\icu\lib icuuc.lib icuin.lib icudt.lib"
   ) ELSE (
-    SET ICU_LINK=%PKGDIR%\icu\lib\icuucd.lib
+    SET ICU_LINK="/LIBPATH:%PKGDIR%\icu\lib icuucd.lib icuind.lib icudtd.lib"
   )
 )
 
+SET INCLUDE=%PKGDIR%\icu\include;%INCLUDE%
+SET ICU_DATA=%PKGDIR%\icu\source\data\in\
 ECHO ICU_LINK %ICU_LINK%
 
 ::NOTE: you cannot have both pythons installed otherwise it appears bjam will still find the 64 bit one
@@ -90,7 +92,10 @@ IF %BUILD_TYPE% EQU Release (
 
 ECHO BOOST_BUILD_TYPE %BOOST_BUILD_TYPE%
 
+REM link=shared ^
+
 CALL b2 -j%NUMBER_OF_PROCESSORS% ^
+-a ^
 -d2 %BOOST_BUILD_TYPE% stage ^
 --build-type=minimal ^
 toolset=msvc-%TOOLS_VERSION% -q ^
@@ -106,9 +111,8 @@ address-model=%BOOSTADDRESSMODEL% ^
 --with-program_options ^
 --with-regex ^
 --disable-filesystem2 ^
-cxxflags="-DBOOST_MSVC_ENABLE_2014_JUN_CTP" ^
 -sHAVE_ICU=1 ^
--sICU_PATH=%PKGDIR%\\icu ^
+-sICU_PATH=%PKGDIR%\icu ^
 -sICU_LINK=%ICU_LINK% ^
 -sZLIB_SOURCE=%PKGDIR%\zlib ^
 -sBUILD=boost_unit_test_framework
@@ -120,6 +124,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 :: we want to dynamically link python
 
 CALL b2 -j%NUMBER_OF_PROCESSORS% ^
+  -a ^
   -d2 %BOOST_BUILD_TYPE% stage ^
   --build-type=minimal toolset=msvc-%TOOLS_VERSION% -q ^
   runtime-link=shared link=shared ^

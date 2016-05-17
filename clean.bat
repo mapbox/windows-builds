@@ -23,9 +23,28 @@ IF EXIST %BDIR% (
   )
 )
 ENDLOCAL
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET BDIR=packages\boost
+IF EXIST %BDIR% (
+  for /R %BDIR% %%f in (*.exe) do (
+    del /q %%f
+    IF !ERRORLEVEL! NEQ 0 GOTO ERROR
+  )
+)
+ENDLOCAL
 
-IF EXIST packages\boost\user-confg.jam (del /q /s packages\boost\user-confg.jam)
+IF EXIST packages\boost\project-config.jam ECHO deleting packages\boost\project-config.jam && DEL packages\boost\project-config.jam
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST packages\boost\user-confg.jam (ECHO deleting packages\boost\user-confg.jam && del /q /s packages\boost\user-confg.jam)
 IF %ERRORLEVEL% NEQ 0 (ECHO %ERRORLEVEL% && GOTO ERROR)
+
+IF EXIST %TEMP%\b2_msvc_14.0_vcvarsall_amd64.cmd ECHO deleting %TEMP%\b2_msvc_14.0_vcvarsall_amd64.cmd && DEL %TEMP%\b2_msvc_14.0_vcvarsall_amd64.cmd
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST %TEMP%\b2_msvc_14.0_vcvarsall_x86.cmd ECHO deleting %TEMP%\b2_msvc_14.0_vcvarsall_x86.cmd && DEL %TEMP%\b2_msvc_14.0_vcvarsall_x86.cmd
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST %TEMP%\b2_msvc_14.0_vcvarsall_x86_arm.cmd ECHO deleting %TEMP%\b2_msvc_14.0_vcvarsall_x86_arm.cmd && DEL %TEMP%\b2_msvc_14.0_vcvarsall_x86_arm.cmd
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 ddt /Q packages\boost\bin.v2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ddt /Q packages\boost\stage
