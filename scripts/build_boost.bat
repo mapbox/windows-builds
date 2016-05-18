@@ -60,6 +60,8 @@ if "%BOOSTADDRESSMODEL%"=="64" (
   )
 )
 
+IF "%TARGET_ARCH%"=="32" SET PATH=%PKGDIR%\icu\bin;%PATH%
+IF "%TARGET_ARCH%"=="64" SET PATH=%PKGDIR%\icu\bin64;%PATH%
 SET INCLUDE=%PKGDIR%\icu\include;%INCLUDE%
 SET ICU_DATA=%PKGDIR%\icu\source\data\in\
 ECHO ICU_LINK %ICU_LINK%
