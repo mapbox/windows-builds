@@ -29,7 +29,7 @@ SET USE_LOCAL_MAPNIK_SDK=1
 SET BUNDLE_RUNTIME=0
 
 ::try to stay in sync with https://github.com/mapnik/mapnik-packaging/blob/master/osx/settings.sh#L414
-SET BOOST_VERSION=59
+SET BOOST_VERSION=60
 SET ICU_VERSION=56.1
 SET ICU_VERSION2=56_1
 SET WEBP_VERSION=0.5.0
