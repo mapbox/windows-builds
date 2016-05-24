@@ -6,12 +6,16 @@ ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 SET TEST_ALL=0
 SET TEST_PYTHON=0
 SET TEST_NATIVE=0
+SET TEST_VERBOSITY=0
+SET OPEN_VS=0
 
 :NEXT-ARG
 IF "%1"=="" GOTO ARGS-DONE
 IF /I "%1"=="python" SET TEST_PYTHON=1 && GOTO ARG-OK
 IF /I "%1"=="native" SET TEST_NATIVE=1 && GOTO ARG-OK
 IF /I "%1"=="all" SET TEST_ALL=1 && SET TEST_PYTHON=1 && SET TEST_NATIVE=1 && GOTO ARG-OK
+IF /I "%1"=="verbose" SET TEST_VERBOSITY=1 && GOTO ARG-OK
+IF /I "%1"=="vs" SET OPEN_VS=1 && GOTO ARG-OK
 
 ECHO. && ECHO ------------------------------
 ECHO Invalid argument "%1"
@@ -106,8 +110,8 @@ IF %V_TEST_JOBS% LSS 1 SET V_TEST_JOBS=1
 ::SET V_TEST_JOBS=4
 ECHO running visual tests with %V_TEST_JOBS% concurrency
 
-REM --verbose
 SET COMMON_FLAGS=--output-dir %TEMP%\mapnik-visual-images --unique-subdir --duration
+IF %TEST_VERBOSITY% EQU 1 SET COMMON_FLAGS=%COMMON_FLAGS% --verbose
 
 ECHO visual tests agg && mapnik-gyp\build\Release\test_visual_run.exe --agg --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
@@ -131,5 +135,5 @@ ECHO ERRORLEVEL^: %EL%
 ECHO ~~~~~~~~~~~~~~~~~~~ DONE %~f0 ~~~~~~~~~~~~~~~~~~~
 
 CD %ROOTDIR%
-REM devenv
+IF %OPEN_VS% EQU 1 devenv
 EXIT /b %EL%
