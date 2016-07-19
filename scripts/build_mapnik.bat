@@ -47,12 +47,15 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
 :: python bindings
+IF NOT DEFINED MAPNIKPYTHONBRANCH SET MAPNIKPYTHONBRANCH=master
 IF NOT EXIST bindings\python git clone https://github.com/mapnik/python-mapnik.git bindings/python
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 CD bindings\python & IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git fetch & IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 git pull & IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+ECHO checking out mapnik python^: %MAPNIKPYTHONBRANCH%
+git checkout %MAPNIKPYTHONBRANCH%
 CD ..\.. & IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
