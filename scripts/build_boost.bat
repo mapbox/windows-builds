@@ -10,19 +10,23 @@ cd %PKGDIR%
 CALL %ROOTDIR%\scripts\download boost_1_%BOOST_VERSION%_0.tar.bz2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if EXIST boost_1_%BOOST_VERSION%_0 (
-  echo found extracted sources
-)
+IF EXIST boost ECHO boost already extracted - check if current version is right && GOTO BOOST_EXTRACTED
 
-if NOT EXIST boost (
-  echo extracting
-  CALL bsdtar xzf %PKGDIR%/boost_1_%BOOST_VERSION%_0.tar.bz2
-  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-  rename boost_1_%BOOST_VERSION%_0 boost
-  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-)
+ECHO extracting boost
+CALL bsdtar xzf %PKGDIR%/boost_1_%BOOST_VERSION%_0.tar.bz2
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+rename boost_1_%BOOST_VERSION%_0 boost
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+SET BOOST_PATCH=%PATCHES%\boost-1_%BOOST_VERSION%.diff
+IF NOT EXIST %BOOST_PATCH% ECHO no patch found && GOTO BOOST_EXTRACTED
+cd %PKGDIR%\boost
+ECHO applying %BOOST_PATCH%
+patch -N -p1 < %BOOST_PATCH% || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-cd boost
+:BOOST_EXTRACTED
+
+cd %PKGDIR%\boost
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ::ohhh, how i LOVE commandline. CANNOT set path when using parentheses e.g. IF EXIST xyz ( SET PATH=bla;%PATH% )
