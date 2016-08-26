@@ -6,7 +6,7 @@ echo ------ expat -----
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
 
 cd %PKGDIR%
-CALL %ROOTDIR%\scripts\download expat-%EXPAT_VERSION%.tar.gz
+CALL %ROOTDIR%\scripts\download expat-%EXPAT_VERSION%.tar.bz2
 IF ERRORLEVEL 1 GOTO ERROR
 
 if EXIST expat (
@@ -16,7 +16,7 @@ if EXIST expat (
 SETLOCAL ENABLEDELAYEDEXPANSION
 if NOT EXIST expat (
   echo extracting
-  CALL bsdtar xfz expat-%EXPAT_VERSION%.tar.gz
+  CALL bsdtar xfz expat-%EXPAT_VERSION%.tar.bz2
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR
   rename expat-%EXPAT_VERSION% expat
   IF !ERRORLEVEL! NEQ 0 GOTO ERROR

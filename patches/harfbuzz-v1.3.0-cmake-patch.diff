@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bcd3a7c..439aa73 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -20,7 +20,6 @@ include_directories(AFTER
+ 
+ add_definitions(-DHAVE_OT)
+ add_definitions(-DHAVE_ATEXIT)
+-add_definitions(-DHB_NO_MT)
+ add_definitions(-DHB_DISABLE_DEPRECATED)
+ ##
+ 
