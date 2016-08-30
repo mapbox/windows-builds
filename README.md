@@ -66,7 +66,7 @@ Examples:
 * Building 32bit and using mapnik branch `win-perf`: `settings "TARGET_ARCH=32" "MAPNIKBRANCH=win-perf"`
 
 
-## Building mapnik and node-mapnik
+## Building mapnik
 
     scripts\build.bat
 
@@ -74,7 +74,7 @@ With `"FASTBUILD=1"` (the default):
 * downloads pre-compiled dependencies
 * pulls latest mapnik (honoring `MAPNIKBRANCH`)
 * builds mapnik only
-* to also build node-mapnik, issue `scripts\build_node_mapnik.bat` afterwards
+* to build node-mapnik, issue `scripts\build_node_mapnik.bat` afterwards
 
 With `"FASTBUILD=0"`:
 * downloads/pulls source and builds each dependencies
@@ -86,7 +86,7 @@ With `"FASTBUILD=0"`:
 
 With `"PACKAGEMAPNIK=1"` (the default) a mapnik SDK package is created, including all necessary header files, libs and DLLs.
 
-The package will be created in the directory `packages\mapnik-<MAPNIKBRANCH>\mapnik-gyp` with this name:
+The package will be created in the directory `bin\` with this name:
 
     mapnik-win-sdk-<MSBUILD VERSION>-<ARCHITECTURE>-<MAPNIK GIT TAG>.7z
 
@@ -94,26 +94,26 @@ The package will be created in the directory `packages\mapnik-<MAPNIKBRANCH>\map
 
     mapnik-win-sdk-14.0-x64-v3.0.0-rc1-242-g2a33ead.7z
 
+## Creating binary mapnik dependencies packages (Mapbox specific)
 
-## Building osmium
+Binary deps packages help speed up the mapnik build by providing already compiled dependencies. They are utilized by `"FASTBUILD=0"` (the default) and provided by Mapbox via S3 - the build scripts pull them down automatically.
 
-    scripts\build_libosmium_deps
-    scripts\package_libosmium_deps
-    scripts\build_libosmium vs
-    scripts\build_osmium-tool
+* x64: `settings "FASTBUILD=0" "PACKAGEDEPS=1"`
+* x86: `settings "TARGET_ARCH=32" "FASTBUILD=0" "PACKAGEDEPS=1"`
 
-## Building node-gdal
+The resulting 7z files are created in the respective `bin\` directories:
+* x64: `mapnik-win-sdk-binary-deps-14.0-x64.7z`
+* x86: `mapnik-win-sdk-binary-deps-14.0-x86.7z`
 
-    scripts\build_node_gdal.bat
+### Automated builds
 
-## Building nodejs
+The binary deps packages have to be updated everytime one or more depencdencies change
+(e.g. `boost@1.60` -> `boost@1.61`).
+Otherwise `"FASTBUILD=1"` will use older depencdencies.
 
-    scripts\build_node
+The use of binary deps packages can be overriden via `"FASTBUILD=0"`.
 
-## Building osrm - WORK IN PROGRESS
-
-    scripts\build_osrm builddeps
-
-Will create:
-* `bin\osrm-deps-win-x64-14.0.7z`
-* `bin\osrm-release-<GIT-TAG>-x64-win-14.0.7z`
+The new binary deps packages have to be put into (overwrite old ones)
+```
+s3://mapbox/windows-builds/windows-build-deps
+```
