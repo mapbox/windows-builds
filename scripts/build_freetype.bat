@@ -46,7 +46,7 @@ msbuild ^
 /m:%NUMBER_OF_PROCESSORS% ^
 /toolsversion:%TOOLS_VERSION% ^
 /p:BuildInParallel=true ^
-/p:Configuration=%BUILD_TYPE% ^
+/p:Configuration="%BUILD_TYPE% Multithreaded" ^
 /p:Platform=%BUILDPLATFORM% ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 IF ERRORLEVEL 1 GOTO ERROR
@@ -55,7 +55,7 @@ ECHO build ok
 
 IF %BUILDPLATFORM% EQU x64 (
   IF %BUILD_TYPE% EQU Release (
-    CALL copy /Y objs\vc2010\x64\freetype%FREETYPE_VERSION_FILE%.lib freetype.lib
+    CALL copy /Y objs\vc2010\x64\freetype%FREETYPE_VERSION_FILE%MT.lib freetype.lib
     IF ERRORLEVEL 1 GOTO ERROR
   ) ELSE (
     CALL copy /Y objs\win64\vc2010\freetype%FREETYPE_VERSION_FILE%_D.lib freetype.lib

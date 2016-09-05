@@ -1,4 +1,4 @@
-@echo off
+@ECHO OFF
 SETLOCAL
 SET EL=0
 ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
@@ -8,6 +8,15 @@ SET TEST_PYTHON=0
 SET TEST_NATIVE=0
 SET TEST_VERBOSITY=0
 SET OPEN_VS=0
+SET CONFIG=Release
+SET MAPNIK_LOG=0
+
+ECHO %0 native^|[python^|all] [verbose] [vs]
+ECHO native  : run native tests
+ECHO python  : run python tests
+ECHO all     : run all tests
+ECHO verbose : pass --verbose flag to tests
+ECHO vs      : start Visual Studio after tests (with env vars needed set)
 
 :NEXT-ARG
 IF "%1"=="" GOTO ARGS-DONE
@@ -26,6 +35,12 @@ SHIFT
 GOTO NEXT-ARG
 
 :ARGS-DONE
+
+ECHO TEST_NATIVE^: %TEST_NATIVE%
+ECHO TEST_PYTHON^: %TEST_PYTHON%
+ECHO TEST_ALL^: %TEST_ALL%
+ECHO TEST_VERBOSITY^: %TEST_VERBOSITY%
+ECHO OPEN_VS^: %OPEN_VS%
 
 ::bail if no test type defined
 IF %TEST_PYTHON% EQU 0 IF %TEST_NATIVE% EQU 0 ECHO usage: run-mapnik-tests ^<python^|native^|all^> && GOTO ERROR
@@ -103,6 +118,9 @@ ECHO ------------------ native UNIT tests -------------------------
 mapnik-gyp\build\test\test.exe
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
 
+FOR %%t in (mapnik-gyp\build\%CONFIG%\test_*.exe) do ( ECHO ---- ECHO %%t ---- && ECHO. && call %%t )
+
+
 ECHO ------------------ native VISUAL tests -------------------------
 
 SET /A V_TEST_JOBS=%NUMBER_OF_PROCESSORS%*2
@@ -111,15 +129,17 @@ REM SET V_TEST_JOBS=1
 ECHO running visual tests with %V_TEST_JOBS% concurrency
 
 SET COMMON_FLAGS=--output-dir %TEMP%\mapnik-visual-images --unique-subdir --duration
-IF %TEST_VERBOSITY% EQU 1 SET COMMON_FLAGS=%COMMON_FLAGS% --verbose
+IF %TEST_VERBOSITY% EQU 1 SET COMMON_FLAGS=%COMMON_FLAGS% --verbose --log=debug
 
-ECHO visual tests agg && mapnik-gyp\build\Release\test_visual_run.exe --agg --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
+ECHO tests COMMON_FLAGS^: %COMMON_FLAGS%
+
+ECHO visual tests agg && mapnik-gyp\build\%CONFIG%\test_visual_run.exe --agg --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
-ECHO visual tests cairo && mapnik-gyp\build\Release\test_visual_run.exe --cairo --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
+ECHO visual tests cairo && mapnik-gyp\build\%CONFIG%\test_visual_run.exe --cairo --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
-ECHO visual tests grid && mapnik-gyp\build\Release\test_visual_run.exe --grid --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
+ECHO visual tests grid && mapnik-gyp\build\%CONFIG%\test_visual_run.exe --grid --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
-ECHO visual tests svg && mapnik-gyp\build\Release\test_visual_run.exe --svg --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
+ECHO visual tests svg && mapnik-gyp\build\%CONFIG%\test_visual_run.exe --svg --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
 
 
