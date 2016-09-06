@@ -118,14 +118,14 @@ ECHO ------------------ native UNIT tests -------------------------
 mapnik-gyp\build\test\test.exe
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
 
-FOR %%t in (mapnik-gyp\build\%CONFIG%\test_*.exe) do ( ECHO ---- ECHO %%t ---- && ECHO. && call %%t )
+FOR %%t in (mapnik-gyp\build\%CONFIG%\test_*.exe) do ( ECHO ---- %%t ---- && call %%t )
 
 
 ECHO ------------------ native VISUAL tests -------------------------
 
 SET /A V_TEST_JOBS=%NUMBER_OF_PROCESSORS%*2
 IF %V_TEST_JOBS% LSS 1 SET V_TEST_JOBS=1
-REM SET V_TEST_JOBS=1
+SET V_TEST_JOBS=1
 ECHO running visual tests with %V_TEST_JOBS% concurrency
 
 SET COMMON_FLAGS=--output-dir %TEMP%\mapnik-visual-images --unique-subdir --duration
