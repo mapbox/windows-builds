@@ -13,16 +13,14 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 if EXIST libtiff echo found extracted sources && GOTO SRCALREADYTHERE
 
 echo downloading from github https://github.com/vadz/libtiff.git
-
 ECHO ===!!!! pin to 4-0-4 =====
 ECHO ---latest commits don't compile on Windows ----!!!!
-
-::git clone --quiet --depth=1 https://github.com/vadz/libtiff.git
 git clone  https://github.com/vadz/libtiff.git
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-cd %PKGDIR%\libtiff
-git checkout tags/Release-v4-0-4
-::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+::cd %PKGDIR%\libtiff
+::git checkout tags/Release-v4-0-4
+REM ::don't use this -> IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
 ::echo extracting
 ::CALL bsdtar xfz tiff-%TIFF_VERSION%.tar.gz
 ::rename tiff-%TIFF_VERSION% libtiff
