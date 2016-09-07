@@ -1,0 +1,13 @@
+diff --git a/vcbuild.bat b/vcbuild.bat
+index 701127e..421d490 100644
+--- a/vcbuild.bat
++++ b/vcbuild.bat
+@@ -203,7 +203,7 @@ if defined nobuild goto sign
+ @rem Build the sln with msbuild.
+ set "msbplatform=Win32"
+ if "%target_arch%"=="x64" set "msbplatform=x64"
+-msbuild node.sln /m /t:%target% /p:Configuration=%config% /p:Platform=%msbplatform% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
++msbuild node.sln /p:ForceImportBeforeCppTargets=%PATCHES%\node-force-MD.props /m /t:%target% /p:Configuration=%config% /p:Platform=%msbplatform% /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo
+ if errorlevel 1 goto exit
+ if "%target%" == "Clean" goto exit
+ 
