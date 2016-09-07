@@ -30,18 +30,18 @@ IF EXIST CMakeLists.txt.rej DEL CMakeLists.txt.rej
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO downloading harfbuzz.cmake to %PKGDIR%\CMakeLists.txt
-::LATEST
-::curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/3bdec853885211d87e7947926b66bfdedd271b21/harfbuzz.cmake
-curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/6100edd35cce40378dbd7c332de166e79dee746e/harfbuzz.cmake
-::PREVIOUS
-::curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/b864147eac40943fd72c2b94948f767a6529466c/harfbuzz.cmake
+
+::20150911 'Update harfbuzz.cmake': e800552c6d2434cd5941517d5bd3c62aa1c8df4c
+::20160330 'Update harfbuzz.cmake': 99d8b41511a44a2c47596b5ea6125b398434fd90
+::20160330 'Add DirectWrite to harfbuzz.cmake': 3bdec853885211d87e7947926b66bfdedd271b21
+::20160420 'Tweak build': 6100edd35cce40378dbd7c332de166e79dee746e
+
+curl -s -S -f -O -L -k --retry 3 https://raw.githubusercontent.com/ebraminio/glcourse/3bdec853885211d87e7947926b66bfdedd271b21/harfbuzz.cmake
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 rename harfbuzz.cmake CMakeLists.txt
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 
-
-:: DEL CMakeLists.txt && copy C:\mb\_TEMP\harfbuzz-v1.1.1-cmake-patch\CMakeLists.txt . && ECHO ======!!!!!!!!======= && ECHO. ECHO ============!!!!!!!!!!!!====== && ECHO copying NOT PATCHING
 IF EXIST %PATCHES%\harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff ECHO applying %PATCHES%\harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff && patch -N -p1 < %PATCHES%/harfbuzz-v%HARFBUZZ_VERSION%-cmake-patch.diff || %SKIP_FAILED_PATCH%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO CMakeLists.txt patched
@@ -73,6 +73,8 @@ SET FREETYPE_DIR=%CD%\freetype-sdk
 CALL cmake ../ -G "NMake Makefiles" ^
    -DCMAKE_BUILD_TYPE=%BUILD_TYPE% ^
    -DHB_HAVE_FREETYPE=ON ^
+   -DHB_HAVE_DIRECTWRITE=OFF ^
+   -DHB_BUILTIN_UCDN=OFF ^
    -DCMAKE_INCLUDE_PATH=%FREETYPE_DIR%\include ^
    -DCMAKE_LIBRARY_PATH=%FREETYPE_DIR%\lib
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
