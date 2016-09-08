@@ -11,12 +11,15 @@ SET OPEN_VS=0
 SET CONFIG=Release
 SET MAPNIK_LOG=0
 
-ECHO %0 native^|[python^|all] [verbose] [vs]
-ECHO native  : run native tests
-ECHO python  : run python tests
-ECHO all     : run all tests
-ECHO verbose : pass --verbose flag to tests
-ECHO vs      : start Visual Studio after tests (with env vars needed set)
+ECHO.
+ECHO %0 native^|[python^|all] [verbose] [vs] [-visualsha SHA]
+ECHO native     : run native tests
+ECHO python     : run python tests
+ECHO all        : run all tests
+ECHO verbose    : pass --verbose flag to tests
+ECHO vs         : start Visual Studio after tests (with env vars needed set)
+ECHO -visualsha : SHA of visual data to test against
+ECHO. && ECHO.
 
 :NEXT-ARG
 IF "%1"=="" GOTO ARGS-DONE
@@ -25,6 +28,7 @@ IF /I "%1"=="native" SET TEST_NATIVE=1 && GOTO ARG-OK
 IF /I "%1"=="all" SET TEST_ALL=1 && SET TEST_PYTHON=1 && SET TEST_NATIVE=1 && GOTO ARG-OK
 IF /I "%1"=="verbose" SET TEST_VERBOSITY=1 && GOTO ARG-OK
 IF /I "%1"=="vs" SET OPEN_VS=1 && GOTO ARG-OK
+IF /I "%1"=="-visualsha" SET VISUALSHA=%2 && SHIFT && GOTO ARG-OK
 
 ECHO. && ECHO ------------------------------
 ECHO Invalid argument "%1"
@@ -92,7 +96,21 @@ ECHO updating Python bindings submodules ...
 git submodule update --init --recursive
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-CD ..\..\mapnik-gyp
+CD %MAPNIK_SDK%\..\..\test\data-visual
+ECHO %CD%
+ECHO visual data SHA^:
+git rev-parse HEAD
+IF NOT DEFINED VISUALSHA ECHO visual data^: using default, no SHA defined
+IF DEFINED VISUALSHA ECHO checking out visual data %VISUALSHA% && git checkout %VISUALSHA%
+ECHO visual data SHA^:
+git rev-parse HEAD
+
+::cd into mapnik-gyp
+CD %MAPNIK_SDK%\..
+
+
+::GOTO SINGLE_TEST
+
 
 IF %TEST_PYTHON% NEQ 1 GOTO RUN_NATIVE_TESTS
 
@@ -125,7 +143,7 @@ ECHO ------------------ native VISUAL tests -------------------------
 
 SET /A V_TEST_JOBS=%NUMBER_OF_PROCESSORS%*2
 IF %V_TEST_JOBS% LSS 1 SET V_TEST_JOBS=1
-SET V_TEST_JOBS=1
+::SET V_TEST_JOBS=1
 ECHO running visual tests with %V_TEST_JOBS% concurrency
 
 SET COMMON_FLAGS=--output-dir %TEMP%\mapnik-visual-images --unique-subdir --duration
@@ -142,7 +160,10 @@ IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO reset
 ECHO visual tests svg && mapnik-gyp\build\%CONFIG%\test_visual_run.exe --svg --jobs=%V_TEST_JOBS% %COMMON_FLAGS%
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
 
-
+:::SINGLE_TEST
+::CD %MAPNIK_SDK%\..\..
+::mapnik-gyp\build\test\test.exe ogr --help
+::mapnik-gyp\build\test\test.exe ogr --break
 
 GOTO DONE
 
