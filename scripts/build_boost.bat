@@ -1,7 +1,7 @@
 @echo off
 SETLOCAL
 SET EL=0
-echo ----------- boost ---------
+ECHO ~~~~~~~~~~~~~~~~~~~ %~f0 ~~~~~~~~~~~~~~~~~~~
 
 :: guard to make sure settings have been sourced
 IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO DONE )
@@ -32,9 +32,11 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::ohhh, how i LOVE commandline. CANNOT set path when using parentheses e.g. IF EXIST xyz ( SET PATH=bla;%PATH% )
 ::%PATH% would get evaluated as a command and bail out of BAT with unexpected ERROR
 ::e.g. "\Microsoft was unexpected at this time."
-if "%BOOSTADDRESSMODEL%"=="32" if EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%PATH%
+IF "%BOOSTADDRESSMODEL%"=="32" IF EXIST %ROOTDIR%\tmp-bin\python2-x86-32 SET PATH=%ROOTDIR%\tmp-bin\python2-x86-32;%PATH%
+IF "%BOOSTADDRESSMODEL%"=="32" IF NOT EXIST %ROOTDIR%\tmp-bin\python2-x86-32 ECHO no Python in tmp-bin && SET ERRORLEVEL=1
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-if "%BOOSTADDRESSMODEL%"=="64" if EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
+IF "%BOOSTADDRESSMODEL%"=="64" IF EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOTDIR%\tmp-bin\python2;%PATH%
+IF "%BOOSTADDRESSMODEL%"=="64" IF NOT EXIST %ROOTDIR%\tmp-bin\python2 ECHO no Python in tmp-bin && SET ERRORLEVEL=1
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 if "%BOOSTADDRESSMODEL%"=="64" (
@@ -144,7 +146,8 @@ GOTO DONE
 
 :ERROR
 SET EL=%ERRORLEVEL%
-echo =========== ERROR boost =========
+ECHO ~~~~~~~~~~~~~~~~~~~ ERROR %~f0 ~~~~~~~~~~~~~~~~~~~
+ECHO ERRORLEVEL^: %EL%
 
 :DONE
 
