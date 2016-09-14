@@ -136,7 +136,7 @@ ECHO ------------------ native UNIT tests -------------------------
 mapnik-gyp\build\test\test.exe
 IF %IGNOREFAILEDTESTS% EQU 0 (IF %ERRORLEVEL% NEQ 0 GOTO ERROR) ELSE (ECHO resetting ERRORLEVEL && SET ERRORLEVEL=0)
 
-FOR %%t in (mapnik-gyp\build\%CONFIG%\test_*.exe) do ( ECHO ---- %%t ---- && call %%t )
+::FOR %%t in (mapnik-gyp\build\%CONFIG%\test_*.exe) do ( ECHO ---- %%t ---- && call %%t )
 
 
 ECHO ------------------ native VISUAL tests -------------------------
