@@ -19,9 +19,18 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ECHO renaming dir && rename freetype-%FREETYPE_VERSION% freetype
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+CD %PKGDIR%\freetype
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+IF EXIST %PATCHES%\freetype-v%FREETYPE_VERSION%.diff ECHO applying %PATCHES%\freetype-v%FREETYPE_VERSION%.diff && patch -N -p1 < %PATCHES%/freetype-v%FREETYPE_VERSION%.diff || %SKIP_FAILED_PATCH%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+IF EXIST %PATCHES%\freetype-v%FREETYPE_VERSION%.diff ECHO patch applied
+IF NOT EXIST %PATCHES%\freetype-v%FREETYPE_VERSION%.diff ECHO no v%FREETYPE_VERSION% patch found
+
+
 :SRC_EXTRACTED
 
-ECHO changing into freetype && CD freetype
+ECHO changing into freetype && CD %PKGDIR%\freetype
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 ECHO building freetype ...
@@ -37,7 +46,7 @@ msbuild ^
 /p:PlatformToolset=%PLATFORM_TOOLSET%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-ECHO build successful
+ECHO freetype v%FREETYPE_VERSION% build successful
 
 IF %BUILDPLATFORM% EQU x64 (
   IF %BUILD_TYPE% EQU Release (
