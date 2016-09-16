@@ -1,0 +1,60 @@
+diff --git a/builds/windows/vc2010/freetype.user.props b/builds/windows/vc2010/freetype.user.props
+index 78310d4..655a6e2 100644
+--- a/builds/windows/vc2010/freetype.user.props
++++ b/builds/windows/vc2010/freetype.user.props
+@@ -25,7 +25,7 @@
+      * this is searched BEFORE any other path
+      -->
+     <!-- <UserOptionDirectory>..\..\..\devel</UserOptionDirectory> -->
+-    <UserOptionDirectory></UserOptionDirectory>
++    <UserOptionDirectory>..\..\..\include\freetype\config</UserOptionDirectory>
+ 
+     <!--
+      * `;'-separated list of paths to additional include directories,
+@@ -33,21 +33,21 @@
+      * this is searched AFTER any other path
+      -->
+     <!-- <UserIncludeDirectories>..\..\..\..\zlib-1.2.8;..\..\..\..\libpng-1.6.12</UserIncludeDirectories> -->
+-    <UserIncludeDirectories></UserIncludeDirectories>
++    <UserIncludeDirectories>..\..\..\..\zlib</UserIncludeDirectories>
+ 
+     <!--
+      * `;'-separated list of paths to additional library directories,
+      * e.g., where to find zlib.lib, libpng.lib, etc.
+      -->
+     <!-- <UserLibraryDirectories>..\..\..\..\zlib-1.2.8;..\..\..\..\libpng-1.6.12</UserLibraryDirectories> -->
+-    <UserLibraryDirectories></UserLibraryDirectories>
++    <UserLibraryDirectories>..\..\..\..\zlib</UserLibraryDirectories>
+ 
+     <!--
+      * `;'-separated list of additional linker dependencies,
+      * e.g., zlib.lib, libpng.lib, etc.
+      -->
+     <!-- <UserDependencies>zlib.lib;libpng16.lib</UserDependencies> -->
+-    <UserDependencies></UserDependencies>
++    <UserDependencies>zlib.lib</UserDependencies>
+ 
+   </PropertyGroup>
+ 
+diff --git a/include/freetype/config/ftoption.h b/include/freetype/config/ftoption.h
+index 90c123e..9b6df80 100644
+--- a/include/freetype/config/ftoption.h
++++ b/include/freetype/config/ftoption.h
+@@ -142,7 +142,7 @@ FT_BEGIN_HEADER
+   /*         file `ftconfig.h' either statically or through the            */
+   /*         `configure' script on supported platforms.                    */
+   /*                                                                       */
+-#undef FT_CONFIG_OPTION_FORCE_INT64
++#define FT_CONFIG_OPTION_FORCE_INT64
+ 
+ 
+   /*************************************************************************/
+@@ -214,7 +214,7 @@ FT_BEGIN_HEADER
+   /*   Do not #undef this macro here since the build system might define   */
+   /*   it for certain configurations only.                                 */
+   /*                                                                       */
+-/* #define FT_CONFIG_OPTION_SYSTEM_ZLIB */
++#define FT_CONFIG_OPTION_SYSTEM_ZLIB
+ 
+ 
+   /*************************************************************************/
