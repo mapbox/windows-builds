@@ -63,7 +63,7 @@ $file_list = @{
         ("$env:PKGDIR" + "\expat\lib\expat_external.h"),
         ("$env:PKGDIR" + "\lua\src\lauxlib.h"),
         ("$env:PKGDIR" + "\lua\src\lua.h"),
-        #("$env:PKGDIR" + "\lua\src\lua.hpp"),
+        ("$env:PKGDIR" + "\lua\etc\lua.hpp"),
         ("$env:PKGDIR" + "\lua\src\luaconf.h"),
         ("$env:PKGDIR" + "\lua\src\lualib.h"),
         ("$env:PKGDIR" + "\stxxl\include\stxxl.h"),
