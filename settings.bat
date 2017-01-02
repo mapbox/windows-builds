@@ -158,7 +158,7 @@ ECHO ------- setting up for VS 2017
 REM test for VS2017 is _MSC_VER > 1900
 REM VS2017 has '19xx' to indicate binary-compatible toolsets with VS2015
 SET MSVC_VER=1911
-SET PLATFORM_TOOLSET=v150
+SET PLATFORM_TOOLSET=v141
 ECHO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ECHO TODO: figure out how to get correct path
 ECHO       to VS2017 install
