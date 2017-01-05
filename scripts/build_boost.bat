@@ -39,7 +39,9 @@ IF "%BOOSTADDRESSMODEL%"=="64" IF EXIST %ROOTDIR%\tmp-bin\python2 SET PATH=%ROOT
 IF "%BOOSTADDRESSMODEL%"=="64" IF NOT EXIST %ROOTDIR%\tmp-bin\python2 ECHO no Python in tmp-bin && SET ERRORLEVEL=1
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
+SET BOOSTARCHITECTURE=x86
 if "%BOOSTADDRESSMODEL%"=="64" (
+  SET BOOSTARCHITECTURE=ia64
   IF %BUILD_TYPE% EQU Release (
     SET ICU_LINK="/LIBPATH:%PKGDIR%\icu\lib64 icuuc.lib icuin.lib icudt.lib"
   ) ELSE (
@@ -57,6 +59,9 @@ if "%BOOSTADDRESSMODEL%"=="64" (
   )
   if "%TOOLS_VERSION%" == "14.0" (
     CALL "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/vcvarsall.bat" x86
+  )
+  if "%TOOLS_VERSION%" == "15.0" (
+    REM CALL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x86 -host_arch=amd64 -app_platform=Desktop
   )
 ) ELSE (
   IF %BUILD_TYPE% EQU Release (
@@ -102,7 +107,7 @@ ECHO BOOST_BUILD_TYPE %BOOST_BUILD_TYPE%
 
 REM link=shared ^
 
-CALL b2 -j%NUMBER_OF_PROCESSORS% ^
+SET BOOST_BUILD_CMD=b2 -j%NUMBER_OF_PROCESSORS% ^
 -a ^
 -d2 %BOOST_BUILD_TYPE% stage ^
 --build-type=minimal ^
@@ -110,6 +115,7 @@ toolset=msvc-%TOOLS_VERSION% -q ^
 runtime-link=shared ^
 link=static ^
 address-model=%BOOSTADDRESSMODEL% ^
+architecture=%BOOSTARCHITECTURE% ^
 --with-iostreams ^
 --with-test ^
 --with-thread ^
@@ -125,22 +131,34 @@ address-model=%BOOSTADDRESSMODEL% ^
 -sZLIB_SOURCE=%PKGDIR%\zlib ^
 -sBUILD=boost_unit_test_framework
 
+ECHO 1st build step:
+ECHO %BOOST_BUILD_CMD%
+
+%BOOST_BUILD_CMD%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 :: build boost_python now
 :: we do this separately because
 :: we want to dynamically link python
 
-CALL b2 -j%NUMBER_OF_PROCESSORS% ^
+SET BOOST_BUILD_CMD=b2 -j%NUMBER_OF_PROCESSORS% ^
   -a ^
   -d2 %BOOST_BUILD_TYPE% stage ^
   --build-type=minimal toolset=msvc-%TOOLS_VERSION% -q ^
   runtime-link=shared link=shared ^
-  cxxflags="-DBOOST_MSVC_ENABLE_2014_JUN_CTP" ^
   address-model=%BOOSTADDRESSMODEL% ^
   --with-python python=2.7
 
+ECHO 2nd build step:
+ECHO %BOOST_BUILD_CMD%
+
+IF "%TOOLS_VERSION%"=="15.0" ECHO !!!!! SKIPPING 2nd build step 'boost_python' - does not work yet with VS2017 && GOTO SKIPPED_PYTHON_BUILD
+
+%BOOST_BUILD_CMD%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+:SKIPPED_PYTHON_BUILD
+
 
 GOTO DONE
 
