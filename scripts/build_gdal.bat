@@ -38,12 +38,25 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 IF %VS2014_CTP4_DETECTED% EQU 0 patch -N -p1 < %PATCHES%\gdal-200-VS2015RC1.diff
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-
 :SRCALREADYEXTRACTED
 
 cd %PKGDIR%\gdal
 IF ERRORLEVEL 1 GOTO ERROR
 
+:: If user switch Release/Debug in settings
+IF "%BUILD_TYPE%"=="Debug" (
+  ECHO Patching nmake.opt for Debug...
+  IF NOT EXIST nmake.bak (
+    copy nmake.opt nmake.bak && patch -N -p1 < %PATCHES%/gdal-debug.diff || %SKIP_FAILED_PATCH%
+    IF %ERRORLEVEL% NEQ 0 ECHO Error patching nmake.opt for Debug! && GOTO ERROR
+  )
+)ELSE (
+  IF EXIST nmake.bak (
+    ECHO Restore origin nmake.opt for Release...
+    copy /y nmake.bak nmake.opt && del nmake.bak
+    IF %ERRORLEVEL% NEQ 0 ECHO Error restore origin nmake.opt! && GOTO ERROR
+  )
+) 
 
 ::echo When compiling 64bit download libexpat dev packages from http://www.gtk.org/download/win64.php
 ::echo Also un-comment WIN64=YES in nmake.opt -> can be passed as argument, see below
