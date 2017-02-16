@@ -26,11 +26,26 @@ REM ::don't use this -> IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 ::rename tiff-%TIFF_VERSION% libtiff
 ::IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-
 :SRCALREADYTHERE
 
 cd %PKGDIR%\libtiff
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+:: If user switch Release/Debug in settings
+IF "%BUILD_TYPE%"=="Debug" (
+  ECHO Patching nmake.opt for Debug...
+  IF NOT EXIST nmake.bak (
+    copy nmake.opt nmake.bak && patch -N -p1 < %PATCHES%/libtiff-debug.diff || %SKIP_FAILED_PATCH%
+    IF %ERRORLEVEL% NEQ 0 ECHO Error patching nmake.opt for Debug! && GOTO ERROR
+  )
+)ELSE (
+  IF EXIST nmake.bak (
+    ECHO Restore origin nmake.opt for Release...
+    copy /y nmake.bak nmake.opt && del nmake.bak
+    IF %ERRORLEVEL% NEQ 0 ECHO Error restore origin nmake.opt! && GOTO ERROR
+  )
+)
 
 COPY /Y %PKGDIR%\libjpegturbo\build\jconfig.h %PKGDIR%\libjpegturbo\
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
