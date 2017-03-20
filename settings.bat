@@ -220,7 +220,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO PSPOLICYERROR
 FOR /F "tokens=*" %%i in ('powershell Get-ExecutionPolicy') do SET PSPOLICY=%%i
 ECHO Powershell execution policy now is^: %PSPOLICY%
 
-powershell get-psdrive –psprovider filesystem
+powershell Get-PSDrive -PSProvider FileSystem
 
 ::install scriptcs
 powershell .\scripts\get-scriptcs.ps1
