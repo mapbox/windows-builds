@@ -2,6 +2,7 @@
 #load "build-targets.csx"
 #load "build-module.csx"
 using System.Diagnostics;
+using System.IO;
 using System.Management;
 using System.Text;
 
