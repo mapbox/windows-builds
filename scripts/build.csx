@@ -1,6 +1,7 @@
-#r System.Management
 #load "build-targets.csx"
 #load "build-module.csx"
+
+#r "System.Management"
 using System.Diagnostics;
 using System.IO;
 using System.Management;
