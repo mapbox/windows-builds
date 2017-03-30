@@ -1,7 +1,9 @@
-#r System.Management
 #load "build-targets.csx"
 #load "build-module.csx"
+
+#r "System.Management"
 using System.Diagnostics;
+using System.IO;
 using System.Management;
 using System.Text;
 
@@ -11,6 +13,13 @@ private static void Console_CancelKeyPress( object sender, ConsoleCancelEventArg
 	build_runner.abort_build();
 }
 
+string rootDir = Environment.GetEnvironmentVariable("ROOTDIR");
+Console.WriteLine($"rootDir                         : {rootDir}");
+Console.WriteLine($"Directory.GetCurrentDirectory() : {Directory.GetCurrentDirectory()}");
+Console.WriteLine($"Environment.CurrentDirectory    : {Environment.CurrentDirectory}");
+// fix scriptcs's changed behavior of evaluating CunrentDirectory
+Directory.SetCurrentDirectory(rootDir);
+Environment.CurrentDirectory = rootDir;
 
 string cwd = Environment.CurrentDirectory;
 

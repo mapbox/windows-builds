@@ -11,7 +11,12 @@ public static class build_runner {
 	) {
 		build_process_id = 0;
 		Console.WriteLine( "[{0}] building via [{1}]", module_name, build_cmd );
-		string log_file = Path.Combine( current_working_directory, "build-logs", module_name + ".txt" );
+		string log_dir = Path.Combine( current_working_directory, "build-logs");
+		//Console.WriteLine($"log dir: [{log_dir}]");
+		if(!Directory.Exists(log_dir)){
+			Directory.CreateDirectory(log_dir);
+		}
+		string log_file = Path.Combine( log_dir, module_name + ".txt" );
 		DateTime time_start = DateTime.Now;
 		bool build_success = true;
 
