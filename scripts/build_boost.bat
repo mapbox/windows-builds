@@ -81,8 +81,10 @@ ECHO ICU_LINK %ICU_LINK%
 
 IF EXIST b2.exe GOTO ALREADY_BOOTSTRAPPED
 
+SET BOOST_TOOLS_VERSION=%TOOLS_VERSION%
+IF "%TOOLS_VERSION%"=="15.0" SET BOOST_TOOLS_VERSION=14.1
 ECHO calling bootstrap bat
-CALL bootstrap.bat --with-toolset=msvc-%TOOLS_VERSION%
+CALL bootstrap.bat --with-toolset=msvc-%BOOST_TOOLS_VERSION%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 IF NOT "%TOOLS_VERSION%"=="15.0" GOTO ALREADY_BOOTSTRAPPED
@@ -119,7 +121,7 @@ SET BOOST_BUILD_CMD=b2 -j%NUMBER_OF_PROCESSORS% ^
 -a ^
 -d2 %BOOST_BUILD_TYPE% stage ^
 --build-type=minimal ^
-toolset=msvc-%TOOLS_VERSION% -q ^
+toolset=msvc-%BOOST_TOOLS_VERSION% -q ^
 runtime-link=shared ^
 link=static ^
 address-model=%BOOSTADDRESSMODEL% ^
@@ -152,7 +154,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 SET BOOST_BUILD_CMD=b2 -j%NUMBER_OF_PROCESSORS% ^
   -a ^
   -d2 %BOOST_BUILD_TYPE% stage ^
-  --build-type=minimal toolset=msvc-%TOOLS_VERSION% -q ^
+  --build-type=minimal toolset=msvc-%BOOST_TOOLS_VERSION% -q ^
   runtime-link=shared link=shared ^
   address-model=%BOOSTADDRESSMODEL% ^
   --with-python python=2.7

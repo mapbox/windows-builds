@@ -41,7 +41,7 @@ try {
 	// new UTF8Encoding(false) false:without BOM
 	using (TextWriter tw = new StreamWriter(projectConfigJam, false, new UTF8Encoding(false))) {
 		tw.WriteLine($"import option ; {Environment.NewLine} ");
-		tw.WriteLine($"using msvc : 15.0 : {clPath} ; {Environment.NewLine} ");
+		tw.WriteLine($"using msvc : 14.1 : {clPath} ; {Environment.NewLine} ");
 		tw.WriteLine($"option.set keep-going : false ; {Environment.NewLine} ");
 	}
 } catch (Exception ex) {
