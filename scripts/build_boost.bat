@@ -79,11 +79,19 @@ ECHO ICU_LINK %ICU_LINK%
 
 ::NOTE: you cannot have both pythons installed otherwise it appears bjam will still find the 64 bit one
 
-if NOT EXIST b2.exe (
-  echo calling bootstrap bat
-  CALL bootstrap.bat --with-toolset=msvc-%TOOLS_VERSION%
-  IF %ERRORLEVEL% NEQ 0 GOTO ERROR
-)
+IF EXIST b2.exe GOTO ALREADY_BOOTSTRAPPED
+
+ECHO calling bootstrap bat
+CALL bootstrap.bat --with-toolset=msvc-%TOOLS_VERSION%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+IF NOT "%TOOLS_VERSION%"=="15.0" GOTO ALREADY_BOOTSTRAPPED
+ECHO using VS2017^: writing custom 'project-config.jam' to make boost find VS2017's cl.exe
+scriptcs %ROOTDIR%\scripts\vs2017-write-boost-project-config-jam.csx
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+
+
+:ALREADY_BOOTSTRAPPED
 
 ::VS2010/MSBuild 10: toolset=msvc-10.0
 ::VS2012/MSBuild 11: toolset=msvc-11.0
