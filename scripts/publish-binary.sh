@@ -31,7 +31,7 @@ maxtimeout=2880
 #security_groups="--security-groups windows-builds"
 ######2015 ami with updated EC2Config
 region="eu-central-1"
-ami_id="ami-62140a0e"
+ami_id="ami-b104ddde"
 security_groups=""
 
 
