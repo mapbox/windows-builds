@@ -8,7 +8,7 @@ IF "%ROOTDIR%"=="" ( echo "ROOTDIR variable not set" && GOTO ERROR )
 cd %PKGDIR%
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
-if NOT EXIST lua git clone https://github.com/LuaDist/lua.git
+if NOT EXIST lua git clone https://github.com/LuaDist/lua.git -b lua-5.2
 IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 cd lua
